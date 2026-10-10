@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>falafelwithfeelings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fffaf7;
+            color: #2d2a32;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Falling Background Shapes Animation */
+        #falling-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-shape {
+            position: absolute;
+            top: -60px;
+            animation: fallDown linear infinite;
+            opacity: 0.6;
+            user-select: none;
+        }
+        @keyframes fallDown {
+            0% {
+                transform: translateY(-60px) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.65;
+            }
+            85% {
+                opacity: 0.65;
+            }
+            100% {
+                transform: translateY(105vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Ensure content sits above the falling background */
+        header, .view, .site-footer, .modal-overlay {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4); }
+            50% { box-shadow: 0 6px 20px rgba(244, 114, 182, 0.7); }
+            100% { box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4); }
+        }
+
+        .view {
+            display: none;
+            flex: 1;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .view.active-view {
+            display: block;
+        }
+
+        /* Header */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background-color: rgba(255, 250, 247, 0.85);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.15rem;
+            cursor: pointer;
+        }
+        .avatar {
+            background: #fce7f3;
+            padding: 0.35rem 0.55rem;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #2d2a32;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #db2777;
+            transform: translateY(-1px);
+        }
+        .admin-badge {
+            background: #fdf2f8;
+            border: 1px solid #f472b6;
+            color: #db2777;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 4.5rem 1rem 3.5rem 1rem;
+        }
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+        .highlight {
+            color: #d946ef;
+        }
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.15rem;
+            margin-top: 0.75rem;
+            margin-bottom: 2.2rem;
+        }
+        .cta-btn, .pink-pill-btn {
+            background-color: #f472b6;
+            color: white;
+            border: none;
+            padding: 0.85rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            animation: pulseGlow 3s infinite;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-family: 'Quicksand', sans-serif;
+        }
+        .cta-btn:hover, .pink-pill-btn:hover {
+            transform: scale(1.08) translateY(-2px);
+        }
+
+        /* Blog Cards Grid */
+        .blog-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: white;
+            border: 1px solid #f3e8ff;
+            border-radius: 20px;
+            padding: 2rem;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(244, 114, 182, 0.2);
+        }
+        .card-tag-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+        }
+        .card-tag.feelings { background: #fdf2f8; color: #db2777; }
+        .card-tag.essays { background: #fef3c7; color: #d97706; }
+        .card-tag.life { background: #ecfdf5; color: #059669; }
+        .read-time {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        .card h3 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            color: #1f2937;
+        }
+        .card-snippet {
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .card-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        .read-more {
+            text-decoration: none;
+            color: #db2777;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .read-more:hover {
+            transform: translateX(4px);
+        }
+        .admin-actions {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .edit-post-btn {
+            background: #fef3c7;
+            color: #d97706;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .delete-post-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* Full Post Reader View */
+        .post-reader-container {
+            max-width: 750px;
+            margin: 3rem auto;
+            background: white;
+            border: 1px solid #f3e8ff;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
+        }
+        .back-to-blog {
+            background: transparent;
+            border: none;
+            color: #db2777;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            padding: 0;
+        }
+        .post-reader-title {
+            font-size: 2.3rem;
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        .post-reader-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+        .post-reader-content {
+            color: #4b5563;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            white-space: pre-wrap;
+        }
+
+        /* Bio Section Preview */
+        .bio-section {
+            padding: 4rem 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .bio-card-preview {
+            background: #fff;
+            border: 1px solid #f3e8ff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
+            transition: transform 0.3s ease;
+        }
+        .bio-card-preview:hover {
+            transform: scale(1.01);
+        }
+        .bio-avatar {
+            font-size: 3.2rem;
+            background: #fdf2f8;
+            padding: 1.5rem;
+            border-radius: 50%;
+            border: 2px dashed #f472b6;
+            animation: float 4s ease-in-out infinite;
+        }
+        .bio-text h2 {
+            margin-top: 0;
+            color: #1f2937;
+        }
+        .bio-text p {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        .secondary-btn {
+            background: transparent;
+            border: 2px solid #f472b6;
+            color: #db2777;
+            padding: 0.6rem 1.4rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+        .secondary-btn:hover {
+            background: #f472b6;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Newsletter Box */
+        .newsletter-box {
+            background-color: #fef08a;
+            margin: 3.5rem auto;
+            max-width: 900px;
+            border-radius: 24px;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(254, 240, 138, 0.4);
+            transition: transform 0.3s ease;
+        }
+        .newsletter-box:hover {
+            transform: translateY(-3px);
+        }
+        .newsletter-box h2 {
+            margin-top: 0;
+            font-size: 2.1rem;
+            color: #1f2937;
+        }
+        .newsletter-box p {
+            color: #4b5563;
+            max-width: 600px;
+            margin: 0.5rem auto 2rem auto;
+            line-height: 1.5;
+        }
+
+        /* Blog Page Specific */
+        .page-header-center {
+            text-align: center;
+            padding: 3.5rem 1rem 1.5rem 1rem;
+        }
+        .page-header-center h1 {
+            font-size: 3rem;
+            color: #d946ef;
+            margin: 0;
+        }
+        .page-header-center p {
+            color: #6b7280;
+            font-size: 1.05rem;
+            margin-top: 0.5rem;
+        }
+        .empty-blog {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        .empty-blog-emoji {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        .empty-blog p {
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        /* About Page Specific */
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem 1.5rem;
+        }
+        .about-section-title {
+            font-size: 2.2rem;
+            color: #d946ef;
+            text-align: center;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .about-text {
+            color: #4b5563;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 2.5rem 0;
+        }
+        .about-mini-card {
+            background: #fff;
+            border: 1px solid #f3e8ff;
+            padding: 1.4rem;
+            border-radius: 16px;
+            color: #4b5563;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(230, 200, 230, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .about-mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.15);
+        }
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .tag-pill {
+            background: #fdf2f8;
+            color: #db2777;
+            padding: 0.45rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .tag-pill:hover {
+            transform: scale(1.08);
+            background: #fce7f3;
+        }
+
+        /* Contact Page Specific */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem;
+            text-align: center;
+        }
+        .contact-box {
+            background: #fff;
+            border: 1px solid #f3e8ff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+        .contact-box:hover {
+            transform: translateY(-3px);
+        }
+        .warning-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #d97706;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        .contact-box h3 {
+            margin-top: 0;
+            color: #1f2937;
+            font-size: 1.6rem;
+        }
+        .contact-box p {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        .email-pill-btn {
+            display: inline-block;
+            background-color: #f472b6;
+            color: white;
+            padding: 0.85rem 2rem;
+            font-weight: 700;
+            border-radius: 30px;
+            text-decoration: none;
+            margin: 1rem 0;
+            box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4);
+            transition: transform 0.2s;
+        }
+        .email-pill-btn:hover {
+            transform: scale(1.05);
+        }
+        .contact-footer-note {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        .thats-it {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-top: 3rem;
+        }
+        .thats-it-sub {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid #f3e8ff;
+            padding: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            color: #6b7280;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: auto;
+        }
+        .footer-brand {
+            font-weight: 700;
+            color: #1f2937;
+            display: block;
+            cursor: pointer;
+        }
+        .footer-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-nav a {
+            text-decoration: none;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .footer-nav a:hover {
+            color: #db2777;
+        }
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        /* Modal for Secret Admin Panel */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .modal h2 { margin-top: 0; color: #db2777; }
+        .modal label { font-weight: 600; font-size: 0.9rem; color: #4b5563; }
+        .modal input, .modal textarea, .modal select {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.4rem 0 1.2rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: 'Quicksand', sans-serif;
+            background: #fffaf7;
+        }
+        .modal textarea { height: 120px; resize: vertical; }
+        .modal-buttons { display: flex; justify-content: flex-end; gap: 1rem; }
+        .modal-btn {
+            padding: 0.6rem 1.3rem;
+            border-radius: 20px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: transform 0.2s;
+        }
+        .modal-btn:hover { transform: scale(1.05); }
+        .modal-btn.cancel { background: #f3f4f6; color: #4b5563; }
+        .modal-btn.save { background: #db2777; color: white; }
+
+        @media(max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .site-header { padding: 1.2rem 1.5rem; }
+            .main-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Falling Background Elements Container -->
+    <div id="falling-bg"></div>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="logo" onclick="switchView('home')">
+            <span class="avatar">🧆</span>
+            <span class="logo-text">falafelwithfeelings</span>
+        </div>
+        <nav class="nav-links">
+            <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New Post ✨</button>
+            <a id="nav-blog" onclick="switchView('blog')">Blog</a>
+            <a id="nav-about" onclick="switchView('about')">About</a>
+            <a id="nav-contact" onclick="switchView('contact')">Contact</a>
+        </nav>
+    </header>
+
+    <!-- VIEW: HOME -->
+    <div id="view-home" class="view active-view">
+        <section class="hero">
+            <h1 class="main-title">falafel<span class="highlight">with</span>feelings</h1>
+            <p class="subtitle">a blog about feelings, falafel, and everything in between</p>
+            <button class="cta-btn" onclick="switchView('blog')">read the latest ✨</button>
+        </section>
+
+        <section class="blog-grid" id="home-posts-grid">
+            <!-- Dynamically populated home cards -->
+        </section>
+
+        <section class="bio-section">
+            <div class="bio-card-preview">
+                <div class="bio-avatar">🧆</div>
+                <div class="bio-text">
+                    <h2>hi, it's me 🩷</h2>
+                    <p>Hi, I'm falafelwithfeelings. I write about feelings, snacks, and the general chaos of being a person. Sometimes all three at once.</p>
+                    <button class="secondary-btn" onclick="switchView('about')">learn more about me →</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-box">
+            <h2>stick around, will you?</h2>
+            <p>New essays land whenever the feelings get too big to keep inside (I might spam you with Genshin Impact and PJSK related emails)</p>
+            <div class="newsletter-action">
+                <button class="pink-pill-btn" onclick="switchView('contact')">yes, I want the feelings 💌</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- VIEW: BLOG -->
+    <div id="view-blog" class="view">
+        <div class="page-header-center">
+            <h1>the blog</h1>
+            <p>the things i write abt im too lazy to study something. grab a snack.</p>
+        </div>
+        <div id="dynamic-blog-container">
+            <!-- Dynamically populated blog feed -->
+        </div>
+    </div>
+
+    <!-- VIEW: POST READER (Full Post view) -->
+    <div id="view-post-reader" class="view">
+        <div class="post-reader-container">
+            <button class="back-to-blog" onclick="switchView('blog')">← back to all posts</button>
+            <div id="reader-tag-row" style="margin-bottom: 0.5rem;"></div>
+            <h1 id="reader-title" class="post-reader-title"></h1>
+            <div class="post-reader-meta">
+                <span id="reader-time"></span>
+            </div>
+            <div id="reader-content" class="post-reader-content"></div>
+        </div>
+    </div>
+
+    <!-- VIEW: ABOUT -->
+    <div id="view-about" class="view">
+        <div class="page-header-center" style="margin-bottom: 0;">
+            <div style="font-size: 3rem; margin-bottom: -1rem;">🧆</div>
+            <h1 style="font-size: 3rem;">hi, im just<br>a person on the internet</h1>
+            <p style="max-width: 600px; margin: 1rem auto; font-size: 1.15rem;">an IGCSE student, chronically burnt out, and absolutely unhinged about gacha games. welcome to my corner of the internet.</p>
+        </div>
+
+        <div class="about-container">
+            <h2 class="about-section-title">the story behind the name</h2>
+            <p class="about-text">Falafel is my comfort food. It's crispy on the outside, soft on the inside, and somehow holds everything together even when it looks like it might fall apart. Honestly? Same.</p>
+            <p class="about-text">I'm an IGCSE student currently in the middle of what I can only describe as a slow-motion burnout. School is a lot. Nobody around me really gets the things I care about — the games, the lore, the 3am character analysis spirals. So I did what any reasonable person would do: I started talking to strangers on the internet instead.</p>
+            <p class="about-text">This blog is my outlet. A place to put the feelings that don't fit anywhere else — too weird for school, too much for a group chat, just right for here.</p>
+
+            <h2 class="about-section-title">a little about me</h2>
+            <div class="about-grid">
+                <div class="about-mini-card">📖 IGCSE student, perpetually one assignment away from a breakdown</div>
+                <div class="about-mini-card">🎮 Honkai Star Rail, Genshin Impact, and Project Sekai are my personality</div>
+                <div class="about-mini-card">🌙 Most productive between midnight and 3am (not by choice)</div>
+                <div class="about-mini-card">🇪🇬 Egyptian — yes, we invented civilisation, and no, I will not be taking questions at this time</div>
+                <div class="about-mini-card">🧆 Yes, I do actually love falafel. It's basically a birthright.</div>
+                <div class="about-mini-card">💬 No one at school gets it, so I'm here talking to strangers instead — hi!</div>
+            </div>
+
+            <h2 class="about-section-title">what you'll find here</h2>
+            <p class="about-text" style="text-align: center;">Personal essays about burnout, games, feelings, and the strange experience of being a person nobody around you quite understands. If you've ever felt like you were built for a different friend group — this blog is for you.</p>
+
+            <div class="tags-container">
+                <span class="tag-pill">#feelings</span>
+                <span class="tag-pill">#burnout</span>
+                <span class="tag-pill">#gacha games</span>
+                <span class="tag-pill">#honkai star rail</span>
+                <span class="tag-pill">#genshin impact</span>
+                <span class="tag-pill">#project_sekai</span>
+                <span class="tag-pill">#being perceived</span>
+            </div>
+
+            <div style="text-align: center; margin: 3rem 0;">
+                <div class="newsletter-box" style="margin: 0 auto;">
+                    <h2>want to read some feelings?</h2>
+                    <button class="cta-btn" onclick="switchView('blog')">read the blog ✨</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW: CONTACT -->
+    <div id="view-contact" class="view">
+        <div class="contact-container">
+            <h1 style="font-size: 3.2rem; color: #d946ef; margin-bottom: 0.5rem;">say something</h1>
+            <p style="color: #6b7280; font-size: 1.1rem;">I'm a person on the internet. you're a person on the internet. let's be weird together.</p>
+
+            <div class="contact-box">
+                <div class="warning-badge">⚠️ IMPORTANT ANNOUNCEMENT</div>
+                <h3>okay FINE, here's my email</h3>
+                <p>if you have blog ideas, unsolicited opinions, Varka leaks, or — and I cannot stress this enough — funny Hatsune Miku memes, please send them here. I will read every single one and react accordingly (probably with my whole chest).</p>
+                
+                <div style="text-align: center; margin: 1.5rem 0;">
+                    <a href="mailto:falafelwithfeelings@gmail.com" class="email-pill-btn">falafelwithfeelings@gmail.com</a>
+                </div>
+
+                <p class="contact-footer-note" style="text-align: center;">do NOT send me your IGCSE past papers. I am begging you.</p>
+            </div>
+
+            <div class="thats-it">that's it. that's the page.</div>
+            <div class="thats-it-sub">no fancy form, no newsletter signup, no "we'll get back to you within 3-5 business days." I have archon quests to get to. you're welcome.</div>
+        </div>
+    </div>
+
+    <!-- Secret Admin Modal (Create / Edit) -->
+    <div id="admin-modal" class="modal-overlay">
+        <div class="modal">
+            <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
+            <p style="color: #6b7280; font-size: 0.9rem;" id="modal-sub">Drop or update a post in your blog feed.</p>
+            
+            <input type="hidden" id="edit-index" value="">
+
+            <label>Post Title</label>
+            <input type="text" id="new-title" placeholder="e.g., Pulling for Aventurine Ruined My GPA">
+            
+            <label>Category Tag</label>
+            <select id="new-tag">
+                <option value="feelings">FEELINGS</option>
+                <option value="essays">ESSAYS</option>
+                <option value="life">LIFE</option>
+            </select>
+
+            <label>Read Time</label>
+            <input type="text" id="new-time" placeholder="e.g., 5 min read" value="4 min read">
+
+            <label>Snippet (Card Preview Text)</label>
+            <input type="text" id="new-snippet" placeholder="Short preview text for the card...">
+
+            <label>Full Post Content</label>
+            <textarea id="new-content" placeholder="Write your full essay or brain dump here..."></textarea>
+
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeAdminModal()">Cancel</button>
+                <button class="modal-btn save" onclick="savePostData()">Save Post 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <span class="footer-brand" onclick="switchView('home')">falafelwithfeelings</span>
+            <span class="footer-tagline">feelings served fresh, daily (or whenever I feel like it)</span>
+        </div>
+        <div class="footer-nav">
+            <a onclick="switchView('blog')">Blog</a>
+            <a onclick="switchView('about')">About</a>
+            <a onclick="switchView('contact')">Contact</a>
+        </div>
+        <div class="footer-bottom">
+            <span id="secret-trigger" style="cursor: pointer;" title="Secret Admin Trigger">© 2026 falafelwithfeelings</span>
+            <span>made with 🩷 feelings</span>
+        </div>
+    </footer>
+
+    <script>
+        // Generate Larger & Varied Falling Stars & Pastel Circles Background
+        function initFallingBackground() {
+            const bgContainer = document.getElementById('falling-bg');
+            const shapes = ['★', '✦', '✧', '●', '•'];
+            const pastelColors = ['#f472b6', '#c084fc', '#fef08a', '#6ee7b7', '#93c5fd', '#fbcfe8', '#fda4af'];
+
+            for (let i = 0; i < 35; i++) {
+                const span = document.createElement('span');
+                span.className = 'bg-shape';
+                span.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                const size = Math.random() * 22 + 16; 
+                span.style.fontSize = size + 'px';
+                span.style.color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+                span.style.left = Math.random() * 100 + 'vw';
+                
+                const duration = Math.random() * 8 + 6;
+                const delay = Math.random() * 10;
+                span.style.animationDuration = duration + 's';
+                span.style.animationDelay = delay + 's';
+                
+                bgContainer.appendChild(span);
+            }
+        }
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            
+            const targetView = document.getElementById('view-' + viewName);
+            if(targetView) {
+                targetView.classList.add('active-view');
+            }
+            const navEl = document.getElementById('nav-' + viewName);
+            if(navEl) {
+                navEl.classList.add('active');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderAllPosts();
+        }
+
+        function getPosts() {
+            const customPosts = JSON.parse(localStorage.getItem('falafel_posts') || 'null');
+            if (customPosts) {
+                return customPosts;
+            }
+            const defaultPosts = [
+                {
+                    title: "I Cried at a Grocery Store and I'm Not Sorry",
+                    tag: "feelings",
+                    tagText: "FEELINGS",
+                    time: "4 min read",
+                    snippet: "It was the cereal aisle. Don't ask. Actually, do ask — I have a lot to say about it.",
+                    content: "It was the cereal aisle. Don't ask. Actually, do ask — I have a lot to say about it.\n\nPicture this: it's Tuesday evening. I've spent six hours trying to balance chemical equations for IGCSE Chemistry that literally make zero sense, my phone has 4 unread group chat notifications I'm too drained to open, and I decided to step out for some snacks.\n\nThen I saw it. The limited edition cereal box I used to eat back when things were simple, sitting right there on the top shelf. And something inside me just short-circuited right next to the Lucky Charms. I didn't full-on sob like a main character in a sad anime, but there were definitely tears involved while choosing between granola bars.\n\nIf you're also running on 4 hours of sleep and pure anxiety: I see you. Grab your favorite snack and let's survive the week together."
+                },
+                {
+                    title: "An Ode to Overthinking",
+                    tag: "essays",
+                    tagText: "ESSAYS",
+                    time: "6 min read",
+                    snippet: "A love letter to my brain, which has never once taken a day off and honestly deserves a raise.",
+                    content: "A love letter to my brain, which has never once taken a day off and honestly deserves a raise.\n\nSome people can just close their eyes and go to sleep. Wild concept, right? My brain, however, prefers to review every single awkward interaction I've had since 2019 right at 2:45 AM.\n\nDid I say something weird during English class presentation? Yes. Does anyone else remember it? Probably not. Is my brain going to analyze every pixel of my teacher's facial expression for the next three business days? Absolutely.\n\nOverthinking is an extreme sport, and I'm currently training for the Olympics. If you relate, drop a comment or send a funny meme to my email before I calculate the velocity of my own existential dread."
+                },
+                {
+                    title: "Why I Talk to My Plants (They Listen)",
+                    tag: "life",
+                    tagText: "LIFE",
+                    time: "3 min read",
+                    snippet: "My monstera has heard more of my secrets than any therapist. She's very non-judgmental.",
+                    content: "My monstera has heard more of my secrets than any therapist. She's very non-judgmental.\n\nHer name is Susan. Susan doesn't care if I got a C on my mock physics test. Susan doesn't judge me when I spend four hours grinding domains in Genshin instead of reviewing past papers.\n\nAll Susan asks for is a little water every week and indirect sunlight. In return, she gives me aesthetic green leaves and zero unsolicited life advice.\n\nIf you don't have a plant yet, get one. They are superior roommates."
+                }
+            ];
+            localStorage.setItem('falafel_posts', JSON.stringify(defaultPosts));
+            return defaultPosts;
+        }
+
+        function renderAllPosts() {
+            const posts = getPosts();
+            
+            const homeGrid = document.getElementById('home-posts-grid');
+            if (homeGrid) {
+                let homeHtml = '';
+                const topThree = posts.slice(0, 3);
+                topThree.forEach((p, idx) => {
+                    homeHtml += createCardHtml(p, idx);
+                });
+                homeGrid.innerHTML = homeHtml;
+            }
+
+            const blogContainer = document.getElementById('dynamic-blog-container');
+            if (blogContainer) {
+                if (posts.length === 0) {
+                    blogContainer.innerHTML = `
+                        <div class="empty-blog">
+                            <div class="empty-blog-emoji">🧆</div>
+                            <p>no posts yet — check back soon!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                let blogHtml = '<div class="blog-grid">';
+                posts.forEach((p, idx) => {
+                    blogHtml += createCardHtml(p, idx);
+                });
+                blogHtml += '</div>';
+                blogContainer.innerHTML = blogHtml;
+            }
+
+            checkAdminStateUI();
+        }
+
+        function createCardHtml(p, idx) {
+            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+            return `
+                <div class="card">
+                    <div>
+                        <div class="card-tag-row">
+                            <span class="card-tag ${p.tag}">${p.tagText || p.tag.toUpperCase()}</span>
+                            <span class="read-time">${p.time}</span>
+                        </div>
+                        <h3>${p.title}</h3>
+                        <p class="card-snippet">${p.snippet}</p>
+                    </div>
+                    <div class="card-footer-row">
+                        <a onclick="openPostReader(${idx})" class="read-more">read more →</a>
+                        <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
+                            <button class="edit-post-btn" onclick="openEditModal(${idx})">Edit ✏️</button>
+                            <button class="delete-post-btn" onclick="deletePost(${idx})">Delete 🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openPostReader(index) {
+            const posts = getPosts();
+            const post = posts[index];
+            if(!post) return;
+
+            document.getElementById('reader-title').innerText = post.title;
+            document.getElementById('reader-time').innerText = post.time;
+            document.getElementById('reader-content').innerText = post.content || post.snippet;
+            
+            const tagEl = document.getElementById('reader-tag-row');
+            tagEl.innerHTML = `<span class="card-tag ${post.tag}" style="display:inline-block;">${post.tagText || post.tag.toUpperCase()}</span>`;
+
+            switchView('post-reader');
+        }
+
+        let clickCount = 0;
+        let clickTimer = null;
+        const secretTrigger = document.getElementById('secret-trigger');
+        if(secretTrigger) {
+            secretTrigger.addEventListener('click', () => {
+                clickCount++;
+                clearTimeout(clickTimer);
+                if (clickCount >= 3) {
+                    clickCount = 0;
+                    const pwd = prompt("Enter secret blogger password:");
+                    if (pwd === "falafel123") {
+                        sessionStorage.setItem('falafel_admin', 'true');
+                        alert("Secret admin mode unlocked! You can now add, edit, or delete posts.");
+                        renderAllPosts();
+                    } else if (pwd !== null) {
+                        alert("Wrong password bestie, nice try.");
+                    }
+                } else {
+                    clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+                }
+            });
+        }
+
+        function checkAdminStateUI() {
+            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+            const badge = document.getElementById('admin-indicator');
+            if(badge) {
+                badge.style.display = isAdmin ? 'block' : 'none';
+            }
+        }
+
+        function openNewPostModal() {
+            document.getElementById('modal-heading').innerText = "✨ Add New Post";
+            document.getElementById('modal-sub').innerText = "Drop a new post right into your blog feed.";
+            document.getElementById('edit-index').value = "";
+            document.getElementById('new-title').value = "";
+            document.getElementById('new-tag').value = "feelings";
+            document.getElementById('new-time').value = "4 min read";
+            document.getElementById('new-snippet').value = "";
+            document.getElementById('new-content').value = "";
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        function openEditModal(index) {
+            const posts = getPosts();
+            const post = posts[index];
+            if(!post) return;
+
+            document.getElementById('modal-heading').innerText = "✏️ Edit Post";
+            document.getElementById('modal-sub').innerText = "Update your thoughts and fix typos.";
+            document.getElementById('edit-index').value = index;
+            document.getElementById('new-title').value = post.title;
+            document.getElementById('new-tag').value = post.tag;
+            document.getElementById('new-time').value = post.time;
+            document.getElementById('new-snippet').value = post.snippet;
+            document.getElementById('new-content').value = post.content || post.snippet;
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+
+        function deletePost(index) {
+            if (confirm("Are you sure you want to delete this post? No turning back bestie!")) {
+                const posts = getPosts();
+                posts.splice(index, 1);
+                localStorage.setItem('falafel_posts', JSON.stringify(posts));
+                renderAllPosts();
+                switchView('blog');
+            }
+        }
+
+        function savePostData() {
+            const editIndex = document.getElementById('edit-index').value;
+            const title = document.getElementById('new-title').value;
+            const tag = document.getElementById('new-tag').value;
+            const time = document.getElementById('new-time').value;
+            const snippet = document.getElementById('new-snippet').value;
+            const content = document.getElementById('new-content').value;
+
+            if(!title || !snippet || !content) {
+                alert("Please fill in the title, snippet, and full content!");
+                return;
+            }
+
+            const posts = getPosts();
+
+            const postObj = {
+                title,
+                tag,
+                tagText: tag.toUpperCase(),
+                time: time || '4 min read',
+                snippet,
+                content
+            };
+
+            if (editIndex !== "") {
+                posts[editIndex] = postObj;
+                alert("Post updated successfully!");
+            } else {
+                posts.unshift(postObj);
+                alert("New post published successfully!");
+            }
+
+            localStorage.setItem('falafel_posts', JSON.stringify(posts));
+            closeAdminModal();
+            switchView('blog');
+        }
+
+        // Initialize background and render posts on page load
+        initFallingBackground();
+        renderAllPosts();
+    </script>
+</body>
+</html>
