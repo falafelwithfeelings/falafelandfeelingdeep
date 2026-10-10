@@ -9,96 +9,91 @@
         * {
             box-sizing: border-box;
         }
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             font-family: 'Quicksand', sans-serif;
             background-color: #fffaf7;
             color: #2d2a32;
-            margin: 0;
-            padding: 0;
+        }
+        body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
         }
 
-        /* Falling Background Shapes Animation */
+        /* Falling Background Animation */
         #falling-bg {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
             overflow: hidden;
         }
         .bg-shape {
             position: absolute;
-            top: -60px;
+            top: -50px;
             animation: fallDown linear infinite;
-            opacity: 0.6;
             user-select: none;
         }
         @keyframes fallDown {
             0% {
-                transform: translateY(-60px) translateX(0px) rotate(0deg);
+                transform: translateY(0px) rotate(0deg);
                 opacity: 0;
             }
-            15% {
-                opacity: 0.65;
+            20% {
+                opacity: 0.7;
             }
-            85% {
-                opacity: 0.65;
+            80% {
+                opacity: 0.7;
             }
             100% {
-                transform: translateY(105vh) translateX(50px) rotate(360deg);
+                transform: translateY(110vh) rotate(360deg);
                 opacity: 0;
             }
         }
 
-        /* Ensure content sits above the falling background */
+        /* Layering */
         header, .view, .site-footer, .modal-overlay {
             position: relative;
             z-index: 10;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
-        }
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4); }
-            50% { box-shadow: 0 6px 20px rgba(244, 114, 182, 0.7); }
-            100% { box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4); }
-        }
-
+        /* Views Router */
         .view {
             display: none;
-            flex: 1;
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            flex: 1 0 auto;
+            animation: fadeIn 0.3s ease-in-out forwards;
         }
         .view.active-view {
             display: block;
         }
 
-        /* Header */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* Header Navigation */
         .site-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 3rem;
-            background-color: rgba(255, 250, 247, 0.85);
+            padding: 1.2rem 2.5rem;
+            background-color: rgba(255, 250, 247, 0.9);
             backdrop-filter: blur(8px);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid #f3e8ff;
         }
         .logo {
             display: flex;
@@ -112,12 +107,12 @@
             background: #fce7f3;
             padding: 0.35rem 0.55rem;
             border-radius: 50%;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             animation: float 3s ease-in-out infinite;
         }
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
         .nav-links a {
@@ -125,28 +120,28 @@
             color: #2d2a32;
             font-weight: 600;
             cursor: pointer;
-            transition: color 0.2s, transform 0.2s;
+            transition: color 0.2s;
         }
         .nav-links a:hover, .nav-links a.active {
             color: #db2777;
-            transform: translateY(-1px);
         }
         .admin-badge {
             background: #fdf2f8;
             border: 1px solid #f472b6;
             color: #db2777;
-            padding: 0.2rem 0.8rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 700;
             display: none;
             cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
         }
 
         /* Hero */
         .hero {
             text-align: center;
-            padding: 4.5rem 1rem 3.5rem 1rem;
+            padding: 4rem 1rem 3rem 1rem;
         }
         .main-title {
             font-size: 3.5rem;
@@ -154,14 +149,12 @@
             margin: 0;
             letter-spacing: -1px;
         }
-        .highlight {
-            color: #d946ef;
-        }
+        .highlight { color: #d946ef; }
         .subtitle {
             color: #6b7280;
-            font-size: 1.15rem;
-            margin-top: 0.75rem;
-            margin-bottom: 2.2rem;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
         }
         .cta-btn, .pink-pill-btn {
             background-color: #f472b6;
@@ -172,12 +165,12 @@
             font-weight: 600;
             border-radius: 30px;
             cursor: pointer;
-            animation: pulseGlow 3s infinite;
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4);
+            transition: transform 0.2s;
             font-family: 'Quicksand', sans-serif;
         }
         .cta-btn:hover, .pink-pill-btn:hover {
-            transform: scale(1.08) translateY(-2px);
+            transform: scale(1.05);
         }
 
         /* Blog Cards Grid */
@@ -200,43 +193,45 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(244, 114, 182, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(244, 114, 182, 0.2);
         }
         .card-tag-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .card-tag {
             font-size: 0.75rem;
             font-weight: 700;
             padding: 0.25rem 0.65rem;
             border-radius: 6px;
-            letter-spacing: 0.5px;
         }
         .card-tag.feelings { background: #fdf2f8; color: #db2777; }
         .card-tag.essays { background: #fef3c7; color: #d97706; }
         .card-tag.life { background: #ecfdf5; color: #059669; }
-        .read-time {
-            font-size: 0.8rem;
-            color: #9ca3af;
+        
+        .card-hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin: 0.5rem 0 1rem 0;
         }
-        .card h3 {
-            font-size: 1.25rem;
-            margin-top: 0;
-            color: #1f2937;
+        .mini-hashtag {
+            font-size: 0.75rem;
+            background: #fdf2f8;
+            color: #db2777;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 600;
         }
-        .card-snippet {
-            color: #4b5563;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
+        .read-time { font-size: 0.8rem; color: #9ca3af; }
+        .card h3 { font-size: 1.25rem; margin: 0 0 0.5rem 0; color: #1f2937; }
+        .card-snippet { color: #4b5563; font-size: 0.95rem; line-height: 1.5; }
         .card-footer-row {
             display: flex;
             justify-content: space-between;
@@ -248,18 +243,9 @@
             color: #db2777;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
         }
-        .read-more:hover {
-            transform: translateX(4px);
-        }
-        .admin-actions {
-            display: flex;
-            gap: 0.4rem;
-        }
-        .edit-post-btn {
-            background: #fef3c7;
-            color: #d97706;
+        .admin-actions { display: flex; gap: 0.4rem; }
+        .edit-post-btn, .delete-post-btn {
             border: none;
             padding: 0.3rem 0.6rem;
             border-radius: 10px;
@@ -268,26 +254,17 @@
             cursor: pointer;
             font-family: 'Quicksand', sans-serif;
         }
-        .delete-post-btn {
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            padding: 0.3rem 0.6rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: 'Quicksand', sans-serif;
-        }
+        .edit-post-btn { background: #fef3c7; color: #d97706; }
+        .delete-post-btn { background: #fee2e2; color: #dc2626; }
 
-        /* Full Post Reader View */
+        /* Reader View */
         .post-reader-container {
             max-width: 750px;
             margin: 3rem auto;
             background: white;
             border: 1px solid #f3e8ff;
             border-radius: 24px;
-            padding: 3rem;
+            padding: 2.5rem;
             box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
         }
         .back-to-blog {
@@ -299,35 +276,13 @@
             font-family: 'Quicksand', sans-serif;
             margin-bottom: 1.5rem;
             font-size: 0.95rem;
-            padding: 0;
         }
-        .post-reader-title {
-            font-size: 2.3rem;
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-        }
-        .post-reader-meta {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-bottom: 2rem;
-            color: #9ca3af;
-            font-size: 0.9rem;
-        }
-        .post-reader-content {
-            color: #4b5563;
-            line-height: 1.9;
-            font-size: 1.1rem;
-            white-space: pre-wrap;
-        }
+        .post-reader-title { font-size: 2.2rem; color: #1f2937; margin: 0 0 0.5rem 0; }
+        .post-reader-meta { color: #9ca3af; font-size: 0.9rem; margin-bottom: 2rem; }
+        .post-reader-content { color: #4b5563; line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
 
-        /* Bio Section Preview */
-        .bio-section {
-            padding: 4rem 2rem;
-            display: flex;
-            justify-content: center;
-        }
+        /* Bio & Newsletter */
+        .bio-section { padding: 3rem 2rem; display: flex; justify-content: center; }
         .bio-card-preview {
             background: #fff;
             border: 1px solid #f3e8ff;
@@ -339,26 +294,13 @@
             align-items: center;
             gap: 2rem;
             box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
-            transition: transform 0.3s ease;
-        }
-        .bio-card-preview:hover {
-            transform: scale(1.01);
         }
         .bio-avatar {
-            font-size: 3.2rem;
+            font-size: 3rem;
             background: #fdf2f8;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 50%;
             border: 2px dashed #f472b6;
-            animation: float 4s ease-in-out infinite;
-        }
-        .bio-text h2 {
-            margin-top: 0;
-            color: #1f2937;
-        }
-        .bio-text p {
-            color: #4b5563;
-            line-height: 1.6;
         }
         .secondary-btn {
             background: transparent;
@@ -370,205 +312,36 @@
             cursor: pointer;
             margin-top: 1rem;
             font-family: 'Quicksand', sans-serif;
-            transition: background 0.2s, color 0.2s, transform 0.2s;
-        }
-        .secondary-btn:hover {
-            background: #f472b6;
-            color: white;
-            transform: scale(1.05);
         }
 
-        /* Newsletter Box */
         .newsletter-box {
             background-color: #fef08a;
-            margin: 3.5rem auto;
+            margin: 3rem auto;
             max-width: 900px;
             border-radius: 24px;
-            padding: 3.5rem 2rem;
+            padding: 3rem 2rem;
             text-align: center;
             box-shadow: 0 10px 30px rgba(254, 240, 138, 0.4);
-            transition: transform 0.3s ease;
-        }
-        .newsletter-box:hover {
-            transform: translateY(-3px);
-        }
-        .newsletter-box h2 {
-            margin-top: 0;
-            font-size: 2.1rem;
-            color: #1f2937;
-        }
-        .newsletter-box p {
-            color: #4b5563;
-            max-width: 600px;
-            margin: 0.5rem auto 2rem auto;
-            line-height: 1.5;
         }
 
-        /* Blog Page Specific */
-        .page-header-center {
-            text-align: center;
-            padding: 3.5rem 1rem 1.5rem 1rem;
-        }
-        .page-header-center h1 {
-            font-size: 3rem;
-            color: #d946ef;
-            margin: 0;
-        }
-        .page-header-center p {
-            color: #6b7280;
-            font-size: 1.05rem;
-            margin-top: 0.5rem;
-        }
-        .empty-blog {
-            text-align: center;
-            padding: 4rem 1rem;
-        }
-        .empty-blog-emoji {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            animation: float 3s ease-in-out infinite;
-        }
-        .empty-blog p {
-            color: #6b7280;
-            font-weight: 600;
-        }
+        /* About & Contact */
+        .about-container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem 1.5rem; }
+        .about-section-title { font-size: 2rem; color: #d946ef; text-align: center; margin-top: 3rem; }
+        .about-text { color: #4b5563; line-height: 1.8; font-size: 1.05rem; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+        .about-mini-card { background: #fff; border: 1px solid #f3e8ff; padding: 1.2rem; border-radius: 16px; color: #4b5563; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin: 2rem 0; }
+        .tag-pill { background: #fdf2f8; color: #db2777; padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
 
-        /* About Page Specific */
-        .about-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem 4rem 1.5rem;
-        }
-        .about-section-title {
-            font-size: 2.2rem;
-            color: #d946ef;
-            text-align: center;
-            margin-top: 3.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .about-text {
-            color: #4b5563;
-            line-height: 1.8;
-            font-size: 1.05rem;
-            margin-bottom: 1.5rem;
-        }
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            margin: 2.5rem 0;
-        }
-        .about-mini-card {
-            background: #fff;
-            border: 1px solid #f3e8ff;
-            padding: 1.4rem;
-            border-radius: 16px;
-            color: #4b5563;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(230, 200, 230, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .about-mini-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.15);
-        }
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            justify-content: center;
-            margin: 2rem 0;
-        }
-        .tag-pill {
-            background: #fdf2f8;
-            color: #db2777;
-            padding: 0.45rem 1.1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: transform 0.2s, background 0.2s;
-        }
-        .tag-pill:hover {
-            transform: scale(1.08);
-            background: #fce7f3;
-        }
-
-        /* Contact Page Specific */
-        .contact-container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 3.5rem 1.5rem;
-            text-align: center;
-        }
-        .contact-box {
-            background: #fff;
-            border: 1px solid #f3e8ff;
-            border-radius: 24px;
-            padding: 2.5rem;
-            margin: 2rem 0;
-            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
-            text-align: left;
-            transition: transform 0.3s ease;
-        }
-        .contact-box:hover {
-            transform: translateY(-3px);
-        }
-        .warning-badge {
-            display: inline-block;
-            background: #fef3c7;
-            color: #d97706;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.25rem 0.6rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-        }
-        .contact-box h3 {
-            margin-top: 0;
-            color: #1f2937;
-            font-size: 1.6rem;
-        }
-        .contact-box p {
-            color: #4b5563;
-            line-height: 1.6;
-        }
-        .email-pill-btn {
-            display: inline-block;
-            background-color: #f472b6;
-            color: white;
-            padding: 0.85rem 2rem;
-            font-weight: 700;
-            border-radius: 30px;
-            text-decoration: none;
-            margin: 1rem 0;
-            box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4);
-            transition: transform 0.2s;
-        }
-        .email-pill-btn:hover {
-            transform: scale(1.05);
-        }
-        .contact-footer-note {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            font-style: italic;
-            margin-top: 0.5rem;
-        }
-        .thats-it {
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-top: 3rem;
-        }
-        .thats-it-sub {
-            color: #6b7280;
-            font-size: 0.95rem;
-            margin-top: 0.5rem;
-            line-height: 1.5;
-        }
+        .contact-container { max-width: 700px; margin: 0 auto; padding: 3rem 1.5rem; text-align: center; }
+        .contact-box { background: #fff; border: 1px solid #f3e8ff; border-radius: 24px; padding: 2.5rem; margin: 2rem 0; text-align: left; }
+        .warning-badge { background: #fef3c7; color: #d97706; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; }
+        .email-pill-btn { display: inline-block; background-color: #f472b6; color: white; padding: 0.8rem 2rem; font-weight: 700; border-radius: 30px; text-decoration: none; margin: 1rem 0; }
 
         /* Footer */
         .site-footer {
             border-top: 1px solid #f3e8ff;
-            padding: 3rem;
+            padding: 2.5rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -578,33 +351,13 @@
             flex-wrap: wrap;
             gap: 1.5rem;
             margin-top: auto;
+            flex-shrink: 0;
         }
-        .footer-brand {
-            font-weight: 700;
-            color: #1f2937;
-            display: block;
-            cursor: pointer;
-        }
-        .footer-nav {
-            display: flex;
-            gap: 1.5rem;
-        }
-        .footer-nav a {
-            text-decoration: none;
-            color: #6b7280;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .footer-nav a:hover {
-            color: #db2777;
-        }
-        .footer-bottom {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-        }
+        .footer-brand { font-weight: 700; color: #1f2937; cursor: pointer; }
+        .footer-nav { display: flex; gap: 1.5rem; }
+        .footer-nav a { text-decoration: none; color: #6b7280; cursor: pointer; }
 
-        /* Modal for Secret Admin Panel */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -614,7 +367,6 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
         }
         .modal {
             background: white;
@@ -623,43 +375,36 @@
             width: 90%;
             max-width: 500px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal h2 { margin-top: 0; color: #db2777; }
         .modal label { font-weight: 600; font-size: 0.9rem; color: #4b5563; }
         .modal input, .modal textarea, .modal select {
             width: 100%;
             padding: 0.8rem;
-            margin: 0.4rem 0 1.2rem 0;
+            margin: 0.4rem 0 1rem 0;
             border: 1px solid #e5e7eb;
             border-radius: 10px;
             font-family: 'Quicksand', sans-serif;
             background: #fffaf7;
         }
-        .modal textarea { height: 120px; resize: vertical; }
+        .modal textarea { height: 100px; resize: vertical; }
         .modal-buttons { display: flex; justify-content: flex-end; gap: 1rem; }
-        .modal-btn {
-            padding: 0.6rem 1.3rem;
-            border-radius: 20px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Quicksand', sans-serif;
-            transition: transform 0.2s;
-        }
-        .modal-btn:hover { transform: scale(1.05); }
+        .modal-btn { padding: 0.6rem 1.3rem; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; font-family: 'Quicksand', sans-serif; }
         .modal-btn.cancel { background: #f3f4f6; color: #4b5563; }
         .modal-btn.save { background: #db2777; color: white; }
 
         @media(max-width: 768px) {
             .about-grid { grid-template-columns: 1fr; }
-            .site-header { padding: 1.2rem 1.5rem; }
+            .site-header { padding: 1rem 1.5rem; }
             .main-title { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Falling Background Elements Container -->
+    <!-- Falling Stars Layer -->
     <div id="falling-bg"></div>
 
     <!-- Header Navigation -->
@@ -677,7 +422,7 @@
     </header>
 
     <!-- VIEW: HOME -->
-    <div id="view-home" class="view active-view">
+    <main id="view-home" class="view active-view">
         <section class="hero">
             <h1 class="main-title">falafel<span class="highlight">with</span>feelings</h1>
             <p class="subtitle">a blog about feelings, falafel, and everything in between</p>
@@ -685,7 +430,7 @@
         </section>
 
         <section class="blog-grid" id="home-posts-grid">
-            <!-- Dynamically populated home cards -->
+            <!-- Dynamically populated top posts -->
         </section>
 
         <section class="bio-section">
@@ -702,42 +447,41 @@
         <section class="newsletter-box">
             <h2>stick around, will you?</h2>
             <p>New essays land whenever the feelings get too big to keep inside (I might spam you with Genshin Impact and PJSK related emails)</p>
-            <div class="newsletter-action">
-                <button class="pink-pill-btn" onclick="switchView('contact')">yes, I want the feelings 💌</button>
-            </div>
+            <button class="pink-pill-btn" onclick="switchView('contact')">yes, I want the feelings 💌</button>
         </section>
-    </div>
+    </main>
 
     <!-- VIEW: BLOG -->
-    <div id="view-blog" class="view">
-        <div class="page-header-center">
-            <h1>the blog</h1>
-            <p>the things i write abt im too lazy to study something. grab a snack.</p>
+    <main id="view-blog" class="view">
+        <div class="hero" style="padding-bottom: 1rem;">
+            <h1 style="font-size: 3rem; color: #d946ef; margin: 0;">the blog</h1>
+            <p class="subtitle">the things i write abt im too lazy to study something. grab a snack.</p>
         </div>
         <div id="dynamic-blog-container">
-            <!-- Dynamically populated blog feed -->
+            <!-- Dynamically populated blog list -->
         </div>
-    </div>
+    </main>
 
-    <!-- VIEW: POST READER (Full Post view) -->
-    <div id="view-post-reader" class="view">
+    <!-- VIEW: POST READER -->
+    <main id="view-post-reader" class="view">
         <div class="post-reader-container">
             <button class="back-to-blog" onclick="switchView('blog')">← back to all posts</button>
-            <div id="reader-tag-row" style="margin-bottom: 0.5rem;"></div>
+            <div id="reader-tag-row"></div>
+            <div id="reader-hashtags" class="card-hashtags"></div>
             <h1 id="reader-title" class="post-reader-title"></h1>
             <div class="post-reader-meta">
                 <span id="reader-time"></span>
             </div>
             <div id="reader-content" class="post-reader-content"></div>
         </div>
-    </div>
+    </main>
 
     <!-- VIEW: ABOUT -->
-    <div id="view-about" class="view">
-        <div class="page-header-center" style="margin-bottom: 0;">
+    <main id="view-about" class="view">
+        <div class="hero" style="padding-bottom: 0;">
             <div style="font-size: 3rem; margin-bottom: -1rem;">🧆</div>
             <h1 style="font-size: 3rem;">hi, im just<br>a person on the internet</h1>
-            <p style="max-width: 600px; margin: 1rem auto; font-size: 1.15rem;">an IGCSE student, chronically burnt out, and absolutely unhinged about gacha games. welcome to my corner of the internet.</p>
+            <p class="subtitle" style="max-width: 600px; margin: 1rem auto;">an IGCSE student, chronically burnt out, and absolutely unhinged about gacha games. welcome to my corner of the internet.</p>
         </div>
 
         <div class="about-container">
@@ -756,9 +500,6 @@
                 <div class="about-mini-card">💬 No one at school gets it, so I'm here talking to strangers instead — hi!</div>
             </div>
 
-            <h2 class="about-section-title">what you'll find here</h2>
-            <p class="about-text" style="text-align: center;">Personal essays about burnout, games, feelings, and the strange experience of being a person nobody around you quite understands. If you've ever felt like you were built for a different friend group — this blog is for you.</p>
-
             <div class="tags-container">
                 <span class="tag-pill">#feelings</span>
                 <span class="tag-pill">#burnout</span>
@@ -769,17 +510,14 @@
                 <span class="tag-pill">#being perceived</span>
             </div>
 
-            <div style="text-align: center; margin: 3rem 0;">
-                <div class="newsletter-box" style="margin: 0 auto;">
-                    <h2>want to read some feelings?</h2>
-                    <button class="cta-btn" onclick="switchView('blog')">read the blog ✨</button>
-                </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="cta-btn" onclick="switchView('blog')">read the blog ✨</button>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- VIEW: CONTACT -->
-    <div id="view-contact" class="view">
+    <main id="view-contact" class="view">
         <div class="contact-container">
             <h1 style="font-size: 3.2rem; color: #d946ef; margin-bottom: 0.5rem;">say something</h1>
             <p style="color: #6b7280; font-size: 1.1rem;">I'm a person on the internet. you're a person on the internet. let's be weird together.</p>
@@ -793,15 +531,15 @@
                     <a href="mailto:falafelwithfeelings@gmail.com" class="email-pill-btn">falafelwithfeelings@gmail.com</a>
                 </div>
 
-                <p class="contact-footer-note" style="text-align: center;">do NOT send me your IGCSE past papers. I am begging you.</p>
+                <p style="color: #9ca3af; font-size: 0.9rem; font-style: italic; text-align: center;">do NOT send me your IGCSE past papers. I am begging you.</p>
             </div>
 
-            <div class="thats-it">that's it. that's the page.</div>
-            <div class="thats-it-sub">no fancy form, no newsletter signup, no "we'll get back to you within 3-5 business days." I have archon quests to get to. you're welcome.</div>
+            <div style="font-weight: 700; font-size: 1.3rem; margin-top: 3rem;">that's it. that's the page.</div>
+            <div style="color: #6b7280; font-size: 0.95rem; margin-top: 0.5rem;">no fancy form, no newsletter signup. I have archon quests to get to. you're welcome.</div>
         </div>
-    </div>
+    </main>
 
-    <!-- Secret Admin Modal (Create / Edit) -->
+    <!-- Admin Modal -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal">
             <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
@@ -818,6 +556,9 @@
                 <option value="essays">ESSAYS</option>
                 <option value="life">LIFE</option>
             </select>
+
+            <label>Hashtags (comma separated)</label>
+            <input type="text" id="new-hashtags" placeholder="#feelings, #burnout, #genshin impact">
 
             <label>Read Time</label>
             <input type="text" id="new-time" placeholder="e.g., 5 min read" value="4 min read">
@@ -837,9 +578,9 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-content">
+        <div>
             <span class="footer-brand" onclick="switchView('home')">falafelwithfeelings</span>
-            <span class="footer-tagline">feelings served fresh, daily (or whenever I feel like it)</span>
+            <div style="font-size: 0.85rem; margin-top: 0.2rem;">feelings served fresh, daily (or whenever I feel like it)</div>
         </div>
         <div class="footer-nav">
             <a onclick="switchView('blog')">Blog</a>
@@ -853,26 +594,33 @@
     </footer>
 
     <script>
-        // Generate Larger & Varied Falling Stars & Pastel Circles Background
+        // JSONBin Cloud Credentials
+        const BIN_ID = '6aca4a7dac6210605a2587db';
+        const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
+
+        // Falling Shapes Setup
         function initFallingBackground() {
             const bgContainer = document.getElementById('falling-bg');
+            if(!bgContainer) return;
+            bgContainer.innerHTML = '';
+            
             const shapes = ['★', '✦', '✧', '●', '•'];
-            const pastelColors = ['#f472b6', '#c084fc', '#fef08a', '#6ee7b7', '#93c5fd', '#fbcfe8', '#fda4af'];
+            const pastelColors = ['#f472b6', '#c084fc', '#fef08a', '#6ee7b7', '#93c5fd', '#fbcfe8'];
 
-            for (let i = 0; i < 35; i++) {
+            for (let i = 0; i < 30; i++) {
                 const span = document.createElement('span');
                 span.className = 'bg-shape';
                 span.innerText = shapes[Math.floor(Math.random() * shapes.length)];
                 
-                const size = Math.random() * 22 + 16; 
+                const size = Math.floor(Math.random() * 22) + 16; 
                 span.style.fontSize = size + 'px';
                 span.style.color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-                span.style.left = Math.random() * 100 + 'vw';
+                span.style.left = Math.random() * 95 + 'vw';
                 
                 const duration = Math.random() * 8 + 6;
-                const delay = Math.random() * 10;
-                span.style.animationDuration = duration + 's';
-                span.style.animationDelay = delay + 's';
+                const delay = Math.random() * 8;
+                span.style.animation = `fallDown ${duration}s linear infinite`;
+                span.style.animationDelay = `${delay}s`;
                 
                 bgContainer.appendChild(span);
             }
@@ -895,49 +643,28 @@
             renderAllPosts();
         }
 
-        function getPosts() {
-            const customPosts = JSON.parse(localStorage.getItem('falafel_posts') || 'null');
-            if (customPosts) {
-                return customPosts;
+        async function getPosts() {
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: {
+                        'X-Master-Key': MASTER_KEY
+                    }
+                });
+                const data = await res.json();
+                return data.record || [];
+            } catch (err) {
+                console.error("Error loading posts from cloud:", err);
+                return [];
             }
-            const defaultPosts = [
-                {
-                    title: "I Cried at a Grocery Store and I'm Not Sorry",
-                    tag: "feelings",
-                    tagText: "FEELINGS",
-                    time: "4 min read",
-                    snippet: "It was the cereal aisle. Don't ask. Actually, do ask — I have a lot to say about it.",
-                    content: "It was the cereal aisle. Don't ask. Actually, do ask — I have a lot to say about it.\n\nPicture this: it's Tuesday evening. I've spent six hours trying to balance chemical equations for IGCSE Chemistry that literally make zero sense, my phone has 4 unread group chat notifications I'm too drained to open, and I decided to step out for some snacks.\n\nThen I saw it. The limited edition cereal box I used to eat back when things were simple, sitting right there on the top shelf. And something inside me just short-circuited right next to the Lucky Charms. I didn't full-on sob like a main character in a sad anime, but there were definitely tears involved while choosing between granola bars.\n\nIf you're also running on 4 hours of sleep and pure anxiety: I see you. Grab your favorite snack and let's survive the week together."
-                },
-                {
-                    title: "An Ode to Overthinking",
-                    tag: "essays",
-                    tagText: "ESSAYS",
-                    time: "6 min read",
-                    snippet: "A love letter to my brain, which has never once taken a day off and honestly deserves a raise.",
-                    content: "A love letter to my brain, which has never once taken a day off and honestly deserves a raise.\n\nSome people can just close their eyes and go to sleep. Wild concept, right? My brain, however, prefers to review every single awkward interaction I've had since 2019 right at 2:45 AM.\n\nDid I say something weird during English class presentation? Yes. Does anyone else remember it? Probably not. Is my brain going to analyze every pixel of my teacher's facial expression for the next three business days? Absolutely.\n\nOverthinking is an extreme sport, and I'm currently training for the Olympics. If you relate, drop a comment or send a funny meme to my email before I calculate the velocity of my own existential dread."
-                },
-                {
-                    title: "Why I Talk to My Plants (They Listen)",
-                    tag: "life",
-                    tagText: "LIFE",
-                    time: "3 min read",
-                    snippet: "My monstera has heard more of my secrets than any therapist. She's very non-judgmental.",
-                    content: "My monstera has heard more of my secrets than any therapist. She's very non-judgmental.\n\nHer name is Susan. Susan doesn't care if I got a C on my mock physics test. Susan doesn't judge me when I spend four hours grinding domains in Genshin instead of reviewing past papers.\n\nAll Susan asks for is a little water every week and indirect sunlight. In return, she gives me aesthetic green leaves and zero unsolicited life advice.\n\nIf you don't have a plant yet, get one. They are superior roommates."
-                }
-            ];
-            localStorage.setItem('falafel_posts', JSON.stringify(defaultPosts));
-            return defaultPosts;
         }
 
-        function renderAllPosts() {
-            const posts = getPosts();
+        async function renderAllPosts() {
+            const posts = await getPosts();
             
             const homeGrid = document.getElementById('home-posts-grid');
             if (homeGrid) {
                 let homeHtml = '';
-                const topThree = posts.slice(0, 3);
-                topThree.forEach((p, idx) => {
+                posts.slice(0, 3).forEach((p, idx) => {
                     homeHtml += createCardHtml(p, idx);
                 });
                 homeGrid.innerHTML = homeHtml;
@@ -947,9 +674,9 @@
             if (blogContainer) {
                 if (posts.length === 0) {
                     blogContainer.innerHTML = `
-                        <div class="empty-blog">
-                            <div class="empty-blog-emoji">🧆</div>
-                            <p>no posts yet — check back soon!</p>
+                        <div style="text-align:center; padding:4rem 1rem;">
+                            <div style="font-size:3rem; margin-bottom:0.5rem;">🧆</div>
+                            <p style="color:#6b7280; font-weight:600;">no posts yet — check back soon!</p>
                         </div>
                     `;
                     return;
@@ -967,6 +694,17 @@
 
         function createCardHtml(p, idx) {
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+            
+            let tagsHtml = '';
+            if (p.hashtags && Array.isArray(p.hashtags) && p.hashtags.length > 0) {
+                tagsHtml = '<div class="card-hashtags">';
+                p.hashtags.forEach(tag => {
+                    const cleanTag = tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim();
+                    tagsHtml += `<span class="mini-hashtag">${cleanTag}</span>`;
+                });
+                tagsHtml += '</div>';
+            }
+
             return `
                 <div class="card">
                     <div>
@@ -975,6 +713,7 @@
                             <span class="read-time">${p.time}</span>
                         </div>
                         <h3>${p.title}</h3>
+                        ${tagsHtml}
                         <p class="card-snippet">${p.snippet}</p>
                     </div>
                     <div class="card-footer-row">
@@ -988,8 +727,8 @@
             `;
         }
 
-        function openPostReader(index) {
-            const posts = getPosts();
+        async function openPostReader(index) {
+            const posts = await getPosts();
             const post = posts[index];
             if(!post) return;
 
@@ -999,6 +738,18 @@
             
             const tagEl = document.getElementById('reader-tag-row');
             tagEl.innerHTML = `<span class="card-tag ${post.tag}" style="display:inline-block;">${post.tagText || post.tag.toUpperCase()}</span>`;
+
+            const readerHashtags = document.getElementById('reader-hashtags');
+            if (post.hashtags && Array.isArray(post.hashtags) && post.hashtags.length > 0) {
+                let rTagsHtml = '';
+                post.hashtags.forEach(tag => {
+                    const cleanTag = tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim();
+                    rTagsHtml += `<span class="mini-hashtag">${cleanTag}</span>`;
+                });
+                readerHashtags.innerHTML = rTagsHtml;
+            } else {
+                readerHashtags.innerHTML = '';
+            }
 
             switchView('post-reader');
         }
@@ -1015,7 +766,7 @@
                     const pwd = prompt("Enter secret blogger password:");
                     if (pwd === "falafel123") {
                         sessionStorage.setItem('falafel_admin', 'true');
-                        alert("Secret admin mode unlocked! You can now add, edit, or delete posts.");
+                        alert("Secret admin mode unlocked!");
                         renderAllPosts();
                     } else if (pwd !== null) {
                         alert("Wrong password bestie, nice try.");
@@ -1040,14 +791,15 @@
             document.getElementById('edit-index').value = "";
             document.getElementById('new-title').value = "";
             document.getElementById('new-tag').value = "feelings";
+            document.getElementById('new-hashtags').value = "#feelings, #burnout";
             document.getElementById('new-time').value = "4 min read";
             document.getElementById('new-snippet').value = "";
             document.getElementById('new-content').value = "";
             document.getElementById('admin-modal').style.display = 'flex';
         }
 
-        function openEditModal(index) {
-            const posts = getPosts();
+        async function openEditModal(index) {
+            const posts = await getPosts();
             const post = posts[index];
             if(!post) return;
 
@@ -1056,6 +808,7 @@
             document.getElementById('edit-index').value = index;
             document.getElementById('new-title').value = post.title;
             document.getElementById('new-tag').value = post.tag;
+            document.getElementById('new-hashtags').value = post.hashtags ? post.hashtags.join(', ') : '';
             document.getElementById('new-time').value = post.time;
             document.getElementById('new-snippet').value = post.snippet;
             document.getElementById('new-content').value = post.content || post.snippet;
@@ -1066,20 +819,36 @@
             document.getElementById('admin-modal').style.display = 'none';
         }
 
-        function deletePost(index) {
+        async function deletePost(index) {
             if (confirm("Are you sure you want to delete this post? No turning back bestie!")) {
-                const posts = getPosts();
+                const posts = await getPosts();
                 posts.splice(index, 1);
-                localStorage.setItem('falafel_posts', JSON.stringify(posts));
-                renderAllPosts();
-                switchView('blog');
+
+                try {
+                    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': MASTER_KEY
+                        },
+                        body: JSON.stringify(posts)
+                    });
+                    if (!res.ok) throw new Error('Failed to update bin');
+                    alert("Post deleted successfully from cloud!");
+                    renderAllPosts();
+                    switchView('blog');
+                } catch (err) {
+                    alert("Failed to delete post from cloud.");
+                    console.error(err);
+                }
             }
         }
 
-        function savePostData() {
+        async function savePostData() {
             const editIndex = document.getElementById('edit-index').value;
             const title = document.getElementById('new-title').value;
             const tag = document.getElementById('new-tag').value;
+            const rawHashtags = document.getElementById('new-hashtags').value;
             const time = document.getElementById('new-time').value;
             const snippet = document.getElementById('new-snippet').value;
             const content = document.getElementById('new-content').value;
@@ -1089,12 +858,14 @@
                 return;
             }
 
-            const posts = getPosts();
+            const hashtags = rawHashtags ? rawHashtags.split(',').map(h => h.trim()).filter(h => h.length > 0) : [];
+            const posts = await getPosts();
 
             const postObj = {
                 title,
                 tag,
                 tagText: tag.toUpperCase(),
+                hashtags,
                 time: time || '4 min read',
                 snippet,
                 content
@@ -1102,20 +873,35 @@
 
             if (editIndex !== "") {
                 posts[editIndex] = postObj;
-                alert("Post updated successfully!");
             } else {
                 posts.unshift(postObj);
-                alert("New post published successfully!");
             }
 
-            localStorage.setItem('falafel_posts', JSON.stringify(posts));
-            closeAdminModal();
-            switchView('blog');
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': MASTER_KEY
+                    },
+                    body: JSON.stringify(posts)
+                });
+                if (!res.ok) throw new Error('Failed to update bin');
+                alert("Post saved directly to the live cloud blog! 🚀");
+                closeAdminModal();
+                renderAllPosts();
+                switchView('blog');
+            } catch (err) {
+                alert("Failed to save post to cloud. Check your connection!");
+                console.error(err);
+            }
         }
 
-        // Initialize background and render posts on page load
-        initFallingBackground();
-        renderAllPosts();
+        // Initialize Everything on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            initFallingBackground();
+            renderAllPosts();
+        });
     </script>
 </body>
 </html>
