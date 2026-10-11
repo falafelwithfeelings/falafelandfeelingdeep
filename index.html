@@ -41,29 +41,17 @@
             user-select: none;
         }
         @keyframes fallDown {
-            0% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.7;
-            }
-            80% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.7; }
+            80% { opacity: 0.7; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Layering */
         header, .view, .site-footer, .modal-overlay {
             position: relative;
             z-index: 10;
         }
 
-        /* Views Router */
         .view {
             display: none;
             flex: 1 0 auto;
@@ -76,10 +64,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
         }
 
         /* Header Navigation */
@@ -102,13 +86,6 @@
             font-weight: 700;
             font-size: 1.15rem;
             cursor: pointer;
-        }
-        .avatar {
-            background: #fce7f3;
-            padding: 0.35rem 0.55rem;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            animation: float 3s ease-in-out infinite;
         }
         .nav-links {
             display: flex;
@@ -141,7 +118,7 @@
         /* Hero */
         .hero {
             text-align: center;
-            padding: 4rem 1rem 3rem 1rem;
+            padding: 3.5rem 1rem 2rem 1rem;
         }
         .main-title {
             font-size: 3.5rem;
@@ -154,7 +131,7 @@
             color: #6b7280;
             font-size: 1.1rem;
             margin-top: 0.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         .cta-btn, .pink-pill-btn {
             background-color: #f472b6;
@@ -173,7 +150,7 @@
             transform: scale(1.05);
         }
 
-        /* Blog Cards Grid */
+        /* Blog Grid */
         .blog-grid {
             display: flex;
             justify-content: center;
@@ -194,10 +171,18 @@
             flex-direction: column;
             justify-content: space-between;
             transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
         }
         .card:hover {
             transform: translateY(-4px);
             box-shadow: 0 15px 30px rgba(244, 114, 182, 0.2);
+        }
+        .card-cover-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
         }
         .card-tag-row {
             display: flex;
@@ -257,6 +242,24 @@
         .edit-post-btn { background: #fef3c7; color: #d97706; }
         .delete-post-btn { background: #fee2e2; color: #dc2626; }
 
+        /* --- "THROW INTO EXISTENCE" PHOTO ANIMATION --- */
+        .throw-photo {
+            opacity: 0;
+            transform: translateY(120px) scale(0.6) rotate(-12deg);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 8px solid white;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.12);
+            border-radius: 16px;
+            max-width: 100%;
+            height: auto;
+            margin: 2rem auto;
+            display: block;
+        }
+        .throw-photo.thrown-in {
+            opacity: 1;
+            transform: translateY(0) scale(1) rotate(0deg);
+        }
+
         /* Reader View */
         .post-reader-container {
             max-width: 750px;
@@ -295,13 +298,6 @@
             gap: 2rem;
             box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
         }
-        .bio-avatar {
-            font-size: 3rem;
-            background: #fdf2f8;
-            padding: 1.2rem;
-            border-radius: 50%;
-            border: 2px dashed #f472b6;
-        }
         .secondary-btn {
             background: transparent;
             border: 2px solid #f472b6;
@@ -313,7 +309,6 @@
             margin-top: 1rem;
             font-family: 'Quicksand', sans-serif;
         }
-
         .newsletter-box {
             background-color: #fef08a;
             margin: 3rem auto;
@@ -394,27 +389,20 @@
         .modal-btn { padding: 0.6rem 1.3rem; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; font-family: 'Quicksand', sans-serif; }
         .modal-btn.cancel { background: #f3f4f6; color: #4b5563; }
         .modal-btn.save { background: #db2777; color: white; }
-
-        @media(max-width: 768px) {
-            .about-grid { grid-template-columns: 1fr; }
-            .site-header { padding: 1rem 1.5rem; }
-            .main-title { font-size: 2.5rem; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- Falling Stars Layer -->
+    <!-- Falling Background Elements -->
     <div id="falling-bg"></div>
 
-    <!-- Header Navigation -->
+    <!-- Sticky Header Navigation -->
     <header class="site-header">
         <div class="logo" onclick="switchView('home')">
-            <span class="avatar">🧆</span>
             <span class="logo-text">falafelwithfeelings</span>
         </div>
         <nav class="nav-links">
-            <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New Post ✨</button>
+            <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">New Post</button>
             <a id="nav-blog" onclick="switchView('blog')">Blog</a>
             <a id="nav-about" onclick="switchView('about')">About</a>
             <a id="nav-contact" onclick="switchView('contact')">Contact</a>
@@ -426,28 +414,27 @@
         <section class="hero">
             <h1 class="main-title">falafel<span class="highlight">with</span>feelings</h1>
             <p class="subtitle">a blog about feelings, falafel, and everything in between</p>
-            <button class="cta-btn" onclick="switchView('blog')">read the latest ✨</button>
+            <button class="cta-btn" onclick="switchView('blog')">read the latest</button>
         </section>
 
         <section class="blog-grid" id="home-posts-grid">
-            <!-- Dynamically populated top posts -->
+            <!-- Top posts populate here -->
         </section>
 
         <section class="bio-section">
             <div class="bio-card-preview">
-                <div class="bio-avatar">🧆</div>
-                <div class="bio-text">
-                    <h2>hi, it's me 🩷</h2>
+                <div class="bio-text" style="width: 100%;">
+                    <h2>hi, it's me</h2>
                     <p>Hi, I'm falafelwithfeelings. I write about feelings, snacks, and the general chaos of being a person. Sometimes all three at once.</p>
-                    <button class="secondary-btn" onclick="switchView('about')">learn more about me →</button>
+                    <button class="secondary-btn" onclick="switchView('about')">learn more about me</button>
                 </div>
             </div>
         </section>
 
         <section class="newsletter-box">
             <h2>stick around, will you?</h2>
-            <p>New essays land whenever the feelings get too big to keep inside (I might spam you with Genshin Impact and PJSK related emails)</p>
-            <button class="pink-pill-btn" onclick="switchView('contact')">yes, I want the feelings 💌</button>
+            <p>New essays land whenever the feelings get too big to keep inside</p>
+            <button class="pink-pill-btn" onclick="switchView('contact')">get in touch</button>
         </section>
     </main>
 
@@ -457,8 +444,8 @@
             <h1 style="font-size: 3rem; color: #d946ef; margin: 0;">the blog</h1>
             <p class="subtitle">the things i write abt im too lazy to study something. grab a snack.</p>
         </div>
-        <div id="dynamic-blog-container">
-            <!-- Dynamically populated blog list -->
+        <div id="dynamic-blog-container" class="blog-grid">
+            <!-- Full blog feed populates here -->
         </div>
     </main>
 
@@ -472,6 +459,10 @@
             <div class="post-reader-meta">
                 <span id="reader-time"></span>
             </div>
+            
+            <!-- Dynamic Photo Box -->
+            <div id="reader-photo-wrapper"></div>
+
             <div id="reader-content" class="post-reader-content"></div>
         </div>
     </main>
@@ -479,7 +470,6 @@
     <!-- VIEW: ABOUT -->
     <main id="view-about" class="view">
         <div class="hero" style="padding-bottom: 0;">
-            <div style="font-size: 3rem; margin-bottom: -1rem;">🧆</div>
             <h1 style="font-size: 3rem;">hi, im just<br>a person on the internet</h1>
             <p class="subtitle" style="max-width: 600px; margin: 1rem auto;">an IGCSE student, chronically burnt out, and absolutely unhinged about gacha games. welcome to my corner of the internet.</p>
         </div>
@@ -492,12 +482,12 @@
 
             <h2 class="about-section-title">a little about me</h2>
             <div class="about-grid">
-                <div class="about-mini-card">📖 IGCSE student, perpetually one assignment away from a breakdown</div>
-                <div class="about-mini-card">🎮 Honkai Star Rail, Genshin Impact, and Project Sekai are my personality</div>
-                <div class="about-mini-card">🌙 Most productive between midnight and 3am (not by choice)</div>
-                <div class="about-mini-card">🇪🇬 Egyptian — yes, we invented civilisation, and no, I will not be taking questions at this time</div>
-                <div class="about-mini-card">🧆 Yes, I do actually love falafel. It's basically a birthright.</div>
-                <div class="about-mini-card">💬 No one at school gets it, so I'm here talking to strangers instead — hi!</div>
+                <div class="about-mini-card">IGCSE student, perpetually one assignment away from a breakdown</div>
+                <div class="about-mini-card">Honkai Star Rail, Genshin Impact, and Project Sekai are my personality</div>
+                <div class="about-mini-card">Most productive between midnight and 3am (not by choice)</div>
+                <div class="about-mini-card">Egyptian — yes, we invented civilisation, and no, I will not be taking questions at this time</div>
+                <div class="about-mini-card">Yes, I do actually love falafel. It's basically a birthright.</div>
+                <div class="about-mini-card">No one at school gets it, so I'm here talking to strangers instead</div>
             </div>
 
             <div class="tags-container">
@@ -511,7 +501,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <button class="cta-btn" onclick="switchView('blog')">read the blog ✨</button>
+                <button class="cta-btn" onclick="switchView('blog')">read the blog</button>
             </div>
         </div>
     </main>
@@ -523,9 +513,9 @@
             <p style="color: #6b7280; font-size: 1.1rem;">I'm a person on the internet. you're a person on the internet. let's be weird together.</p>
 
             <div class="contact-box">
-                <div class="warning-badge">⚠️ IMPORTANT ANNOUNCEMENT</div>
+                <div class="warning-badge">IMPORTANT ANNOUNCEMENT</div>
                 <h3>okay FINE, here's my email</h3>
-                <p>if you have blog ideas, unsolicited opinions, Varka leaks, or — and I cannot stress this enough — funny Hatsune Miku memes, please send them here. I will read every single one and react accordingly (probably with my whole chest).</p>
+                <p>if you have blog ideas, unsolicited opinions, Varka leaks, or funny memes, please send them here. I will read every single one and react accordingly.</p>
                 
                 <div style="text-align: center; margin: 1.5rem 0;">
                     <a href="mailto:falafelwithfeelings@gmail.com" class="email-pill-btn">falafelwithfeelings@gmail.com</a>
@@ -542,7 +532,7 @@
     <!-- Admin Modal -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal">
-            <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
+            <h2 id="modal-heading">Secret Blogger Mode</h2>
             <p style="color: #6b7280; font-size: 0.9rem;" id="modal-sub">Drop or update a post in your blog feed.</p>
             
             <input type="hidden" id="edit-index" value="">
@@ -556,6 +546,9 @@
                 <option value="essays">ESSAYS</option>
                 <option value="life">LIFE</option>
             </select>
+
+            <label>Photo URL (Optional)</label>
+            <input type="text" id="new-imageUrl" placeholder="https://images.unsplash.com/photo-...">
 
             <label>Hashtags (comma separated)</label>
             <input type="text" id="new-hashtags" placeholder="#feelings, #burnout, #genshin impact">
@@ -571,7 +564,7 @@
 
             <div class="modal-buttons">
                 <button class="modal-btn cancel" onclick="closeAdminModal()">Cancel</button>
-                <button class="modal-btn save" onclick="savePostData()">Save Post 🚀</button>
+                <button class="modal-btn save" onclick="savePostData()">Save Post</button>
             </div>
         </div>
     </div>
@@ -580,7 +573,7 @@
     <footer class="site-footer">
         <div>
             <span class="footer-brand" onclick="switchView('home')">falafelwithfeelings</span>
-            <div style="font-size: 0.85rem; margin-top: 0.2rem;">feelings served fresh, daily (or whenever I feel like it)</div>
+            <div style="font-size: 0.85rem; margin-top: 0.2rem;">feelings served fresh, daily</div>
         </div>
         <div class="footer-nav">
             <a onclick="switchView('blog')">Blog</a>
@@ -589,7 +582,7 @@
         </div>
         <div class="footer-bottom">
             <span id="secret-trigger" style="cursor: pointer;" title="Secret Admin Trigger">© 2026 falafelwithfeelings</span>
-            <span>made with 🩷 feelings</span>
+            <span>made with feelings</span>
         </div>
     </footer>
 
@@ -597,6 +590,21 @@
         // JSONBin Cloud Credentials
         const BIN_ID = '6aca4a7dac6210605a2587db';
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
+
+        // Scroll "Throw into Existence" Observer Setup
+        const throwObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('thrown-in');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        function observePhotos() {
+            document.querySelectorAll('.throw-photo').forEach(img => {
+                throwObserver.observe(img);
+            });
+        }
 
         // Falling Shapes Setup
         function initFallingBackground() {
@@ -631,13 +639,9 @@
             document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
             
             const targetView = document.getElementById('view-' + viewName);
-            if(targetView) {
-                targetView.classList.add('active-view');
-            }
+            if(targetView) targetView.classList.add('active-view');
             const navEl = document.getElementById('nav-' + viewName);
-            if(navEl) {
-                navEl.classList.add('active');
-            }
+            if(navEl) navEl.classList.add('active');
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
             renderAllPosts();
@@ -646,9 +650,7 @@
         async function getPosts() {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                    headers: {
-                        'X-Master-Key': MASTER_KEY
-                    }
+                    headers: { 'X-Master-Key': MASTER_KEY }
                 });
                 const data = await res.json();
                 return data.record || [];
@@ -675,17 +677,15 @@
                 if (posts.length === 0) {
                     blogContainer.innerHTML = `
                         <div style="text-align:center; padding:4rem 1rem;">
-                            <div style="font-size:3rem; margin-bottom:0.5rem;">🧆</div>
-                            <p style="color:#6b7280; font-weight:600;">no posts yet — check back soon!</p>
+                            <p style="color:#6b7280; font-weight:600;">no posts yet — check back soon</p>
                         </div>
                     `;
                     return;
                 }
-                let blogHtml = '<div class="blog-grid">';
+                let blogHtml = '';
                 posts.forEach((p, idx) => {
                     blogHtml += createCardHtml(p, idx);
                 });
-                blogHtml += '</div>';
                 blogContainer.innerHTML = blogHtml;
             }
 
@@ -705,9 +705,12 @@
                 tagsHtml += '</div>';
             }
 
+            const coverImageHtml = p.imageUrl ? `<img src="${p.imageUrl}" class="card-cover-img" alt="Cover">` : '';
+
             return `
                 <div class="card">
                     <div>
+                        ${coverImageHtml}
                         <div class="card-tag-row">
                             <span class="card-tag ${p.tag}">${p.tagText || p.tag.toUpperCase()}</span>
                             <span class="read-time">${p.time}</span>
@@ -719,8 +722,8 @@
                     <div class="card-footer-row">
                         <a onclick="openPostReader(${idx})" class="read-more">read more →</a>
                         <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
-                            <button class="edit-post-btn" onclick="openEditModal(${idx})">Edit ✏️</button>
-                            <button class="delete-post-btn" onclick="deletePost(${idx})">Delete 🗑️</button>
+                            <button class="edit-post-btn" onclick="openEditModal(${idx})">Edit</button>
+                            <button class="delete-post-btn" onclick="deletePost(${idx})">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -736,6 +739,13 @@
             document.getElementById('reader-time').innerText = post.time;
             document.getElementById('reader-content').innerText = post.content || post.snippet;
             
+            const photoWrapper = document.getElementById('reader-photo-wrapper');
+            if(post.imageUrl) {
+                photoWrapper.innerHTML = `<img src="${post.imageUrl}" class="throw-photo" alt="Blog Photo">`;
+            } else {
+                photoWrapper.innerHTML = '';
+            }
+
             const tagEl = document.getElementById('reader-tag-row');
             tagEl.innerHTML = `<span class="card-tag ${post.tag}" style="display:inline-block;">${post.tagText || post.tag.toUpperCase()}</span>`;
 
@@ -752,6 +762,7 @@
             }
 
             switchView('post-reader');
+            setTimeout(observePhotos, 100);
         }
 
         let clickCount = 0;
@@ -766,10 +777,10 @@
                     const pwd = prompt("Enter secret blogger password:");
                     if (pwd === "falafel123") {
                         sessionStorage.setItem('falafel_admin', 'true');
-                        alert("Secret admin mode unlocked!");
+                        alert("Secret admin mode unlocked");
                         renderAllPosts();
                     } else if (pwd !== null) {
-                        alert("Wrong password bestie, nice try.");
+                        alert("Wrong password bestie, nice try");
                     }
                 } else {
                     clickTimer = setTimeout(() => { clickCount = 0; }, 600);
@@ -780,17 +791,16 @@
         function checkAdminStateUI() {
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             const badge = document.getElementById('admin-indicator');
-            if(badge) {
-                badge.style.display = isAdmin ? 'block' : 'none';
-            }
+            if(badge) badge.style.display = isAdmin ? 'block' : 'none';
         }
 
         function openNewPostModal() {
-            document.getElementById('modal-heading').innerText = "✨ Add New Post";
+            document.getElementById('modal-heading').innerText = "Add New Post";
             document.getElementById('modal-sub').innerText = "Drop a new post right into your blog feed.";
             document.getElementById('edit-index').value = "";
             document.getElementById('new-title').value = "";
             document.getElementById('new-tag').value = "feelings";
+            document.getElementById('new-imageUrl').value = "";
             document.getElementById('new-hashtags').value = "#feelings, #burnout";
             document.getElementById('new-time').value = "4 min read";
             document.getElementById('new-snippet').value = "";
@@ -803,11 +813,12 @@
             const post = posts[index];
             if(!post) return;
 
-            document.getElementById('modal-heading').innerText = "✏️ Edit Post";
+            document.getElementById('modal-heading').innerText = "Edit Post";
             document.getElementById('modal-sub').innerText = "Update your thoughts and fix typos.";
             document.getElementById('edit-index').value = index;
             document.getElementById('new-title').value = post.title;
             document.getElementById('new-tag').value = post.tag;
+            document.getElementById('new-imageUrl').value = post.imageUrl || '';
             document.getElementById('new-hashtags').value = post.hashtags ? post.hashtags.join(', ') : '';
             document.getElementById('new-time').value = post.time;
             document.getElementById('new-snippet').value = post.snippet;
@@ -820,7 +831,7 @@
         }
 
         async function deletePost(index) {
-            if (confirm("Are you sure you want to delete this post? No turning back bestie!")) {
+            if (confirm("Are you sure you want to delete this post?")) {
                 const posts = await getPosts();
                 posts.splice(index, 1);
 
@@ -834,11 +845,11 @@
                         body: JSON.stringify(posts)
                     });
                     if (!res.ok) throw new Error('Failed to update bin');
-                    alert("Post deleted successfully from cloud!");
+                    alert("Post deleted successfully from cloud");
                     renderAllPosts();
                     switchView('blog');
                 } catch (err) {
-                    alert("Failed to delete post from cloud.");
+                    alert("Failed to delete post from cloud");
                     console.error(err);
                 }
             }
@@ -848,13 +859,14 @@
             const editIndex = document.getElementById('edit-index').value;
             const title = document.getElementById('new-title').value;
             const tag = document.getElementById('new-tag').value;
+            const imageUrl = document.getElementById('new-imageUrl').value;
             const rawHashtags = document.getElementById('new-hashtags').value;
             const time = document.getElementById('new-time').value;
             const snippet = document.getElementById('new-snippet').value;
             const content = document.getElementById('new-content').value;
 
             if(!title || !snippet || !content) {
-                alert("Please fill in the title, snippet, and full content!");
+                alert("Please fill in the title, snippet, and full content");
                 return;
             }
 
@@ -865,6 +877,7 @@
                 title,
                 tag,
                 tagText: tag.toUpperCase(),
+                imageUrl,
                 hashtags,
                 time: time || '4 min read',
                 snippet,
@@ -887,17 +900,16 @@
                     body: JSON.stringify(posts)
                 });
                 if (!res.ok) throw new Error('Failed to update bin');
-                alert("Post saved directly to the live cloud blog! 🚀");
+                alert("Post saved directly to the live cloud blog");
                 closeAdminModal();
                 renderAllPosts();
                 switchView('blog');
             } catch (err) {
-                alert("Failed to save post to cloud. Check your connection!");
+                alert("Failed to save post to cloud. Check your connection");
                 console.error(err);
             }
         }
 
-        // Initialize Everything on Load
         window.addEventListener('DOMContentLoaded', () => {
             initFallingBackground();
             renderAllPosts();
