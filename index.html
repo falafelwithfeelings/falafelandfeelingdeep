@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>falafelwithfeelings</title>
     <!-- Favicon: Standing Emu PNG -->
-   <link rel="icon" type="image/png" href="EMU/favicon.png">
+    <link rel="icon" type="image/png" href="EMU/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -59,7 +59,7 @@
             }
         }
 
-        /* Bouncing Emu Characters (NO EMU.png / Emu 67) */
+        /* Bouncing Emu Characters (Only on Announcements Page) */
         .bouncing-emu {
             position: fixed;
             object-fit: contain;
@@ -288,7 +288,7 @@
         .edit-post-btn { background: #fef3c7; color: #d97706; }
         .delete-post-btn { background: #fee2e2; color: #dc2626; }
 
-        /* --- "Throw into Existence" Scroll Gallery --- */
+        /* Photo Gallery Container */
         .photo-gallery-container {
             display: flex;
             flex-wrap: wrap;
@@ -341,7 +341,7 @@
         .post-reader-meta { color: #9ca3af; font-size: 0.9rem; margin-bottom: 2rem; }
         .post-reader-content { color: #4b5563; line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
 
-        /* --- ANNOUNCEMENTS PAGE (EMU OTORI WALL WITH BIGGER BOWS) --- */
+        /* ANNOUNCEMENTS PAGE (EMU OTORI WALL WITH BIGGER BOWS) */
         .announcements-container {
             max-width: 850px;
             margin: 0 auto;
@@ -359,7 +359,6 @@
             position: relative;
             text-align: center;
         }
-        /* Bigger & Fluffier Pink Bows in the Top Corners */
         .announcements-hero::before,
         .announcements-hero::after {
             content: '🎀';
@@ -367,12 +366,8 @@
             font-size: 1.8rem;
             top: -18px;
         }
-        .announcements-hero::before {
-            left: 20px;
-        }
-        .announcements-hero::after {
-            right: 20px;
-        }
+        .announcements-hero::before { left: 20px; }
+        .announcements-hero::after { right: 20px; }
 
         .announcement-card {
             background: white;
@@ -384,9 +379,7 @@
             position: relative;
             transition: transform 0.2s;
         }
-        .announcement-card:hover {
-            transform: translateY(-3px);
-        }
+        .announcement-card:hover { transform: translateY(-3px); }
         .announcement-card.pinned {
             border: 3px solid #f59e0b;
             background: #fffbeb;
@@ -580,7 +573,7 @@
     <!-- Falling Stars Layer -->
     <div id="falling-bg"></div>
 
-    <!-- Bouncing Emu Characters Layer (Active across ALL pages) -->
+    <!-- Bouncing Emu Characters Layer (Only active on Announcements page) -->
     <div id="emu-layer"></div>
 
     <!-- Header Navigation -->
@@ -682,7 +675,7 @@
             <h2 class="about-section-title">a little about me</h2>
             <div class="about-grid">
                 <div class="about-mini-card">📖 IGCSE student, perpetually one assignment away from a breakdown</div>
-                <div class="about-mini-card">🎮 Honkai Star Rail, Genshin Impact, and Project Sekai: Colorful Stage are my personality</div>
+                <div class="about-mini-card">🎮 Honkai Star Rail, Genshin Impact, and Project Sekai are my personality</div>
                 <div class="about-mini-card">🌙 Most productive between midnight and 3am (not by choice)</div>
                 <div class="about-mini-card">🇪🇬 Egyptian — yes, we invented civilisation, and no, I will not be taking questions at this time</div>
                 <div class="about-mini-card">🧆 Yes, I do actually love falafel. It's basically a birthright.</div>
@@ -825,7 +818,7 @@
 
         let currentPostPhotos = [];
 
-        // Generate 15 Multi-Speed, Multi-Shape Bouncing Emus across ALL pages
+        // Generate 15 Multi-Speed, Multi-Shape Bouncing Emus (Only called on Announcements view)
         function initBouncingEmus() {
             const emuContainer = document.getElementById('emu-layer');
             if (!emuContainer) return;
@@ -839,18 +832,15 @@
                     img.style.display = 'none';
                 };
 
-                // Different shapes and sizes (50px to 95px)
                 const size = Math.floor(Math.random() * 45) + 50;
                 img.style.width = size + 'px';
                 img.style.height = size + 'px';
 
-                // Random border radius shapes for variety
                 const shapes = ['50%', '20px', '35% 65% 50% 50% / 50% 50% 50% 50%', '30px 10px 30px 10px'];
                 img.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
 
-                // Different speeds (random bounce & float durations)
-                const bounceSpeed = (Math.random() * 3 + 2).toFixed(2); // 2s to 5s
-                const floatSpeed = (Math.random() * 6 + 4).toFixed(2);  // 4s to 10s
+                const bounceSpeed = (Math.random() * 3 + 2).toFixed(2);
+                const floatSpeed = (Math.random() * 6 + 4).toFixed(2);
                 img.style.animation = `emuBounce ${bounceSpeed}s ease-in-out infinite alternate, emuFloatSide ${floatSpeed}s ease-in-out infinite alternate`;
 
                 img.style.left = (Math.random() * 88 + 2) + 'vw';
@@ -949,6 +939,16 @@
             const navEl = document.getElementById('nav-' + viewName);
             if(navEl) {
                 navEl.classList.add('active');
+            }
+
+            // Contain Emus ONLY to Announcements View
+            const emuContainer = document.getElementById('emu-layer');
+            if (emuContainer) {
+                if (viewName === 'announcements') {
+                    initBouncingEmus();
+                } else {
+                    emuContainer.innerHTML = ''; // Clear Emus everywhere else
+                }
             }
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1431,7 +1431,8 @@
         // Initialize Everything on Load
         window.addEventListener('DOMContentLoaded', () => {
             initFallingBackground();
-            initBouncingEmus(); // Emus active everywhere!
+            // Emus won't load on initial home load unless user clicks Announcements, 
+            // but you can call initBouncingEmus() here if you want them on home too.
             renderAllPosts();
         });
     </script>
