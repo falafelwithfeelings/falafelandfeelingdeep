@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>falafelwithfeelings</title>
+    <!-- Favicon: Standing Emu PNG -->
+    <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -55,6 +57,26 @@
                 transform: translateY(110vh) rotate(360deg);
                 opacity: 0;
             }
+        }
+
+        /* Bouncing Emu Characters (NO EMU.png / Emu 67) */
+        .bouncing-emu {
+            position: fixed;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            pointer-events: none;
+            z-index: 2;
+            user-select: none;
+        }
+        @keyframes emuBounce {
+            0% { transform: translateY(0px) rotate(-12deg) scale(0.92); }
+            100% { transform: translateY(-45px) rotate(12deg) scale(1.08); }
+        }
+        @keyframes emuFloatSide {
+            0% { margin-left: 0px; }
+            100% { margin-left: 60px; }
         }
 
         /* Layering */
@@ -112,7 +134,7 @@
         }
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.2rem;
             align-items: center;
         }
         .nav-links a {
@@ -266,7 +288,7 @@
         .edit-post-btn { background: #fef3c7; color: #d97706; }
         .delete-post-btn { background: #fee2e2; color: #dc2626; }
 
-        /* --- "Throw into Existence" Full Aspect Ratio Gallery --- */
+        /* --- "Throw into Existence" Scroll Gallery --- */
         .photo-gallery-container {
             display: flex;
             flex-wrap: wrap;
@@ -318,6 +340,88 @@
         .post-reader-title { font-size: 2.2rem; color: #1f2937; margin: 0 0 0.5rem 0; }
         .post-reader-meta { color: #9ca3af; font-size: 0.9rem; margin-bottom: 2rem; }
         .post-reader-content { color: #4b5563; line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
+
+        /* --- ANNOUNCEMENTS PAGE (EMU OTORI WALL WITH BOWS) --- */
+        .announcements-container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem 1.5rem;
+        }
+        .announcements-hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px dashed #f472b6;
+            border-radius: 24px;
+            max-width: 750px;
+            margin: 2.5rem auto 1rem auto;
+            padding: 2.5rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.18);
+            position: relative;
+            text-align: center;
+        }
+        /* Tiny Pink Bows in the Top Corners */
+        .announcements-hero::before,
+        .announcements-hero::after {
+            content: '🎀';
+            position: absolute;
+            font-size: 1.4rem;
+            top: -14px;
+        }
+        .announcements-hero::before {
+            left: 22px;
+        }
+        .announcements-hero::after {
+            right: 22px;
+        }
+
+        .announcement-card {
+            background: white;
+            border: 2px dashed #f472b6;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(244, 114, 182, 0.12);
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .announcement-card:hover {
+            transform: translateY(-3px);
+        }
+        .announcement-card.pinned {
+            border: 3px solid #f59e0b;
+            background: #fffbeb;
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.2);
+        }
+        .pin-badge {
+            position: absolute;
+            top: -15px;
+            right: 25px;
+            background: #f59e0b;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+        }
+        .announcement-date {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .announcement-title {
+            font-size: 1.6rem;
+            color: #db2777;
+            margin: 0 0 1rem 0;
+            font-weight: 700;
+        }
+        .announcement-body {
+            font-size: 1.05rem;
+            color: #374151;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
 
         /* Bio & Newsletter */
         .bio-section { padding: 3rem 2rem; display: flex; justify-content: center; }
@@ -476,6 +580,9 @@
     <!-- Falling Stars Layer -->
     <div id="falling-bg"></div>
 
+    <!-- Bouncing Emu Characters Layer -->
+    <div id="emu-layer"></div>
+
     <!-- Header Navigation -->
     <header class="site-header">
         <div class="logo" onclick="switchView('home')">
@@ -483,8 +590,9 @@
             <span class="logo-text">falafelwithfeelings</span>
         </div>
         <nav class="nav-links">
-            <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New Post ✨</button>
+            <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New Entry ✨</button>
             <a id="nav-blog" onclick="switchView('blog')">Blog</a>
+            <a id="nav-announcements" onclick="switchView('announcements')">Announcements</a>
             <a id="nav-about" onclick="switchView('about')">About</a>
             <a id="nav-contact" onclick="switchView('contact')">Contact</a>
         </nav>
@@ -524,10 +632,21 @@
     <main id="view-blog" class="view">
         <div class="hero" style="padding-bottom: 1rem;">
             <h1 style="font-size: 3rem; color: #d946ef; margin: 0;">the blog</h1>
-            <p class="subtitle">the things i write abt im too lazy to study something. grab a snack.</p>
+            <p class="subtitle">the things i write abt when im too lazy to study something. grab a snack.</p>
         </div>
         <div id="dynamic-blog-container">
             <!-- Dynamically populated blog list -->
+        </div>
+    </main>
+
+    <!-- VIEW: ANNOUNCEMENTS (EMU OTORI WALL) -->
+    <main id="view-announcements" class="view">
+        <div class="announcements-hero">
+            <h1 style="font-size: 3.2rem; color: #ec4899; margin: 0;">WONDERHOI!! ⭐</h1>
+            <p class="subtitle" style="font-weight: 600; margin-bottom: 0;">the official Emu Otori wall for all my notes ˚ʚ♡ɞ˚</p>
+        </div>
+        <div class="announcements-container" id="announcements-wall-container">
+            <!-- Dynamically populated announcements -->
         </div>
     </main>
 
@@ -613,53 +732,70 @@
     <div id="admin-modal" class="modal-overlay">
         <div class="modal">
             <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
-            <p style="color: #6b7280; font-size: 0.9rem;" id="modal-sub">Drop or update a post in your blog feed.</p>
+            <p style="color: #6b7280; font-size: 0.9rem;" id="modal-sub">Drop or update a post/announcement in your feed.</p>
             
             <input type="hidden" id="edit-index" value="">
 
-            <label>Post Title</label>
-            <input type="text" id="new-title" placeholder="e.g., Pulling for Aventurine Ruined My GPA">
+            <label>Entry Type</label>
+            <select id="new-entry-type" onchange="toggleModalTypeFields()">
+                <option value="blog">Blog Post</option>
+                <option value="announcement">Emu Announcement Wall ⭐</option>
+            </select>
+
+            <label>Title</label>
+            <input type="text" id="new-title" placeholder="e.g., Pulling for Aventurine Ruined My GPA / WONDERHOI NEWS!">
             
-            <label>Category Tag</label>
-            <select id="new-tag">
-                <option value="feelings">FEELINGS</option>
-                <option value="essays">ESSAYS</option>
-                <option value="life">LIFE</option>
-            </select>
+            <div id="blog-only-fields">
+                <label>Category Tag</label>
+                <select id="new-tag">
+                    <option value="feelings">FEELINGS</option>
+                    <option value="essays">ESSAYS</option>
+                    <option value="life">LIFE</option>
+                </select>
 
-            <label>Card Preview Cover Thumbnail</label>
-            <select id="new-show-cover">
-                <option value="true">Show Photo on Card Preview (Main Feed)</option>
-                <option value="false">Hide Photo on Card Preview (Main Feed)</option>
-            </select>
+                <label>Card Preview Cover Thumbnail</label>
+                <select id="new-show-cover">
+                    <option value="true">Show Photo on Card Preview (Main Feed)</option>
+                    <option value="false">Hide Photo on Card Preview (Main Feed)</option>
+                </select>
 
+                <label>Hashtags (comma separated)</label>
+                <input type="text" id="new-hashtags" placeholder="#feelings, #burnout, #genshin impact">
+
+                <label>Read Time</label>
+                <input type="text" id="new-time" placeholder="e.g., 5 min read" value="4 min read">
+
+                <label>Snippet (Card Preview Text)</label>
+                <input type="text" id="new-snippet" placeholder="Short preview text for the card...">
+            </div>
+
+            <!-- Shared Photo Upload for Blog & Announcements -->
             <label>Upload Photos from Gallery (Up to 3 Photos)</label>
             <input type="file" id="new-image-files" accept="image/*" multiple>
 
             <div id="modal-photo-list"></div>
 
-            <label>Photo Position Inside Essay</label>
+            <label>Photo Position Inside Entry</label>
             <select id="new-image-pos">
-                <option value="bottom">Bottom (End of Essay Showcase ✨)</option>
+                <option value="bottom">Bottom (End of Showcase ✨)</option>
                 <option value="top">Top (Header Photo)</option>
                 <option value="middle">Middle (After Paragraph 1)</option>
             </select>
 
-            <label>Hashtags (comma separated)</label>
-            <input type="text" id="new-hashtags" placeholder="#feelings, #burnout, #genshin impact">
+            <div id="announcement-only-fields" style="display: none; margin-top: 1rem;">
+                <label>Pin Announcement to Top?</label>
+                <select id="new-pinned">
+                    <option value="false">Normal Announcement</option>
+                    <option value="true">📌 PIN TO TOP ⭐</option>
+                </select>
+            </div>
 
-            <label>Read Time</label>
-            <input type="text" id="new-time" placeholder="e.g., 5 min read" value="4 min read">
-
-            <label>Snippet (Card Preview Text)</label>
-            <input type="text" id="new-snippet" placeholder="Short preview text for the card...">
-
-            <label>Full Post Content</label>
-            <textarea id="new-content" placeholder="Write your full essay or brain dump here..."></textarea>
+            <label style="margin-top: 1rem; display: block;">Full Content / Announcement Text</label>
+            <textarea id="new-content" placeholder="Write your full essay or announcement here..."></textarea>
 
             <div class="modal-buttons">
                 <button class="modal-btn cancel" onclick="closeAdminModal()">Cancel</button>
-                <button class="modal-btn save" id="save-post-btn" onclick="savePostData()">Save Post 🚀</button>
+                <button class="modal-btn save" id="save-post-btn" onclick="savePostData()">Save Entry 🚀</button>
             </div>
         </div>
     </div>
@@ -672,6 +808,7 @@
         </div>
         <div class="footer-nav">
             <a onclick="switchView('blog')">Blog</a>
+            <a onclick="switchView('announcements')">Announcements</a>
             <a onclick="switchView('about')">About</a>
             <a onclick="switchView('contact')">Contact</a>
         </div>
@@ -687,6 +824,42 @@
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
 
         let currentPostPhotos = [];
+
+        // Generate 15 Multi-Speed, Multi-Shape Bouncing Emus (Only active on Announcements Page)
+        function initBouncingEmus() {
+            const emuContainer = document.getElementById('emu-layer');
+            if (!emuContainer) return;
+            emuContainer.innerHTML = '';
+
+            for (let i = 0; i < 15; i++) {
+                const img = document.createElement('img');
+                img.className = 'bouncing-emu';
+                img.src = "NO EMU.png"; 
+                img.onerror = () => {
+                    img.style.display = 'none';
+                };
+
+                // Different shapes and sizes (50px to 95px)
+                const size = Math.floor(Math.random() * 45) + 50;
+                img.style.width = size + 'px';
+                img.style.height = size + 'px';
+
+                // Random border radius shapes for variety
+                const shapes = ['50%', '20px', '35% 65% 50% 50% / 50% 50% 50% 50%', '30px 10px 30px 10px'];
+                img.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
+
+                // Different speeds (random bounce & float durations)
+                const bounceSpeed = (Math.random() * 3 + 2).toFixed(2); // 2s to 5s
+                const floatSpeed = (Math.random() * 6 + 4).toFixed(2);  // 4s to 10s
+                img.style.animation = `emuBounce ${bounceSpeed}s ease-in-out infinite alternate, emuFloatSide ${floatSpeed}s ease-in-out infinite alternate`;
+
+                img.style.left = (Math.random() * 88 + 2) + 'vw';
+                img.style.top = (Math.random() * 80 + 10) + 'vh';
+                img.style.animationDelay = (Math.random() * 3) + 's';
+
+                emuContainer.appendChild(img);
+            }
+        }
 
         // Aspect-Ratio Preserving Compression Helper
         function compressImage(file, maxDimension = 1000, quality = 0.8) {
@@ -779,6 +952,15 @@
             }
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Trigger emus ONLY on announcements page, clear them elsewhere
+            const emuContainer = document.getElementById('emu-layer');
+            if (viewName === 'announcements') {
+                initBouncingEmus();
+            } else if (emuContainer) {
+                emuContainer.innerHTML = '';
+            }
+
             renderAllPosts();
         }
 
@@ -798,40 +980,67 @@
         }
 
         async function renderAllPosts() {
-            const posts = await getPosts();
+            const items = await getPosts();
             
+            const blogPosts = items.filter(p => p.type !== 'announcement');
+            const announcements = items.filter(p => p.type === 'announcement');
+
             const homeGrid = document.getElementById('home-posts-grid');
             if (homeGrid) {
                 let homeHtml = '';
-                posts.slice(0, 3).forEach((p, idx) => {
-                    homeHtml += createCardHtml(p, idx);
+                blogPosts.slice(0, 3).forEach((p) => {
+                    const originalIndex = items.indexOf(p);
+                    homeHtml += createCardHtml(p, originalIndex);
                 });
                 homeGrid.innerHTML = homeHtml;
             }
 
             const blogContainer = document.getElementById('dynamic-blog-container');
             if (blogContainer) {
-                if (posts.length === 0) {
+                if (blogPosts.length === 0) {
                     blogContainer.innerHTML = `
                         <div style="text-align:center; padding:4rem 1rem;">
                             <div style="font-size:3rem; margin-bottom:0.5rem;">🧆</div>
                             <p style="color:#6b7280; font-weight:600;">no posts yet — check back soon!</p>
                         </div>
                     `;
-                    return;
+                } else {
+                    let blogHtml = '<div class="blog-grid">';
+                    blogPosts.forEach((p) => {
+                        const originalIndex = items.indexOf(p);
+                        blogHtml += createCardHtml(p, originalIndex);
+                    });
+                    blogHtml += '</div>';
+                    blogContainer.innerHTML = blogHtml;
                 }
-                let blogHtml = '<div class="blog-grid">';
-                posts.forEach((p, idx) => {
-                    blogHtml += createCardHtml(p, idx);
-                });
-                blogHtml += '</div>';
-                blogContainer.innerHTML = blogHtml;
+            }
+
+            const annContainer = document.getElementById('announcements-wall-container');
+            if (annContainer) {
+                if (announcements.length === 0) {
+                    annContainer.innerHTML = `
+                        <div style="text-align:center; padding:4rem 1rem; background:white; border-radius:24px; border:2px dashed #f472b6;">
+                            <div style="font-size:3.5rem; margin-bottom:0.5rem;">⭐</div>
+                            <h3 style="color:#ec4899; margin:0;">WONDERHOI! No announcements yet!</h3>
+                            <p style="color:#6b7280; font-weight:600; margin-top:0.5rem;">no new announcements from me yet! better go conduct a welfare check soon!!!</p>
+                        </div>
+                    `;
+                } else {
+                    const sortedAnn = [...announcements].sort((a, b) => (b.pinned === true ? 1 : 0) - (a.pinned === true ? 1 : 0));
+                    let annHtml = '';
+                    sortedAnn.forEach((ann) => {
+                        const originalIndex = items.indexOf(ann);
+                        annHtml += createAnnouncementCardHtml(ann, originalIndex);
+                    });
+                    annContainer.innerHTML = annHtml;
+                    setTimeout(observePhotos, 100);
+                }
             }
 
             checkAdminStateUI();
         }
 
-        function createCardHtml(p, idx) {
+        function createCardHtml(p, originalIndex) {
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             
             let tagsHtml = '';
@@ -844,7 +1053,6 @@
                 tagsHtml += '</div>';
             }
 
-            // Get cover image if allowed
             const photosArr = p.images || (p.imageUrl ? [p.imageUrl] : []);
             const showCover = p.showCover !== false;
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
@@ -855,19 +1063,69 @@
                     <div>
                         ${coverImgHtml}
                         <div class="card-tag-row">
-                            <span class="card-tag ${p.tag}">${p.tagText || p.tag.toUpperCase()}</span>
-                            <span class="read-time">${p.time}</span>
+                            <span class="card-tag ${p.tag || 'feelings'}">${p.tagText || (p.tag ? p.tag.toUpperCase() : 'FEELINGS')}</span>
+                            <span class="read-time">${p.time || '4 min read'}</span>
                         </div>
                         <h3>${p.title}</h3>
                         ${tagsHtml}
                         <p class="card-snippet">${p.snippet}</p>
                     </div>
                     <div class="card-footer-row">
-                        <a onclick="openPostReader(${idx})" class="read-more">read more →</a>
+                        <a onclick="openPostReader(${originalIndex})" class="read-more">read more →</a>
                         <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
-                            <button class="edit-post-btn" onclick="openEditModal(${idx})">Edit ✏️</button>
-                            <button class="delete-post-btn" onclick="deletePost(${idx})">Delete 🗑️</button>
+                            <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">Edit ✏️</button>
+                            <button class="delete-post-btn" onclick="deletePost(${originalIndex})">Delete 🗑️</button>
                         </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createAnnouncementCardHtml(ann, originalIndex) {
+            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+            const isPinned = ann.pinned === true || ann.pinned === 'true';
+
+            const photosArr = ann.images || (ann.imageUrl ? [ann.imageUrl] : []);
+            let galleryHtml = '';
+            if (photosArr.length > 0) {
+                galleryHtml = '<div class="photo-gallery-container">';
+                photosArr.forEach(url => {
+                    galleryHtml += `<img src="${url}" class="throw-photo" alt="Announcement Photo">`;
+                });
+                galleryHtml += '</div>';
+            }
+
+            const pos = ann.imagePos || 'bottom';
+            const fullText = ann.content || '';
+            let contentBodyHtml = '';
+
+            if (photosArr.length === 0) {
+                contentBodyHtml = `<div>${fullText}</div>`;
+            } else if (pos === 'top') {
+                contentBodyHtml = `${galleryHtml}<div>${fullText}</div>`;
+            } else if (pos === 'bottom') {
+                contentBodyHtml = `<div>${fullText}</div>${galleryHtml}`;
+            } else if (pos === 'middle') {
+                const paragraphs = fullText.split('\n\n');
+                if (paragraphs.length > 1) {
+                    const firstPart = paragraphs[0];
+                    const restPart = paragraphs.slice(1).join('\n\n');
+                    contentBodyHtml = `<div>${firstPart}</div>${galleryHtml}<div>${restPart}</div>`;
+                } else {
+                    contentBodyHtml = `<div>${fullText}</div>${galleryHtml}`;
+                }
+            }
+
+            return `
+                <div class="announcement-card ${isPinned ? 'pinned' : ''}">
+                    ${isPinned ? '<div class="pin-badge">📌 PINNED ANNOUNCEMENT ⭐</div>' : ''}
+                    <div class="announcement-date">⭐ ${ann.date || 'WONDERHOI UPDATE'}</div>
+                    <h2 class="announcement-title">${ann.title}</h2>
+                    <div class="announcement-body">${contentBodyHtml}</div>
+                    
+                    <div style="margin-top:1.5rem; display:${isAdmin ? 'flex' : 'none'}; justify-content:flex-end; gap:0.5rem;">
+                        <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">Edit ✏️</button>
+                        <button class="delete-post-btn" onclick="deletePost(${originalIndex})">Delete 🗑️</button>
                     </div>
                 </div>
             `;
@@ -879,10 +1137,10 @@
             if(!post) return;
 
             document.getElementById('reader-title').innerText = post.title;
-            document.getElementById('reader-time').innerText = post.time;
+            document.getElementById('reader-time').innerText = post.time || '';
             
             const tagEl = document.getElementById('reader-tag-row');
-            tagEl.innerHTML = `<span class="card-tag ${post.tag}" style="display:inline-block;">${post.tagText || post.tag.toUpperCase()}</span>`;
+            tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || (post.tag ? post.tag.toUpperCase() : 'FEELINGS')}</span>`;
 
             const readerHashtags = document.getElementById('reader-hashtags');
             if (post.hashtags && Array.isArray(post.hashtags) && post.hashtags.length > 0) {
@@ -896,7 +1154,6 @@
                 readerHashtags.innerHTML = '';
             }
 
-            // Photos Gallery HTML
             const photosArr = post.images || (post.imageUrl ? [post.imageUrl] : []);
             let galleryHtml = '';
             if (photosArr.length > 0) {
@@ -963,6 +1220,20 @@
             }
         }
 
+        function toggleModalTypeFields() {
+            const type = document.getElementById('new-entry-type').value;
+            const blogFields = document.getElementById('blog-only-fields');
+            const annFields = document.getElementById('announcement-only-fields');
+            
+            if (type === 'announcement') {
+                blogFields.style.display = 'none';
+                annFields.style.display = 'block';
+            } else {
+                blogFields.style.display = 'block';
+                annFields.style.display = 'none';
+            }
+        }
+
         function renderModalPhotoList() {
             const container = document.getElementById('modal-photo-list');
             if (!container) return;
@@ -989,9 +1260,10 @@
         }
 
         function openNewPostModal() {
-            document.getElementById('modal-heading').innerText = "✨ Add New Post";
-            document.getElementById('modal-sub').innerText = "Drop a new post right into your blog feed.";
+            document.getElementById('modal-heading').innerText = "✨ Add New Entry";
+            document.getElementById('modal-sub').innerText = "Drop a new blog post or announcement into your cloud feed.";
             document.getElementById('edit-index').value = "";
+            document.getElementById('new-entry-type').value = "blog";
             document.getElementById('new-title').value = "";
             document.getElementById('new-tag').value = "feelings";
             document.getElementById('new-show-cover').value = "true";
@@ -1000,8 +1272,10 @@
             document.getElementById('new-hashtags').value = "#feelings, #burnout";
             document.getElementById('new-time').value = "4 min read";
             document.getElementById('new-snippet').value = "";
+            document.getElementById('new-pinned').value = "false";
             document.getElementById('new-content').value = "";
             
+            toggleModalTypeFields();
             currentPostPhotos = [];
             renderModalPhotoList();
             document.getElementById('admin-modal').style.display = 'flex';
@@ -1012,19 +1286,22 @@
             const post = posts[index];
             if(!post) return;
 
-            document.getElementById('modal-heading').innerText = "✏️ Edit Post";
-            document.getElementById('modal-sub').innerText = "Update your thoughts and fix typos.";
+            document.getElementById('modal-heading').innerText = "✏️ Edit Entry";
+            document.getElementById('modal-sub').innerText = "Update your post or announcement.";
             document.getElementById('edit-index').value = index;
+            document.getElementById('new-entry-type').value = post.type || "blog";
             document.getElementById('new-title').value = post.title;
-            document.getElementById('new-tag').value = post.tag;
+            document.getElementById('new-tag').value = post.tag || "feelings";
             document.getElementById('new-show-cover').value = (post.showCover !== false) ? "true" : "false";
             document.getElementById('new-image-files').value = "";
             document.getElementById('new-image-pos').value = post.imagePos || "bottom";
             document.getElementById('new-hashtags').value = post.hashtags ? post.hashtags.join(', ') : '';
-            document.getElementById('new-time').value = post.time;
-            document.getElementById('new-snippet').value = post.snippet;
-            document.getElementById('new-content').value = post.content || post.snippet;
+            document.getElementById('new-time').value = post.time || "4 min read";
+            document.getElementById('new-snippet').value = post.snippet || "";
+            document.getElementById('new-pinned').value = (post.pinned === true || post.pinned === 'true') ? "true" : "false";
+            document.getElementById('new-content').value = post.content || post.snippet || "";
             
+            toggleModalTypeFields();
             currentPostPhotos = post.images ? [...post.images] : (post.imageUrl ? [post.imageUrl] : []);
             renderModalPhotoList();
 
@@ -1036,7 +1313,7 @@
         }
 
         async function deletePost(index) {
-            if (confirm("Are you sure you want to delete this post? No turning back bestie!")) {
+            if (confirm("Are you sure you want to delete this entry? No turning back bestie!")) {
                 const posts = await getPosts();
                 posts.splice(index, 1);
 
@@ -1050,11 +1327,10 @@
                         body: JSON.stringify(posts)
                     });
                     if (!res.ok) throw new Error('Failed to update bin');
-                    alert("Post deleted successfully from cloud!");
+                    alert("Deleted successfully from cloud!");
                     renderAllPosts();
-                    switchView('blog');
                 } catch (err) {
-                    alert("Failed to delete post from cloud.");
+                    alert("Failed to delete entry from cloud.");
                     console.error(err);
                 }
             }
@@ -1062,27 +1338,31 @@
 
         async function savePostData() {
             const editIndex = document.getElementById('edit-index').value;
+            const entryType = document.getElementById('new-entry-type').value;
             const title = document.getElementById('new-title').value;
-            const tag = document.getElementById('new-tag').value;
-            const showCover = document.getElementById('new-show-cover').value === "true";
-            const imagePos = document.getElementById('new-image-pos').value;
-            const rawHashtags = document.getElementById('new-hashtags').value;
-            const time = document.getElementById('new-time').value;
-            const snippet = document.getElementById('new-snippet').value;
             const content = document.getElementById('new-content').value;
-            const imageFilesInput = document.getElementById('new-image-files');
             const saveBtn = document.getElementById('save-post-btn');
 
-            if(!title || !snippet || !content) {
-                alert("Please fill in the title, snippet, and full content!");
+            if(!title || !content) {
+                alert("Please fill in the title and content!");
                 return;
             }
 
             saveBtn.innerText = "Compressing & Saving... ⏳";
             saveBtn.disabled = true;
 
-            const hashtags = rawHashtags ? rawHashtags.split(',').map(h => h.trim()).filter(h => h.length > 0) : [];
+            const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+            let postObj = {
+                type: entryType,
+                title,
+                content,
+                date: todayStr
+            };
+
+            const imageFilesInput = document.getElementById('new-image-files');
             const files = Array.from(imageFilesInput.files);
+            const imagePos = document.getElementById('new-image-pos').value;
 
             let newCompressedPhotos = [];
             const maxNewSlots = Math.max(0, 3 - currentPostPhotos.length);
@@ -1098,23 +1378,32 @@
             }
 
             const finalPhotos = currentPostPhotos.concat(newCompressedPhotos).slice(0, 3);
+            postObj.images = finalPhotos;
+            postObj.imageUrl = finalPhotos[0] || '';
+            postObj.imagePos = imagePos || 'bottom';
+
+            if (entryType === 'blog') {
+                const tag = document.getElementById('new-tag').value;
+                const showCover = document.getElementById('new-show-cover').value === "true";
+                const rawHashtags = document.getElementById('new-hashtags').value;
+                const time = document.getElementById('new-time').value;
+                const snippet = document.getElementById('new-snippet').value || content.substring(0, 100) + '...';
+
+                const hashtags = rawHashtags ? rawHashtags.split(',').map(h => h.trim()).filter(h => h.length > 0) : [];
+
+                postObj.tag = tag;
+                postObj.tagText = tag.toUpperCase();
+                postObj.showCover = showCover;
+                postObj.hashtags = hashtags;
+                postObj.time = time || '4 min read';
+                postObj.snippet = snippet;
+            } else {
+                const isPinned = document.getElementById('new-pinned').value === "true";
+                postObj.pinned = isPinned;
+                postObj.snippet = content.substring(0, 120);
+            }
 
             const posts = await getPosts();
-            
-            const postObj = {
-                title,
-                tag,
-                tagText: tag.toUpperCase(),
-                images: finalPhotos,
-                imageUrl: finalPhotos[0] || '',
-                showCover: showCover,
-                imagePos: imagePos || 'bottom',
-                hashtags,
-                time: time || '4 min read',
-                snippet,
-                content
-            };
-
             if (editIndex !== "") {
                 posts[editIndex] = postObj;
             } else {
@@ -1131,15 +1420,19 @@
                     body: JSON.stringify(posts)
                 });
                 if (!res.ok) throw new Error('Failed to update bin');
-                alert("Post saved directly to the live cloud blog! 🚀");
+                alert("Saved directly to the cloud bin! 🚀");
                 closeAdminModal();
                 renderAllPosts();
-                switchView('blog');
+                if (entryType === 'announcement') {
+                    switchView('announcements');
+                } else {
+                    switchView('blog');
+                }
             } catch (err) {
-                alert("Failed to save post to cloud. Check your connection!");
+                alert("Failed to save entry to cloud. Check your connection!");
                 console.error(err);
             } finally {
-                saveBtn.innerText = "Save Post 🚀";
+                saveBtn.innerText = "Save Entry 🚀";
                 saveBtn.disabled = false;
             }
         }
