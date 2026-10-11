@@ -655,7 +655,7 @@
 
             <div class="modal-buttons">
                 <button class="modal-btn cancel" onclick="closeAdminModal()">Cancel</button>
-                <button class="modal-btn save" onclick="savePostData()">Save Post 🚀</button>
+                <button class="modal-btn save" id="save-post-btn" onclick="savePostData()">Save Post 🚀</button>
             </div>
         </div>
     </div>
@@ -683,6 +683,35 @@
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
 
         let currentPostPhotos = [];
+
+        // Image Compression Helper
+        function compressImage(file, maxWidth = 800, quality = 0.7) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                };
+            });
+        }
 
         // Scroll "Throw into Existence" Observer
         const throwObserver = new IntersectionObserver((entries) => {
@@ -1022,7 +1051,7 @@
             }
         }
 
-        function savePostData() {
+        async function savePostData() {
             const editIndex = document.getElementById('edit-index').value;
             const title = document.getElementById('new-title').value;
             const tag = document.getElementById('new-tag').value;
@@ -1033,82 +1062,77 @@
             const snippet = document.getElementById('new-snippet').value;
             const content = document.getElementById('new-content').value;
             const imageFilesInput = document.getElementById('new-image-files');
+            const saveBtn = document.getElementById('save-post-btn');
 
             if(!title || !snippet || !content) {
                 alert("Please fill in the title, snippet, and full content!");
                 return;
             }
 
-            const hashtags = rawHashtags ? rawHashtags.split(',').map(h => h.trim()).filter(h => h.length > 0) : [];
+            saveBtn.innerText = "Compressing & Saving... ⏳";
+            saveBtn.disabled = true;
 
+            const hashtags = rawHashtags ? rawHashtags.split(',').map(h => h.trim()).filter(h => h.length > 0) : [];
             const files = Array.from(imageFilesInput.files);
 
-            function readFilesAndSave(fileList) {
-                if (fileList.length === 0) {
-                    finishSave(currentPostPhotos);
-                    return;
-                }
-                
-                let readCount = 0;
-                let newBase64s = [];
-                fileList.slice(0, 3 - currentPostPhotos.length).forEach((file) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        newBase64s.push(e.target.result);
-                        readCount++;
-                        if (readCount === Math.min(fileList.length, 3 - currentPostPhotos.length)) {
-                            const finalPhotos = currentPostPhotos.concat(newBase64s).slice(0, 3);
-                            finishSave(finalPhotos);
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
+            let newCompressedPhotos = [];
+            const maxNewSlots = Math.max(0, 3 - currentPostPhotos.length);
+            const filesToProcess = files.slice(0, maxNewSlots);
 
-            async function finishSave(finalPhotos) {
-                const posts = await getPosts();
-                
-                const postObj = {
-                    title,
-                    tag,
-                    tagText: tag.toUpperCase(),
-                    images: finalPhotos,
-                    imageUrl: finalPhotos[0] || '',
-                    showCover: showCover,
-                    imagePos: imagePos || 'bottom',
-                    hashtags,
-                    time: time || '4 min read',
-                    snippet,
-                    content
-                };
-
-                if (editIndex !== "") {
-                    posts[editIndex] = postObj;
-                } else {
-                    posts.unshift(postObj);
-                }
-
+            for (let file of filesToProcess) {
                 try {
-                    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Master-Key': MASTER_KEY
-                        },
-                        body: JSON.stringify(posts)
-                    });
-                    if (!res.ok) throw new Error('Failed to update bin');
-                    alert("Post saved directly to the live cloud blog! 🚀");
-                    closeAdminModal();
-                    renderAllPosts();
-                    switchView('blog');
-                } catch (err) {
-                    alert("Failed to save post to cloud. Check your connection!");
-                    console.error(err);
+                    const compressed = await compressImage(file, 800, 0.7);
+                    newCompressedPhotos.push(compressed);
+                } catch (e) {
+                    console.error("Failed to compress image", e);
                 }
             }
 
-            readFilesAndSave(files);
+            const finalPhotos = currentPostPhotos.concat(newCompressedPhotos).slice(0, 3);
+
+            const posts = await getPosts();
+            
+            const postObj = {
+                title,
+                tag,
+                tagText: tag.toUpperCase(),
+                images: finalPhotos,
+                imageUrl: finalPhotos[0] || '',
+                showCover: showCover,
+                imagePos: imagePos || 'bottom',
+                hashtags,
+                time: time || '4 min read',
+                snippet,
+                content
+            };
+
+            if (editIndex !== "") {
+                posts[editIndex] = postObj;
+            } else {
+                posts.unshift(postObj);
+            }
+
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': MASTER_KEY
+                    },
+                    body: JSON.stringify(posts)
+                });
+                if (!res.ok) throw new Error('Failed to update bin');
+                alert("Post saved directly to the live cloud blog! 🚀");
+                closeAdminModal();
+                renderAllPosts();
+                switchView('blog');
+            } catch (err) {
+                alert("Failed to save post to cloud. Check your connection!");
+                console.error(err);
+            } finally {
+                saveBtn.innerText = "Save Post 🚀";
+                saveBtn.disabled = false;
+            }
         }
 
         // Initialize Everything on Load
