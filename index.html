@@ -1026,10 +1026,16 @@
                     <input type="text" id="new-snippet" placeholder="Preview snippet...">
                 </div>
 
-                <label>Upload Photos from Gallery (Up to 3 Photos - Super Compressed ✨)</label>
+                <label>Upload File Photos (Up to 3 Photos)</label>
                 <input type="file" id="new-image-files" accept="image/*" multiple onchange="handleFileSelection(event)">
 
-                <div id="modal-photo-list"></div>
+                <label style="margin-top: 0.5rem; display: block;">Or Add Direct Image Links (Recommended for 3+ Photos to avoid size limits ✨)</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="new-photo-url-input" placeholder="Paste direct image URL here..." style="margin: 0; flex: 1;">
+                    <button type="button" class="pink-pill-btn" style="padding: 0.4rem 1rem;" onclick="addPhotoUrlFromInput()">Add URL ➕</button>
+                </div>
+
+                <div id="modal-photo-list" style="margin-top: 1rem;"></div>
 
                 <label style="margin-top: 1rem; display: block;">Full Content / Announcement Text</label>
                 <textarea id="new-content" placeholder="Write full content here..."></textarea>
@@ -1115,7 +1121,6 @@
             }
 
             const binData = await getBinData();
-            // Use cloud background if available, otherwise fallback to local storage
             const savedBg = binData.siteBg || localStorage.getItem('site_custom_bg');
             const savedType = binData.bgType || localStorage.getItem('site_custom_bg_type') || 'image';
 
@@ -1156,7 +1161,6 @@
                 return;
             }
 
-            // Save locally immediately for bulletproof loading
             localStorage.setItem('site_custom_bg', bgVal);
             localStorage.setItem('site_custom_bg_type', bgType);
             localStorage.setItem('hide_custom_bg', 'false');
@@ -1206,8 +1210,7 @@
             }
         }
 
-        // Super-Compressed Image Function to fit safely inside JSONBin request payload limits
-        function compressImage(file, maxDimension = 550, quality = 0.68) {
+        function compressImage(file, maxDimension = 500, quality = 0.6) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1248,12 +1251,25 @@
             const filesToProcess = files.slice(0, remainingSlots);
 
             for (let file of filesToProcess) {
-                const compressedUrl = await compressImage(file, 550, 0.68);
+                const compressedUrl = await compressImage(file, 500, 0.6);
                 currentPostPhotos.push(compressedUrl);
             }
 
             renderModalPhotoList();
             event.target.value = "";
+        }
+
+        function addPhotoUrlFromInput() {
+            const input = document.getElementById('new-photo-url-input');
+            const url = input.value.trim();
+            if (!url) return;
+            if (currentPostPhotos.length >= 3) {
+                alert("You can add up to 3 photos maximum!");
+                return;
+            }
+            currentPostPhotos.push(url);
+            renderModalPhotoList();
+            input.value = "";
         }
 
         function initFallingBackground() {
@@ -1515,6 +1531,7 @@
             document.getElementById('new-content').value = "";
             document.getElementById('admin-custom-bg-input').value = "";
             document.getElementById('admin-custom-bg-file').value = "";
+            document.getElementById('new-photo-url-input').value = "";
             currentPostPhotos = [];
             renderModalPhotoList();
             document.getElementById('new-entry-type').value = "blog";
@@ -1612,7 +1629,7 @@
                 renderAllPosts();
                 switchView(entryType === 'announcement' ? 'announcements' : 'blog');
             } catch (err) {
-                alert("Upload failed because the total file size was too large for JSONBin. Try uploading slightly smaller or fewer photos.");
+                alert("Upload failed because the total file size was too large for JSONBin. Try using direct image URL links instead of uploading large files!");
             } finally {
                 saveBtn.innerText = "Save Entry 🚀";
                 saveBtn.disabled = false;
