@@ -278,6 +278,38 @@
         body.mood-lavender .admin-badge, body.mood-lavender .mood-selector-pill, body.mood-lavender .emu-toggle-pill, body.mood-lavender .local-bg-btn { background: #ede9fe; border: 2px dashed #8b5cf6; color: #6d28d9; }
         body.mood-sunset .admin-badge, body.mood-sunset .mood-selector-pill, body.mood-sunset .emu-toggle-pill, body.mood-sunset .local-bg-btn { background: #ffedd5; border: 2px dashed #f97316; color: #c2410c; }
 
+        /* Background Menu Settings Modal Styles */
+        .bg-menu-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .bg-option-item-btn {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 16px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px dashed;
+            font-family: 'Quicksand', sans-serif;
+            transition: transform 0.2s, background 0.3s;
+        }
+        .bg-option-item-btn:hover { transform: translateY(-2px); }
+        body.mood-pink .bg-option-item-btn { background: #ffe4e6; border-color: #f472b6; color: #db2777; }
+        body.mood-midnight .bg-option-item-btn { background: #28243d; border-color: #a855f7; color: #d8b4fe; }
+        body.mood-matcha .bg-option-item-btn { background: #e1efe2; border-color: #65a30d; color: #3f6212; }
+        body.mood-lemonade .bg-option-item-btn { background: #fef9c3; border-color: #ca8a04; color: #854d0e; }
+        body.mood-strawberry .bg-option-item-btn { background: #ffe4e6; border-color: #e11d48; color: #be123c; }
+        body.mood-cyber .bg-option-item-btn { background: #1e293b; border-color: #38bdf8; color: #7dd3fc; }
+        body.mood-lavender .bg-option-item-btn { background: #ede9fe; border-color: #8b5cf6; color: #6d28d9; }
+        body.mood-sunset .bg-option-item-btn { background: #ffedd5; border-color: #f97316; color: #c2410c; }
+
         /* Hero */
         .hero {
             text-align: center;
@@ -1085,7 +1117,7 @@
         </div>
     </div>
 
-    <!-- Header Navigation -->
+    <!-- Clean Header Navigation with Single BG Settings Button -->
     <header class="site-header">
         <div class="logo" onclick="switchView('home')">
             <span class="avatar">🧆</span>
@@ -1103,9 +1135,8 @@
                 <option value="sunset">☀️ Sunset Peach</option>
             </select>
 
-            <button class="local-bg-btn" onclick="triggerLocalCustomBg()">My Custom BG</button>
-            <button class="local-bg-btn" onclick="removeLocalCustomBg()">Remove Custom BG 🗑️</button>
-            <button class="local-bg-btn" onclick="toggleSolidMoodBg()">🎨 Toggle Solid Mood Color</button>
+            <!-- Single Clean Button for All Wallpaper Options -->
+            <button class="local-bg-btn" onclick="openBgSettingsModal()">🖼️ BG Settings</button>
             <input type="file" id="local-png-file-input" accept="image/png, image/jpeg, image/webp" style="display: none;" onchange="handleLocalPngUpload(event)">
 
             <button class="emu-toggle-pill" id="emu-toggle-btn" onclick="toggleGlobalEmus()">🦅 Emu: ON</button>
@@ -1198,7 +1229,7 @@
                     </div>
                 </div>
                 <p class="about-text">Falafel is my ultimate comfort food. It's crispy on the outside, soft on the inside, and somehow holds everything together even when it looks like it might fall apart at any second. Honestly? Same.</p>
-                <p class="about-text">I'm an IGCSE student currently navigating what I can only describe as a slow-motion academic burnout. School is a lot, and nobody around me understands the things I genuinely care about — the lore spirals, the gacha banners, and 3am existential thoughts. So I built this cozy corner of the internet to talk to wonderful strangers instead! Hiya!</p>
+                <p class="about-text">I'm an IGCSE student currently navigating what I can only describe as a slow-motion academic burnout. School is a lot, and nobody around me understands the things I genuinely care about — the lore spirals, the gacha banners, and 3am existential thoughts. So I built this cozy corner to talk to wonderful strangers instead!</p>
             </div>
 
             <!-- Mascot Video Section (Scrolled Down) -->
@@ -1226,15 +1257,15 @@
                 <div class="lore-timeline">
                     <div class="lore-item">
                         <div class="lore-icon">📖</div>
-                        <div><strong>Academic Status:</strong> IGCSE student, one assignment away from complete insanity.</div>
+                        <div><strong>Academic Status:</strong> IGCSE student, perpetually one assignment away from ordering boba and staring at the ceiling.</div>
                     </div>
                     <div class="lore-item">
                         <div class="lore-icon">🎮</div>
-                        <div><strong>Gacha Poison:</strong> Honkai Star Rail, Genshin Impact, and Project Sekai: Colorful Stage constitute 90% of my daily brain chemistry.</div>
+                        <div><strong>Gacha Poison:</strong> Honkai Star Rail, Genshin Impact, and Project Sekai constitute 90% of my daily brain chemistry.</div>
                     </div>
                     <div class="lore-item">
                         <div class="lore-icon">🌙</div>
-                        <div><strong>Peak Hours:</strong> Most productive between midnight and 3am. Do not contact me before noon.</div>
+                        <div><strong>Peak Hours:</strong> Most productive between midnight and 3am. Do not perceive me before noon.</div>
                     </div>
                     <div class="lore-item">
                         <div class="lore-icon">🇪🇬</div>
@@ -1245,11 +1276,11 @@
                 <div class="tags-container" style="margin-top: 2rem;">
                     <span class="tag-pill">#feelings</span>
                     <span class="tag-pill">#burnout</span>
-                    <span class="tag-pill">#gacha_games</span>
-                    <span class="tag-pill">#honkai_star_rail</span>
-                    <span class="tag-pill">#genshin_impact</span>
+                    <span class="tag-pill">#gacha games</span>
+                    <span class="tag-pill">#honkai star rail</span>
+                    <span class="tag-pill">#genshin impact</span>
                     <span class="tag-pill">#project_sekai</span>
-                    <span class="tag-pill">#being_perceived</span>
+                    <span class="tag-pill">#being perceived</span>
                 </div>
             </div>
 
@@ -1280,11 +1311,40 @@
             </div>
 
             <div class="contact-footer-badge">
-                <div class="contact-main-subtext">that's it. that's the page.</div>
+                <div class="contact-main-subtext">that's it. that's the page. ✨</div>
                 <div class="contact-secondary-subtext">no fancy forms, no corporate newsletter. I have archon quests waiting for me. you're welcome.</div>
             </div>
         </div>
     </main>
+
+    <!-- Visitor Background Options Modal -->
+    <div id="bg-options-modal" class="modal-overlay">
+        <div class="modal">
+            <h2>🖼️ Wallpaper & Background Options</h2>
+            <p style="opacity: 0.8; font-size: 0.95rem; margin-bottom: 1.2rem;">Customize how the background looks exclusively for you!</p>
+            
+            <div class="bg-menu-options-list">
+                <button class="bg-option-item-btn" onclick="triggerLocalCustomBg()">
+                    <span>✨ Upload "My Custom BG"</span>
+                    <span>📂</span>
+                </button>
+
+                <button class="bg-option-item-btn" onclick="removeLocalCustomBg()">
+                    <span>🗑️ Clear My Custom Wallpaper</span>
+                    <span>❌</span>
+                </button>
+
+                <button class="bg-option-item-btn" onclick="toggleSolidMoodBg()">
+                    <span>🎨 Toggle Solid Mood Color (Hide Site BG)</span>
+                    <span>✨</span>
+                </button>
+            </div>
+
+            <div class="modal-buttons" style="margin-top: 2rem;">
+                <button class="modal-btn cancel" onclick="closeBgSettingsModal()">Done ✨</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Admin Modal -->
     <div id="admin-modal" class="modal-overlay">
@@ -1436,6 +1496,14 @@
             ytPlayer.seekTo(currentTime + seconds, true);
         }
 
+        function openBgSettingsModal() {
+            document.getElementById('bg-options-modal').style.display = 'flex';
+        }
+
+        function closeBgSettingsModal() {
+            document.getElementById('bg-options-modal').style.display = 'none';
+        }
+
         function changeMoodTheme(mood) {
             document.body.className = 'mood-' + mood;
             localStorage.setItem('site_mood', mood);
@@ -1470,13 +1538,13 @@
         }
 
         async function applyBackgroundState() {
-            const localCustomBg = localStorage.getItem('visitor_local_custom_png');
-            if (localCustomBg) {
-                document.body.style.backgroundImage = `url('${localCustomBg}')`;
+            const hideSiteBg = localStorage.getItem('visitor_hide_site_bg') === 'true';
+            if (hideSiteBg) {
+                document.body.style.backgroundImage = 'none';
                 document.body.style.backgroundColor = '';
                 return;
             }
-            // Check if visitor has a private local custom PNG in localStorage
+
             const localCustomBg = localStorage.getItem('visitor_local_custom_png');
             if (localCustomBg) {
                 document.body.style.backgroundImage = `url('${localCustomBg}')`;
@@ -1497,7 +1565,27 @@
         }
 
         function triggerLocalCustomBg() {
+            closeBgSettingsModal();
             document.getElementById('local-png-file-input').click();
+        }
+
+        function removeLocalCustomBg() {
+            localStorage.removeItem('visitor_local_custom_png');
+            applyBackgroundState();
+            alert("Your custom background has been removed! ✨ Returning to the site theme background.");
+            closeBgSettingsModal();
+        }
+
+        function toggleSolidMoodBg() {
+            const currentHide = localStorage.getItem('visitor_hide_site_bg') === 'true';
+            localStorage.setItem('visitor_hide_site_bg', !currentHide);
+            applyBackgroundState();
+            if (!currentHide) {
+                alert("Site background hidden! Now showing a clean solid color from your mood theme ✨");
+            } else {
+                alert("Site background restored! ✨");
+            }
+            closeBgSettingsModal();
         }
 
         async function handleLocalPngUpload(event) {
@@ -1508,21 +1596,6 @@
             applyBackgroundState();
             alert("Your private My Custom BG has been applied just for you! ✨");
             event.target.value = "";
-        }
-        function removeLocalCustomBg() {
-            localStorage.removeItem('visitor_local_custom_png');
-            applyBackgroundState();
-            alert("Your custom background has been removed! ✨ Returning to the site theme background.");
-        }
-        function toggleSolidMoodBg() {
-            const currentHide = localStorage.getItem('visitor_hide_site_bg') === 'true';
-            localStorage.setItem('visitor_hide_site_bg', !currentHide);
-            applyBackgroundState();
-            if (!currentHide) {
-                alert("Site background hidden! Now showing a clean solid color from your mood theme ✨");
-            } else {
-                alert("Site background restored! ✨");
-            }
         }
 
         async function applyAdminCustomBackground() {
