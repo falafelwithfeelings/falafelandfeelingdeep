@@ -1026,8 +1026,8 @@
                     <input type="text" id="new-snippet" placeholder="Preview snippet...">
                 </div>
 
-                <label>Upload Photos from Gallery (Up to 3 Photos)</label>
-                <input type="file" id="new-image-files" accept="image/*" multiple>
+                <label>Upload Photos from Gallery (Up to 3 Photos - Auto Compressed ✨)</label>
+                <input type="file" id="new-image-files" accept="image/*" multiple onchange="handleFileSelection(event)">
 
                 <div id="modal-photo-list"></div>
 
@@ -1171,7 +1171,8 @@
             }
         }
 
-        function compressImage(file, maxDimension = 1000, quality = 0.8) {
+        // Optimized Image Compression: Keeps images looking razor sharp while trimming size down perfectly
+        function compressImage(file, maxDimension = 1100, quality = 0.82) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1202,6 +1203,22 @@
                     };
                 };
             });
+        }
+
+        async function handleFileSelection(event) {
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
+
+            const remainingSlots = Math.max(0, 3 - currentPostPhotos.length);
+            const filesToProcess = files.slice(0, remainingSlots);
+
+            for (let file of filesToProcess) {
+                const compressedUrl = await compressImage(file, 1100, 0.82);
+                currentPostPhotos.push(compressedUrl);
+            }
+
+            renderModalPhotoList();
+            event.target.value = ""; // Reset file input so same files can be chosen again if needed
         }
 
         function initFallingBackground() {
@@ -1526,16 +1543,9 @@
             const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             let postObj = { type: entryType, title, content, date: todayStr };
 
-            const fileInputEl = document.getElementById('new-image-files');
-            let files = fileInputEl && fileInputEl.files ? Array.from(fileInputEl.files) : [];
-            let newCompressedPhotos = [];
-            for (let file of files.slice(0, Math.max(0, 3 - currentPostPhotos.length))) {
-                newCompressedPhotos.push(await compressImage(file, 800, 0.75));
-            }
-
-            const finalPhotos = currentPostPhotos.concat(newCompressedPhotos).slice(0, 3);
-            postObj.images = finalPhotos;
-            postObj.imageUrl = finalPhotos[0] || '';
+            // Images are already auto-compressed upon selection, so we just use currentPostPhotos
+            postObj.images = currentPostPhotos;
+            postObj.imageUrl = currentPostPhotos[0] || '';
 
             if (entryType === 'blog') {
                 const tag = document.getElementById('new-tag').value;
@@ -1572,7 +1582,7 @@
                 renderAllPosts();
                 switchView(entryType === 'announcement' ? 'announcements' : 'blog');
             } catch (err) {
-                alert("Oops! Couldn't save. Please check your internet connection or try with smaller images.");
+                alert("Oops! Couldn't save. Please check your internet connection.");
             } finally {
                 saveBtn.innerText = "Save Entry 🚀";
                 saveBtn.disabled = false;
