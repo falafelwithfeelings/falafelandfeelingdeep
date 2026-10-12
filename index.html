@@ -1099,9 +1099,183 @@
             .main-title { font-size: 2.5rem; }
             .hero-title-box { padding: 1.2rem 1.5rem; }
         }
-    </style>
+  
+    /* 🎶 Cute Floating Music Widget in Bottom Right */
+        .music-widget {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            border-radius: 24px;
+            padding: 1.2rem;
+            width: 320px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            z-index: 1500;
+            border: 3px dashed;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease;
+        }
+        .music-widget.hidden {
+            transform: translateX(calc(100% + 35px));
+        }
+        .music-widget-toggle {
+            position: absolute;
+            left: -38px;
+            top: 15px;
+            width: 38px;
+            height: 42px;
+            border-radius: 16px 0 0 16px;
+            border: none;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Quicksand', sans-serif;
+            box-shadow: -4px 4px 15px rgba(0,0,0,0.15);
+        }
+        body.mood-pink .music-widget-toggle { background: #fff0f6; border: 2px dashed #f472b6; border-right: none; color: #db2777; }
+        body.mood-midnight .music-widget-toggle { background: #1e1b2e; border: 2px dashed #a855f7; border-right: none; color: #c084fc; }
+        body.mood-matcha .music-widget-toggle { background: #f4fbf5; border: 2px dashed #65a30d; border-right: none; color: #65a30d; }
+        body.mood-lemonade .music-widget-toggle { background: #fffef7; border: 2px dashed #ca8a04; border-right: none; color: #ca8a04; }
+        body.mood-strawberry .music-widget-toggle { background: #ffebf0; border: 2px dashed #e11d48; border-right: none; color: #e11d48; }
+        body.mood-cyber .music-widget-toggle { background: #141426; border: 2px dashed #38bdf8; border-right: none; color: #38bdf8; }
+        body.mood-lavender .music-widget-toggle { background: #f8f0ff; border: 2px dashed #8b5cf6; border-right: none; color: #8b5cf6; }
+        body.mood-sunset .music-widget-toggle { background: #fff3e0; border: 2px dashed #f97316; border-right: none; color: #f97316; }
+
+        .music-widget-header {
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
+            text-align: center;
+            opacity: 0.85;
+        }
+        .music-song-title {
+            font-weight: 800;
+            font-size: 0.95rem;
+            margin: 0 0 0.1rem 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .music-song-artist {
+            font-size: 0.8rem;
+            opacity: 0.75;
+            margin-bottom: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .music-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+        .music-btn {
+            border: none;
+            border-radius: 12px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: transform 0.2s;
+        }
+        .music-btn:hover { transform: scale(1.05); }
+        body.mood-pink .music-btn { background: #ffe4e6; color: #db2777; border: 1px dashed #f472b6; }
+        body.mood-midnight .music-btn { background: #28243d; color: #d8b4fe; border: 1px dashed #a855f7; }
+        body.mood-matcha .music-btn { background: #e1efe2; color: #3f6212; border: 1px dashed #65a30d; }
+        body.mood-lemonade .music-btn { background: #fef9c3; color: #854d0e; border: 1px dashed #ca8a04; }
+        body.mood-strawberry .music-btn { background: #ffe4e6; color: #be123c; border: 1px dashed #e11d48; }
+        body.mood-cyber .music-btn { background: #1e293b; color: #38bdf8; border: 1px dashed #38bdf8; }
+        body.mood-lavender .music-btn { background: #ede9fe; color: #6d28d9; border: 1px dashed #8b5cf6; }
+        body.mood-sunset .music-btn { background: #ffedd5; color: #c2410c; border: 1px dashed #f97316; }
+
+        .music-select {
+            width: 100%;
+            padding: 0.4rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+        body.mood-pink .music-select { background: #fff0f6; border: 1px solid #f472b6; color: #4a1525; }
+        body.mood-midnight .music-select { background: #1e1b2e; border: 1px solid #a855f7; color: #f3e8ff; }
+        body.mood-matcha .music-select { background: #f4fbf5; border: 1px solid #65a30d; color: #1e3322; }
+        body.mood-lemonade .music-select { background: #fffef7; border: 1px solid #ca8a04; color: #382e0a; }
+        body.mood-strawberry .music-select { background: #ffebf0; border: 1px solid #e11d48; color: #500e21; }
+        body.mood-cyber .music-select { background: #141426; border: 1px solid #38bdf8; color: #f0fdf4; }
+        body.mood-lavender .music-select { background: #f8f0ff; border: 1px solid #8b5cf6; color: #3b0764; }
+        body.mood-sunset .music-select { background: #fff3e0; border: 1px solid #f97316; color: #431407; }
+
+        #hidden-audio-container {
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mobile-admin-fab {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: #db2777;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            padding: 0.6rem 1.1rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 1500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: none;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        @media(max-width: 768px) {
+            .mobile-admin-fab { display: block; }
+            .music-widget { width: 280px; bottom: 15px; right: 10px; }
+        }
+          </style>
 </head>
 <body class="mood-pink">
+   <body class="mood-pink">
+
+    <!-- Mobile Floating Admin Button for Phone Access -->
+    <button class="mobile-admin-fab" onclick="promptAdminLogin()">⚙️ Admin Login</button>
+
+    <!-- Cute Floating "Now Playing" Music Widget (Bottom Right) -->
+    <div class="music-widget" id="music-widget-box">
+        <button class="music-widget-toggle" id="music-widget-toggle-btn" onclick="toggleMusicWidgetHide()" title="Hide / Show Widget">◀</button>
+        <div class="music-widget-header">⏔⏔⏔ ꒰ ᧔ෆ᧓ ꒱ ⏔⏔⏔</div>
+        <div class="music-song-title" id="widget-song-title">Like Dino! Game Theme</div>
+        <div class="music-song-artist" id="widget-song-artist">The Pau Channel</div>
+        
+        <select class="music-select" id="playlist-track-select" onchange="onTrackDropdownChange(this.value)">
+            <option value="0">🎵 Track 1: Like Dino! Game Theme</option>
+            <option value="1">🎵 Track 2: Cozy Vibes Remix</option>
+            <option value="2">🎵 Track 3: Starlight Melody</option>
+            <option value="3">🎵 Track 4: Arcade Chill Mix</option>
+            <option value="4">🎵 Track 5: Sweet Dreams OST</option>
+        </select>
+
+        <div class="music-controls-row">
+            <button class="music-btn" onclick="skipAudioTrack(-1)">⏮ Prev</button>
+            <button class="music-btn" id="audio-play-pause-btn" onclick="toggleAudioPlayback()">▶ Play</button>
+            <button class="music-btn" onclick="skipAudioTrack(1)">Next ⏭</button>
+        </div>
+    </div>
+
+    <!-- Hidden Audio IFrame Streamer for Playlist -->
+    <div id="hidden-audio-container">
+        <iframe id="bg-playlist-iframe" src="https://www.youtube.com/embed?listType=playlist&list=PL70l4ypNo0_7a7-JAZcwm5bdRGPbTT2E-&enablejsapi=1&autoplay=0" allow="autoplay"></iframe>
+    </div> 
 
     <!-- Falling Stars Layer -->
     <div id="falling-bg"></div>
@@ -1455,6 +1629,94 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
+    
+        let audioPlayer = null;
+        let isAudioPlaying = false;
+        const playlistTracks = [
+            { title: "Like Dino! Game Theme", artist: "super_toki (from the game: Like A Dino!" },
+            { title: "Cozy Arcade Vibes", artist: "super_toki (from the game: Like A Dino!" },
+            { title: "Starlight Melody", artist: "super_toki (from the game: Like A Dino!" },
+            { title: "Chilling In The Park", artist: "super_toki (from the game: Like A Dino!" },
+            { title: "Sweet Dreams OST", artist: "super_toki (from the game: Like A Dino!" }
+        ];
+        let currentTrackIndex = 0;
+
+        function onAudioPlayerStateChange(event) {
+            const btn = document.getElementById('audio-play-pause-btn');
+            if (event.data === YT.PlayerState.PLAYING) {
+                isAudioPlaying = true;
+                if(btn) btn.innerText = "⏸ Pause";
+            } else {
+                isAudioPlaying = false;
+                if(btn) btn.innerText = "▶ Play";
+            }
+        }
+
+        function toggleAudioPlayback() {
+            if (!audioPlayer || typeof audioPlayer.getPlayerState !== 'function') return;
+            const state = audioPlayer.getPlayerState();
+            if (state === YT.PlayerState.PLAYING) {
+                audioPlayer.pauseVideo();
+            } else {
+                audioPlayer.playVideo();
+            }
+        }
+
+        function skipAudioTrack(direction) {
+            if (!audioPlayer || typeof audioPlayer.nextVideo !== 'function') return;
+            if (direction > 0) {
+                audioPlayer.nextVideo();
+                currentTrackIndex = (currentTrackIndex + 1) % playlistTracks.length;
+            } else {
+                audioPlayer.previousVideo();
+                currentTrackIndex = (currentTrackIndex - 1 + playlistTracks.length) % playlistTracks.length;
+            }
+            updateWidgetTrackDisplay();
+        }
+
+        function onTrackDropdownChange(indexVal) {
+            const idx = parseInt(indexVal);
+            currentTrackIndex = idx;
+            if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
+                audioPlayer.playVideoAt(idx);
+            }
+            updateWidgetTrackDisplay();
+        }
+
+        function updateWidgetTrackDisplay() {
+            const track = playlistTracks[currentTrackIndex];
+            const titleEl = document.getElementById('widget-song-title');
+            const artistEl = document.getElementById('widget-song-artist');
+            const selectEl = document.getElementById('playlist-track-select');
+            
+            if(titleEl) titleEl.innerText = track.title;
+            if(artistEl) artistEl.innerText = track.artist;
+            if(selectEl) selectEl.value = currentTrackIndex;
+        }
+
+        function toggleMusicWidgetHide() {
+            const widget = document.getElementById('music-widget-box');
+            const toggleBtn = document.getElementById('music-widget-toggle-btn');
+            widget.classList.toggle('hidden');
+            if (widget.classList.contains('hidden')) {
+                toggleBtn.innerText = "▶";
+            } else {
+                toggleBtn.innerText = "◀";
+            }
+        }
+
+        function promptAdminLogin() {
+            const pwd = prompt("Enter secret blogger password:");
+            if (pwd === "falafel123") {
+                sessionStorage.setItem('falafel_admin', 'true');
+                alert("Admin unlocked!");
+                renderAllPosts();
+            } else if (pwd !== null) {
+                alert("Incorrect password!");
+            }
+        }
+
+        const BIN_ID = '6aca4a7dac6210605a2587db';
         const BIN_ID = '6aca4a7dac6210605a2587db';
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
 
@@ -1468,6 +1730,13 @@
                     'onStateChange': onPlayerStateChange
                 }
             });
+            
+            audioPlayer = new YT.Player('bg-playlist-iframe', {
+                events: {
+                    'onStateChange': onAudioPlayerStateChange
+                }
+            });
+        }
         }
 
         function onPlayerStateChange(event) {
