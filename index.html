@@ -989,10 +989,10 @@
 
             <!-- Custom Background Admin Panel -->
             <div id="custom-bg-admin-fields" style="display: none; margin-top: 1rem;">
-                <label>Option A: Paste Wallpaper URL or Color Code</label>
+                <label>Option A: Paste Wallpaper URL or Color Code (Recommended for HD ✨)</label>
                 <input type="text" id="admin-custom-bg-input" placeholder="e.g., #ffe4e1 or https://image.url/wallpaper.jpg">
                 
-                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper File (Synced for Everyone ✨)</label>
+                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper File (HD Quality)</label>
                 <input type="file" id="admin-custom-bg-file" accept="image/*">
 
                 <button type="button" class="pink-pill-btn" style="width: 100%; margin-top: 1rem; padding: 0.6rem;" onclick="applyAdminCustomBackground()">Apply & Sync Custom BG for Everyone 🎨</button>
@@ -1029,7 +1029,7 @@
                 <label>Upload File Photos (Up to 3 Photos)</label>
                 <input type="file" id="new-image-files" accept="image/*" multiple onchange="handleFileSelection(event)">
 
-                <label style="margin-top: 0.5rem; display: block;">Or Add Direct Image Links (Recommended for 3+ Photos to avoid size limits ✨)</label>
+                <label style="margin-top: 0.5rem; display: block;">Or Add Direct Image Links (Recommended for 3+ Photos ✨)</label>
                 <div style="display: flex; gap: 0.5rem;">
                     <input type="text" id="new-photo-url-input" placeholder="Paste direct image URL here..." style="margin: 0; flex: 1;">
                     <button type="button" class="pink-pill-btn" style="padding: 0.4rem 1rem;" onclick="addPhotoUrlFromInput()">Add URL ➕</button>
@@ -1152,7 +1152,8 @@
             let bgType = 'image';
 
             if (fileInput) {
-                bgVal = await compressImage(fileInput, 700, 0.7);
+                // Higher resolution and better quality for HD wallpapers
+                bgVal = await compressImage(fileInput, 1400, 0.88);
                 bgType = 'image';
             } else if (urlInput) {
                 bgVal = urlInput;
@@ -1174,7 +1175,7 @@
 
             await saveBinData(newPayload);
             applyBackgroundState();
-            alert("Custom wallpaper successfully applied and synced for everyone! ✨");
+            alert("HD Custom wallpaper successfully applied and synced for everyone! ✨");
             closeAdminModal();
         }
 
@@ -1210,7 +1211,8 @@
             }
         }
 
-        function compressImage(file, maxDimension = 500, quality = 0.6) {
+        // Higher quality compressor specifically for background wallpapers
+        function compressImage(file, maxDimension = 1400, quality = 0.88) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1251,7 +1253,8 @@
             const filesToProcess = files.slice(0, remainingSlots);
 
             for (let file of filesToProcess) {
-                const compressedUrl = await compressImage(file, 500, 0.6);
+                // Keep standard compression for blog post uploads to prevent size errors
+                const compressedUrl = await compressImage(file, 600, 0.7);
                 currentPostPhotos.push(compressedUrl);
             }
 
