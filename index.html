@@ -47,6 +47,8 @@
         body.mood-pink .card-snippet, body.mood-pink .about-text, body.mood-pink .subtitle, body.mood-pink .post-reader-content { color: #6b2d45; }
         body.mood-pink .main-title { color: #38101c; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9); }
         body.mood-pink .highlight { color: #db2777; }
+        body.mood-pink #image-lightbox-modal { background: rgba(74, 21, 37, 0.88); }
+        body.mood-pink .lightbox-content-box { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 20px 50px rgba(244, 114, 182, 0.4); }
 
         /* 🌙 Midnight Spiral Theme */
         body.mood-midnight { background-color: rgba(18, 16, 26, 0.95); color: #f3e8ff; }
@@ -66,6 +68,8 @@
         body.mood-midnight .card-snippet, body.mood-midnight .about-text, body.mood-midnight .subtitle, body.mood-midnight .post-reader-content { color: #e9d5ff; }
         body.mood-midnight .main-title { color: #ffffff; text-shadow: 0 2px 12px rgba(168, 85, 247, 0.6); }
         body.mood-midnight .highlight { color: #c084fc; }
+        body.mood-midnight #image-lightbox-modal { background: rgba(18, 16, 26, 0.9); }
+        body.mood-midnight .lightbox-content-box { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 20px 50px rgba(168, 85, 247, 0.4); }
 
         /* 🍵 Matcha Sage Theme */
         body.mood-matcha { background-color: rgba(234, 244, 237, 0.94); color: #1e3322; }
@@ -85,6 +89,8 @@
         body.mood-matcha .card-snippet, body.mood-matcha .about-text, body.mood-matcha .subtitle, body.mood-matcha .post-reader-content { color: #365314; }
         body.mood-matcha .main-title { color: #142317; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9); }
         body.mood-matcha .highlight { color: #65a30d; }
+        body.mood-matcha #image-lightbox-modal { background: rgba(30, 51, 34, 0.88); }
+        body.mood-matcha .lightbox-content-box { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 20px 50px rgba(101, 163, 13, 0.4); }
 
         /* 🍋 Lemonade Theme */
         body.mood-lemonade { background-color: rgba(255, 253, 240, 0.94); color: #382e0a; }
@@ -104,6 +110,8 @@
         body.mood-lemonade .card-snippet, body.mood-lemonade .about-text, body.mood-lemonade .subtitle, body.mood-lemonade .post-reader-content { color: #713f12; }
         body.mood-lemonade .main-title { color: #261f05; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9); }
         body.mood-lemonade .highlight { color: #ca8a04; }
+        body.mood-lemonade #image-lightbox-modal { background: rgba(56, 46, 10, 0.88); }
+        body.mood-lemonade .lightbox-content-box { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 20px 50px rgba(202, 138, 4, 0.4); }
 
         /* Falling Background Animation */
         #falling-bg {
@@ -149,32 +157,46 @@
             100% { margin-left: 60px; }
         }
 
-        /* 🚀 Picture-Only Animations: Zero-Gravity Float & Opening Throw-In */
+        /* 🚀 Ultra-Cutesy Picture Animations: Opening Throw-In + Zero-Gravity Float */
         @keyframes pictureFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-7px) rotate(1.2deg); }
         }
 
         @keyframes pictureThrowIn {
-            0% { opacity: 0; transform: scale(0.6) translateY(30px) rotate(-10deg); }
+            0% { opacity: 0; transform: scale(0.5) translateY(40px) rotate(-12deg); }
             100% { opacity: 1; transform: scale(1) translateY(0px) rotate(0deg); }
         }
 
-        .cutesy-snapshot {
-            padding: 6px;
-            border-radius: 18px;
-            width: 200px;
-            height: 210px;
-            object-fit: cover;
-            position: relative;
-            cursor: pointer;
-            animation: pictureThrowIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, pictureFloat 5s ease-in-out infinite;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        .cutesy-snapshot, .card-cover-img {
+            animation: pictureThrowIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, pictureFloat 4.5s ease-in-out infinite;
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
+            cursor: zoom-in;
         }
-        .cutesy-snapshot:hover {
-            transform: scale(1.15) rotate(0deg) !important;
+
+        .cutesy-snapshot:hover, .card-cover-img:hover {
+            transform: scale(1.14) rotate(0deg) !important;
             z-index: 20 !important;
         }
+
+        .cutesy-snapshot {
+            padding: 8px;
+            border-radius: 20px;
+            width: 210px;
+            height: 220px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.35); }
+        body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4); }
+        body.mood-matcha .cutesy-snapshot { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.35); }
+        body.mood-lemonade .cutesy-snapshot { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.35); }
+
+        /* Overlapping Angles */
+        .cutesy-snapshot:nth-child(1) { transform: rotate(-6deg) translateX(18px); }
+        .cutesy-snapshot:nth-child(2) { transform: rotate(4deg) translateX(-12px) translateY(-6px); }
+        .cutesy-snapshot:nth-child(3) { transform: rotate(-5deg) translateX(-30px) translateY(6px); }
 
         /* Layering */
         header, .view, .site-footer, .modal-overlay {
@@ -199,22 +221,6 @@
             align-items: center;
             margin: 2.5rem 0 1.5rem 0;
             padding: 1rem;
-        }
-
-        body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.3); }
-        body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35); }
-        body.mood-matcha .cutesy-snapshot { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.3); }
-        body.mood-lemonade .cutesy-snapshot { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.3); }
-
-        /* Overlapping Angles */
-        .cutesy-snapshot:nth-child(1) {
-            transform: rotate(-6deg) translateX(18px);
-        }
-        .cutesy-snapshot:nth-child(2) {
-            transform: rotate(4deg) translateX(-12px) translateY(-6px);
-        }
-        .cutesy-snapshot:nth-child(3) {
-            transform: rotate(-5deg) translateX(-30px) translateY(6px);
         }
 
         /* Header Navigation */
@@ -388,11 +394,6 @@
             object-fit: cover;
             border-radius: 12px;
             margin-bottom: 1rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .card-cover-img:hover {
-            transform: scale(1.03);
         }
         body.mood-pink .card-cover-img { background: #ffe4e6; }
         body.mood-midnight .card-cover-img { background: #28243d; }
@@ -791,12 +792,11 @@
         .modal-btn.cancel { background: #f3f4f6; color: #4b5563; }
         .modal-btn.save { background: #db2777; color: white; }
 
-        /* 🔍 Lightbox Image Zoom Modal */
+        /* 🔍 Lightbox Cutesy Theme-Matched Image Zoom Modal */
         #image-lightbox-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
             backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
@@ -804,13 +804,30 @@
             cursor: zoom-out;
             padding: 2rem;
         }
+        .lightbox-content-box {
+            padding: 1.2rem;
+            border-radius: 24px;
+            max-width: 92vw;
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            animation: pictureThrowIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .lightbox-content-box::before {
+            content: '🎀✧ sparkle view ✧🎀';
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+            opacity: 0.85;
+        }
         #lightbox-img {
-            max-width: 90vw;
-            max-height: 90vh;
-            border-radius: 16px;
+            max-width: 85vw;
+            max-height: 78vh;
+            border-radius: 14px;
             object-fit: contain;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            animation: pictureThrowIn 0.3s ease-out;
         }
 
         .photo-slot-item {
@@ -865,7 +882,10 @@
 
     <!-- Lightbox Image Zoom Modal -->
     <div id="image-lightbox-modal" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Zoomed Photo">
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Zoomed Photo">
+            <button class="pink-pill-btn" style="margin-top: 1rem; padding: 0.4rem 1.2rem; font-size: 0.85rem;" onclick="closeLightbox()">Close ✨</button>
+        </div>
     </div>
 
     <!-- Header Navigation -->
@@ -1448,7 +1468,6 @@
             }
 
             const photosArr = extractPostPhotos(p);
-            // Universal card preview check
             const showCover = p.showCover !== false && p.showCover !== "false";
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
             const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')" title="Click to view full size">` : '';
