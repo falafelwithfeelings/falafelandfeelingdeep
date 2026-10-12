@@ -1574,7 +1574,7 @@
                     <select id="new-tag">
                         <option value="feelings">FEELINGS</option>
                         <option value="essays">ESSAYS</option>
-                        <option value="life">LIFE</option>
+                        <option value="life">LIFE</option> 
                     </select>
 
                     <label>Card Preview Cover Thumbnail</label>
@@ -1694,6 +1694,15 @@
                     'onStateChange': onPlayerStateChange
                 }
             });
+            // Lazy loader function for YouTube API
+function initYouTubeAPI() {
+    if (document.getElementById('youtube-api-script')) return;
+    const tag = document.createElement('script');
+    tag.id = 'youtube-api-script';
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
 
             audioPlayer = new YT.Player('bg-playlist-iframe', {
                 events: {
