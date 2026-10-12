@@ -992,7 +992,7 @@
                 <label>Option A: Paste Wallpaper URL or Color Code</label>
                 <input type="text" id="admin-custom-bg-input" placeholder="e.g., #ffe4e1 or https://image.url/wallpaper.jpg">
                 
-                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper from Local Storage (Synced for Everyone ✨)</label>
+                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper File (Synced for Everyone ✨)</label>
                 <input type="file" id="admin-custom-bg-file" accept="image/*">
 
                 <button type="button" class="pink-pill-btn" style="width: 100%; margin-top: 1rem; padding: 0.6rem;" onclick="applyAdminCustomBackground()">Apply & Sync Custom BG for Everyone 🎨</button>
@@ -1026,7 +1026,7 @@
                     <input type="text" id="new-snippet" placeholder="Preview snippet...">
                 </div>
 
-                <label>Upload Photos from Gallery (Up to 3 Photos - Auto Compressed ✨)</label>
+                <label>Upload Photos from Gallery (Up to 3 Photos - Super Compressed ✨)</label>
                 <input type="file" id="new-image-files" accept="image/*" multiple onchange="handleFileSelection(event)">
 
                 <div id="modal-photo-list"></div>
@@ -1115,8 +1115,9 @@
             }
 
             const binData = await getBinData();
-            const savedBg = binData.siteBg;
-            const savedType = binData.bgType || 'image';
+            // Use cloud background if available, otherwise fallback to local storage
+            const savedBg = binData.siteBg || localStorage.getItem('site_custom_bg');
+            const savedType = binData.bgType || localStorage.getItem('site_custom_bg_type') || 'image';
 
             if (hideCustom || !savedBg) {
                 document.body.style.backgroundImage = '';
@@ -1146,7 +1147,7 @@
             let bgType = 'image';
 
             if (fileInput) {
-                bgVal = await compressImage(fileInput, 1000, 0.78);
+                bgVal = await compressImage(fileInput, 700, 0.7);
                 bgType = 'image';
             } else if (urlInput) {
                 bgVal = urlInput;
@@ -1154,6 +1155,11 @@
             } else {
                 return;
             }
+
+            // Save locally immediately for bulletproof loading
+            localStorage.setItem('site_custom_bg', bgVal);
+            localStorage.setItem('site_custom_bg_type', bgType);
+            localStorage.setItem('hide_custom_bg', 'false');
 
             const binData = await getBinData();
             const newPayload = {
@@ -1163,9 +1169,8 @@
             };
 
             await saveBinData(newPayload);
-            localStorage.setItem('hide_custom_bg', 'false');
             applyBackgroundState();
-            alert("Custom wallpaper successfully synced for everyone across all devices! ✨");
+            alert("Custom wallpaper successfully applied and synced for everyone! ✨");
             closeAdminModal();
         }
 
@@ -1201,8 +1206,8 @@
             }
         }
 
-        // Optimized Image Compression: Keeps images crystal clear while optimizing payload size for 3-photo posts
-        function compressImage(file, maxDimension = 850, quality = 0.78) {
+        // Super-Compressed Image Function to fit safely inside JSONBin request payload limits
+        function compressImage(file, maxDimension = 550, quality = 0.68) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1243,7 +1248,7 @@
             const filesToProcess = files.slice(0, remainingSlots);
 
             for (let file of filesToProcess) {
-                const compressedUrl = await compressImage(file, 850, 0.78);
+                const compressedUrl = await compressImage(file, 550, 0.68);
                 currentPostPhotos.push(compressedUrl);
             }
 
@@ -1597,8 +1602,8 @@
 
             const newPayload = {
                 posts: posts,
-                siteBg: binData.siteBg || null,
-                bgType: binData.bgType || 'image'
+                siteBg: binData.siteBg || binData.siteBg === '' ? binData.siteBg : localStorage.getItem('site_custom_bg'),
+                bgType: binData.bgType || localStorage.getItem('site_custom_bg_type') || 'image'
             };
 
             try {
@@ -1607,7 +1612,7 @@
                 renderAllPosts();
                 switchView(entryType === 'announcement' ? 'announcements' : 'blog');
             } catch (err) {
-                alert("Oops! Couldn't save. Please check your internet connection.");
+                alert("Upload failed because the total file size was too large for JSONBin. Try uploading slightly smaller or fewer photos.");
             } finally {
                 saveBtn.innerText = "Save Entry 🚀";
                 saveBtn.disabled = false;
