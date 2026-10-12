@@ -1255,6 +1255,7 @@
         }
         /* Base Theme-Aware Cutesy Volume Control */
 /* Dynamic Theme-Matching Volume Control */
+/* Theme-Matching Volume Control */
 .cutesy-volume-wrapper {
     display: flex;
     align-items: center;
@@ -1264,10 +1265,10 @@
     -webkit-backdrop-filter: blur(8px);
     padding: 6px 12px;
     border-radius: 20px;
-    border: 2px dashed currentColor !important;
+    border: 2px dashed;
+    border-color: inherit;
     font-family: 'Quicksand', sans-serif;
     font-size: 0.85rem;
-    color: inherit !important;
     margin-top: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -1278,8 +1279,7 @@
     width: 85px;
     height: 6px;
     border-radius: 3px;
-    background: currentColor !important;
-    opacity: 0.4;
+    background: rgba(0, 0, 0, 0.2);
     outline: none;
 }
 
@@ -1289,19 +1289,14 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: currentColor !important;
+    background: #b19cd9; /* Matches your active mood tone */
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.15s ease;
-    opacity: 1;
 }
 
 .cutesy-slider::-webkit-slider-thumb:hover {
     transform: scale(1.25);
-}
-
-.volume-icon {
-    color: inherit !important;
 }
 
 .volume-percentage {
@@ -1309,7 +1304,6 @@
     text-align: right;
     font-weight: 700;
     font-size: 0.75rem;
-    color: inherit !important;
 }
 
 /* Mood-specific tint overrides */
@@ -1743,38 +1737,47 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
                 }
             });
         }
-    function changeWidgetVolume(val) {
+   function changeWidgetVolume(val) {
+    const numVal = Number(val);
     const display = document.getElementById('volume-display');
-    if (display) display.innerHTML = val + '%';
+    if (display) display.innerHTML = numVal + '%';
 
-    // Save user preference
-    localStorage.setItem('widgetVolume', val);
+    // Save preference
+    localStorage.setItem('widgetVolume', numVal);
 
-    // Target the active YouTube player instance or iframe window
-    const targetPlayer = (typeof ytPlayer !== 'undefined' && ytPlayer) ? ytPlayer : 
-                         (typeof player !== 'undefined' && player) ? player : null;
-
-    if (targetPlayer && typeof targetPlayer.setVolume === 'function') {
-        targetPlayer.setVolume(val);
-        if (val > 0 && typeof targetPlayer.unMute === 'function') {
-            targetPlayer.unMute();
+    // 1. Try YouTube JS API Player instance methods if they exist
+    try {
+        if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.setVolume === 'function') {
+            ytPlayer.setVolume(numVal);
+            if (numVal > 0 && typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
         }
-    } else {
-        // Direct iframe postMessage fallback
-        const iframe = document.getElementById('bg-playlist-iframe');
-        if (iframe && iframe.contentWindow) {
+        if (typeof player !== 'undefined' && player && typeof player.setVolume === 'function') {
+            player.setVolume(numVal);
+            if (numVal > 0 && typeof player.unMute === 'function') player.unMute();
+        }
+    } catch (e) {}
+
+    // 2. Directly send postMessage command to the YouTube IFrame
+    const iframe = document.getElementById('bg-playlist-iframe');
+    if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: 'setVolume',
+            args: [numVal]
+        }), '*');
+
+        if (numVal > 0) {
             iframe.contentWindow.postMessage(JSON.stringify({
                 event: 'command',
-                func: 'setVolume',
-                args: [val]
+                func: 'unMute',
+                args: []
             }), '*');
-            if (val > 0) {
-                iframe.contentWindow.postMessage(JSON.stringify({
-                    event: 'command',
-                    func: 'unMute',
-                    args: []
-                }), '*');
-            }
+        } else {
+            iframe.contentWindow.postMessage(JSON.stringify({
+                event: 'command',
+                func: 'mute',
+                args: []
+            }), '*');
         }
     }
 }
