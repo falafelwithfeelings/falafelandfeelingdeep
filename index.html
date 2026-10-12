@@ -1364,6 +1364,11 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
             <option value="10">🎵 Track 11: OVER THE MOON</option>
             <option value="11">🎵 Track 12: WADDLE WADDLE</option>
         </select>
+        <div class="cutesy-volume-wrapper">
+    <span class="volume-icon">♡︎</span>
+    <input type="range" id="widget-volume-slider" min="0" max="100" value="80" class="cutesy-slider" oninput="changeWidgetVolume(this.value)">
+    <span class="volume-percentage" id="volume-display">80%</span>
+</div>
 
         <div class="music-controls-row">
             <button class="music-btn" onclick="skipAudioTrack(-1)">⏮ Prev</button>
@@ -1399,7 +1404,7 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
             <button class="local-bg-btn" onclick="openBgSettingsModal()">🖼️ BG Settings</button>
             <input type="file" id="local-png-file-input" accept="image/png, image/jpeg, image/webp" style="display: none;" onchange="handleLocalPngUpload(event)">
 
-            <button class="emu-toggle-pill" id="emu-toggle-btn" onclick="toggleGlobalEmus()">🦅 Emu: ON</button>
+            <button class="emu-toggle-pill" id="emu-toggle-btn" onclick="toggleGlobalEmus()">🩰 Emu: ON</button>
             <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New ✨</button>
 
             <a id="nav-blog" onclick="switchView('blog')">Blog</a>
@@ -1731,7 +1736,36 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
                 }
             });
         }
+        function changeWidgetVolume(val) {
+    const display = document.getElementById('volume-display');
+    if (display) display.innerHTML = val + '%';
 
+    if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.setVolume === 'function') {
+        ytPlayer.setVolume(val);
+    }
+    
+    if (typeof audioPlayer !== 'undefined' && audioPlayer) {
+        audioPlayer.volume = val / 100;
+    }
+    
+    localStorage.setItem('widgetVolume', val);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const savedVol = localStorage.getItem('widgetVolume');
+    if (savedVol !== null) {
+        const slider = document.getElementById('widget-volume-slider');
+        if (slider) slider.value = savedVol;
+        const display = document.getElementById('volume-display');
+        if (display) display.innerHTML = savedVol + '%';
+        
+        setTimeout(() => {
+            if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.setVolume === 'function') {
+                ytPlayer.setVolume(savedVol);
+            }
+        }, 1500);
+    }
+});
         const BIN_ID = '6aca4a7dac6210605a2587db';
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
 
@@ -1971,7 +2005,7 @@ function initYouTubeAPI() {
             const compressedUrl = await compressImage(file, 1400, 0.88);
             localStorage.setItem('visitor_local_custom_png', compressedUrl);
             applyBackgroundState();
-            alert("Your private My Custom BG has been applied just for you! ✨");
+            alert("Your private custom BG has been applied just for you! ✨");
             event.target.value = "";
         }
 
@@ -2013,7 +2047,7 @@ function initYouTubeAPI() {
             const hideEmus = localStorage.getItem('hide_global_emus') === 'true';
             const toggleBtn = document.getElementById('emu-toggle-btn');
             if (toggleBtn) {
-                toggleBtn.innerText = hideEmus ? "🦅 Emu: OFF" : "🦅 Emu: ON";
+                toggleBtn.innerText = hideEmus ? "🩰 Emu: OFF" : "🩰 Emu: ON";
             }
 
             if (hideEmus) return;
