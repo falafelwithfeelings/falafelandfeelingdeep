@@ -6,7 +6,7 @@
     <title>falafelwithfeelings 🎀</title>
     <!-- Favicon: Standing Emu PNG -->
     <link rel="icon" type="image/png" href="EMU/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -37,7 +37,8 @@
         body.mood-pink .bio-card-preview, 
         body.mood-pink .about-bow-card, 
         body.mood-pink .contact-box,
-        body.mood-pink .post-reader-container { 
+        body.mood-pink .post-reader-container,
+        body.mood-pink .contact-footer-badge { 
             background-color: rgba(255, 240, 246, 0.96); 
             border-color: #f472b6; 
             color: #4a1525; 
@@ -55,7 +56,8 @@
         body.mood-midnight .bio-card-preview, 
         body.mood-midnight .about-bow-card, 
         body.mood-midnight .contact-box,
-        body.mood-midnight .post-reader-container { 
+        body.mood-midnight .post-reader-container,
+        body.mood-midnight .contact-footer-badge { 
             background-color: rgba(30, 27, 46, 0.96); 
             border-color: #a855f7; 
             color: #f3e8ff; 
@@ -73,7 +75,8 @@
         body.mood-matcha .bio-card-preview, 
         body.mood-matcha .about-bow-card, 
         body.mood-matcha .contact-box,
-        body.mood-matcha .post-reader-container { 
+        body.mood-matcha .post-reader-container,
+        body.mood-matcha .contact-footer-badge { 
             background-color: rgba(244, 251, 245, 0.96); 
             border-color: #65a30d; 
             color: #1e3322; 
@@ -91,7 +94,8 @@
         body.mood-lemonade .bio-card-preview, 
         body.mood-lemonade .about-bow-card, 
         body.mood-lemonade .contact-box,
-        body.mood-lemonade .post-reader-container { 
+        body.mood-lemonade .post-reader-container,
+        body.mood-lemonade .contact-footer-badge { 
             background-color: rgba(255, 254, 247, 0.96); 
             border-color: #ca8a04; 
             color: #382e0a; 
@@ -170,54 +174,48 @@
             50% { transform: translateY(-6px); }
         }
 
-        /* Thrown & Floating Photos Arranged in a Row */
+        /* 🎀 Cutesy Overlapping Photo Snapshot Gallery */
         .photo-gallery-container {
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
-            gap: 1.5rem;
             justify-content: center;
             align-items: center;
-            margin: 2rem 0;
+            margin: 2.5rem 0 1.5rem 0;
+            padding: 1rem;
         }
-        .throw-photo {
+        .cutesy-snapshot {
             padding: 6px;
-            border-radius: 20px;
-            width: 220px;
-            height: auto;
-            max-height: 280px;
-            object-fit: contain;
-            display: block;
-            opacity: 0;
-            animation: throwAndFloat 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, realFloat 5s ease-in-out infinite;
+            border-radius: 18px;
+            width: 200px;
+            height: 210px;
+            object-fit: cover;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            cursor: pointer;
         }
-        @keyframes throwAndFloat {
-            0% {
-                transform: scale(0.2) translateY(-200px) rotate(-15deg);
-                opacity: 0;
-            }
-            60% {
-                transform: scale(1.05) translateY(10px) rotate(4deg);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1) translateY(0px) rotate(-2deg);
-            }
-        }
-        @keyframes realFloat {
-            0% { transform: translateY(0px) rotate(-2deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(-2deg); }
+        .cutesy-snapshot:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 10 !important;
         }
 
-        body.mood-pink .throw-photo { border: 3px dashed #f472b6; background: #fff0f6; box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3); }
-        body.mood-midnight .throw-photo { border: 3px dashed #a855f7; background: #1e1b2e; box-shadow: 0 10px 20px rgba(168, 85, 247, 0.35); }
-        body.mood-matcha .throw-photo { border: 3px dashed #65a30d; background: #f4fbf5; box-shadow: 0 10px 20px rgba(101, 163, 13, 0.3); }
-        body.mood-lemonade .throw-photo { border: 3px dashed #ca8a04; background: #fffef7; box-shadow: 0 10px 20px rgba(202, 138, 4, 0.3); }
+        body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.3); }
+        body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35); }
+        body.mood-matcha .cutesy-snapshot { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.3); }
+        body.mood-lemonade .cutesy-snapshot { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.3); }
 
-        .throw-photo:nth-child(1) { animation-delay: 0.2s, 1.4s; }
-        .throw-photo:nth-child(2) { animation-delay: 0.5s, 1.7s; }
-        .throw-photo:nth-child(3) { animation-delay: 0.8s, 2.0s; }
+        /* Overlapping Angles */
+        .cutesy-snapshot:nth-child(1) {
+            transform: rotate(-6deg) translateX(18px);
+            z-index: 1;
+        }
+        .cutesy-snapshot:nth-child(2) {
+            transform: rotate(4deg) translateX(-12px) translateY(-6px);
+            z-index: 2;
+        }
+        .cutesy-snapshot:nth-child(3) {
+            transform: rotate(-5deg) translateX(-30px) translateY(6px);
+            z-index: 3;
+        }
 
         /* Header Navigation */
         .site-header {
@@ -691,6 +689,32 @@
         body.mood-matcha .email-pill-btn { background-color: #65a30d; }
         body.mood-lemonade .email-pill-btn { background-color: #ca8a04; }
 
+        /* ✨ Contact Page Bottom Text High-Contrast Container */
+        .contact-footer-badge {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin: 2.5rem auto 1rem auto;
+            max-width: 550px;
+            border: 2px dashed;
+            display: inline-block;
+        }
+
+        .contact-main-subtext {
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin: 0 0 0.4rem 0;
+            letter-spacing: -0.3px;
+        }
+
+        .contact-secondary-subtext {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.5;
+        }
+
         /* Footer */
         .site-footer {
             padding: 2.5rem 3rem;
@@ -964,8 +988,11 @@
                 <p style="opacity: 0.6; font-size: 0.9rem; font-style: italic; text-align: center;">do NOT send me your IGCSE past papers. I am begging you.</p>
             </div>
 
-            <div style="font-weight: 700; font-size: 1.3rem; margin-top: 3rem;">that's it. that's the page.</div>
-            <div style="opacity: 0.7; font-size: 0.95rem; margin-top: 0.5rem;">no fancy form, no newsletter signup. I have archon quests to get to. you're welcome.</div>
+            <!-- Enhanced High-Contrast Bottom Text Badge -->
+            <div class="contact-footer-badge">
+                <div class="contact-main-subtext">that's it. that's the page. ✨</div>
+                <div class="contact-secondary-subtext">no fancy form, no newsletter signup. I have archon quests to get to. you're welcome.</div>
+            </div>
         </div>
     </main>
 
@@ -1359,6 +1386,16 @@
             checkAdminStateUI();
         }
 
+        function extractPostPhotos(post) {
+            if (post.images && Array.isArray(post.images) && post.images.length > 0) {
+                return post.images;
+            }
+            if (post.imageUrl) {
+                return [post.imageUrl];
+            }
+            return [];
+        }
+
         function createCardHtml(p, originalIndex) {
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             let tagsHtml = '';
@@ -1370,7 +1407,7 @@
                 tagsHtml += '</div>';
             }
 
-            const photosArr = p.images || (p.imageUrl ? [p.imageUrl] : []);
+            const photosArr = extractPostPhotos(p);
             const showCover = p.showCover !== false;
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
             const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover">` : '';
@@ -1402,12 +1439,12 @@
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             const isPinned = ann.pinned === true || ann.pinned === 'true';
 
-            const photosArr = ann.images || (ann.imageUrl ? [ann.imageUrl] : []);
+            const photosArr = extractPostPhotos(ann);
             let galleryHtml = '';
             if (photosArr.length > 0) {
                 galleryHtml = '<div class="photo-gallery-container">';
                 photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="throw-photo" alt="Photo">`;
+                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo">`;
                 });
                 galleryHtml += '</div>';
             }
@@ -1438,12 +1475,12 @@
             const tagEl = document.getElementById('reader-tag-row');
             tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || 'FEELINGS'}</span>`;
 
-            const photosArr = post.images || (post.imageUrl ? [post.imageUrl] : []);
+            const photosArr = extractPostPhotos(post);
             let galleryHtml = '';
             if (photosArr.length > 0) {
                 galleryHtml = '<div class="photo-gallery-container">';
                 photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="throw-photo" alt="Photo">`;
+                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo">`;
                 });
                 galleryHtml += '</div>';
             }
@@ -1545,7 +1582,7 @@
             document.getElementById('new-entry-type').value = post.type || "blog";
             document.getElementById('new-title').value = post.title;
             document.getElementById('new-content').value = post.content || post.snippet;
-            currentPostPhotos = post.images ? [...post.images] : (post.imageUrl ? [post.imageUrl] : []);
+            currentPostPhotos = extractPostPhotos(post);
             renderModalPhotoList();
             toggleModalTypeFields();
             document.getElementById('admin-modal').style.display = 'flex';
