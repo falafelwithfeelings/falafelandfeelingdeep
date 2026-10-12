@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>falafelwithfeelings</title>
+    <title>falafelwithfeelings 🎀</title>
     <!-- Favicon: Standing Emu PNG -->
     <link rel="icon" type="image/png" href="EMU/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,19 +11,95 @@
         * {
             box-sizing: border-box;
         }
-        html, body {
+        
+        /* Mood Themes with High-Contrast Harmonized Text and Shadows */
+        body {
             margin: 0;
             padding: 0;
             min-height: 100vh;
             font-family: 'Quicksand', sans-serif;
-            background-color: #fffaf7;
+            background-color: #fff0f6;
             color: #2d2a32;
-        }
-        body {
+            transition: background 0.5s ease, color 0.5s ease;
             display: flex;
             flex-direction: column;
             position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
+
+        /* 🌸 Cozy Pink Theme */
+        body.mood-pink { background-color: rgba(255, 230, 242, 0.94); color: #4a1525; }
+        body.mood-pink .page-header-box, 
+        body.mood-pink .card, 
+        body.mood-pink .announcement-card, 
+        body.mood-pink .bio-card-preview, 
+        body.mood-pink .about-bow-card, 
+        body.mood-pink .contact-box,
+        body.mood-pink .post-reader-container { 
+            background-color: rgba(255, 240, 246, 0.96); 
+            border-color: #f472b6; 
+            color: #4a1525; 
+            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.25);
+        }
+        body.mood-pink .card-snippet, body.mood-pink .about-text, body.mood-pink .subtitle, body.mood-pink .post-reader-content { color: #6b2d45; }
+        body.mood-pink .main-title { color: #38101c; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9); }
+        body.mood-pink .highlight { color: #db2777; }
+
+        /* 🌙 Midnight Spiral Theme */
+        body.mood-midnight { background-color: rgba(18, 16, 26, 0.95); color: #f3e8ff; }
+        body.mood-midnight .page-header-box, 
+        body.mood-midnight .card, 
+        body.mood-midnight .announcement-card, 
+        body.mood-midnight .bio-card-preview, 
+        body.mood-midnight .about-bow-card, 
+        body.mood-midnight .contact-box,
+        body.mood-midnight .post-reader-container { 
+            background-color: rgba(30, 27, 46, 0.96); 
+            border-color: #a855f7; 
+            color: #f3e8ff; 
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+        }
+        body.mood-midnight .card-snippet, body.mood-midnight .about-text, body.mood-midnight .subtitle, body.mood-midnight .post-reader-content { color: #e9d5ff; }
+        body.mood-midnight .main-title { color: #ffffff; text-shadow: 0 2px 12px rgba(168, 85, 247, 0.6); }
+        body.mood-midnight .highlight { color: #c084fc; }
+
+        /* 🍵 Matcha Sage Theme */
+        body.mood-matcha { background-color: rgba(234, 244, 237, 0.94); color: #1e3322; }
+        body.mood-matcha .page-header-box, 
+        body.mood-matcha .card, 
+        body.mood-matcha .announcement-card, 
+        body.mood-matcha .bio-card-preview, 
+        body.mood-matcha .about-bow-card, 
+        body.mood-matcha .contact-box,
+        body.mood-matcha .post-reader-container { 
+            background-color: rgba(244, 251, 245, 0.96); 
+            border-color: #65a30d; 
+            color: #1e3322; 
+            box-shadow: 0 10px 30px rgba(101, 163, 13, 0.22);
+        }
+        body.mood-matcha .card-snippet, body.mood-matcha .about-text, body.mood-matcha .subtitle, body.mood-matcha .post-reader-content { color: #365314; }
+        body.mood-matcha .main-title { color: #142317; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9); }
+        body.mood-matcha .highlight { color: #65a30d; }
+
+        /* 🍋 Lemonade Theme */
+        body.mood-lemonade { background-color: rgba(255, 253, 240, 0.94); color: #382e0a; }
+        body.mood-lemonade .page-header-box, 
+        body.mood-lemonade .card, 
+        body.mood-lemonade .announcement-card, 
+        body.mood-lemonade .bio-card-preview, 
+        body.mood-lemonade .about-bow-card, 
+        body.mood-lemonade .contact-box,
+        body.mood-lemonade .post-reader-container { 
+            background-color: rgba(255, 254, 247, 0.96); 
+            border-color: #ca8a04; 
+            color: #382e0a; 
+            box-shadow: 0 10px 30px rgba(202, 138, 4, 0.22);
+        }
+        body.mood-lemonade .card-snippet, body.mood-lemonade .about-text, body.mood-lemonade .subtitle, body.mood-lemonade .post-reader-content { color: #713f12; }
+        body.mood-lemonade .main-title { color: #261f05; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9); }
+        body.mood-lemonade .highlight { color: #ca8a04; }
 
         /* Falling Background Animation */
         #falling-bg {
@@ -43,23 +119,13 @@
             user-select: none;
         }
         @keyframes fallDown {
-            0% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.7;
-            }
-            80% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.7; }
+            80% { opacity: 0.7; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Bouncing Emu Characters (Only on Announcements Page) */
+        /* Bouncing Emu Characters */
         .bouncing-emu {
             position: fixed;
             object-fit: contain;
@@ -104,19 +170,47 @@
             50% { transform: translateY(-6px); }
         }
 
+        /* "Throw into Existence" + Real Floating Animation for Photos */
+        @keyframes throwAndFloat {
+            0% {
+                transform: scale(0.2) translateY(-300px) rotate(-25deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.08) translateY(15px) rotate(6deg);
+                opacity: 1;
+            }
+            80% {
+                transform: scale(0.97) translateY(-5px) rotate(-2deg);
+            }
+            100% {
+                transform: scale(1) translateY(0px) rotate(-3deg);
+            }
+        }
+
+        @keyframes realFloat {
+            0% { transform: translateY(0px) rotate(-3deg); }
+            50% { transform: translateY(-14px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(-3deg); }
+        }
+
         /* Header Navigation */
         .site-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.2rem 2.5rem;
-            background-color: rgba(255, 250, 247, 0.9);
             backdrop-filter: blur(8px);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid #f3e8ff;
+            transition: background-color 0.5s ease, border-color 0.5s ease;
         }
+        body.mood-pink .site-header { background-color: rgba(255, 230, 242, 0.92); border-bottom: 2px dashed #f472b6; }
+        body.mood-midnight .site-header { background-color: rgba(18, 16, 26, 0.92); border-bottom: 2px dashed #a855f7; }
+        body.mood-matcha .site-header { background-color: rgba(234, 244, 237, 0.92); border-bottom: 2px dashed #65a30d; }
+        body.mood-lemonade .site-header { background-color: rgba(255, 253, 240, 0.92); border-bottom: 2px dashed #ca8a04; }
+
         .logo {
             display: flex;
             align-items: center;
@@ -126,7 +220,7 @@
             cursor: pointer;
         }
         .avatar {
-            background: #fce7f3;
+            background: rgba(255,255,255,0.6);
             padding: 0.35rem 0.55rem;
             border-radius: 50%;
             font-size: 1.2rem;
@@ -134,52 +228,68 @@
         }
         .nav-links {
             display: flex;
-            gap: 1.2rem;
+            gap: 1rem;
             align-items: center;
+            flex-wrap: wrap;
         }
         .nav-links a {
             text-decoration: none;
-            color: #2d2a32;
+            color: inherit;
             font-weight: 600;
             cursor: pointer;
             transition: color 0.2s;
         }
         .nav-links a:hover, .nav-links a.active {
-            color: #db2777;
-        }
-        .admin-badge {
-            background: #fdf2f8;
-            border: 1px solid #f472b6;
-            color: #db2777;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            display: none;
-            cursor: pointer;
-            font-family: 'Quicksand', sans-serif;
+            opacity: 0.75;
         }
 
-        /* Hero */
+        /* Dynamic Theme Styling for Buttons/Pills */
+        .admin-badge, .mood-selector-pill, .bg-toggle-pill {
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
+        }
+        body.mood-pink .admin-badge, body.mood-pink .mood-selector-pill, body.mood-pink .bg-toggle-pill { background: #ffe4e6; border: 2px dashed #f472b6; color: #db2777; }
+        body.mood-midnight .admin-badge, body.mood-midnight .mood-selector-pill, body.mood-midnight .bg-toggle-pill { background: #28243d; border: 2px dashed #a855f7; color: #d8b4fe; }
+        body.mood-matcha .admin-badge, body.mood-matcha .mood-selector-pill, body.mood-matcha .bg-toggle-pill { background: #e1efe2; border: 2px dashed #65a30d; color: #3f6212; }
+        body.mood-lemonade .admin-badge, body.mood-lemonade .mood-selector-pill, body.mood-lemonade .bg-toggle-pill { background: #fef9c3; border: 2px dashed #ca8a04; color: #854d0e; }
+
+        /* Hero Container & High Contrast Title Card */
         .hero {
             text-align: center;
             padding: 4rem 1rem 3rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .main-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-        .highlight { color: #d946ef; }
-        .subtitle {
-            color: #6b7280;
-            font-size: 1.1rem;
-            margin-top: 0.5rem;
+        .hero-title-box {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1.8rem 2.8rem;
+            border-radius: 30px;
             margin-bottom: 2rem;
+            max-width: 800px;
+            width: 90%;
+            transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
         }
+        body.mood-pink .hero-title-box { background: rgba(255, 240, 246, 0.9); border: 3px dashed #f472b6; box-shadow: 0 10px 30px rgba(244, 114, 182, 0.25); }
+        body.mood-midnight .hero-title-box { background: rgba(30, 27, 46, 0.9); border: 3px dashed #a855f7; box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3); }
+        body.mood-matcha .hero-title-box { background: rgba(244, 251, 245, 0.9); border: 3px dashed #65a30d; box-shadow: 0 10px 30px rgba(101, 163, 13, 0.22); }
+        body.mood-lemonade .hero-title-box { background: rgba(255, 254, 247, 0.9); border: 3px dashed #ca8a04; box-shadow: 0 10px 30px rgba(202, 138, 4, 0.22); }
+
+        .main-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1.5px;
+        }
+
         .cta-btn, .pink-pill-btn {
-            background-color: #f472b6;
             color: white;
             border: none;
             padding: 0.85rem 2rem;
@@ -187,13 +297,40 @@
             font-weight: 600;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4);
-            transition: transform 0.2s;
+            transition: transform 0.2s, background-color 0.3s;
             font-family: 'Quicksand', sans-serif;
         }
-        .cta-btn:hover, .pink-pill-btn:hover {
-            transform: scale(1.05);
+        body.mood-pink .cta-btn, body.mood-pink .pink-pill-btn { background-color: #db2777; box-shadow: 0 4px 14px rgba(219, 39, 119, 0.45); }
+        body.mood-midnight .cta-btn, body.mood-midnight .pink-pill-btn { background-color: #9333ea; box-shadow: 0 4px 14px rgba(147, 51, 234, 0.4); }
+        body.mood-matcha .cta-btn, body.mood-matcha .pink-pill-btn { background-color: #65a30d; box-shadow: 0 4px 14px rgba(101, 163, 13, 0.4); }
+        body.mood-lemonade .cta-btn, body.mood-lemonade .pink-pill-btn { background-color: #ca8a04; box-shadow: 0 4px 14px rgba(202, 138, 4, 0.4); }
+
+        .cta-btn:hover, .pink-pill-btn:hover { transform: scale(1.05); }
+
+        /* Bow Header Box */
+        .page-header-box {
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            max-width: 750px;
+            margin: 2.5rem auto 1.5rem auto;
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            text-align: center;
         }
+        body.mood-pink .page-header-box { background: rgba(255, 240, 246, 0.95); border: 3px dashed #f472b6; box-shadow: 0 10px 30px rgba(244, 114, 182, 0.22); }
+        body.mood-midnight .page-header-box { background: rgba(30, 27, 46, 0.95); border: 3px dashed #a855f7; box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3); }
+        body.mood-matcha .page-header-box { background: rgba(244, 251, 245, 0.95); border: 3px dashed #65a30d; box-shadow: 0 10px 30px rgba(101, 163, 13, 0.22); }
+        body.mood-lemonade .page-header-box { background: rgba(255, 254, 247, 0.95); border: 3px dashed #ca8a04; box-shadow: 0 10px 30px rgba(202, 138, 4, 0.22); }
+
+        .page-header-box::before,
+        .page-header-box::after {
+            content: '🎀';
+            position: absolute;
+            font-size: 1.8rem;
+            top: -18px;
+        }
+        .page-header-box::before { left: 20px; }
+        .page-header-box::after { right: 20px; }
 
         /* Blog Cards Grid */
         .blog-grid {
@@ -206,30 +343,34 @@
             flex-wrap: wrap;
         }
         .card {
-            background: white;
-            border: 1px solid #f3e8ff;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 2rem;
             width: 350px;
-            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             transition: transform 0.2s, box-shadow 0.2s;
             overflow: hidden;
+            position: relative;
         }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(244, 114, 182, 0.2);
-        }
+        body.mood-pink .card { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
+        body.mood-midnight .card { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.25); }
+        body.mood-matcha .card { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.18); }
+        body.mood-lemonade .card { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.18); }
+
+        .card:hover { transform: translateY(-4px); }
         .card-cover-img {
             width: 100%;
             max-height: 200px;
             object-fit: contain;
-            background: #fffaf7;
             border-radius: 12px;
             margin-bottom: 1rem;
         }
+        body.mood-pink .card-cover-img { background: #ffe4e6; }
+        body.mood-midnight .card-cover-img { background: #28243d; }
+        body.mood-matcha .card-cover-img { background: #e1efe2; }
+        body.mood-lemonade .card-cover-img { background: #fef9c3; }
+
         .card-tag-row {
             display: flex;
             justify-content: space-between;
@@ -254,15 +395,19 @@
         }
         .mini-hashtag {
             font-size: 0.75rem;
-            background: #fdf2f8;
-            color: #db2777;
             padding: 0.15rem 0.5rem;
             border-radius: 12px;
             font-weight: 600;
         }
-        .read-time { font-size: 0.8rem; color: #9ca3af; }
-        .card h3 { font-size: 1.25rem; margin: 0 0 0.5rem 0; color: #1f2937; }
-        .card-snippet { color: #4b5563; font-size: 0.95rem; line-height: 1.5; }
+        body.mood-pink .mini-hashtag { background: #ffe4e6; color: #db2777; }
+        body.mood-midnight .mini-hashtag { background: #28243d; color: #d8b4fe; }
+        body.mood-matcha .mini-hashtag { background: #e1efe2; color: #3f6212; }
+        body.mood-lemonade .mini-hashtag { background: #fef9c3; color: #854d0e; }
+
+        .read-time { font-size: 0.8rem; opacity: 0.7; }
+        .card h3 { font-size: 1.25rem; margin: 0 0 0.5rem 0; }
+        .card-snippet { font-size: 0.95rem; line-height: 1.5; }
+
         .card-footer-row {
             display: flex;
             justify-content: space-between;
@@ -271,10 +416,14 @@
         }
         .read-more {
             text-decoration: none;
-            color: #db2777;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
         }
+        body.mood-pink .read-more { color: #db2777; }
+        body.mood-midnight .read-more { color: #c084fc; }
+        body.mood-matcha .read-more { color: #65a30d; }
+        body.mood-lemonade .read-more { color: #ca8a04; }
+
         .admin-actions { display: flex; gap: 0.4rem; }
         .edit-post-btn, .delete-post-btn {
             border: none;
@@ -288,102 +437,96 @@
         .edit-post-btn { background: #fef3c7; color: #d97706; }
         .delete-post-btn { background: #fee2e2; color: #dc2626; }
 
-        /* Photo Gallery Container */
+        /* Sequential Thrown & Floating Photos */
         .photo-gallery-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
+            flex-direction: column;
+            gap: 2rem;
             align-items: center;
             margin: 2rem 0;
         }
         .throw-photo {
-            opacity: 0;
-            transform: translateY(80px) scale(0.7) rotate(-8deg);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 6px solid white;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-radius: 16px;
+            padding: 6px;
+            border-radius: 20px;
             max-width: 100%;
             height: auto;
-            max-height: 500px;
+            max-height: 480px;
             object-fit: contain;
             display: block;
+            opacity: 0;
+            animation: throwAndFloat 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, realFloat 5s ease-in-out infinite;
         }
-        .throw-photo.thrown-in {
-            opacity: 1;
-            transform: translateY(0) scale(1) rotate(0deg);
-        }
-        .throw-photo:nth-child(2) { transition-delay: 0.15s; }
-        .throw-photo:nth-child(3) { transition-delay: 0.3s; }
+        body.mood-pink .throw-photo { border: 3px dashed #f472b6; background: #fff0f6; box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3); }
+        body.mood-midnight .throw-photo { border: 3px dashed #a855f7; background: #1e1b2e; box-shadow: 0 10px 20px rgba(168, 85, 247, 0.35); }
+        body.mood-matcha .throw-photo { border: 3px dashed #65a30d; background: #f4fbf5; box-shadow: 0 10px 20px rgba(101, 163, 13, 0.3); }
+        body.mood-lemonade .throw-photo { border: 3px dashed #ca8a04; background: #fffef7; box-shadow: 0 10px 20px rgba(202, 138, 4, 0.3); }
+
+        .throw-photo:nth-child(1) { animation-delay: 0.2s, 1.4s; }
+        .throw-photo:nth-child(2) { animation-delay: 0.8s, 2.0s; }
+        .throw-photo:nth-child(3) { animation-delay: 1.4s, 2.6s; }
 
         /* Reader View */
         .post-reader-container {
             max-width: 750px;
             margin: 3rem auto;
-            background: white;
-            border: 1px solid #f3e8ff;
             border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
+            position: relative;
+        }
+        body.mood-pink .post-reader-container { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.2); }
+        body.mood-midnight .post-reader-container { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.25); }
+        body.mood-matcha .post-reader-container { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.2); }
+        body.mood-lemonade .post-reader-container { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.2); }
+
+        .post-reader-container::before {
+            content: '🎀';
+            position: absolute;
+            font-size: 1.8rem;
+            top: -18px;
+            left: 25px;
         }
         .back-to-blog {
             background: transparent;
             border: none;
-            color: #db2777;
             font-weight: 700;
             cursor: pointer;
             font-family: 'Quicksand', sans-serif;
             margin-bottom: 1.5rem;
             font-size: 0.95rem;
         }
-        .post-reader-title { font-size: 2.2rem; color: #1f2937; margin: 0 0 0.5rem 0; }
-        .post-reader-meta { color: #9ca3af; font-size: 0.9rem; margin-bottom: 2rem; }
-        .post-reader-content { color: #4b5563; line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
+        body.mood-pink .back-to-blog { color: #db2777; }
+        body.mood-midnight .back-to-blog { color: #c084fc; }
+        body.mood-matcha .back-to-blog { color: #65a30d; }
+        body.mood-lemonade .back-to-blog { color: #ca8a04; }
 
-        /* ANNOUNCEMENTS PAGE (EMU OTORI WALL WITH BIGGER BOWS) */
+        .post-reader-title { font-size: 2.2rem; margin: 0 0 0.5rem 0; }
+        .post-reader-meta { opacity: 0.7; font-size: 0.9rem; margin-bottom: 2rem; }
+        .post-reader-content { line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
+
+        /* ANNOUNCEMENTS & BOW WALLS */
         .announcements-container {
             max-width: 850px;
             margin: 0 auto;
             padding: 2rem 1.5rem 4rem 1.5rem;
         }
-        .announcements-hero {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 2px dashed #f472b6;
-            border-radius: 24px;
-            max-width: 750px;
-            margin: 2.5rem auto 1rem auto;
-            padding: 2.5rem 1.5rem;
-            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.18);
-            position: relative;
-            text-align: center;
-        }
-        .announcements-hero::before,
-        .announcements-hero::after {
-            content: '🎀';
-            position: absolute;
-            font-size: 1.8rem;
-            top: -18px;
-        }
-        .announcements-hero::before { left: 20px; }
-        .announcements-hero::after { right: 20px; }
-
         .announcement-card {
-            background: white;
-            border: 2px dashed #f472b6;
             border-radius: 24px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 25px rgba(244, 114, 182, 0.12);
             position: relative;
             transition: transform 0.2s;
         }
+        body.mood-pink .announcement-card { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
+        body.mood-midnight .announcement-card { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.22); }
+        body.mood-matcha .announcement-card { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.18); }
+        body.mood-lemonade .announcement-card { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.18); }
+
         .announcement-card:hover { transform: translateY(-3px); }
         .announcement-card.pinned {
             border: 3px solid #f59e0b;
             background: #fffbeb;
-            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.2);
+            color: #382e0a;
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.25);
         }
         .pin-badge {
             position: absolute;
@@ -399,19 +542,22 @@
         }
         .announcement-date {
             font-size: 0.85rem;
-            color: #9ca3af;
+            opacity: 0.7;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
         .announcement-title {
             font-size: 1.6rem;
-            color: #db2777;
             margin: 0 0 1rem 0;
             font-weight: 700;
         }
+        body.mood-pink .announcement-title { color: #db2777; }
+        body.mood-midnight .announcement-title { color: #d8b4fe; }
+        body.mood-matcha .announcement-title { color: #65a30d; }
+        body.mood-lemonade .announcement-title { color: #ca8a04; }
+
         .announcement-body {
             font-size: 1.05rem;
-            color: #374151;
             line-height: 1.7;
             white-space: pre-wrap;
         }
@@ -419,8 +565,6 @@
         /* Bio & Newsletter */
         .bio-section { padding: 3rem 2rem; display: flex; justify-content: center; }
         .bio-card-preview {
-            background: #fff;
-            border: 1px solid #f3e8ff;
             border-radius: 24px;
             padding: 2.5rem;
             max-width: 800px;
@@ -428,112 +572,204 @@
             display: flex;
             align-items: center;
             gap: 2rem;
-            box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15);
+            position: relative;
+        }
+        body.mood-pink .bio-card-preview { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
+        body.mood-midnight .bio-card-preview { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.22); }
+        body.mood-matcha .bio-card-preview { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.18); }
+        body.mood-lemonade .bio-card-preview { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.18); }
+
+        .bio-card-preview::before {
+            content: '🎀';
+            position: absolute;
+            top: -18px;
+            left: 25px;
+            font-size: 1.6rem;
         }
         .bio-avatar {
             font-size: 3rem;
-            background: #fdf2f8;
             padding: 1.2rem;
             border-radius: 50%;
-            border: 2px dashed #f472b6;
         }
+        body.mood-pink .bio-avatar { background: #ffe4e6; border: 2px dashed #f472b6; }
+        body.mood-midnight .bio-avatar { background: #28243d; border: 2px dashed #a855f7; }
+        body.mood-matcha .bio-avatar { background: #e1efe2; border: 2px dashed #65a30d; }
+        body.mood-lemonade .bio-avatar { background: #fef9c3; border: 2px dashed #ca8a04; }
+
         .secondary-btn {
             background: transparent;
-            border: 2px solid #f472b6;
-            color: #db2777;
+            border-width: 2px;
+            border-style: solid;
             padding: 0.6rem 1.4rem;
             border-radius: 20px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             margin-top: 1rem;
             font-family: 'Quicksand', sans-serif;
         }
+        body.mood-pink .secondary-btn { border-color: #f472b6; color: #db2777; }
+        body.mood-midnight .secondary-btn { border-color: #a855f7; color: #d8b4fe; }
+        body.mood-matcha .secondary-btn { border-color: #65a30d; color: #3f6212; }
+        body.mood-lemonade .secondary-btn { border-color: #ca8a04; color: #854d0e; }
 
         .newsletter-box {
             background-color: #fef08a;
             margin: 3rem auto;
             max-width: 900px;
+            border: 2px dashed #f59e0b;
             border-radius: 24px;
             padding: 3rem 2rem;
             text-align: center;
             box-shadow: 0 10px 30px rgba(254, 240, 138, 0.4);
+            position: relative;
+            color: #382e0a;
+        }
+        .newsletter-box::before {
+            content: '⭐';
+            position: absolute;
+            top: -18px;
+            left: 30px;
+            font-size: 1.6rem;
         }
 
         /* About & Contact */
         .about-container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem 1.5rem; }
-        .about-section-title { font-size: 2rem; color: #d946ef; text-align: center; margin-top: 3rem; }
-        .about-text { color: #4b5563; line-height: 1.8; font-size: 1.05rem; }
+        .about-bow-card {
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        body.mood-pink .about-bow-card { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
+        body.mood-midnight .about-bow-card { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.22); }
+        body.mood-matcha .about-bow-card { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.18); }
+        body.mood-lemonade .about-bow-card { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.18); }
+
+        .about-bow-card::before {
+            content: '🎀';
+            position: absolute;
+            top: -18px;
+            left: 25px;
+            font-size: 1.6rem;
+        }
+        .about-section-title { font-size: 1.8rem; margin-top: 0; margin-bottom: 1rem; }
+        body.mood-pink .about-section-title { color: #db2777; }
+        body.mood-midnight .about-section-title { color: #d8b4fe; }
+        body.mood-matcha .about-section-title { color: #65a30d; }
+        body.mood-lemonade .about-section-title { color: #ca8a04; }
+
+        .about-text { line-height: 1.8; font-size: 1.05rem; }
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
-        .about-mini-card { background: #fff; border: 1px solid #f3e8ff; padding: 1.2rem; border-radius: 16px; color: #4b5563; }
+        .about-mini-card { padding: 1.2rem; border-radius: 16px; font-weight: 600; }
+        body.mood-pink .about-mini-card { background: #ffe4e6; border: 1px solid #f472b6; color: #4a1525; }
+        body.mood-midnight .about-mini-card { background: #28243d; border: 1px solid #a855f7; color: #f3e8ff; }
+        body.mood-matcha .about-mini-card { background: #e1efe2; border: 1px solid #65a30d; color: #1e3322; }
+        body.mood-lemonade .about-mini-card { background: #fef9c3; border: 1px solid #ca8a04; color: #382e0a; }
+
         .tags-container { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin: 2rem 0; }
-        .tag-pill { background: #fdf2f8; color: #db2777; padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+        .tag-pill { padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 700; font-size: 0.9rem; }
+        body.mood-pink .tag-pill { background: #ffe4e6; color: #db2777; }
+        body.mood-midnight .tag-pill { background: #28243d; color: #d8b4fe; }
+        body.mood-matcha .tag-pill { background: #e1efe2; color: #3f6212; }
+        body.mood-lemonade .tag-pill { background: #fef9c3; color: #854d0e; }
 
         .contact-container { max-width: 700px; margin: 0 auto; padding: 3rem 1.5rem; text-align: center; }
-        .contact-box { background: #fff; border: 1px solid #f3e8ff; border-radius: 24px; padding: 2.5rem; margin: 2rem 0; text-align: left; }
-        .warning-badge { background: #fef3c7; color: #d97706; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; }
-        .email-pill-btn { display: inline-block; background-color: #f472b6; color: white; padding: 0.8rem 2rem; font-weight: 700; border-radius: 30px; text-decoration: none; margin: 1rem 0; }
+        .contact-box { border-radius: 24px; padding: 2.5rem; margin: 2rem 0; text-align: left; position: relative; }
+        body.mood-pink .contact-box { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
+        body.mood-midnight .contact-box { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.22); }
+        body.mood-matcha .contact-box { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.18); }
+        body.mood-lemonade .contact-box { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.18); }
+
+        .contact-box::before {
+            content: '🎀';
+            position: absolute;
+            top: -18px;
+            left: 25px;
+            font-size: 1.6rem;
+        }
+        .warning-badge { background: #fef3c7; color: #d97706; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-block; margin-bottom: 0.5rem; }
+        .email-pill-btn { display: inline-block; color: white; padding: 0.8rem 2rem; font-weight: 700; border-radius: 30px; text-decoration: none; margin: 1rem 0; }
+        body.mood-pink .email-pill-btn { background-color: #db2777; }
+        body.mood-midnight .email-pill-btn { background-color: #9333ea; }
+        body.mood-matcha .email-pill-btn { background-color: #65a30d; }
+        body.mood-lemonade .email-pill-btn { background-color: #ca8a04; }
 
         /* Footer */
         .site-footer {
-            border-top: 1px solid #f3e8ff;
             padding: 2.5rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fff;
-            color: #6b7280;
             font-size: 0.9rem;
             flex-wrap: wrap;
             gap: 1.5rem;
             margin-top: auto;
             flex-shrink: 0;
+            transition: background-color 0.5s ease, border-color 0.5s ease;
         }
-        .footer-brand { font-weight: 700; color: #1f2937; cursor: pointer; }
+        body.mood-pink .site-footer { background: #fff0f6; border-top: 2px dashed #f472b6; color: #4a1525; }
+        body.mood-midnight .site-footer { background: #12101a; border-top: 2px dashed #a855f7; color: #d8b4fe; }
+        body.mood-matcha .site-footer { background: #eaf4ed; border-top: 2px dashed #65a30d; color: #1e3322; }
+        body.mood-lemonade .site-footer { background: #fffdf0; border-top: 2px dashed #ca8a04; color: #382e0a; }
+
+        .footer-brand { font-weight: 700; cursor: pointer; }
         .footer-nav { display: flex; gap: 1.5rem; }
-        .footer-nav a { text-decoration: none; color: #6b7280; cursor: pointer; }
+        .footer-nav a { text-decoration: none; color: inherit; cursor: pointer; }
 
         /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal {
-            background: white;
             padding: 2.5rem;
             border-radius: 20px;
             width: 90%;
             max-width: 520px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
             max-height: 90vh;
             overflow-y: auto;
         }
-        .modal h2 { margin-top: 0; color: #db2777; }
-        .modal label { font-weight: 600; font-size: 0.9rem; color: #4b5563; }
+        body.mood-pink .modal { background: #fff0f6; border: 3px dashed #f472b6; color: #4a1525; }
+        body.mood-midnight .modal { background: #1e1b2e; border: 3px dashed #a855f7; color: #f3e8ff; }
+        body.mood-matcha .modal { background: #f4fbf5; border: 3px dashed #65a30d; color: #1e3322; }
+        body.mood-lemonade .modal { background: #fffef7; border: 3px dashed #ca8a04; color: #382e0a; }
+
+        .modal h2 { margin-top: 0; }
+        body.mood-pink .modal h2 { color: #db2777; }
+        body.mood-midnight .modal h2 { color: #d8b4fe; }
+        body.mood-matcha .modal h2 { color: #65a30d; }
+        body.mood-lemonade .modal h2 { color: #ca8a04; }
+
+        .modal label { font-weight: 700; font-size: 0.9rem; }
         .modal input, .modal textarea, .modal select {
             width: 100%;
             padding: 0.8rem;
             margin: 0.4rem 0 1rem 0;
-            border: 1px solid #e5e7eb;
             border-radius: 10px;
             font-family: 'Quicksand', sans-serif;
-            background: #fffaf7;
+            background: #ffffff;
+            color: #2d2a32;
         }
+        body.mood-pink .modal input, body.mood-pink .modal textarea, body.mood-pink .modal select { border: 1px solid #f472b6; }
+        body.mood-midnight .modal input, body.mood-midnight .modal textarea, body.mood-midnight .modal select { border: 1px solid #a855f7; }
+        body.mood-matcha .modal input, body.mood-matcha .modal textarea, body.mood-matcha .modal select { border: 1px solid #65a30d; }
+        body.mood-lemonade .modal input, body.mood-lemonade .modal textarea, body.mood-lemonade .modal select { border: 1px solid #ca8a04; }
+
         .modal textarea { height: 100px; resize: vertical; }
         .modal-buttons { display: flex; justify-content: flex-end; gap: 1rem; }
-        .modal-btn { padding: 0.6rem 1.3rem; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; font-family: 'Quicksand', sans-serif; }
+        .modal-btn { padding: 0.6rem 1.3rem; border-radius: 20px; border: none; font-weight: 700; cursor: pointer; font-family: 'Quicksand', sans-serif; }
         .modal-btn.cancel { background: #f3f4f6; color: #4b5563; }
         .modal-btn.save { background: #db2777; color: white; }
 
-        /* Photo Upload Item row in Admin */
         .photo-slot-item {
-            background: #fff0f6;
-            border: 1px dashed #f472b6;
+            border: 1px dashed;
             padding: 0.8rem;
             border-radius: 12px;
             margin-bottom: 0.8rem;
@@ -542,6 +778,11 @@
             justify-content: space-between;
             gap: 0.5rem;
         }
+        body.mood-pink .photo-slot-item { background: #ffe4e6; border-color: #f472b6; }
+        body.mood-midnight .photo-slot-item { background: #28243d; border-color: #a855f7; }
+        body.mood-matcha .photo-slot-item { background: #e1efe2; border-color: #65a30d; }
+        body.mood-lemonade .photo-slot-item { background: #fef9c3; border-color: #ca8a04; }
+
         .photo-slot-preview {
             width: 50px;
             height: 50px;
@@ -565,15 +806,16 @@
             .about-grid { grid-template-columns: 1fr; }
             .site-header { padding: 1rem 1.5rem; }
             .main-title { font-size: 2.5rem; }
+            .hero-title-box { padding: 1.2rem 1.5rem; }
         }
     </style>
 </head>
-<body>
+<body class="mood-pink">
 
     <!-- Falling Stars Layer -->
     <div id="falling-bg"></div>
 
-    <!-- Bouncing Emu Characters Layer (Only active on Announcements page) -->
+    <!-- Bouncing Emu Characters Layer -->
     <div id="emu-layer"></div>
 
     <!-- Header Navigation -->
@@ -583,6 +825,15 @@
             <span class="logo-text">falafelwithfeelings</span>
         </div>
         <nav class="nav-links">
+            <select class="mood-selector-pill" id="mood-picker" onchange="changeMoodTheme(this.value)">
+                <option value="pink">🌸 Cozy Pink</option>
+                <option value="midnight">🌙 Midnight Spiral</option>
+                <option value="matcha">🍵 Matcha Sage</option>
+                <option value="lemonade">🍋 Lemonade</option>
+            </select>
+
+            <button class="bg-toggle-pill" id="bg-toggle-btn" onclick="toggleCustomBgVisibility()">✨ Show Custom BG</button>
+
             <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New Entry ✨</button>
             <a id="nav-blog" onclick="switchView('blog')">Blog</a>
             <a id="nav-announcements" onclick="switchView('announcements')">Announcements</a>
@@ -594,14 +845,14 @@
     <!-- VIEW: HOME -->
     <main id="view-home" class="view active-view">
         <section class="hero">
-            <h1 class="main-title">falafel<span class="highlight">with</span>feelings</h1>
-            <p class="subtitle">a blog about feelings, falafel, and everything in between</p>
+            <div class="hero-title-box">
+                <h1 class="main-title">falafel<span class="highlight">with</span>feelings</h1>
+                <p class="subtitle">a blog about feelings, falafel, and everything in between</p>
+            </div>
             <button class="cta-btn" onclick="switchView('blog')">read the latest ✨</button>
         </section>
 
-        <section class="blog-grid" id="home-posts-grid">
-            <!-- Dynamically populated top posts -->
-        </section>
+        <section class="blog-grid" id="home-posts-grid"></section>
 
         <section class="bio-section">
             <div class="bio-card-preview">
@@ -623,24 +874,20 @@
 
     <!-- VIEW: BLOG -->
     <main id="view-blog" class="view">
-        <div class="hero" style="padding-bottom: 1rem;">
-            <h1 style="font-size: 3rem; color: #d946ef; margin: 0;">the blog</h1>
-            <p class="subtitle">the things i write abt when im too lazy to study something. grab a snack.</p>
+        <div class="page-header-box">
+            <h1 style="font-size: 2.8rem; margin: 0;" class="about-section-title">the blog 📖</h1>
+            <p class="subtitle" style="margin-bottom: 0;">the things i write abt when im too lazy to study something. grab a snack.</p>
         </div>
-        <div id="dynamic-blog-container">
-            <!-- Dynamically populated blog list -->
-        </div>
+        <div id="dynamic-blog-container"></div>
     </main>
 
-    <!-- VIEW: ANNOUNCEMENTS (EMU OTORI WALL) -->
+    <!-- VIEW: ANNOUNCEMENTS -->
     <main id="view-announcements" class="view">
-        <div class="announcements-hero">
-            <h1 style="font-size: 3.2rem; color: #ec4899; margin: 0;">WONDERHOI!! ⭐</h1>
+        <div class="page-header-box">
+            <h1 style="font-size: 3.2rem; margin: 0;" class="about-section-title">WONDERHOI!! ⭐</h1>
             <p class="subtitle" style="font-weight: 600; margin-bottom: 0;">the official Emu Otori wall for all my notes ˚ʚ♡ɞ˚</p>
         </div>
-        <div class="announcements-container" id="announcements-wall-container">
-            <!-- Dynamically populated announcements -->
-        </div>
+        <div class="announcements-container" id="announcements-wall-container"></div>
     </main>
 
     <!-- VIEW: POST READER -->
@@ -653,43 +900,45 @@
             <div class="post-reader-meta">
                 <span id="reader-time"></span>
             </div>
-            
             <div id="reader-content-wrapper" class="post-reader-content"></div>
         </div>
     </main>
 
     <!-- VIEW: ABOUT -->
     <main id="view-about" class="view">
-        <div class="hero" style="padding-bottom: 0;">
-            <div style="font-size: 3rem; margin-bottom: -1rem;">🧆</div>
-            <h1 style="font-size: 3rem;">hi, im just<br>a person on the internet</h1>
-            <p class="subtitle" style="max-width: 600px; margin: 1rem auto;">an IGCSE student, chronically burnt out, and absolutely unhinged about gacha games. welcome to my corner of the internet.</p>
+        <div class="page-header-box">
+            <div style="font-size: 2.5rem; margin-bottom: -0.5rem;">🧆</div>
+            <h1 style="font-size: 2.8rem; margin: 0.5rem 0;" class="about-section-title">hi, im just a person on the internet</h1>
+            <p class="subtitle" style="max-width: 600px; margin: 0.5rem auto 0 auto;">an IGCSE student, chronically burnt out, and absolutely unhinged about gacha games. welcome to my corner.</p>
         </div>
 
         <div class="about-container">
-            <h2 class="about-section-title">the story behind the name</h2>
-            <p class="about-text">Falafel is my comfort food. It's crispy on the outside, soft on the inside, and somehow holds everything together even when it looks like it might fall apart. Honestly? Same.</p>
-            <p class="about-text">I'm an IGCSE student currently in the middle of what I can only describe as a slow-motion burnout. School is a lot. Nobody around me really gets the things I care about — the games, the lore, the 3am character analysis spirals. So I did what any reasonable person would do: I started talking to strangers on the internet instead.</p>
-            <p class="about-text">This blog is my outlet. A place to put the feelings that don't fit anywhere else — too weird for school, too much for a group chat, just right for here.</p>
-
-            <h2 class="about-section-title">a little about me</h2>
-            <div class="about-grid">
-                <div class="about-mini-card">📖 IGCSE student, perpetually one assignment away from a breakdown</div>
-                <div class="about-mini-card">🎮 Honkai Star Rail, Genshin Impact, and Project Sekai are my personality</div>
-                <div class="about-mini-card">🌙 Most productive between midnight and 3am (not by choice)</div>
-                <div class="about-mini-card">🇪🇬 Egyptian — yes, we invented civilisation, and no, I will not be taking questions at this time</div>
-                <div class="about-mini-card">🧆 Yes, I do actually love falafel. It's basically a birthright.</div>
-                <div class="about-mini-card">💬 No one at school gets it, so I'm here talking to strangers instead — hi!</div>
+            <div class="about-bow-card">
+                <h2 class="about-section-title">the story behind the name</h2>
+                <p class="about-text">Falafel is my comfort food. It's crispy on the outside, soft on the inside, and somehow holds everything together even when it looks like it might fall apart. Honestly? Same.</p>
+                <p class="about-text">I'm an IGCSE student currently in the middle of what I can only describe as a slow-motion burnout. School is a lot. Nobody around me really gets the things I care about — the games, the lore, the 3am character analysis spirals. So I did what any reasonable person would do: I started talking to strangers on the internet instead.</p>
             </div>
 
-            <div class="tags-container">
-                <span class="tag-pill">#feelings</span>
-                <span class="tag-pill">#burnout</span>
-                <span class="tag-pill">#gacha games</span>
-                <span class="tag-pill">#honkai star rail</span>
-                <span class="tag-pill">#genshin impact</span>
-                <span class="tag-pill">#project_sekai</span>
-                <span class="tag-pill">#being perceived</span>
+            <div class="about-bow-card">
+                <h2 class="about-section-title">a little about me</h2>
+                <div class="about-grid">
+                    <div class="about-mini-card">📖 IGCSE student, perpetually one assignment away from a breakdown</div>
+                    <div class="about-mini-card">🎮 Honkai Star Rail, Genshin Impact, and Project Sekai are my personality</div>
+                    <div class="about-mini-card">🌙 Most productive between midnight and 3am (not by choice)</div>
+                    <div class="about-mini-card">🇪🇬 Egyptian — yes, we invented civilisation, and no, I will not be taking questions at this time</div>
+                    <div class="about-mini-card">🧆 Yes, I do actually love falafel. It's basically a birthright.</div>
+                    <div class="about-mini-card">💬 No one at school gets it, so I'm here talking to strangers instead — hi!</div>
+                </div>
+
+                <div class="tags-container">
+                    <span class="tag-pill">#feelings</span>
+                    <span class="tag-pill">#burnout</span>
+                    <span class="tag-pill">#gacha games</span>
+                    <span class="tag-pill">#honkai star rail</span>
+                    <span class="tag-pill">#genshin impact</span>
+                    <span class="tag-pill">#project_sekai</span>
+                    <span class="tag-pill">#being perceived</span>
+                </div>
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
@@ -701,8 +950,10 @@
     <!-- VIEW: CONTACT -->
     <main id="view-contact" class="view">
         <div class="contact-container">
-            <h1 style="font-size: 3.2rem; color: #d946ef; margin-bottom: 0.5rem;">say something</h1>
-            <p style="color: #6b7280; font-size: 1.1rem;">I'm a person on the internet. you're a person on the internet. let's be weird together.</p>
+            <div class="page-header-box">
+                <h1 style="font-size: 3rem; margin: 0 0 0.5rem 0;" class="about-section-title">say something 💌</h1>
+                <p class="subtitle" style="margin: 0;">I'm a person on the internet. you're a person on the internet. let's be weird together.</p>
+            </div>
 
             <div class="contact-box">
                 <div class="warning-badge">⚠️ IMPORTANT ANNOUNCEMENT</div>
@@ -713,11 +964,11 @@
                     <a href="mailto:falafelwithfeelings@gmail.com" class="email-pill-btn">falafelwithfeelings@gmail.com</a>
                 </div>
 
-                <p style="color: #9ca3af; font-size: 0.9rem; font-style: italic; text-align: center;">do NOT send me your IGCSE past papers. I am begging you.</p>
+                <p style="opacity: 0.6; font-size: 0.9rem; font-style: italic; text-align: center;">do NOT send me your IGCSE past papers. I am begging you.</p>
             </div>
 
             <div style="font-weight: 700; font-size: 1.3rem; margin-top: 3rem;">that's it. that's the page.</div>
-            <div style="color: #6b7280; font-size: 0.95rem; margin-top: 0.5rem;">no fancy form, no newsletter signup. I have archon quests to get to. you're welcome.</div>
+            <div style="opacity: 0.7; font-size: 0.95rem; margin-top: 0.5rem;">no fancy form, no newsletter signup. I have archon quests to get to. you're welcome.</div>
         </div>
     </main>
 
@@ -725,69 +976,82 @@
     <div id="admin-modal" class="modal-overlay">
         <div class="modal">
             <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
-            <p style="color: #6b7280; font-size: 0.9rem;" id="modal-sub">Drop or update a post/announcement in your feed.</p>
+            <p style="opacity: 0.7; font-size: 0.9rem;" id="modal-sub">Manage entries or customize secret site settings.</p>
             
             <input type="hidden" id="edit-index" value="">
 
-            <label>Entry Type</label>
+            <label>Mode / Action</label>
             <select id="new-entry-type" onchange="toggleModalTypeFields()">
                 <option value="blog">Blog Post</option>
                 <option value="announcement">Emu Announcement Wall ⭐</option>
+                <option value="custom-bg">🎨 Customize Secret Site Background</option>
             </select>
 
-            <label>Title</label>
-            <input type="text" id="new-title" placeholder="e.g., Pulling for Aventurine Ruined My GPA / WONDERHOI NEWS!">
-            
-            <div id="blog-only-fields">
-                <label>Category Tag</label>
-                <select id="new-tag">
-                    <option value="feelings">FEELINGS</option>
-                    <option value="essays">ESSAYS</option>
-                    <option value="life">LIFE</option>
-                </select>
+            <!-- Custom Background Admin Panel -->
+            <div id="custom-bg-admin-fields" style="display: none; margin-top: 1rem;">
+                <label>Option A: Paste Wallpaper URL or Color Code</label>
+                <input type="text" id="admin-custom-bg-input" placeholder="e.g., #ffe4e1 or https://image.url/wallpaper.jpg">
+                
+                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper from Local Storage</label>
+                <input type="file" id="admin-custom-bg-file" accept="image/*">
 
-                <label>Card Preview Cover Thumbnail</label>
-                <select id="new-show-cover">
-                    <option value="true">Show Photo on Card Preview (Main Feed)</option>
-                    <option value="false">Hide Photo on Card Preview (Main Feed)</option>
-                </select>
-
-                <label>Hashtags (comma separated)</label>
-                <input type="text" id="new-hashtags" placeholder="#feelings, #burnout, #genshin impact">
-
-                <label>Read Time</label>
-                <input type="text" id="new-time" placeholder="e.g., 5 min read" value="4 min read">
-
-                <label>Snippet (Card Preview Text)</label>
-                <input type="text" id="new-snippet" placeholder="Short preview text for the card...">
+                <button type="button" class="pink-pill-btn" style="width: 100%; margin-top: 1rem; padding: 0.6rem;" onclick="applyAdminCustomBackground()">Apply & Save Custom BG 🎨</button>
             </div>
 
-            <!-- Shared Photo Upload for Blog & Announcements -->
-            <label>Upload Photos from Gallery (Up to 3 Photos)</label>
-            <input type="file" id="new-image-files" accept="image/*" multiple>
+            <div id="post-content-admin-wrapper">
+                <label>Title</label>
+                <input type="text" id="new-title" placeholder="Entry title...">
+                
+                <div id="blog-only-fields">
+                    <label>Category Tag</label>
+                    <select id="new-tag">
+                        <option value="feelings">FEELINGS</option>
+                        <option value="essays">ESSAYS</option>
+                        <option value="life">LIFE</option>
+                    </select>
 
-            <div id="modal-photo-list"></div>
+                    <label>Card Preview Cover Thumbnail</label>
+                    <select id="new-show-cover">
+                        <option value="true">Show Photo on Card Preview</option>
+                        <option value="false">Hide Photo on Card Preview</option>
+                    </select>
 
-            <label>Photo Position Inside Entry</label>
-            <select id="new-image-pos">
-                <option value="bottom">Bottom (End of Showcase ✨)</option>
-                <option value="top">Top (Header Photo)</option>
-                <option value="middle">Middle (After Paragraph 1)</option>
-            </select>
+                    <label>Hashtags (comma separated)</label>
+                    <input type="text" id="new-hashtags" placeholder="#feelings, #burnout">
 
-            <div id="announcement-only-fields" style="display: none; margin-top: 1rem;">
-                <label>Pin Announcement to Top?</label>
-                <select id="new-pinned">
-                    <option value="false">Normal Announcement</option>
-                    <option value="true">📌 PIN TO TOP ⭐</option>
+                    <label>Read Time</label>
+                    <input type="text" id="new-time" value="4 min read">
+
+                    <label>Snippet</label>
+                    <input type="text" id="new-snippet" placeholder="Preview snippet...">
+                </div>
+
+                <label>Upload Photos from Gallery (Up to 3 Photos)</label>
+                <input type="file" id="new-image-files" accept="image/*" multiple>
+
+                <div id="modal-photo-list"></div>
+
+                <label>Photo Position Inside Entry</label>
+                <select id="new-image-pos">
+                    <option value="bottom">Bottom (End of Showcase ✨)</option>
+                    <option value="top">Top (Header Photo)</option>
+                    <option value="middle">Middle (After Paragraph 1)</option>
                 </select>
+
+                <div id="announcement-only-fields" style="display: none; margin-top: 1rem;">
+                    <label>Pin Announcement to Top?</label>
+                    <select id="new-pinned">
+                        <option value="false">Normal Announcement</option>
+                        <option value="true">📌 PIN TO TOP ⭐</option>
+                    </select>
+                </div>
+
+                <label style="margin-top: 1rem; display: block;">Full Content / Announcement Text</label>
+                <textarea id="new-content" placeholder="Write full content here..."></textarea>
             </div>
 
-            <label style="margin-top: 1rem; display: block;">Full Content / Announcement Text</label>
-            <textarea id="new-content" placeholder="Write your full essay or announcement here..."></textarea>
-
-            <div class="modal-buttons">
-                <button class="modal-btn cancel" onclick="closeAdminModal()">Cancel</button>
+            <div class="modal-buttons" style="margin-top: 1.5rem;">
+                <button class="modal-btn cancel" onclick="closeAdminModal()">Close / Cancel</button>
                 <button class="modal-btn save" id="save-post-btn" onclick="savePostData()">Save Entry 🚀</button>
             </div>
         </div>
@@ -797,7 +1061,7 @@
     <footer class="site-footer">
         <div>
             <span class="footer-brand" onclick="switchView('home')">falafelwithfeelings</span>
-            <div style="font-size: 0.85rem; margin-top: 0.2rem;">feelings served fresh, daily (or whenever I feel like it)</div>
+            <div style="font-size: 0.85rem; margin-top: 0.2rem; opacity: 0.8;">feelings served fresh, daily (or whenever I feel like it)</div>
         </div>
         <div class="footer-nav">
             <a onclick="switchView('blog')">Blog</a>
@@ -812,13 +1076,81 @@
     </footer>
 
     <script>
-        // JSONBin Cloud Credentials
         const BIN_ID = '6aca4a7dac6210605a2587db';
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
 
         let currentPostPhotos = [];
 
-        // Generate 15 Multi-Speed, Multi-Shape Bouncing Emus (Only called on Announcements view)
+        function changeMoodTheme(mood) {
+            document.body.className = 'mood-' + mood;
+            localStorage.setItem('site_mood', mood);
+            applyBackgroundState();
+
+            const picker = document.getElementById('mood-picker');
+            if (picker) picker.value = mood;
+        }
+
+        function applyBackgroundState() {
+            const hideCustom = localStorage.getItem('hide_custom_bg') === 'true';
+            const savedBg = localStorage.getItem('custom_bg_val');
+            const savedType = localStorage.getItem('custom_bg_type');
+            
+            const btn = document.getElementById('bg-toggle-btn');
+            if (btn) {
+                btn.innerText = hideCustom ? "✨ Show Custom BG" : "🚫 Hide Custom BG";
+            }
+
+            if (hideCustom || !savedBg) {
+                document.body.style.backgroundImage = '';
+                document.body.style.backgroundColor = '';
+            } else {
+                if (savedType === 'image') {
+                    document.body.style.backgroundImage = `url('${savedBg}')`;
+                    document.body.style.backgroundColor = '';
+                } else if (savedType === 'color') {
+                    document.body.style.backgroundImage = '';
+                    document.body.style.backgroundColor = savedBg;
+                }
+            }
+        }
+
+        function toggleCustomBgVisibility() {
+            const currentHideState = localStorage.getItem('hide_custom_bg') === 'true';
+            localStorage.setItem('hide_custom_bg', !currentHideState);
+            applyBackgroundState();
+        }
+
+        async function applyAdminCustomBackground() {
+            const urlInput = document.getElementById('admin-custom-bg-input').value.trim();
+            const fileInput = document.getElementById('admin-custom-bg-file').files[0];
+
+            if (fileInput) {
+                const compressedDataUrl = await compressImage(fileInput, 1200, 0.85);
+                localStorage.setItem('custom_bg_val', compressedDataUrl);
+                localStorage.setItem('custom_bg_type', 'image');
+            } else if (urlInput) {
+                if (urlInput.startsWith('http') || urlInput.includes('png') || urlInput.includes('jpg') || urlInput.includes('webp') || urlInput.includes('data:image')) {
+                    localStorage.setItem('custom_bg_val', urlInput);
+                    localStorage.setItem('custom_bg_type', 'image');
+                } else {
+                    localStorage.setItem('custom_bg_val', urlInput);
+                    localStorage.setItem('custom_bg_type', 'color');
+                }
+            } else {
+                return;
+            }
+
+            localStorage.setItem('hide_custom_bg', 'false');
+            applyBackgroundState();
+            alert("Custom background successfully updated for everyone! ✨");
+            closeAdminModal();
+        }
+
+        function loadSavedBackground() {
+            const savedMood = localStorage.getItem('site_mood') || 'pink';
+            changeMoodTheme(savedMood);
+        }
+
         function initBouncingEmus() {
             const emuContainer = document.getElementById('emu-layer');
             if (!emuContainer) return;
@@ -828,16 +1160,11 @@
                 const img = document.createElement('img');
                 img.className = 'bouncing-emu';
                 img.src = "EMU/NO EMU.png"; 
-                img.onerror = () => {
-                    img.style.display = 'none';
-                };
+                img.onerror = () => { img.style.display = 'none'; };
 
                 const size = Math.floor(Math.random() * 45) + 50;
                 img.style.width = size + 'px';
                 img.style.height = size + 'px';
-
-                const shapes = ['50%', '20px', '35% 65% 50% 50% / 50% 50% 50% 50%', '30px 10px 30px 10px'];
-                img.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
 
                 const bounceSpeed = (Math.random() * 3 + 2).toFixed(2);
                 const floatSpeed = (Math.random() * 6 + 4).toFixed(2);
@@ -851,7 +1178,6 @@
             }
         }
 
-        // Aspect-Ratio Preserving Compression Helper
         function compressImage(file, maxDimension = 1000, quality = 0.8) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -885,37 +1211,19 @@
             });
         }
 
-        // Scroll "Throw into Existence" Observer
-        const throwObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('thrown-in');
-                }
-            });
-        }, { threshold: 0.15 });
-
-        function observePhotos() {
-            document.querySelectorAll('.throw-photo').forEach(img => {
-                throwObserver.observe(img);
-            });
-        }
-
-        // Falling Shapes Setup
         function initFallingBackground() {
             const bgContainer = document.getElementById('falling-bg');
             if(!bgContainer) return;
             bgContainer.innerHTML = '';
             
             const shapes = ['★', '✦', '✧', '●', '•'];
-            const pastelColors = ['#f472b6', '#c084fc', '#fef08a', '#6ee7b7', '#93c5fd', '#fbcfe8'];
+            const pastelColors = ['#f472b6', '#a855f7', '#fef08a', '#65a30d', '#60a5fa', '#fbcfe8'];
 
             for (let i = 0; i < 30; i++) {
                 const span = document.createElement('span');
                 span.className = 'bg-shape';
                 span.innerText = shapes[Math.floor(Math.random() * shapes.length)];
-                
-                const size = Math.floor(Math.random() * 22) + 16; 
-                span.style.fontSize = size + 'px';
+                span.style.fontSize = (Math.floor(Math.random() * 22) + 16) + 'px';
                 span.style.color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
                 span.style.left = Math.random() * 95 + 'vw';
                 
@@ -933,21 +1241,17 @@
             document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
             
             const targetView = document.getElementById('view-' + viewName);
-            if(targetView) {
-                targetView.classList.add('active-view');
-            }
+            if(targetView) targetView.classList.add('active-view');
+            
             const navEl = document.getElementById('nav-' + viewName);
-            if(navEl) {
-                navEl.classList.add('active');
-            }
+            if(navEl) navEl.classList.add('active');
 
-            // Contain Emus ONLY to Announcements View
             const emuContainer = document.getElementById('emu-layer');
             if (emuContainer) {
                 if (viewName === 'announcements') {
                     initBouncingEmus();
                 } else {
-                    emuContainer.innerHTML = ''; // Clear Emus everywhere else
+                    emuContainer.innerHTML = '';
                 }
             }
             
@@ -958,21 +1262,17 @@
         async function getPosts() {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                    headers: {
-                        'X-Master-Key': MASTER_KEY
-                    }
+                    headers: { 'X-Master-Key': MASTER_KEY }
                 });
                 const data = await res.json();
                 return data.record || [];
             } catch (err) {
-                console.error("Error loading posts from cloud:", err);
                 return [];
             }
         }
 
         async function renderAllPosts() {
             const items = await getPosts();
-            
             const blogPosts = items.filter(p => p.type !== 'announcement');
             const announcements = items.filter(p => p.type === 'announcement');
 
@@ -980,52 +1280,28 @@
             if (homeGrid) {
                 let homeHtml = '';
                 blogPosts.slice(0, 3).forEach((p) => {
-                    const originalIndex = items.indexOf(p);
-                    homeHtml += createCardHtml(p, originalIndex);
+                    homeHtml += createCardHtml(p, items.indexOf(p));
                 });
                 homeGrid.innerHTML = homeHtml;
             }
 
             const blogContainer = document.getElementById('dynamic-blog-container');
             if (blogContainer) {
-                if (blogPosts.length === 0) {
-                    blogContainer.innerHTML = `
-                        <div style="text-align:center; padding:4rem 1rem;">
-                            <div style="font-size:3rem; margin-bottom:0.5rem;">🧆</div>
-                            <p style="color:#6b7280; font-weight:600;">no posts yet — check back soon!</p>
-                        </div>
-                    `;
-                } else {
-                    let blogHtml = '<div class="blog-grid">';
-                    blogPosts.forEach((p) => {
-                        const originalIndex = items.indexOf(p);
-                        blogHtml += createCardHtml(p, originalIndex);
-                    });
-                    blogHtml += '</div>';
-                    blogContainer.innerHTML = blogHtml;
-                }
+                let blogHtml = '<div class="blog-grid">';
+                blogPosts.forEach((p) => {
+                    blogHtml += createCardHtml(p, items.indexOf(p));
+                });
+                blogHtml += '</div>';
+                blogContainer.innerHTML = blogHtml;
             }
 
             const annContainer = document.getElementById('announcements-wall-container');
             if (annContainer) {
-                if (announcements.length === 0) {
-                    annContainer.innerHTML = `
-                        <div style="text-align:center; padding:4rem 1rem; background:white; border-radius:24px; border:2px dashed #f472b6;">
-                            <div style="font-size:3.5rem; margin-bottom:0.5rem;">⭐</div>
-                            <h3 style="color:#ec4899; margin:0;">WONDERHOI! No announcements yet!</h3>
-                            <p style="color:#6b7280; font-weight:600; margin-top:0.5rem;">no new announcements from me yet! better go conduct a welfare check soon!!!</p>
-                        </div>
-                    `;
-                } else {
-                    const sortedAnn = [...announcements].sort((a, b) => (b.pinned === true ? 1 : 0) - (a.pinned === true ? 1 : 0));
-                    let annHtml = '';
-                    sortedAnn.forEach((ann) => {
-                        const originalIndex = items.indexOf(ann);
-                        annHtml += createAnnouncementCardHtml(ann, originalIndex);
-                    });
-                    annContainer.innerHTML = annHtml;
-                    setTimeout(observePhotos, 100);
-                }
+                let annHtml = '';
+                announcements.forEach((ann) => {
+                    annHtml += createAnnouncementCardHtml(ann, items.indexOf(ann));
+                });
+                annContainer.innerHTML = annHtml;
             }
 
             checkAdminStateUI();
@@ -1033,13 +1309,11 @@
 
         function createCardHtml(p, originalIndex) {
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-            
             let tagsHtml = '';
             if (p.hashtags && Array.isArray(p.hashtags) && p.hashtags.length > 0) {
                 tagsHtml = '<div class="card-hashtags">';
                 p.hashtags.forEach(tag => {
-                    const cleanTag = tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim();
-                    tagsHtml += `<span class="mini-hashtag">${cleanTag}</span>`;
+                    tagsHtml += `<span class="mini-hashtag">${tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim()}</span>`;
                 });
                 tagsHtml += '</div>';
             }
@@ -1054,7 +1328,7 @@
                     <div>
                         ${coverImgHtml}
                         <div class="card-tag-row">
-                            <span class="card-tag ${p.tag || 'feelings'}">${p.tagText || (p.tag ? p.tag.toUpperCase() : 'FEELINGS')}</span>
+                            <span class="card-tag ${p.tag || 'feelings'}">${p.tagText || 'FEELINGS'}</span>
                             <span class="read-time">${p.time || '4 min read'}</span>
                         </div>
                         <h3>${p.title}</h3>
@@ -1064,8 +1338,8 @@
                     <div class="card-footer-row">
                         <a onclick="openPostReader(${originalIndex})" class="read-more">read more →</a>
                         <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
-                            <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">Edit ✏️</button>
-                            <button class="delete-post-btn" onclick="deletePost(${originalIndex})">Delete 🗑️</button>
+                            <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
+                            <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
                         </div>
                     </div>
                 </div>
@@ -1081,30 +1355,9 @@
             if (photosArr.length > 0) {
                 galleryHtml = '<div class="photo-gallery-container">';
                 photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="throw-photo" alt="Announcement Photo">`;
+                    galleryHtml += `<img src="${url}" class="throw-photo" alt="Photo">`;
                 });
                 galleryHtml += '</div>';
-            }
-
-            const pos = ann.imagePos || 'bottom';
-            const fullText = ann.content || '';
-            let contentBodyHtml = '';
-
-            if (photosArr.length === 0) {
-                contentBodyHtml = `<div>${fullText}</div>`;
-            } else if (pos === 'top') {
-                contentBodyHtml = `${galleryHtml}<div>${fullText}</div>`;
-            } else if (pos === 'bottom') {
-                contentBodyHtml = `<div>${fullText}</div>${galleryHtml}`;
-            } else if (pos === 'middle') {
-                const paragraphs = fullText.split('\n\n');
-                if (paragraphs.length > 1) {
-                    const firstPart = paragraphs[0];
-                    const restPart = paragraphs.slice(1).join('\n\n');
-                    contentBodyHtml = `<div>${firstPart}</div>${galleryHtml}<div>${restPart}</div>`;
-                } else {
-                    contentBodyHtml = `<div>${fullText}</div>${galleryHtml}`;
-                }
             }
 
             return `
@@ -1112,11 +1365,11 @@
                     ${isPinned ? '<div class="pin-badge">📌 PINNED ANNOUNCEMENT ⭐</div>' : ''}
                     <div class="announcement-date">⭐ ${ann.date || 'WONDERHOI UPDATE'}</div>
                     <h2 class="announcement-title">${ann.title}</h2>
-                    <div class="announcement-body">${contentBodyHtml}</div>
+                    <div class="announcement-body">${ann.content}${galleryHtml}</div>
                     
                     <div style="margin-top:1.5rem; display:${isAdmin ? 'flex' : 'none'}; justify-content:flex-end; gap:0.5rem;">
-                        <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">Edit ✏️</button>
-                        <button class="delete-post-btn" onclick="deletePost(${originalIndex})">Delete 🗑️</button>
+                        <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
+                        <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
                     </div>
                 </div>
             `;
@@ -1131,97 +1384,64 @@
             document.getElementById('reader-time').innerText = post.time || '';
             
             const tagEl = document.getElementById('reader-tag-row');
-            tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || (post.tag ? post.tag.toUpperCase() : 'FEELINGS')}</span>`;
-
-            const readerHashtags = document.getElementById('reader-hashtags');
-            if (post.hashtags && Array.isArray(post.hashtags) && post.hashtags.length > 0) {
-                let rTagsHtml = '';
-                post.hashtags.forEach(tag => {
-                    const cleanTag = tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim();
-                    rTagsHtml += `<span class="mini-hashtag">${cleanTag}</span>`;
-                });
-                readerHashtags.innerHTML = rTagsHtml;
-            } else {
-                readerHashtags.innerHTML = '';
-            }
+            tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || 'FEELINGS'}</span>`;
 
             const photosArr = post.images || (post.imageUrl ? [post.imageUrl] : []);
             let galleryHtml = '';
             if (photosArr.length > 0) {
                 galleryHtml = '<div class="photo-gallery-container">';
                 photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="throw-photo" alt="Post Photo">`;
+                    galleryHtml += `<img src="${url}" class="throw-photo" alt="Photo">`;
                 });
                 galleryHtml += '</div>';
             }
 
             const contentEl = document.getElementById('reader-content-wrapper');
-            const pos = post.imagePos || 'bottom';
-            const fullText = post.content || post.snippet;
-
-            if (photosArr.length === 0) {
-                contentEl.innerHTML = `<div>${fullText}</div>`;
-            } else if (pos === 'top') {
-                contentEl.innerHTML = `${galleryHtml}<div>${fullText}</div>`;
-            } else if (pos === 'bottom') {
-                contentEl.innerHTML = `<div>${fullText}</div>${galleryHtml}`;
-            } else if (pos === 'middle') {
-                const paragraphs = fullText.split('\n\n');
-                if (paragraphs.length > 1) {
-                    const firstPart = paragraphs[0];
-                    const restPart = paragraphs.slice(1).join('\n\n');
-                    contentEl.innerHTML = `<div>${firstPart}</div>${galleryHtml}<div>${restPart}</div>`;
-                } else {
-                    contentEl.innerHTML = `<div>${fullText}</div>${galleryHtml}`;
-                }
-            }
+            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}`;
 
             switchView('post-reader');
-            setTimeout(observePhotos, 100);
         }
 
         let clickCount = 0;
         let clickTimer = null;
-        const secretTrigger = document.getElementById('secret-trigger');
-        if(secretTrigger) {
-            secretTrigger.addEventListener('click', () => {
-                clickCount++;
-                clearTimeout(clickTimer);
-                if (clickCount >= 3) {
-                    clickCount = 0;
-                    const pwd = prompt("Enter secret blogger password:");
-                    if (pwd === "falafel123") {
-                        sessionStorage.setItem('falafel_admin', 'true');
-                        alert("Secret admin mode unlocked!");
-                        renderAllPosts();
-                    } else if (pwd !== null) {
-                        alert("Wrong password bestie, nice try.");
-                    }
-                } else {
-                    clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+        document.getElementById('secret-trigger').addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            if (clickCount >= 3) {
+                clickCount = 0;
+                const pwd = prompt("Enter secret blogger password:");
+                if (pwd === "falafel123") {
+                    sessionStorage.setItem('falafel_admin', 'true');
+                    alert("Admin unlocked!");
+                    renderAllPosts();
                 }
-            });
-        }
+            } else {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+            }
+        });
 
         function checkAdminStateUI() {
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             const badge = document.getElementById('admin-indicator');
-            if(badge) {
-                badge.style.display = isAdmin ? 'block' : 'none';
-            }
+            if(badge) badge.style.display = isAdmin ? 'block' : 'none';
         }
 
         function toggleModalTypeFields() {
             const type = document.getElementById('new-entry-type').value;
-            const blogFields = document.getElementById('blog-only-fields');
-            const annFields = document.getElementById('announcement-only-fields');
-            
-            if (type === 'announcement') {
-                blogFields.style.display = 'none';
-                annFields.style.display = 'block';
+            const customBgFields = document.getElementById('custom-bg-admin-fields');
+            const postFields = document.getElementById('post-content-admin-wrapper');
+            const saveBtn = document.getElementById('save-post-btn');
+
+            if (type === 'custom-bg') {
+                customBgFields.style.display = 'block';
+                postFields.style.display = 'none';
+                saveBtn.style.display = 'none';
             } else {
-                blogFields.style.display = 'block';
-                annFields.style.display = 'none';
+                customBgFields.style.display = 'none';
+                postFields.style.display = 'block';
+                saveBtn.style.display = 'inline-block';
+                document.getElementById('blog-only-fields').style.display = type === 'announcement' ? 'none' : 'block';
+                document.getElementById('announcement-only-fields').style.display = type === 'announcement' ? 'block' : 'none';
             }
         }
 
@@ -1229,15 +1449,15 @@
             const container = document.getElementById('modal-photo-list');
             if (!container) return;
             if (currentPostPhotos.length === 0) {
-                container.innerHTML = '<p style="color:#9ca3af; font-size:0.85rem; margin-top:-0.5rem;">No photos attached yet.</p>';
+                container.innerHTML = '<p style="opacity:0.6; font-size:0.85rem;">No photos attached yet.</p>';
                 return;
             }
             let html = '';
             currentPostPhotos.forEach((url, i) => {
                 html += `
                     <div class="photo-slot-item">
-                        <img src="${url}" class="photo-slot-preview" alt="Thumbnail">
-                        <span style="font-size:0.85rem; font-weight:600; color:#4b5563;">Photo #${i + 1}</span>
+                        <img src="${url}" class="photo-slot-preview" alt="Thumb">
+                        <span style="font-size:0.85rem; font-weight:600;">Photo #${i + 1}</span>
                         <button class="remove-single-photo-btn" onclick="removePhotoFromList(${i})">Remove 🗑️</button>
                     </div>
                 `;
@@ -1251,24 +1471,15 @@
         }
 
         function openNewPostModal() {
-            document.getElementById('modal-heading').innerText = "✨ Add New Entry";
-            document.getElementById('modal-sub').innerText = "Drop a new blog post or announcement into your cloud feed.";
             document.getElementById('edit-index').value = "";
-            document.getElementById('new-entry-type').value = "blog";
             document.getElementById('new-title').value = "";
-            document.getElementById('new-tag').value = "feelings";
-            document.getElementById('new-show-cover').value = "true";
-            document.getElementById('new-image-files').value = "";
-            document.getElementById('new-image-pos').value = "bottom";
-            document.getElementById('new-hashtags').value = "#feelings, #burnout";
-            document.getElementById('new-time').value = "4 min read";
-            document.getElementById('new-snippet').value = "";
-            document.getElementById('new-pinned').value = "false";
             document.getElementById('new-content').value = "";
-            
-            toggleModalTypeFields();
+            document.getElementById('admin-custom-bg-input').value = "";
+            document.getElementById('admin-custom-bg-file').value = "";
             currentPostPhotos = [];
             renderModalPhotoList();
+            document.getElementById('new-entry-type').value = "blog";
+            toggleModalTypeFields();
             document.getElementById('admin-modal').style.display = 'flex';
         }
 
@@ -1277,25 +1488,13 @@
             const post = posts[index];
             if(!post) return;
 
-            document.getElementById('modal-heading').innerText = "✏️ Edit Entry";
-            document.getElementById('modal-sub').innerText = "Update your post or announcement.";
             document.getElementById('edit-index').value = index;
             document.getElementById('new-entry-type').value = post.type || "blog";
             document.getElementById('new-title').value = post.title;
-            document.getElementById('new-tag').value = post.tag || "feelings";
-            document.getElementById('new-show-cover').value = (post.showCover !== false) ? "true" : "false";
-            document.getElementById('new-image-files').value = "";
-            document.getElementById('new-image-pos').value = post.imagePos || "bottom";
-            document.getElementById('new-hashtags').value = post.hashtags ? post.hashtags.join(', ') : '';
-            document.getElementById('new-time').value = post.time || "4 min read";
-            document.getElementById('new-snippet').value = post.snippet || "";
-            document.getElementById('new-pinned').value = (post.pinned === true || post.pinned === 'true') ? "true" : "false";
-            document.getElementById('new-content').value = post.content || post.snippet || "";
-            
-            toggleModalTypeFields();
+            document.getElementById('new-content').value = post.content || post.snippet;
             currentPostPhotos = post.images ? [...post.images] : (post.imageUrl ? [post.imageUrl] : []);
             renderModalPhotoList();
-
+            toggleModalTypeFields();
             document.getElementById('admin-modal').style.display = 'flex';
         }
 
@@ -1304,26 +1503,15 @@
         }
 
         async function deletePost(index) {
-            if (confirm("Are you sure you want to delete this entry? No turning back bestie!")) {
+            if (confirm("Delete this entry?")) {
                 const posts = await getPosts();
                 posts.splice(index, 1);
-
-                try {
-                    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Master-Key': MASTER_KEY
-                        },
-                        body: JSON.stringify(posts)
-                    });
-                    if (!res.ok) throw new Error('Failed to update bin');
-                    alert("Deleted successfully from cloud!");
-                    renderAllPosts();
-                } catch (err) {
-                    alert("Failed to delete entry from cloud.");
-                    console.error(err);
-                }
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
+                    body: JSON.stringify(posts)
+                });
+                renderAllPosts();
             }
         }
 
@@ -1334,105 +1522,57 @@
             const content = document.getElementById('new-content').value;
             const saveBtn = document.getElementById('save-post-btn');
 
-            if(!title || !content) {
-                alert("Please fill in the title and content!");
-                return;
-            }
+            if(!title || !content) return;
 
-            saveBtn.innerText = "Compressing & Saving... ⏳";
+            saveBtn.innerText = "Saving... ⏳";
             saveBtn.disabled = true;
 
             const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            let postObj = { type: entryType, title, content, date: todayStr };
 
-            let postObj = {
-                type: entryType,
-                title,
-                content,
-                date: todayStr
-            };
-
-            const imageFilesInput = document.getElementById('new-image-files');
-            const files = Array.from(imageFilesInput.files);
-            const imagePos = document.getElementById('new-image-pos').value;
-
+            const files = Array.from(document.getElementById('new-image-files').files);
             let newCompressedPhotos = [];
-            const maxNewSlots = Math.max(0, 3 - currentPostPhotos.length);
-            const filesToProcess = files.slice(0, maxNewSlots);
-
-            for (let file of filesToProcess) {
-                try {
-                    const compressed = await compressImage(file, 1000, 0.8);
-                    newCompressedPhotos.push(compressed);
-                } catch (e) {
-                    console.error("Failed to compress image", e);
-                }
+            for (let file of files.slice(0, Math.max(0, 3 - currentPostPhotos.length))) {
+                newCompressedPhotos.push(await compressImage(file, 1000, 0.8));
             }
 
             const finalPhotos = currentPostPhotos.concat(newCompressedPhotos).slice(0, 3);
             postObj.images = finalPhotos;
             postObj.imageUrl = finalPhotos[0] || '';
-            postObj.imagePos = imagePos || 'bottom';
 
             if (entryType === 'blog') {
                 const tag = document.getElementById('new-tag').value;
-                const showCover = document.getElementById('new-show-cover').value === "true";
-                const rawHashtags = document.getElementById('new-hashtags').value;
-                const time = document.getElementById('new-time').value;
-                const snippet = document.getElementById('new-snippet').value || content.substring(0, 100) + '...';
-
-                const hashtags = rawHashtags ? rawHashtags.split(',').map(h => h.trim()).filter(h => h.length > 0) : [];
-
                 postObj.tag = tag;
                 postObj.tagText = tag.toUpperCase();
-                postObj.showCover = showCover;
-                postObj.hashtags = hashtags;
-                postObj.time = time || '4 min read';
-                postObj.snippet = snippet;
+                postObj.showCover = document.getElementById('new-show-cover').value === "true";
+                postObj.hashtags = document.getElementById('new-hashtags').value.split(',').map(h => h.trim()).filter(Boolean);
+                postObj.time = document.getElementById('new-time').value || '4 min read';
+                postObj.snippet = document.getElementById('new-snippet').value || content.substring(0, 100) + '...';
             } else {
-                const isPinned = document.getElementById('new-pinned').value === "true";
-                postObj.pinned = isPinned;
+                postObj.pinned = document.getElementById('new-pinned').value === "true";
                 postObj.snippet = content.substring(0, 120);
             }
 
             const posts = await getPosts();
-            if (editIndex !== "") {
-                posts[editIndex] = postObj;
-            } else {
-                posts.unshift(postObj);
-            }
+            if (editIndex !== "") posts[editIndex] = postObj;
+            else posts.unshift(postObj);
 
-            try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': MASTER_KEY
-                    },
-                    body: JSON.stringify(posts)
-                });
-                if (!res.ok) throw new Error('Failed to update bin');
-                alert("Saved directly to the cloud bin! 🚀");
-                closeAdminModal();
-                renderAllPosts();
-                if (entryType === 'announcement') {
-                    switchView('announcements');
-                } else {
-                    switchView('blog');
-                }
-            } catch (err) {
-                alert("Failed to save entry to cloud. Check your connection!");
-                console.error(err);
-            } finally {
-                saveBtn.innerText = "Save Entry 🚀";
-                saveBtn.disabled = false;
-            }
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
+                body: JSON.stringify(posts)
+            });
+
+            closeAdminModal();
+            renderAllPosts();
+            switchView(entryType === 'announcement' ? 'announcements' : 'blog');
+            saveBtn.innerText = "Save Entry 🚀";
+            saveBtn.disabled = false;
         }
 
-        // Initialize Everything on Load
         window.addEventListener('DOMContentLoaded', () => {
+            loadSavedBackground();
             initFallingBackground();
-            // Emus won't load on initial home load unless user clicks Announcements, 
-            // but you can call initBouncingEmus() here if you want them on home too.
             renderAllPosts();
         });
     </script>
