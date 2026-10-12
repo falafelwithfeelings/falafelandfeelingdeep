@@ -170,29 +170,54 @@
             50% { transform: translateY(-6px); }
         }
 
-        /* "Throw into Existence" + Real Floating Animation for Photos */
+        /* Thrown & Floating Photos Arranged in a Row */
+        .photo-gallery-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        .throw-photo {
+            padding: 6px;
+            border-radius: 20px;
+            width: 220px;
+            height: auto;
+            max-height: 280px;
+            object-fit: contain;
+            display: block;
+            opacity: 0;
+            animation: throwAndFloat 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, realFloat 5s ease-in-out infinite;
+        }
         @keyframes throwAndFloat {
             0% {
-                transform: scale(0.2) translateY(-300px) rotate(-25deg);
+                transform: scale(0.2) translateY(-200px) rotate(-15deg);
                 opacity: 0;
             }
             60% {
-                transform: scale(1.08) translateY(15px) rotate(6deg);
+                transform: scale(1.05) translateY(10px) rotate(4deg);
                 opacity: 1;
             }
-            80% {
-                transform: scale(0.97) translateY(-5px) rotate(-2deg);
-            }
             100% {
-                transform: scale(1) translateY(0px) rotate(-3deg);
+                transform: scale(1) translateY(0px) rotate(-2deg);
             }
+        }
+        @keyframes realFloat {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(-2deg); }
         }
 
-        @keyframes realFloat {
-            0% { transform: translateY(0px) rotate(-3deg); }
-            50% { transform: translateY(-14px) rotate(3deg); }
-            100% { transform: translateY(0px) rotate(-3deg); }
-        }
+        body.mood-pink .throw-photo { border: 3px dashed #f472b6; background: #fff0f6; box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3); }
+        body.mood-midnight .throw-photo { border: 3px dashed #a855f7; background: #1e1b2e; box-shadow: 0 10px 20px rgba(168, 85, 247, 0.35); }
+        body.mood-matcha .throw-photo { border: 3px dashed #65a30d; background: #f4fbf5; box-shadow: 0 10px 20px rgba(101, 163, 13, 0.3); }
+        body.mood-lemonade .throw-photo { border: 3px dashed #ca8a04; background: #fffef7; box-shadow: 0 10px 20px rgba(202, 138, 4, 0.3); }
+
+        .throw-photo:nth-child(1) { animation-delay: 0.2s, 1.4s; }
+        .throw-photo:nth-child(2) { animation-delay: 0.5s, 1.7s; }
+        .throw-photo:nth-child(3) { animation-delay: 0.8s, 2.0s; }
 
         /* Header Navigation */
         .site-header {
@@ -436,34 +461,6 @@
         }
         .edit-post-btn { background: #fef3c7; color: #d97706; }
         .delete-post-btn { background: #fee2e2; color: #dc2626; }
-
-        /* Sequential Thrown & Floating Photos */
-        .photo-gallery-container {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            align-items: center;
-            margin: 2rem 0;
-        }
-        .throw-photo {
-            padding: 6px;
-            border-radius: 20px;
-            max-width: 100%;
-            height: auto;
-            max-height: 480px;
-            object-fit: contain;
-            display: block;
-            opacity: 0;
-            animation: throwAndFloat 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, realFloat 5s ease-in-out infinite;
-        }
-        body.mood-pink .throw-photo { border: 3px dashed #f472b6; background: #fff0f6; box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3); }
-        body.mood-midnight .throw-photo { border: 3px dashed #a855f7; background: #1e1b2e; box-shadow: 0 10px 20px rgba(168, 85, 247, 0.35); }
-        body.mood-matcha .throw-photo { border: 3px dashed #65a30d; background: #f4fbf5; box-shadow: 0 10px 20px rgba(101, 163, 13, 0.3); }
-        body.mood-lemonade .throw-photo { border: 3px dashed #ca8a04; background: #fffef7; box-shadow: 0 10px 20px rgba(202, 138, 4, 0.3); }
-
-        .throw-photo:nth-child(1) { animation-delay: 0.2s, 1.4s; }
-        .throw-photo:nth-child(2) { animation-delay: 0.8s, 2.0s; }
-        .throw-photo:nth-child(3) { animation-delay: 1.4s, 2.6s; }
 
         /* Reader View */
         .post-reader-container {
@@ -1152,7 +1149,6 @@
             let bgType = 'image';
 
             if (fileInput) {
-                // Higher resolution and better quality for HD wallpapers
                 bgVal = await compressImage(fileInput, 1400, 0.88);
                 bgType = 'image';
             } else if (urlInput) {
@@ -1211,7 +1207,6 @@
             }
         }
 
-        // Higher quality compressor specifically for background wallpapers
         function compressImage(file, maxDimension = 1400, quality = 0.88) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -1253,7 +1248,6 @@
             const filesToProcess = files.slice(0, remainingSlots);
 
             for (let file of filesToProcess) {
-                // Keep standard compression for blog post uploads to prevent size errors
                 const compressedUrl = await compressImage(file, 600, 0.7);
                 currentPostPhotos.push(compressedUrl);
             }
