@@ -157,30 +157,28 @@
             100% { margin-left: 60px; }
         }
 
-        /* 🎀 SUPER CUTESY PHOTO ANIMATIONS: Bouncy Throw-In + Whimsical Float */
-        @keyframes cutesyFloatAndWobble {
-            0% { transform: translateY(0px) rotate(-1.5deg) scale(1); }
-            50% { transform: translateY(-9px) rotate(2deg) scale(1.02); }
-            100% { transform: translateY(0px) rotate(-1.5deg) scale(1); }
+        /* 🪶 ETHEREAL, WEIGHTLESS, FLOATY PHOTO ANIMATIONS ✨ */
+        @keyframes etherealFloat {
+            0%, 100% { transform: translateY(0px) rotate(-0.8deg); }
+            50% { transform: translateY(-10px) rotate(0.8deg); }
         }
 
-        @keyframes cutesyThrowInToExistence {
-            0% { opacity: 0; transform: scale(0.3) translateY(60px) rotate(-25deg); }
-            60% { opacity: 1; transform: scale(1.08) translateY(-10px) rotate(6deg); }
-            80% { transform: scale(0.96) translateY(4px) rotate(-2deg); }
-            100% { opacity: 1; transform: scale(1) translateY(0px) rotate(0deg); }
+        @keyframes etherealFadeIn {
+            0% { opacity: 0; transform: translateY(20px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0px) scale(1); }
         }
 
         .cutesy-snapshot, .card-cover-img {
-            animation: cutesyThrowInToExistence 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.35) forwards, cutesyFloatAndWobble 4s ease-in-out infinite;
-            animation-delay: 0s, 0.9s;
-            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.35), box-shadow 0.35s ease;
+            animation: etherealFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, etherealFloat 6s ease-in-out infinite;
+            animation-delay: 0s, 1.2s;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease, filter 0.5s ease;
             cursor: zoom-in;
             transform-origin: center center;
         }
 
         .cutesy-snapshot:hover, .card-cover-img:hover {
-            transform: scale(1.15) rotate(0deg) !important;
+            transform: translateY(-6px) scale(1.03) rotate(0deg) !important;
+            filter: brightness(1.04);
             z-index: 30 !important;
         }
 
@@ -193,15 +191,15 @@
             position: relative;
         }
 
-        body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 12px 28px rgba(244, 114, 182, 0.4); }
-        body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 12px 28px rgba(168, 85, 247, 0.45); }
-        body.mood-matcha .cutesy-snapshot { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 12px 28px rgba(101, 163, 13, 0.4); }
-        body.mood-lemonade .cutesy-snapshot { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 12px 28px rgba(202, 138, 4, 0.4); }
+        body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 8px 24px rgba(244, 114, 182, 0.2); }
+        body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 8px 24px rgba(168, 85, 247, 0.25); }
+        body.mood-matcha .cutesy-snapshot { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 8px 24px rgba(101, 163, 13, 0.2); }
+        body.mood-lemonade .cutesy-snapshot { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 8px 24px rgba(202, 138, 4, 0.2); }
 
-        /* Overlapping Angles */
-        .cutesy-snapshot:nth-child(1) { transform: rotate(-7deg) translateX(15px); }
-        .cutesy-snapshot:nth-child(2) { transform: rotate(5deg) translateX(-10px) translateY(-8px); }
-        .cutesy-snapshot:nth-child(3) { transform: rotate(-4deg) translateX(-25px) translateY(8px); }
+        /* Gentle Overlapping Angles */
+        .cutesy-snapshot:nth-child(1) { transform: rotate(-3deg) translateX(12px); }
+        .cutesy-snapshot:nth-child(2) { transform: rotate(2deg) translateX(-8px) translateY(-4px); }
+        .cutesy-snapshot:nth-child(3) { transform: rotate(-2deg) translateX(-18px) translateY(4px); }
 
         /* Layering */
         header, .view, .site-footer, .modal-overlay {
@@ -258,7 +256,7 @@
             padding: 0.35rem 0.55rem;
             border-radius: 50%;
             font-size: 1.2rem;
-            animation: cutesyFloatAndWobble 3s ease-in-out infinite;
+            animation: etherealFloat 4s ease-in-out infinite;
         }
         .nav-links {
             display: flex;
@@ -818,7 +816,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            animation: cutesyThrowInToExistence 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.35);
+            animation: etherealFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .lightbox-content-box::before {
             content: '🎀✧ sparkle view ✧🎀';
