@@ -992,10 +992,10 @@
                 <label>Option A: Paste Wallpaper URL or Color Code</label>
                 <input type="text" id="admin-custom-bg-input" placeholder="e.g., #ffe4e1 or https://image.url/wallpaper.jpg">
                 
-                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper from Local Storage (Auto-compressed ✨)</label>
+                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper from Local Storage (Synced for Everyone ✨)</label>
                 <input type="file" id="admin-custom-bg-file" accept="image/*">
 
-                <button type="button" class="pink-pill-btn" style="width: 100%; margin-top: 1rem; padding: 0.6rem;" onclick="applyAdminCustomBackground()">Apply & Save Custom BG for Everyone! 🎨</button>
+                <button type="button" class="pink-pill-btn" style="width: 100%; margin-top: 1rem; padding: 0.6rem;" onclick="applyAdminCustomBackground()">Apply & Sync Custom BG for Everyone 🎨</button>
             </div>
 
             <div id="post-content-admin-wrapper">
@@ -1089,7 +1089,11 @@
                     headers: { 'X-Master-Key': MASTER_KEY }
                 });
                 const data = await res.json();
-                return data.record || { posts: [], siteBg: null, bgType: 'image' };
+                const record = data.record;
+                if (Array.isArray(record)) {
+                    return { posts: record, siteBg: null, bgType: 'image' };
+                }
+                return record || { posts: [], siteBg: null, bgType: 'image' };
             } catch (err) {
                 return { posts: [], siteBg: null, bgType: 'image' };
             }
@@ -1110,9 +1114,9 @@
                 btn.innerText = hideCustom ? "✨ Show Custom BG" : "🚫 Hide Custom BG";
             }
 
-            const data = await getBinData();
-            const savedBg = data.siteBg;
-            const savedType = data.bgType || 'image';
+            const binData = await getBinData();
+            const savedBg = binData.siteBg;
+            const savedType = binData.bgType || 'image';
 
             if (hideCustom || !savedBg) {
                 document.body.style.backgroundImage = '';
@@ -1142,7 +1146,7 @@
             let bgType = 'image';
 
             if (fileInput) {
-                bgVal = await compressImage(fileInput, 1200, 0.82);
+                bgVal = await compressImage(fileInput, 1000, 0.78);
                 bgType = 'image';
             } else if (urlInput) {
                 bgVal = urlInput;
@@ -1151,11 +1155,9 @@
                 return;
             }
 
-            const data = await getBinData();
-            const postsArr = Array.isArray(data) ? data : (data.posts || []);
-            
+            const binData = await getBinData();
             const newPayload = {
-                posts: postsArr,
+                posts: binData.posts || [],
                 siteBg: bgVal,
                 bgType: bgType
             };
@@ -1163,7 +1165,7 @@
             await saveBinData(newPayload);
             localStorage.setItem('hide_custom_bg', 'false');
             applyBackgroundState();
-            alert("Custom wallpaper updated and synced for everyone across the website! ✨");
+            alert("Custom wallpaper successfully synced for everyone across all devices! ✨");
             closeAdminModal();
         }
 
@@ -1199,7 +1201,8 @@
             }
         }
 
-        function compressImage(file, maxDimension = 1100, quality = 0.82) {
+        // Optimized Image Compression: Keeps images crystal clear while optimizing payload size for 3-photo posts
+        function compressImage(file, maxDimension = 850, quality = 0.78) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1240,7 +1243,7 @@
             const filesToProcess = files.slice(0, remainingSlots);
 
             for (let file of filesToProcess) {
-                const compressedUrl = await compressImage(file, 1100, 0.82);
+                const compressedUrl = await compressImage(file, 850, 0.78);
                 currentPostPhotos.push(compressedUrl);
             }
 
@@ -1297,9 +1300,8 @@
         }
 
         async function getPosts() {
-            const data = await getBinData();
-            if (Array.isArray(data)) return data;
-            return data.posts || [];
+            const binData = await getBinData();
+            return binData.posts || [];
         }
 
         async function renderAllPosts() {
@@ -1536,14 +1538,14 @@
 
         async function deletePost(index) {
             if (confirm("Delete this entry?")) {
-                const data = await getBinData();
-                const posts = Array.isArray(data) ? data : (data.posts || []);
+                const binData = await getBinData();
+                const posts = binData.posts || [];
                 posts.splice(index, 1);
                 
                 const newPayload = {
                     posts: posts,
-                    siteBg: data.siteBg || null,
-                    bgType: data.bgType || 'image'
+                    siteBg: binData.siteBg || null,
+                    bgType: binData.bgType || 'image'
                 };
                 await saveBinData(newPayload);
                 renderAllPosts();
@@ -1584,8 +1586,8 @@
                 postObj.snippet = content.substring(0, 120);
             }
 
-            const data = await getBinData();
-            let posts = Array.isArray(data) ? data : (data.posts || []);
+            const binData = await getBinData();
+            let posts = binData.posts || [];
 
             if (editIndex !== "" && !isNaN(editIndex)) {
                 posts[parseInt(editIndex)] = postObj;
@@ -1595,8 +1597,8 @@
 
             const newPayload = {
                 posts: posts,
-                siteBg: data.siteBg || null,
-                bgType: data.bgType || 'image'
+                siteBg: binData.siteBg || null,
+                bgType: binData.bgType || 'image'
             };
 
             try {
