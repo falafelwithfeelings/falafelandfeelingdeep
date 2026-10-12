@@ -1256,19 +1256,20 @@
         /* Base Theme-Aware Cutesy Volume Control */
 /* Dynamic Theme-Matching Volume Control */
 /* Theme-Matching Volume Control */
+/* Theme-Matching Volume Control */
 .cutesy-volume-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     padding: 6px 12px;
     border-radius: 20px;
-    border: 2px dashed;
-    border-color: inherit;
+    border: 2px dashed currentColor;
     font-family: 'Quicksand', sans-serif;
     font-size: 0.85rem;
+    color: inherit;
     margin-top: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -1279,7 +1280,8 @@
     width: 85px;
     height: 6px;
     border-radius: 3px;
-    background: rgba(0, 0, 0, 0.2);
+    background: currentColor;
+    opacity: 0.3;
     outline: none;
 }
 
@@ -1289,21 +1291,20 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: #b19cd9; /* Matches your active mood tone */
+    background: currentColor;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.15s ease;
+    opacity: 1;
 }
 
 .cutesy-slider::-webkit-slider-thumb:hover {
     transform: scale(1.25);
 }
 
+.volume-icon,
 .volume-percentage {
-    min-width: 32px;
-    text-align: right;
-    font-weight: 700;
-    font-size: 0.75rem;
+    color: inherit;
 }
 
 /* Mood-specific tint overrides */
