@@ -157,46 +157,51 @@
             100% { margin-left: 60px; }
         }
 
-        /* 🚀 Ultra-Cutesy Picture Animations: Opening Throw-In + Zero-Gravity Float */
-        @keyframes pictureFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-7px) rotate(1.2deg); }
+        /* 🎀 SUPER CUTESY PHOTO ANIMATIONS: Bouncy Throw-In + Whimsical Float */
+        @keyframes cutesyFloatAndWobble {
+            0% { transform: translateY(0px) rotate(-1.5deg) scale(1); }
+            50% { transform: translateY(-9px) rotate(2deg) scale(1.02); }
+            100% { transform: translateY(0px) rotate(-1.5deg) scale(1); }
         }
 
-        @keyframes pictureThrowIn {
-            0% { opacity: 0; transform: scale(0.5) translateY(40px) rotate(-12deg); }
+        @keyframes cutesyThrowInToExistence {
+            0% { opacity: 0; transform: scale(0.3) translateY(60px) rotate(-25deg); }
+            60% { opacity: 1; transform: scale(1.08) translateY(-10px) rotate(6deg); }
+            80% { transform: scale(0.96) translateY(4px) rotate(-2deg); }
             100% { opacity: 1; transform: scale(1) translateY(0px) rotate(0deg); }
         }
 
         .cutesy-snapshot, .card-cover-img {
-            animation: pictureThrowIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, pictureFloat 4.5s ease-in-out infinite;
-            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
+            animation: cutesyThrowInToExistence 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.35) forwards, cutesyFloatAndWobble 4s ease-in-out infinite;
+            animation-delay: 0s, 0.9s;
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.35), box-shadow 0.35s ease;
             cursor: zoom-in;
+            transform-origin: center center;
         }
 
         .cutesy-snapshot:hover, .card-cover-img:hover {
-            transform: scale(1.14) rotate(0deg) !important;
-            z-index: 20 !important;
+            transform: scale(1.15) rotate(0deg) !important;
+            z-index: 30 !important;
         }
 
         .cutesy-snapshot {
             padding: 8px;
-            border-radius: 20px;
-            width: 210px;
-            height: 220px;
+            border-radius: 22px;
+            width: 215px;
+            height: 225px;
             object-fit: cover;
             position: relative;
         }
 
-        body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.35); }
-        body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4); }
-        body.mood-matcha .cutesy-snapshot { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.35); }
-        body.mood-lemonade .cutesy-snapshot { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.35); }
+        body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 12px 28px rgba(244, 114, 182, 0.4); }
+        body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 12px 28px rgba(168, 85, 247, 0.45); }
+        body.mood-matcha .cutesy-snapshot { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 12px 28px rgba(101, 163, 13, 0.4); }
+        body.mood-lemonade .cutesy-snapshot { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 12px 28px rgba(202, 138, 4, 0.4); }
 
         /* Overlapping Angles */
-        .cutesy-snapshot:nth-child(1) { transform: rotate(-6deg) translateX(18px); }
-        .cutesy-snapshot:nth-child(2) { transform: rotate(4deg) translateX(-12px) translateY(-6px); }
-        .cutesy-snapshot:nth-child(3) { transform: rotate(-5deg) translateX(-30px) translateY(6px); }
+        .cutesy-snapshot:nth-child(1) { transform: rotate(-7deg) translateX(15px); }
+        .cutesy-snapshot:nth-child(2) { transform: rotate(5deg) translateX(-10px) translateY(-8px); }
+        .cutesy-snapshot:nth-child(3) { transform: rotate(-4deg) translateX(-25px) translateY(8px); }
 
         /* Layering */
         header, .view, .site-footer, .modal-overlay {
@@ -253,7 +258,7 @@
             padding: 0.35rem 0.55rem;
             border-radius: 50%;
             font-size: 1.2rem;
-            animation: pictureFloat 3s ease-in-out infinite;
+            animation: cutesyFloatAndWobble 3s ease-in-out infinite;
         }
         .nav-links {
             display: flex;
@@ -813,7 +818,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            animation: pictureThrowIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: cutesyThrowInToExistence 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.35);
         }
         .lightbox-content-box::before {
             content: '🎀✧ sparkle view ✧🎀';
