@@ -149,19 +149,31 @@
             100% { margin-left: 60px; }
         }
 
-        /* 🚀 Zero-Gravity Float & Entrance Animations */
-        @keyframes zeroGravityFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(1deg); }
+        /* 🚀 Picture-Only Animations: Zero-Gravity Float & Opening Throw-In */
+        @keyframes pictureFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
 
-        @keyframes throwIntoExistence {
-            0% { opacity: 0; transform: scale(0.7) translateY(40px) rotate(-5deg); }
+        @keyframes pictureThrowIn {
+            0% { opacity: 0; transform: scale(0.6) translateY(30px) rotate(-10deg); }
             100% { opacity: 1; transform: scale(1) translateY(0px) rotate(0deg); }
         }
 
-        .card, .announcement-card, .bio-card-preview, .about-bow-card, .contact-box, .contact-footer-badge, .cutesy-snapshot {
-            animation: throwIntoExistence 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, zeroGravityFloat 6s ease-in-out infinite;
+        .cutesy-snapshot {
+            padding: 6px;
+            border-radius: 18px;
+            width: 200px;
+            height: 210px;
+            object-fit: cover;
+            position: relative;
+            cursor: pointer;
+            animation: pictureThrowIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, pictureFloat 5s ease-in-out infinite;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+        .cutesy-snapshot:hover {
+            transform: scale(1.15) rotate(0deg) !important;
+            z-index: 20 !important;
         }
 
         /* Layering */
@@ -188,20 +200,6 @@
             margin: 2.5rem 0 1.5rem 0;
             padding: 1rem;
         }
-        .cutesy-snapshot {
-            padding: 6px;
-            border-radius: 18px;
-            width: 200px;
-            height: 210px;
-            object-fit: cover;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            cursor: pointer;
-        }
-        .cutesy-snapshot:hover {
-            transform: scale(1.1) rotate(0deg) !important;
-            z-index: 10 !important;
-        }
 
         body.mood-pink .cutesy-snapshot { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.3); }
         body.mood-midnight .cutesy-snapshot { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35); }
@@ -211,15 +209,12 @@
         /* Overlapping Angles */
         .cutesy-snapshot:nth-child(1) {
             transform: rotate(-6deg) translateX(18px);
-            z-index: 1;
         }
         .cutesy-snapshot:nth-child(2) {
             transform: rotate(4deg) translateX(-12px) translateY(-6px);
-            z-index: 2;
         }
         .cutesy-snapshot:nth-child(3) {
             transform: rotate(-5deg) translateX(-30px) translateY(6px);
-            z-index: 3;
         }
 
         /* Header Navigation */
@@ -252,7 +247,7 @@
             padding: 0.35rem 0.55rem;
             border-radius: 50%;
             font-size: 1.2rem;
-            animation: zeroGravityFloat 3s ease-in-out infinite;
+            animation: pictureFloat 3s ease-in-out infinite;
         }
         .nav-links {
             display: flex;
@@ -379,6 +374,7 @@
             justify-content: space-between;
             overflow: hidden;
             position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         body.mood-pink .card { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
         body.mood-midnight .card { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.25); }
@@ -389,9 +385,14 @@
         .card-cover-img {
             width: 100%;
             max-height: 200px;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: 12px;
             margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .card-cover-img:hover {
+            transform: scale(1.03);
         }
         body.mood-pink .card-cover-img { background: #ffe4e6; }
         body.mood-midnight .card-cover-img { background: #28243d; }
@@ -790,6 +791,28 @@
         .modal-btn.cancel { background: #f3f4f6; color: #4b5563; }
         .modal-btn.save { background: #db2777; color: white; }
 
+        /* 🔍 Lightbox Image Zoom Modal */
+        #image-lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: zoom-out;
+            padding: 2rem;
+        }
+        #lightbox-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 16px;
+            object-fit: contain;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: pictureThrowIn 0.3s ease-out;
+        }
+
         .photo-slot-item {
             border: 1px dashed;
             padding: 0.8rem;
@@ -839,6 +862,11 @@
 
     <!-- Bouncing Emu Characters Layer -->
     <div id="emu-layer"></div>
+
+    <!-- Lightbox Image Zoom Modal -->
+    <div id="image-lightbox-modal" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Zoomed Photo">
+    </div>
 
     <!-- Header Navigation -->
     <header class="site-header">
@@ -1396,6 +1424,18 @@
             return [];
         }
 
+        function openLightbox(url) {
+            const modal = document.getElementById('image-lightbox-modal');
+            const img = document.getElementById('lightbox-img');
+            img.src = url;
+            modal.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('image-lightbox-modal');
+            modal.style.display = 'none';
+        }
+
         function createCardHtml(p, originalIndex) {
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             let tagsHtml = '';
@@ -1408,10 +1448,10 @@
             }
 
             const photosArr = extractPostPhotos(p);
-            // Universal fix: explicitly verify showCover is not explicitly set to false/string "false"
+            // Universal card preview check
             const showCover = p.showCover !== false && p.showCover !== "false";
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
-            const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover">` : '';
+            const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')" title="Click to view full size">` : '';
 
             return `
                 <div class="card">
@@ -1445,7 +1485,7 @@
             if (photosArr.length > 0) {
                 galleryHtml = '<div class="photo-gallery-container">';
                 photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo">`;
+                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
                 });
                 galleryHtml += '</div>';
             }
@@ -1481,7 +1521,7 @@
             if (photosArr.length > 0) {
                 galleryHtml = '<div class="photo-gallery-container">';
                 photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo">`;
+                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
                 });
                 galleryHtml += '</div>';
             }
