@@ -1253,42 +1253,6 @@
             cursor: pointer;
             font-family: 'Quicksand', sans-serif;
         }
-        /* Card Transparency mode when toggled */
-body.transparent-cards .hero-card,
-body.transparent-cards .about-mini-card,
-body.transparent-cards .post-card,
-body.transparent-cards .announcement-card,
-body.transparent-cards .blog-header-card {
-    background: rgba(255, 240, 245, 0.45) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
-}
-
-/* Mobile responsive fixes for small screens */
-@media (max-width: 768px) {
-    body, html {
-        overflow-x: hidden;
-    }
-
-    .container, .hero-section, .about-section {
-        width: 100% !important;
-        padding-left: 12px !important;
-        padding-right: 12px !important;
-        box-sizing: border-box !important;
-    }
-
-    .hero-card h1, .logo h1 {
-        font-size: 1.8rem !important;
-        word-break: break-word;
-    }
-
-    .hero-card, .about-mini-card, .post-card, .announcement-card {
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-}
     </style>
 </head>
 <body class="mood-pink">
@@ -1367,7 +1331,6 @@ body.transparent-cards .blog-header-card {
             <input type="file" id="local-png-file-input" accept="image/png, image/jpeg, image/webp" style="display: none;" onchange="handleLocalPngUpload(event)">
 
             <button class="emu-toggle-pill" id="emu-toggle-btn" onclick="toggleGlobalEmus()">🦅 Emu: ON</button>
-            <button class="toggle-btn" id="mobile-card-toggle" onclick="toggleCardTransparency()">🖼️ Cards: Solid</button>
             <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New ✨</button>
 
             <a id="nav-blog" onclick="switchView('blog')">Blog</a>
@@ -1699,21 +1662,7 @@ body.transparent-cards .blog-header-card {
                 }
             });
         }
-        function toggleCardTransparency() {
-    document.body.classList.toggle('transparent-cards');
-    const isTrans = document.body.classList.contains('transparent-cards');
-    const btn = document.getElementById('mobile-card-toggle');
-    if (btn) {
-        btn.innerHTML = isTrans ? '🖼️ Cards: Glass' : '🖼️ Cards: Solid';
-    }
-    localStorage.setItem('transparentCards', isTrans ? 'true' : 'false');
-}
 
-if (localStorage.getItem('transparentCards') === 'true') {
-    document.body.classList.add('transparent-cards');
-    const btn = document.getElementById('mobile-card-toggle');
-    if (btn) btn.innerHTML = '🖼️ Cards: Glass';
-}
         const BIN_ID = '6aca4a7dac6210605a2587db';
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
 
