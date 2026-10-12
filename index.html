@@ -1263,8 +1263,7 @@
     <!-- Global Bouncing Emu Characters Layer -->
     <div id="emu-layer"></div>
 
-    <!-- Mobile Floating Admin Button for Phone Access -->
-    <button class="mobile-admin-fab" onclick="promptAdminLogin()">⚙️ Admin Login</button>
+   
 
     <!-- Lightbox Image Zoom Modal -->
     <div id="image-lightbox-modal" onclick="closeLightbox()">
@@ -1303,7 +1302,7 @@
 
     <!-- Clean Header Navigation with Single BG Settings Button -->
     <header class="site-header">
-        <div class="logo" onclick="switchView('home')">
+        <div class="logo" id="mobile-secret-logo-trigger" onclick="switchView('home')">
             <span class="avatar">🧆</span>
             <span class="logo-text">falafelwithfeelings</span>
         </div>
@@ -1636,6 +1635,23 @@
 
     <!-- YouTube IFrame API Script -->
     <script src="https://www.youtube.com/iframe_api"></script>
+    let logoClickCount = 0;
+        let logoClickTimer = null;
+        const logoTrigger = document.getElementById('mobile-secret-logo-trigger');
+        if (logoTrigger) {
+            logoTrigger.addEventListener('click', (e) => {
+                logoClickCount++;
+                clearTimeout(logoClickTimer);
+                if (logoClickCount >= 3) {
+                    logoClickCount = 0;
+                    e.stopPropagation();
+                    promptAdminLogin();
+                } else {
+                    logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 600);
+                }
+            });
+        }
+
 
     <script>
         const BIN_ID = '6aca4a7dac6210605a2587db';
