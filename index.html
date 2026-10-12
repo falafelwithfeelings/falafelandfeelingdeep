@@ -1253,6 +1253,75 @@
             cursor: pointer;
             font-family: 'Quicksand', sans-serif;
         }
+        /* Base Theme-Aware Cutesy Volume Control */
+.cutesy-volume-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 2px dashed #ffb6c1;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    color: #d87093;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.cutesy-slider {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 85px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(216, 112, 147, 0.2);
+    outline: none;
+}
+
+.cutesy-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ff69b4;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.15s ease;
+}
+
+.cutesy-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+}
+
+.volume-percentage {
+    min-width: 32px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+/* Mood-specific tint overrides */
+body.mood-pink .cutesy-volume-wrapper {
+    border-color: #ffb6c1;
+    color: #d87093;
+}
+body.mood-pink .cutesy-slider::-webkit-slider-thumb {
+    background: #ff69b4;
+}
+
+body.mood-dark .cutesy-volume-wrapper {
+    background: rgba(30, 30, 30, 0.6);
+    border-color: #dda0dd;
+    color: #dda0dd;
+}
+body.mood-dark .cutesy-slider::-webkit-slider-thumb {
+    background: #dda0dd;
+}
     </style>
 </head>
 <body class="mood-pink">
