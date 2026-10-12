@@ -149,6 +149,21 @@
             100% { margin-left: 60px; }
         }
 
+        /* 🚀 Zero-Gravity Float & Entrance Animations */
+        @keyframes zeroGravityFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        @keyframes throwIntoExistence {
+            0% { opacity: 0; transform: scale(0.7) translateY(40px) rotate(-5deg); }
+            100% { opacity: 1; transform: scale(1) translateY(0px) rotate(0deg); }
+        }
+
+        .card, .announcement-card, .bio-card-preview, .about-bow-card, .contact-box, .contact-footer-badge, .cutesy-snapshot {
+            animation: throwIntoExistence 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, zeroGravityFloat 6s ease-in-out infinite;
+        }
+
         /* Layering */
         header, .view, .site-footer, .modal-overlay {
             position: relative;
@@ -159,19 +174,9 @@
         .view {
             display: none;
             flex: 1 0 auto;
-            animation: fadeIn 0.3s ease-in-out forwards;
         }
         .view.active-view {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
         }
 
         /* 🎀 Cutesy Overlapping Photo Snapshot Gallery */
@@ -247,7 +252,7 @@
             padding: 0.35rem 0.55rem;
             border-radius: 50%;
             font-size: 1.2rem;
-            animation: float 3s ease-in-out infinite;
+            animation: zeroGravityFloat 3s ease-in-out infinite;
         }
         .nav-links {
             display: flex;
@@ -372,7 +377,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s, box-shadow 0.2s;
             overflow: hidden;
             position: relative;
         }
@@ -509,14 +513,12 @@
             padding: 2rem;
             margin-bottom: 2rem;
             position: relative;
-            transition: transform 0.2s;
         }
         body.mood-pink .announcement-card { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
         body.mood-midnight .announcement-card { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.22); }
         body.mood-matcha .announcement-card { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.18); }
         body.mood-lemonade .announcement-card { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 10px 25px rgba(202, 138, 4, 0.18); }
 
-        .announcement-card:hover { transform: translateY(-3px); }
         .announcement-card.pinned {
             border: 3px solid #f59e0b;
             background: #fffbeb;
@@ -689,7 +691,6 @@
         body.mood-matcha .email-pill-btn { background-color: #65a30d; }
         body.mood-lemonade .email-pill-btn { background-color: #ca8a04; }
 
-        /* ✨ Contact Page Bottom Text High-Contrast Container */
         .contact-footer-badge {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -988,7 +989,6 @@
                 <p style="opacity: 0.6; font-size: 0.9rem; font-style: italic; text-align: center;">do NOT send me your IGCSE past papers. I am begging you.</p>
             </div>
 
-            <!-- Enhanced High-Contrast Bottom Text Badge -->
             <div class="contact-footer-badge">
                 <div class="contact-main-subtext">that's it. that's the page. ✨</div>
                 <div class="contact-secondary-subtext">no fancy form, no newsletter signup. I have archon quests to get to. you're welcome.</div>
@@ -1408,7 +1408,8 @@
             }
 
             const photosArr = extractPostPhotos(p);
-            const showCover = p.showCover !== false;
+            // Universal fix: explicitly verify showCover is not explicitly set to false/string "false"
+            const showCover = p.showCover !== false && p.showCover !== "false";
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
             const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover">` : '';
 
@@ -1582,6 +1583,11 @@
             document.getElementById('new-entry-type').value = post.type || "blog";
             document.getElementById('new-title').value = post.title;
             document.getElementById('new-content').value = post.content || post.snippet;
+            
+            if (post.showCover !== undefined) {
+                document.getElementById('new-show-cover').value = post.showCover.toString();
+            }
+
             currentPostPhotos = extractPostPhotos(post);
             renderModalPhotoList();
             toggleModalTypeFields();
