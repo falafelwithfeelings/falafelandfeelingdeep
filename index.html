@@ -2067,10 +2067,10 @@
                 blogContainer.innerHTML = blogHtml;
             }
 
-            const annContainer = document.getElementById('announcements-wall-container');
+           const annContainer = document.getElementById('announcements-wall-container');
             if (annContainer) {
                 let annHtml = '';
-                announcements.forEach((ann) => {
+                announcements.sort((a, b) => (b.pinned === true || b.pinned === 'true') - (a.pinned === true || a.pinned === 'true')).forEach((ann) => {
                     annHtml += createAnnouncementCardHtml(ann, items.indexOf(ann));
                 });
                 annContainer.innerHTML = annHtml;
