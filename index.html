@@ -1104,6 +1104,8 @@
             </select>
 
             <button class="local-bg-btn" onclick="triggerLocalCustomBg()">My Custom BG</button>
+            <button class="local-bg-btn" onclick="removeLocalCustomBg()">Remove Custom BG 🗑️</button>
+            <button class="local-bg-btn" onclick="toggleSolidMoodBg()">🎨 Toggle Solid Mood Color</button>
             <input type="file" id="local-png-file-input" accept="image/png, image/jpeg, image/webp" style="display: none;" onchange="handleLocalPngUpload(event)">
 
             <button class="emu-toggle-pill" id="emu-toggle-btn" onclick="toggleGlobalEmus()">🦅 Emu: ON</button>
@@ -1224,7 +1226,7 @@
                 <div class="lore-timeline">
                     <div class="lore-item">
                         <div class="lore-icon">📖</div>
-                        <div><strong>Academic Status:</strong> IGCSE student, perpetually one assignment away from complete insanity.</div>
+                        <div><strong>Academic Status:</strong> IGCSE student, one assignment away from complete insanity.</div>
                     </div>
                     <div class="lore-item">
                         <div class="lore-icon">🎮</div>
@@ -1232,7 +1234,7 @@
                     </div>
                     <div class="lore-item">
                         <div class="lore-icon">🌙</div>
-                        <div><strong>Peak Hours:</strong> Most productive between midnight and 3am. Do not conact me before noon.</div>
+                        <div><strong>Peak Hours:</strong> Most productive between midnight and 3am. Do not contact me before noon.</div>
                     </div>
                     <div class="lore-item">
                         <div class="lore-icon">🇪🇬</div>
@@ -1474,6 +1476,13 @@
                 document.body.style.backgroundColor = '';
                 return;
             }
+            // Check if visitor has a private local custom PNG in localStorage
+            const localCustomBg = localStorage.getItem('visitor_local_custom_png');
+            if (localCustomBg) {
+                document.body.style.backgroundImage = `url('${localCustomBg}')`;
+                document.body.style.backgroundColor = '';
+                return;
+            }
 
             const binData = await getBinData();
             const savedBg = binData.siteBg;
@@ -1499,6 +1508,21 @@
             applyBackgroundState();
             alert("Your private My Custom BG has been applied just for you! ✨");
             event.target.value = "";
+        }
+        function removeLocalCustomBg() {
+            localStorage.removeItem('visitor_local_custom_png');
+            applyBackgroundState();
+            alert("Your custom background has been removed! ✨ Returning to the site theme background.");
+        }
+        function toggleSolidMoodBg() {
+            const currentHide = localStorage.getItem('visitor_hide_site_bg') === 'true';
+            localStorage.setItem('visitor_hide_site_bg', !currentHide);
+            applyBackgroundState();
+            if (!currentHide) {
+                alert("Site background hidden! Now showing a clean solid color from your mood theme ✨");
+            } else {
+                alert("Site background restored! ✨");
+            }
         }
 
         async function applyAdminCustomBackground() {
