@@ -3089,16 +3089,25 @@ function escapeHtml(str) {
         }
 
         async function savePostData() {
-            const editIndex = document.getElementById('edit-index').value;
-            const entryType = document.getElementById('new-entry-type').value;
-            const title = document.getElementById('new-title').value.trim();
-    const content = document.getElementById('new-content').value.trim();
-    const saveBtn = document.getElementById('save-post-btn');
-   const videoEl = document.getElementById('admin-video-input') || document.getElementById('new-video-input');
-    const pollEl = document.getElementById('admin-poll-question') || document.getElementById('new-poll-question');
-    
+           const editIndexEl = document.getElementById('edit-index') || document.getElementById('admin-edit-index');
+    const editIndex = editIndexEl ? editIndexEl.value : '-1';
+
+    const entryTypeEl = document.getElementById('new-entry-type') || document.getElementById('admin-entry-type');
+    const entryType = entryTypeEl ? entryTypeEl.value : 'blog';
+
+    const titleEl = document.getElementById('new-title') || document.getElementById('admin-title');
+    const title = titleEl ? titleEl.value.trim() : '';
+
+    const contentEl = document.getElementById('new-content') || document.getElementById('admin-content');
+    const content = contentEl ? contentEl.value.trim() : '';
+
+    const videoEl = document.getElementById('admin-video-input') || document.getElementById('new-video-input');
     const videoUrl = videoEl ? videoEl.value.trim() : '';
+
+    const pollEl = document.getElementById('admin-poll-question') || document.getElementById('new-poll-question');
     const pollQuestion = pollEl ? pollEl.value.trim() : '';
+
+    const saveBtn = document.getElementById('save-post-btn') || document.getElementById('admin-save-btn');
 
     if (!title || (!content && !videoUrl && !pollQuestion)) {
         alert("Please fill in a title and either text content, a video link, or a poll!");
