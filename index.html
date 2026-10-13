@@ -1662,9 +1662,6 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
                     <label>Hashtags (comma separated)</label>
                     <input type="text" id="new-hashtags" placeholder="#feelings, #burnout">
 
-                    <label style="margin-top: 1rem; display: block;">Media Link (YouTube, Imgur, TikTok, etc.)</label>
-<input type="text" id="new-media-url" placeholder="https://www.youtube.com/watch?v=... or Imgur/TikTok link">
-
                     <label>Read Time</label>
                     <input type="text" id="new-time" value="4 min read">
 
@@ -1784,89 +1781,6 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
             }), '*');
         }
     }
-}
-        function renderUniversalMedia(url) {
-    if (!url || typeof url !== 'string') return '';
-    const cleanUrl = url.trim();
-
-    // 1. YouTube Handler (Renders your exact cute player template)
-    const ytRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|shorts\/|\&v=)([^#\&\?]*).*/;
-    const ytMatch = cleanUrl.match(ytRegExp);
-    if (ytMatch && ytMatch[2].length === 11) {
-        const videoId = ytMatch[2];
-        const uniqueId = 'yt-' + Math.random().toString(36).substring(2, 9);
-        return `
-            <div class="video-container-box" style="margin-top: 16px;">
-                <div class="video-frame-wrapper">
-                    <iframe id="${uniqueId}" src="https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="video-custom-controls">
-                    <button class="vid-control-btn" onclick="seekVideoDynamic('${uniqueId}', -10)">⏪ -10s</button>
-                    <button class="vid-control-btn" id="${uniqueId}-btn" onclick="togglePlayVideoDynamic('${uniqueId}')">▶️ Play</button>
-                    <button class="vid-control-btn" onclick="seekVideoDynamic('${uniqueId}', 10)">+10s ⏩</button>
-                </div>
-            </div>
-        `;
-    }
-
-    // 2. TikTok Handler
-    if (cleanUrl.includes('tiktok.com')) {
-        return `
-            <div class="media-embed-wrapper" style="margin-top: 16px; display: flex; justify-content: center;">
-                <blockquote class="tiktok-embed" cite="${cleanUrl}" data-video-id="${cleanUrl.split('/video/')[1]?.split('?')[0] || ''}" style="max-width: 605px;min-width: 325px;" > 
-                   <section> <a target="_blank" href="${cleanUrl}">View on TikTok</a> </section> 
-                </blockquote> 
-                <script async src="https://www.tiktok.com/embed.js"></script>
-            </div>
-        `;
-    }
-
-    // 3. Imgur / Direct Image Handler
-    if (cleanUrl.includes('imgur.com') || /\.(jpg|jpeg|png|gif|webp)$/i.test(cleanUrl)) {
-        let imgUrl = cleanUrl;
-        if (cleanUrl.includes('imgur.com') && !cleanUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-            const id = cleanUrl.split('/').pop();
-            imgUrl = `https://i.imgur.com/${id}.jpg`;
-        }
-        return `
-            <div class="media-embed-wrapper" style="margin-top: 16px; text-align: center;">
-                <img src="${imgUrl}" alt="Embedded Media" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            </div>
-        `;
-    }
-
-    return `<p class="about-text"><a href="${cleanUrl}" target="_blank" style="color: inherit; text-decoration: underline;">${cleanUrl}</a></p>`;
-}
-
-function togglePlayVideoDynamic(iframeId) {
-    const iframe = document.getElementById(iframeId);
-    const btn = document.getElementById(iframeId + '-btn');
-    if (!iframe || !iframe.contentWindow) return;
-
-    if (btn && btn.innerHTML.includes('Play')) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*');
-        btn.innerHTML = '⏸️ Pause';
-    } else {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*');
-        btn.innerHTML = '▶️ Play';
-    }
-}
-
-function seekVideoDynamic(iframeId, seconds) {
-    const iframe = document.getElementById(iframeId);
-    if (!iframe || !iframe.contentWindow) return;
-
-    iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'getCurrentTime', args: [] }), '*');
-    window.addEventListener('message', function listener(e) {
-        try {
-            const data = JSON.parse(e.data);
-            if (data.event === 'infoDelivery' && typeof data.info === 'number') {
-                const targetTime = Math.max(0, data.info + seconds);
-                iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [targetTime, true] }), '*');
-                window.removeEventListener('message', listener);
-            }
-        } catch (err) {}
-    });
 }
 window.addEventListener('DOMContentLoaded', () => {
     const savedVol = localStorage.getItem('widgetVolume');
@@ -2382,7 +2296,6 @@ function initYouTubeAPI() {
                 <div class="card">
                     <div>
                         ${coverImgHtml}
-                        ${renderUniversalMedia(p.mediaUrl)}
                         <div class="card-tag-row">
                             <span class="card-tag ${p.tag || 'feelings'}">${p.tagText || 'FEELINGS'}</span>
                             <span class="read-time">${p.time || '4 min read'}</span>
@@ -2453,7 +2366,8 @@ function initYouTubeAPI() {
             }
 
             const contentEl = document.getElementById('reader-content-wrapper');
-            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${renderUniversalMedia(post.mediaUrl)}${galleryHtml}`;
+            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}`;
+
             switchView('post-reader');
         }
 
@@ -2538,7 +2452,6 @@ function initYouTubeAPI() {
             document.getElementById('admin-custom-bg-input').value = "";
             document.getElementById('admin-custom-bg-file').value = "";
             document.getElementById('new-photo-url-input').value = "";
-            document.getElementById('new-media-url').value = "";
             currentPostPhotos = [];
             renderModalPhotoList();
             document.getElementById('new-entry-type').value = "blog";
@@ -2612,7 +2525,6 @@ function initYouTubeAPI() {
                 postObj.tagText = tag.toUpperCase();
                 postObj.showCover = document.getElementById('new-show-cover').value === "true";
                 postObj.hashtags = document.getElementById('new-hashtags').value.split(',').map(h => h.trim()).filter(Boolean);
-                postObj.mediaUrl = document.getElementById('new-media-url').value;
                 postObj.time = document.getElementById('new-time').value || '4 min read';
                 postObj.snippet = document.getElementById('new-snippet').value || content.substring(0, 100) + '...';
             } else {
