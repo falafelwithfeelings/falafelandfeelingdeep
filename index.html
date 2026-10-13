@@ -8,6 +8,88 @@
     <link rel="icon" type="image/png" href="EMU/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* 🌸 MOOD SYNC FOR CUTESY COMPONENTS 🌸 */
+
+/* Default / Pink */
+.falafel-video-wrapper, 
+.falafel-poll-wrapper, 
+.falafel-social-wrapper {
+  --current-card-bg: #fce4ec;
+  --current-border: #f48fb1;
+  --current-text: #5c3a42;
+}
+
+/* Pink */
+body.mood-pink .falafel-video-wrapper,
+body.mood-pink .falafel-poll-wrapper,
+body.mood-pink .falafel-social-wrapper {
+  --current-card-bg: #fce4ec;
+  --current-border: #f48fb1;
+  --current-text: #5c3a42;
+}
+
+/* Midnight */
+body.mood-midnight .falafel-video-wrapper,
+body.mood-midnight .falafel-poll-wrapper,
+body.mood-midnight .falafel-social-wrapper {
+  --current-card-bg: #1a1b26;
+  --current-border: #7aa2f7;
+  --current-text: #c0caf5;
+}
+
+/* Matcha */
+body.mood-matcha .falafel-video-wrapper,
+body.mood-matcha .falafel-poll-wrapper,
+body.mood-matcha .falafel-social-wrapper {
+  --current-card-bg: #eef2ed;
+  --current-border: #87a96b;
+  --current-text: #3b4a38;
+}
+
+/* Lemonade */
+body.mood-lemonade .falafel-video-wrapper,
+body.mood-lemonade .falafel-poll-wrapper,
+body.mood-lemonade .falafel-social-wrapper {
+  --current-card-bg: #fffde7;
+  --current-border: #ffd54f;
+  --current-text: #5e5436;
+}
+
+/* Strawberry */
+body.mood-strawberry .falafel-video-wrapper,
+body.mood-strawberry .falafel-poll-wrapper,
+body.mood-strawberry .falafel-social-wrapper {
+  --current-card-bg: #ffccd5;
+  --current-border: #ff4d6d;
+  --current-text: #591e2b;
+}
+
+/* Cyber */
+body.mood-cyber .falafel-video-wrapper,
+body.mood-cyber .falafel-poll-wrapper,
+body.mood-cyber .falafel-social-wrapper {
+  --current-card-bg: #0d0221;
+  --current-border: #00ffcc;
+  --current-text: #e0fbfc;
+}
+
+/* Lavender */
+body.mood-lavender .falafel-video-wrapper,
+body.mood-lavender .falafel-poll-wrapper,
+body.mood-lavender .falafel-social-wrapper {
+  --current-card-bg: #f3e8ff;
+  --current-border: #c084fc;
+  --current-text: #4c1d95;
+}
+
+/* Sunset */
+body.mood-sunset .falafel-video-wrapper,
+body.mood-sunset .falafel-poll-wrapper,
+body.mood-sunset .falafel-social-wrapper {
+  --current-card-bg: #fff5ed;
+  --current-border: #ff9e7d;
+  --current-text: #5c3321;
+}
         * {
             box-sizing: border-box;
         }
@@ -1698,6 +1780,22 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
     </div>
 
     <!-- Admin Modal -->
+  
+
+
+<div id="alias-modal" class="modal-overlay" style="display: none;">
+    <div class="modal" style="text-align: center; max-width: 380px;">
+        <span style="font-size: 2.5rem;">🌸</span>
+        <h3 style="margin: 10px 0 5px 0; color: var(--current-text, #5c3a42); font-family: 'Quicksand', sans-serif;">what's your name, friend?</h3>
+        <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 15px; font-family: 'Quicksand', sans-serif;">enter a public username/alias so everyone knows who's dropping notes!</p>
+        
+       <input type="text" id="modal-alias-input" placeholder="e.g., mochi_cat or anonymous 🍓" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--current-border, #f48fb1); border-radius: 10px; font-family: 'Quicksand', sans-serif; font-size: 13px; margin-bottom: 15px; box-sizing: border-box; outline: none;">
+        
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button type="button" class="modal-btn save" onclick="saveUserAlias()" style="width: 100%;">save alias ✨</button>
+        </div>
+    </div>
+</div>
     <div id="admin-modal" class="modal-overlay">
         <div class="modal">
             <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
@@ -1772,6 +1870,19 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
                     </select>
                 </div>
             </div>
+
+            
+        <label style="margin-top: 1rem; display: block;">🎥 Optional YouTube Video Link</label>
+        <input type="text" id="new-video-url" placeholder="Paste YouTube link here (e.g., https://youtu.be/...)">
+
+        <div id="poll-admin-section" style="margin-top: 1rem;">
+            <label>📊 Optional Poll Question</label>
+            <input type="text" id="new-poll-question" placeholder="e.g., What snack are you eating right now?">
+            
+            <label style="margin-top: 0.5rem; display: block;">📊 Poll Options (Comma separated)</label>
+            <input type="text" id="new-poll-options" placeholder="e.g., Matcha, Falafel, Sleep, Chips">
+        </div>
+       
 
             <div class="modal-buttons" style="margin-top: 1.5rem;">
                 <button class="modal-btn cancel" onclick="closeAdminModal()">Close / Cancel</button>
@@ -2034,7 +2145,18 @@ function initYouTubeAPI() {
 
     const picker = document.getElementById('mood-picker');
     if (picker) picker.value = mood;
+
+    
+};
+
+var currentColors = moodColors[theme] || moodColors['pink'];
+document.documentElement.style.setProperty('--current-card-bg', currentColors.bg);
+document.documentElement.style.setProperty('--current-border', currentColors.border);
+document.documentElement.style.setProperty('--current-text', currentColors.text);
+
+            
 }
+    
 
         async function getBinData() {
             try {
@@ -2447,10 +2569,200 @@ function initYouTubeAPI() {
             }
 
             const contentEl = document.getElementById('reader-content-wrapper');
-            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}`;
+           // Build Video Player HTML if videoUrl exists
+let videoHtml = '';
+if (post.videoUrl) {
+    const embedUrl = getYouTubeEmbedUrl(post.videoUrl);
+    videoHtml = `
+    <div class="falafel-video-wrapper mood-themeable">
+      <div class="video-header">
+        <span class="video-icon">🎥</span>
+        <span class="video-title-label">cozy screening room ~</span>
+      </div>
+      <div class="video-container">
+        <iframe src="${embedUrl}" title="Cute Video Player" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>`;
+}
+
+// Build Poll HTML if pollQuestion exists
+let pollHtml = '';
+if (post.pollQuestion && post.pollOptions) {
+    const optionsArr = post.pollOptions.split(',').map(opt => opt.trim());
+    pollHtml = `
+    <div class="falafel-poll-wrapper mood-themeable">
+      <div class="poll-header">
+        <h4>📊 ${escapeHtml(post.pollQuestion)}</h4>
+      </div>
+      <div class="poll-options">
+        ${optionsArr.map((opt, idx) => `
+          <button class="poll-option-btn" onclick="voteDynamicPoll(this, ${idx})">
+            <span class="option-text">${escapeHtml(opt)}</span>
+            <span class="option-pct">0%</span>
+            <div class="poll-fill" style="width: 0%"></div>
+          </button>
+        `).join('')}
+      </div>
+      <p class="poll-footer-text">click an option to cast your vote! ✨</p>
+    </div>`;
+}
+
+// Build Social (Likes & Comments) HTML
+const socialHtml = `
+<div class="falafel-social-wrapper mood-themeable" style="margin-top: 30px;">
+  <div class="like-section">
+    <button class="like-btn" onclick="togglePostLike(this)">
+      <span class="heart-icon">🤍</span> send a little love (<span class="like-count">0</span>)
+    </button>
+  </div>
+  <hr class="social-divider">
+  <h4 class="comments-heading">💬 leave a little note ~</h4>
+  <form class="comment-form" onsubmit="submitDynamicComment(event, this)">
+    <input type="text" class="comment-author-input" placeholder="your name / nickname ~" required>
+    <textarea class="comment-text-input" placeholder="say something nice..." rows="3" required></textarea>
+    <button type="submit" class="comment-submit-btn">post note ✨</button>
+  </form>
+  <div class="comments-list"></div>
+</div>`;
+
+// Set reader content with everything combined!
+contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}${videoHtml}${pollHtml}${socialHtml}`;
 
             switchView('post-reader');
         }
+
+        function getYouTubeEmbedUrl(url) {
+    if (!url) return '';
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match && match[2].length === 11) { return 'https://www.youtube.com/embed/' + match[2]; }
+    return url;
+}
+
+function voteDynamicPoll(btn, index) {
+    var wrapper = btn.closest('.falafel-poll-wrapper');
+    if (wrapper.dataset.voted === 'true') return;
+    wrapper.dataset.voted = 'true';
+    var buttons = wrapper.querySelectorAll('.poll-option-btn');
+    var votes = [12, 19, 7, 25]; 
+    votes[index]++;
+    var total = votes.reduce((a, b) => a + b, 0);
+    buttons.forEach((b, i) => {
+        var pct = Math.min(100, Math.round(((votes[i] || 5) / total) * 100));
+        b.querySelector('.poll-pct').textContent = pct + '%';
+        b.querySelector('.poll-fill').style.width = pct + '%';
+        b.style.cursor = 'default';
+    });
+    wrapper.querySelector('.poll-footer-text').textContent = 'thanks for voting! ✨';
+}
+
+function togglePostLike(btn) {
+    var countSpan = btn.querySelector('.like-count');
+    var heartSpan = btn.querySelector('.heart-icon');
+    var current = parseInt(countSpan.textContent);
+    if (btn.dataset.liked === 'true') {
+        btn.dataset.liked = 'false';
+        countSpan.textContent = current - 1;
+        heartSpan.textContent = '🤍';
+        btn.style.backgroundColor = '#ffffff';
+    } else {
+        btn.dataset.liked = 'true';
+        countSpan.textContent = current + 1;
+        heartSpan.textContent = '💖';
+        btn.style.backgroundColor = 'var(--current-border, #f48fb1)';
+    }
+}
+
+// --- UPDATED ALIAS, COMMENT & MODERATION LOGIC ---
+
+let pendingCommentForm = null;
+let pendingCommentText = '';
+
+function submitDynamicComment(e, form) {
+    e.preventDefault();
+    var textInput = form.querySelector('.comment-text-input');
+    if (!textInput.value) return;
+
+    var savedAlias = localStorage.getItem('falafel_user_alias');
+    
+    if (!savedAlias) {
+        pendingCommentForm = form;
+        pendingCommentText = textInput.value;
+        document.getElementById('alias-modal').style.display = 'flex';
+        document.getElementById('modal-alias-input').focus();
+    } else {
+        postCommentWithAlias(savedAlias, textInput.value, form);
+        textInput.value = '';
+    }
+}
+
+function saveUserAlias() {
+    var inputVal = document.getElementById('modal-alias-input').value.trim();
+    if (!inputVal) return;
+
+    localStorage.setItem('falafel_user_alias', inputVal);
+    document.getElementById('alias-modal').style.display = 'none';
+
+    if (pendingCommentForm && pendingCommentText) {
+        postCommentWithAlias(inputVal, pendingCommentText, pendingCommentForm);
+        var textInput = pendingCommentForm.querySelector('.comment-text-input');
+        if (textInput) textInput.value = '';
+        pendingCommentForm = null;
+        pendingCommentText = '';
+    }
+}
+
+function postCommentWithAlias(author, text, form) {
+    var listContainer = form.nextElementSibling;
+    var bubble = document.createElement('div');
+    bubble.className = 'comment-bubble';
+    bubble.style.cssText = 'background: #ffffff; border: 1.5px solid var(--current-border, #f48fb1); border-radius: 10px; padding: 12px; margin-top: 10px; position: relative;';
+    
+    // Shows delete & reply buttons automatically if Admin mode is open!
+    var adminButtonsHtml = '';
+    var isAdminActive = document.getElementById('admin-modal').style.display === 'flex' || window.isFalafelAdmin === true;
+    
+    if (isAdminActive) {
+        adminButtonsHtml = `
+            <div style="margin-top: 8px; font-size: 11px; display: flex; gap: 10px;">
+                <span onclick="replyToComment(this)" style="cursor: pointer; color: #e91e63; font-weight: 700;">💬 reply</span>
+                <span onclick="deleteComment(this)" style="cursor: pointer; color: #d32f2f; font-weight: 700;">🗑️ delete</span>
+            </div>`;
+    }
+
+    bubble.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 700; font-size: 12px; color: var(--current-text, #5c3a42); margin-bottom: 4px;">${escapeHtml(author)} 🌸</div>
+        </div>
+        <div style="font-size: 13px; color: #444444;" class="comment-content-body">${escapeHtml(text)}</div>
+        ${adminButtonsHtml}`;
+
+    listContainer.prepend(bubble);
+}
+
+function deleteComment(el) {
+    var bubble = el.closest('.comment-bubble');
+    if (confirm('delete this note? ✨')) {
+        bubble.style.transition = 'opacity 0.3s ease';
+        bubble.style.opacity = '0';
+        setTimeout(function() { bubble.remove(); }, 300);
+    }
+}
+
+function replyToComment(el) {
+    var bubble = el.closest('.comment-bubble');
+    var replyText = prompt('Write your owner reply:');
+    if (!replyText) return;
+
+    var replyBox = document.createElement('div');
+    replyBox.style.cssText = 'margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--current-border, #f48fb1); font-size: 12px; color: #555555;';
+    replyBox.innerHTML = '<strong>the great falafel ────୨ৎ────:</strong> ' + escapeHtml(replyText);
+    bubble.appendChild(replyBox);
+}
+
+function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
 
         let clickCount = 0;
         let clickTimer = null;
