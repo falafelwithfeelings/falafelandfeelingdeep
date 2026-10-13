@@ -11,54 +11,6 @@
         * {
             box-sizing: border-box;
         }
-
-        /* Cute Theme-Adaptive Progress Bar */
-.music-progress-container {
-  width: 180px;
-  height: 10px;
-  background: var(--bg-secondary, rgba(255, 255, 255, 0.4));
-  border: 2px dashed var(--accent-color, #d4a5a5);
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  margin: 12px auto;
-  position: relative;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.music-progress-bar {
-  height: 100%;
-  width: 0%;
-  background-color: var(--accent-color, #d4a5a5);
-  border-radius: 6px;
-  transition: width 0.2s linear, background-color 0.4s ease;
-}
-        /* Music Player Controls & Loop Button */
-.music-player-controls-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin: 12px auto;
-}
-
-.music-loop-btn {
-  background: var(--bg-secondary, rgba(255, 255, 255, 0.6));
-  border: 2px dashed var(--accent-color, #d4a5a5);
-  color: var(--text-color, #555);
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.music-loop-btn.active {
-  background-color: var(--accent-color, #d4a5a5);
-  color: #fff;
-  border-style: solid;
-}
         
         /* 🌈 Vivid Mood Themes with Harmonized Text & Shadows */
         body {
@@ -1475,6 +1427,18 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
             <option value="10">🎵 Track 11: OVER THE MOON</option>
             <option value="11">🎵 Track 12: WADDLE WADDLE</option>
         </select>
+
+       
+
+    <!-- Theme-Adaptive Progress Bar & Loop Button (Dynamically changes with mood) -->
+    <div class="music-progress-container" id="progress-container" style="width: 100%; height: 8px; background: var(--bg-secondary, rgba(255,255,255,0.4)); border: 2px dashed var(--accent-color, #d4a5a5); border-radius: 8px; overflow: hidden; cursor: pointer; margin: 10px 0; position: relative;">
+        <div class="music-progress-bar" id="progress-bar" style="height: 100%; width: 0%; background-color: var(--accent-color, #d4a5a5); border-radius: 4px; transition: width 0.2s linear;"></div>
+    </div>
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+        <button id="loop-btn" class="active" title="Toggle Loop" style="background: var(--accent-color, #d4a5a5); color: #fff; border: none; border-radius: 8px; padding: 3px 10px; font-size: 11px; cursor: pointer; font-family: inherit;">🔁 Loop: On</button>
+    </div>
+
+    <div class="cutesy-volume-wrapper">
         <div class="cutesy-volume-wrapper">
     <span class="volume-icon">♡︎</span>
     <input type="range" id="widget-volume-slider" min="0" max="100" value="80" class="cutesy-slider" oninput="changeWidgetVolume(this.value)">
@@ -1615,6 +1579,103 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
     }
   });
 </script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  var player;
+  var progressInterval;
+  var isLooping = true;
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('bg-playlist-iframe', {
+      height: '100',
+      width: '100',
+      playerVars: {
+        'listType': 'playlist',
+        'list': 'PL7014ypNo0_7a7-JAZcwm5bdRGPbTT2E-',
+        'enablejsapi': 1,
+        'autoplay': 1,
+        'loop': 1
+      },
+      events: {
+        'onReady': function(event) {
+          event.target.setLoop(true);
+        },
+        'onStateChange': function(event) {
+          // State 1 = Playing
+          if (event.data === 1) {
+            startProgressTracker();
+            var videoData = player.getVideoData();
+            if (videoData && videoData.title) {
+              var titleEl = document.querySelector('#widget-song-title');
+              if (titleEl) titleEl.textContent = videoData.title;
+            }
+            var dropdown = document.getElementById('playlist-track-select');
+            if (dropdown && typeof player.getPlaylistIndex === 'function') {
+              dropdown.value = player.getPlaylistIndex();
+            }
+          }
+          // State 0 = Ended (Loop logic)
+          if (event.data === 0) {
+            var currentIndex = player.getPlaylistIndex();
+            var playlist = player.getPlaylist();
+            if (playlist && currentIndex >= playlist.length - 1) {
+              if (isLooping) player.playVideoAt(0);
+            } else {
+              player.nextVideo();
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function startProgressTracker() {
+    clearInterval(progressInterval);
+    progressInterval = setInterval(function() {
+      if (player && typeof player.getCurrentTime === 'function' && typeof player.getDuration === 'function') {
+        var ct = player.getCurrentTime();
+        var dur = player.getDuration();
+        if (dur > 0) {
+          var bar = document.getElementById('progress-bar');
+          if (bar) bar.style.width = ((ct / dur) * 100) + '%';
+        }
+      }
+    }, 400);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.getElementById('playlist-track-select');
+    if (dropdown) {
+      dropdown.addEventListener('change', function() {
+        if (player && typeof player.playVideoAt === 'function') {
+          player.playVideoAt(parseInt(this.value));
+        }
+      });
+    }
+
+    var container = document.getElementById('progress-container');
+    if (container) {
+      container.addEventListener('click', function(e) {
+        if (player && typeof player.seekTo === 'function' && typeof player.getDuration === 'function') {
+          var rect = this.getBoundingClientRect();
+          var seekTime = ((e.clientX - rect.left) / rect.width) * player.getDuration();
+          player.seekTo(seekTime, true);
+        }
+      });
+    }
+
+    var loopBtn = document.getElementById('loop-btn');
+    if (loopBtn) {
+      loopBtn.addEventListener('click', function() {
+        isLooping = !isLooping;
+        loopBtn.style.opacity = isLooping ? '1' : '0.5';
+        loopBtn.textContent = isLooping ? '🔁 Loop: On' : '🔁 Loop: Off';
+      });
+    }
+  });
+</script>
+        
     <!-- Clean Header Navigation with Single BG Settings Button -->
     <header class="site-header">
         <div class="logo" id="mobile-secret-logo-trigger" onclick="switchView('home')">
@@ -2818,5 +2879,11 @@ function initYouTubeAPI() {
             updateWidgetTrackDisplay();
         });
     </script>
+
+        <!-- Hidden YouTube Audio Player (Off-screen so browsers don't pause it) -->
+<div id="hidden-audio-container" style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden;">
+    <div id="bg-playlist-iframe"></div>
+</div>
+
 </body>
 </html>
