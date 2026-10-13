@@ -1645,6 +1645,21 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
             
             <!-- Official Kit Embed Script -->
             <script async data-uid="efab41ce33" src="https://falafelwithfeelings.kit.com/efab41ce33/index.js"></script>
+            <script>
+    window.addEventListener('load', function() {
+      let checkKitInterval = setInterval(function() {
+        let emailField = document.querySelector('.contact-envelope-box input[name="email_address"]');
+        let nameField = document.querySelector('.contact-envelope-box input[name*="first_name"], .contact-envelope-box input[name*="fields"]');
+        
+        if (emailField && nameField) {
+          emailField.placeholder = "your email address ⋆.𐙚 ̊";
+          nameField.placeholder = "your first name ⋆.𐙚 ̊";
+          clearInterval(checkKitInterval);
+        }
+      }, 200);
+    });
+  </script>
+</div>
         </div>
             <div class="contact-footer-badge">
                 <div class="contact-main-subtext">that's it. that's the page.</div>
