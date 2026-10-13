@@ -11,6 +11,54 @@
         * {
             box-sizing: border-box;
         }
+
+        /* Cute Theme-Adaptive Progress Bar */
+.music-progress-container {
+  width: 180px;
+  height: 10px;
+  background: var(--bg-secondary, rgba(255, 255, 255, 0.4));
+  border: 2px dashed var(--accent-color, #d4a5a5);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 12px auto;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.music-progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: var(--accent-color, #d4a5a5);
+  border-radius: 6px;
+  transition: width 0.2s linear, background-color 0.4s ease;
+}
+        /* Music Player Controls & Loop Button */
+.music-player-controls-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 12px auto;
+}
+
+.music-loop-btn {
+  background: var(--bg-secondary, rgba(255, 255, 255, 0.6));
+  border: 2px dashed var(--accent-color, #d4a5a5);
+  color: var(--text-color, #555);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.music-loop-btn.active {
+  background-color: var(--accent-color, #d4a5a5);
+  color: #fff;
+  border-style: solid;
+}
         
         /* 🌈 Vivid Mood Themes with Harmonized Text & Shadows */
         body {
@@ -1440,44 +1488,66 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
         </div>
     </div>
 
-    <!-- Hidden Audio IFrame Streamer for Playlist -->
-    <div id="hidden-audio-container">
-       <iframe id="bg-playlist-iframe" src="https://www.youtube.com/embed?listType=playlist&list=PL70l4ypNo0_7a7-JAZcwm5bdRGPbTT2E-&enablejsapi=1&autoplay=0&loop=1" allow="autoplay"></iframe>
+<!-- Hidden Audio Container (Dynamic Player) -->
+<div id="hidden-audio-container" style="position: absolute; left: -9999px; visibility: hidden;">
+    <div id="bg-playlist-iframe"></div>
+</div>
+
+<!-- Music Controls Wrapper (Progress Bar + Loop Button) -->
+<div class="music-player-controls-wrapper">
+    <div class="music-progress-container" id="progress-container">
+        <div class="music-progress-bar" id="progress-bar"></div>
     </div>
+    <button id="loop-btn" class="music-loop-btn active" title="Toggle Loop">
+        🔁 <span id="loop-status">Loop: On</span>
+    </button>
+</div>
 
-    <!-- YouTube API Playlist Loop Enforcer -->
-
-<!-- YouTube API Playlist Loop & Live Title Updater -->
+<!-- YouTube API Dynamic Player, Loop, Live Title, Progress Bar & Loop Button Script -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
   var player;
+  var progressInterval;
+  var isLooping = true; // Default loop state
+
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('bg-playlist-iframe', {
+      height: '100',
+      width: '100',
+      playerVars: {
+        'listType': 'playlist',
+        'list': 'PL7014ypNo0_7a7-JAZcwm5bdRGPbTT2E-',
+        'enablejsapi': 1,
+        'autoplay': 0,
+        'loop': 1
+      },
       events: {
         'onReady': function(event) {
           event.target.setLoop(true);
         },
         'onStateChange': function(event) {
-          // State 1 = Playing (Fires the second a new song starts)
+          // State 1 = Playing (Updates title and starts progress bar)
           if (event.data === 1) {
+            startProgressTracker();
+            
             var videoData = player.getVideoData();
             if (videoData && videoData.title) {
-              // ⚠️ NOTE: Change '#song-title' below to match whatever ID or class 
-              // your website uses to display the song name (e.g., '.track-name' or '#current-song')
-              var titleElement = document.querySelector('#song-title'); 
+              var titleElement = document.querySelector('#song-title'); // Change '#song-title' if your element uses a different ID/class
               if (titleElement) {
                 titleElement.textContent = videoData.title;
               }
             }
           }
 
-          // State 0 = Ended (Loops the playlist back to the start)
+          // State 0 = Ended (Loops playlist back to start if loop is active)
           if (event.data === 0) {
             var currentIndex = player.getPlaylistIndex();
             var playlist = player.getPlaylist();
             
             if (playlist && currentIndex >= playlist.length - 1) {
-              player.playVideoAt(0);
+              if (isLooping) {
+                player.playVideoAt(0);
+              }
             } else {
               player.nextVideo();
             }
@@ -1486,6 +1556,64 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
       }
     });
   }
+
+  // Progress bar time tracker
+  function startProgressTracker() {
+    clearInterval(progressInterval);
+    progressInterval = setInterval(function() {
+      if (player && typeof player.getCurrentTime === 'function' && typeof player.getDuration === 'function') {
+        var currentTime = player.getCurrentTime();
+        var duration = player.getDuration();
+        if (duration > 0) {
+          var percent = (currentTime / duration) * 100;
+          var progressBar = document.getElementById('progress-bar');
+          if (progressBar) {
+            progressBar.style.width = percent + '%';
+          }
+        }
+      }
+    }, 400);
+  }
+
+  // Event Listeners for Click-to-Seek and Loop Button
+  document.addEventListener('DOMContentLoaded', function() {
+    // Click-to-seek functionality
+    var container = document.getElementById('progress-container');
+    if (container) {
+      container.addEventListener('click', function(e) {
+        if (player && typeof player.seekTo === 'function' && typeof player.getDuration === 'function') {
+          var rect = this.getBoundingClientRect();
+          var clickX = e.clientX - rect.left;
+          var width = rect.width;
+          var duration = player.getDuration();
+          var seekToTime = (clickX / width) * duration;
+          player.seekTo(seekToTime, true);
+        }
+      });
+    }
+
+    // Loop Button Toggle Logic
+    var loopBtn = document.getElementById('loop-btn');
+    var loopStatus = document.getElementById('loop-status');
+    if (loopBtn) {
+      loopBtn.addEventListener('click', function() {
+        isLooping = !isLooping;
+        if (isLooping) {
+          loopBtn.classList.add('active');
+          if (loopStatus) loopStatus.textContent = 'Loop: On';
+          if (player && typeof player.setLoop === 'function') {
+            player.setLoop(true);
+          }
+        } else {
+          loopBtn.classList.remove('active');
+          if (loopStatus) loopStatus.textContent = 'Loop: Off';
+          if (player && typeof player.setLoop === 'function') {
+            player.setLoop(false);
+          }
+        }
+      });
+    }
+  });
 </script>
     <!-- Clean Header Navigation with Single BG Settings Button -->
     <header class="site-header">
