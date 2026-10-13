@@ -1442,35 +1442,8 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
 
     <!-- Hidden Audio IFrame Streamer for Playlist -->
     <div id="hidden-audio-container">
-       <iframe id="bg-playlist-iframe" src="https://www.youtube.com/embed?listType=playlist&list=PL70l4ypNo0_7a7-JAZcwm5bdRGPbTT2E-&enablejsapi=1&autoplay=0&loop=1" allow="autoplay"></iframe>
+       <iframe id="bg-playlist-iframe" src="https://www.youtube.com/embed?listType=playlist&list=PL70l4ypNo0_7a7-JAZcwm5bdRGPbTT2E-&enablejsapi=1&autoplay=0" allow="autoplay"></iframe>
     </div>
-
-    <!-- YouTube API Playlist Loop Enforcer -->
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('bg-playlist-iframe', {
-      events: {
-        'onReady': function(event) {
-          event.target.setLoop(true);
-        },
-        'onStateChange': function(event) {
-          if (event.data === 0) {
-            var currentIndex = player.getPlaylistIndex();
-            var playlist = player.getPlaylist();
-            
-            if (playlist && currentIndex >= playlist.length - 1) {
-              player.playVideoAt(0);
-            } else {
-              player.nextVideo();
-            }
-          }
-        }
-      }
-    });
-  }
-</script>
 
     <!-- Clean Header Navigation with Single BG Settings Button -->
     <header class="site-header">
