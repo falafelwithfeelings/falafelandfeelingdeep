@@ -2652,14 +2652,13 @@ function submitComment(postId) {
                         <h3>${p.title}</h3>
                         ${tagsHtml}
                         <p class="card-snippet">${p.snippet}</p>
-                    </div>
-                    <div class="card-footer-row">
-                        <a onclick="openPostReader(${originalIndex})" class="read-more">read more →</a>
-                        <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
-                            <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
-                            <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
-                        </div>
-                    </div>
+                   <div class="card-footer-row" style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+    <a onclick="openPostReader(${originalIndex})" class="read-more" style="cursor: pointer;">read more →</a>
+    <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'}; gap: 6px;">
+        <button class="edit-post-btn" onclick="event.stopPropagation(); openEditModal(${originalIndex})" style="border: none; background: #fff3bf; border-radius: 10px; padding: 4px 8px; cursor: pointer;">✏️</button>
+        <button class="delete-post-btn" onclick="event.stopPropagation(); deletePost(${originalIndex})" style="border: none; background: #ffe3e3; border-radius: 10px; padding: 4px 8px; cursor: pointer;">🗑️</button>
+    </div>
+</div>
                     <!-- CUTESY SIDE-BY-SIDE ACTION BAR -->
 <div class="falafel-social-bar" style="display: flex; gap: 10px; align-items: center; margin-top: 15px;">
     <!-- Like Pill Button -->
@@ -2675,20 +2674,7 @@ function submitComment(postId) {
     </button>
 </div>
 
-<!-- PRETTY POLL (Renders automatically if present) -->
-${renderPollHTML(p)}
 
-<!-- YOUTUBE-STYLE COMMENT DRAWER -->
-<div id="comment-section-${p.id}" style="display: none; margin-top: 15px; padding: 15px; background: rgba(255, 255, 255, 0.6); border-radius: 15px; border: 1.5px dashed var(--current-border, #f48fb1);">
-    <div id="comments-list-${p.id}" style="margin-bottom: 12px; display: flex; flex-direction: column;">
-        ${renderCommentsList(p.id, p.comments)}
-    </div>
-
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-        <textarea id="comment-input-${p.id}" placeholder="say something nice..." style="width: 100%; height: 50px; padding: 10px; border-radius: 12px; border: 1px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; font-size: 0.85rem; resize: vertical; outline: none; box-sizing: border-box; background: white;"></textarea>
-        <button type="button" onclick="submitComment('${p.id}')" style="align-self: flex-end; background: var(--current-border, #f48fb1); color: white; border: none; padding: 6px 16px; border-radius: 15px; font-family: 'Quicksand', sans-serif; font-size: 0.85rem; cursor: pointer; font-weight: bold;">post note ✨</button>
-    </div>
-</div>
                 </div>
             `;
         }
@@ -2719,6 +2705,33 @@ ${renderPollHTML(p)}
                         <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
                     </div>
                 </div>
+                <!-- 🌸 ANNOUNCEMENT SOCIAL BAR & COMMENTS 🌸 -->
+    <div class="falafel-social-bar" style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
+        <button type="button" class="cutesy-pill-btn" onclick="event.stopPropagation(); toggleLike('${ann.id}')" style="flex: 1; background: #fff0f3; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, #5c3a42); padding: 6px 10px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-weight: 600;">
+            <span>🤍</span> 
+            <span>send a little love (<strong id="like-count-${ann.id}">${ann.likes || 0}</strong>)</span>
+        </button>
+
+        <button type="button" class="cutesy-pill-btn" onclick="event.stopPropagation(); toggleCommentBox('${ann.id}')" style="flex: 1; background: #f0f7ff; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, #5c3a42); padding: 6px 10px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-weight: 600;">
+            <span>💬</span> 
+            <span>leave a note (${(ann.comments || []).length})</span>
+        </button>
+    </div>
+
+    <!-- PRETTY POLL -->
+    ${renderPollHTML(ann)}
+
+    <!-- PRETTY YOUTUBE-STYLE COMMENT DRAWER -->
+    <div id="comment-section-${ann.id}" style="display: none; margin-top: 12px; padding: 12px; background: rgba(255, 255, 255, 0.85); border-radius: 16px; border: 1.5px dashed var(--current-border, #f48fb1); box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+        <div id="comments-list-${ann.id}" style="margin-bottom: 10px; display: flex; flex-direction: column;">
+            ${renderCommentsList(ann.id, ann.comments)}
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+            <textarea id="comment-input-${ann.id}" placeholder="say something nice... ✨" style="width: 100%; height: 48px; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; font-size: 0.8rem; resize: none; outline: none; box-sizing: border-box; background: white; color: var(--current-text, #5c3a42);"></textarea>
+            <button type="button" onclick="submitComment('${ann.id}')" style="align-self: flex-end; background: var(--current-border, #f48fb1); color: white; border: none; padding: 5px 14px; border-radius: 12px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(244,143,177,0.4);">post note ✨</button>
+        </div>
+    </div>
             `;
         }
 
@@ -3072,8 +3085,11 @@ function escapeHtml(str) {
             const title = document.getElementById('new-title').value.trim();
     const content = document.getElementById('new-content').value.trim();
     const saveBtn = document.getElementById('save-post-btn');
-    const videoUrl = document.getElementById('admin-video-input')?.value.trim() || '';
-    const pollQuestion = document.getElementById('admin-poll-question')?.value.trim() || '';
+   const videoEl = document.getElementById('admin-video-input') || document.getElementById('new-video-input');
+    const pollEl = document.getElementById('admin-poll-question') || document.getElementById('new-poll-question');
+    
+    const videoUrl = videoEl ? videoEl.value.trim() : '';
+    const pollQuestion = pollEl ? pollEl.value.trim() : '';
 
     if (!title || (!content && !videoUrl && !pollQuestion)) {
         alert("Please fill in a title and either text content, a video link, or a poll!");
