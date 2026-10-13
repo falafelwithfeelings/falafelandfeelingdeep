@@ -1446,6 +1446,8 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
     </div>
 
     <!-- YouTube API Playlist Loop Enforcer -->
+
+<!-- YouTube API Playlist Loop & Live Title Updater -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
   var player;
@@ -1456,6 +1458,20 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
           event.target.setLoop(true);
         },
         'onStateChange': function(event) {
+          // State 1 = Playing (Fires the second a new song starts)
+          if (event.data === 1) {
+            var videoData = player.getVideoData();
+            if (videoData && videoData.title) {
+              // ⚠️ NOTE: Change '#song-title' below to match whatever ID or class 
+              // your website uses to display the song name (e.g., '.track-name' or '#current-song')
+              var titleElement = document.querySelector('#song-title'); 
+              if (titleElement) {
+                titleElement.textContent = videoData.title;
+              }
+            }
+          }
+
+          // State 0 = Ended (Loops the playlist back to the start)
           if (event.data === 0) {
             var currentIndex = player.getPlaylistIndex();
             var playlist = player.getPlaylist();
@@ -1471,7 +1487,6 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
     });
   }
 </script>
-
     <!-- Clean Header Navigation with Single BG Settings Button -->
     <header class="site-header">
         <div class="logo" id="mobile-secret-logo-trigger" onclick="switchView('home')">
