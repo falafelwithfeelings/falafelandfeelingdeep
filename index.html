@@ -3212,7 +3212,7 @@ async function savePostData() {
         }
     }
 }
-        wfunction renderPollHTML(ann) {
+        function renderPollHTML(ann) {
     if (!ann.pollQuestion || !ann.pollOptions || ann.pollOptions.length === 0) return '';
     
     const userVotes = ann.pollVotes || {};
