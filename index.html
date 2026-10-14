@@ -2284,7 +2284,7 @@ function toggleEditComment(postId, commentIndex) {
 function toggleCommentBox(postId) {
     const el = document.getElementById(`comment-section-${postId}`);
     if (el) {
-        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
     }
 }
 
@@ -2303,6 +2303,22 @@ function submitComment(postId) {
     } else {
         executeAddComment(postId, savedAlias, text);
     }
+}
+
+        async function toggleLike(postId) {
+    const posts = await getPosts();
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+
+    post.likes = (post.likes || 0) + 1;
+    await updateRemoteData();
+    renderAll();
+
+    // Instant update on active cards/readers
+    const countEl = document.getElementById(`like-count-${postId}`);
+    if (countEl) countEl.innerText = post.likes;
+    const readerCountEl = document.getElementById(`like-count-reader-${postId}`);
+    if (readerCountEl) readerCountEl.innerText = post.likes;
 }
         async function getBinData() {
             try {
@@ -2744,89 +2760,57 @@ function createCardHtml(p, originalIndex) {
             `;
         }
 
-        async function openPostReader(index) {
-            const posts = await getPosts();
-            const post = posts[index];
-            if(!post) return;
+     async function openPostReader(index) {
+    const posts = await getPosts();
+    const post = posts[index];
+    if (!post) return;
 
-            document.getElementById('reader-title').innerText = post.title;
-            document.getElementById('reader-time').innerText = post.time || '';
+    document.getElementById('reader-title').innerText = post.title;
+    document.getElementById('reader-time').innerText = post.date || '';
+
+    const tagEl = document.getElementById('reader-tag-row');
+    if (tagEl) {
+        tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || 'FEELINGS'}</span>`;
+    }
+
+    const photosArr = extractPostPhotos(post);
+    let galleryHtml = '';
+    if (photosArr.length > 0) {
+        galleryHtml = '<div class="photo-gallery-container">';
+        photosArr.forEach(url => {
+            galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
+        });
+        galleryHtml += '</div>';
+    }
+
+    const contentEl = document.getElementById('reader-content-wrapper');
+    if (contentEl) {
+        contentEl.innerHTML = `
+            <div class="reader-body-text">${post.content || ''}</div>
+            ${galleryHtml}
             
-            const tagEl = document.getElementById('reader-tag-row');
-            tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || 'FEELINGS'}</span>`;
+            <div class="falafel-social-bar" style="display: flex; gap: 8px; align-items: center; margin-top: 16px;">
+                <button type="button" class="cutesy-pill-btn" onclick="toggleLike('${post.id}')" style="flex: 1; background: #fff0f3; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, #5c3a42); padding: 8px 12px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600;">
+                    <span>🤍</span> <span>send a little love (<strong id="like-count-reader-${post.id}">${post.likes || 0}</strong>)</span>
+                </button>
+            </div>
 
-            const photosArr = extractPostPhotos(post);
-            let galleryHtml = '';
-            if (photosArr.length > 0) {
-                galleryHtml = '<div class="photo-gallery-container">';
-                photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
-                });
-                galleryHtml += '</div>';
-            }
+            <div class="reader-comment-box" style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.85); border-radius: 16px; border: 1.5px dashed var(--current-border, #f48fb1);">
+                <h4 style="margin: 0 0 10px 0; font-family: 'Quicksand', sans-serif; color: var(--current-text, #5c3a42);">💬 leave a little note ~</h4>
+                <div id="comments-list-reader-${post.id}" style="margin-bottom: 12px;">
+                    ${renderCommentsList(post.id, post.comments)}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <input type="text" id="comment-author-reader-${post.id}" placeholder="your name / nickname ~" style="width: 100%; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; box-sizing: border-box;" />
+                    <textarea id="comment-input-reader-${post.id}" placeholder="say something nice... ✨" style="width: 100%; height: 60px; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; resize: none; box-sizing: border-box;"></textarea>
+                    <button type="button" onclick="submitComment('${post.id}', true)" style="align-self: flex-end; background: var(--current-border, #f48fb1); color: white; border: none; padding: 6px 16px; border-radius: 12px; font-family: 'Quicksand', sans-serif; cursor: pointer; font-weight: bold;">post note ✨</button>
+                </div>
+            </div>
+        `;
+    }
 
-            const contentEl = document.getElementById('reader-content-wrapper');
-           // Build Video Player HTML if videoUrl exists
-let videoHtml = '';
-if (post.videoUrl) {
-    const embedUrl = getYouTubeEmbedUrl(post.videoUrl);
-    videoHtml = `
-    <div class="falafel-video-wrapper mood-themeable">
-      <div class="video-header">
-        <span class="video-icon">🎥</span>
-        <span class="video-title-label">cozy screening room ~</span>
-      </div>
-      <div class="video-container">
-        <iframe src="${embedUrl}" title="Cute Video Player" frameborder="0" allowfullscreen></iframe>
-      </div>
-    </div>`;
+    switchView('post-reader');
 }
-
-// Build Poll HTML if pollQuestion exists
-let pollHtml = '';
-if (post.pollQuestion && post.pollOptions) {
-    const optionsArr = post.pollOptions.split(',').map(opt => opt.trim());
-    pollHtml = `
-    <div class="falafel-poll-wrapper mood-themeable">
-      <div class="poll-header">
-        <h4>📊 ${escapeHtml(post.pollQuestion)}</h4>
-      </div>
-      <div class="poll-options">
-        ${optionsArr.map((opt, idx) => `
-          <button class="poll-option-btn" onclick="voteDynamicPoll(this, ${idx})">
-            <span class="option-text">${escapeHtml(opt)}</span>
-            <span class="option-pct">0%</span>
-            <div class="poll-fill" style="width: 0%"></div>
-          </button>
-        `).join('')}
-      </div>
-      <p class="poll-footer-text">click an option to cast your vote! ✨</p>
-    </div>`;
-}
-
-// Build Social (Likes & Comments) HTML
-const socialHtml = `
-<div class="falafel-social-wrapper mood-themeable" style="margin-top: 30px;">
-  <div class="like-section">
-    <button class="like-btn" onclick="togglePostLike(this)">
-      <span class="heart-icon">🤍</span> send a little love (<span class="like-count">0</span>)
-    </button>
-  </div>
-  <hr class="social-divider">
-  <h4 class="comments-heading">💬 leave a little note ~</h4>
-  <form class="comment-form" onsubmit="submitDynamicComment(event, this)">
-    <input type="text" class="comment-author-input" placeholder="your name / nickname ~" required>
-    <textarea class="comment-text-input" placeholder="say something nice..." rows="3" required></textarea>
-    <button type="submit" class="comment-submit-btn">post note ✨</button>
-  </form>
-  <div class="comments-list"></div>
-</div>`;
-
-// Set reader content with everything combined!
-contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}${videoHtml}${pollHtml}${socialHtml}`;
-
-            switchView('post-reader');
-        }
 
         function getYouTubeEmbedUrl(url) {
     if (!url) return '';
@@ -3087,9 +3071,7 @@ function escapeHtml(str) {
                 renderAllPosts();
             }
         }
-
-        async function savePostData() {
-           const editIndexEl = document.getElementById('edit-index') || document.getElementById('admin-edit-index');
+const editIndexEl = document.getElementById('edit-index') || document.getElementById('admin-edit-index');
     const editIndex = editIndexEl ? editIndexEl.value : '-1';
 
     const entryTypeEl = document.getElementById('new-entry-type') || document.getElementById('admin-entry-type');
@@ -3113,7 +3095,6 @@ function escapeHtml(str) {
         alert("Please fill in a title and either text content, a video link, or a poll!");
         return;
     }
-
             saveBtn.innerText = "Saving... ⏳";
             saveBtn.disabled = true;
 
