@@ -1773,6 +1773,19 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
                 </div>
             </div>
 
+            <!-- YOUTUBE LINK FIELD -->
+<div style="margin-top: 1rem;">
+    <label style="display: block; font-weight: bold; font-size: 0.85rem;">📺 YouTube Video Link (Optional)</label>
+    <input type="text" id="new-youtube-url" placeholder="https://www.youtube.com/watch?v=..." style="width: 100%; box-sizing: border-box; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color, #ffb6c1); font-size: 0.85rem; margin-top: 4px;">
+</div>
+
+<!-- POLL CREATION FIELD -->
+<div style="margin-top: 1rem; background: rgba(255,182,193,0.1); padding: 10px; border-radius: 10px; border: 1px dashed var(--border-color, #ffb6c1);">
+    <label style="display: block; font-weight: bold; font-size: 0.85rem;">📊 Attach a Poll (Optional)</label>
+    <input type="text" id="new-poll-question" placeholder="Poll Question (e.g. Favorite flavor?)" style="width: 100%; box-sizing: border-box; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color, #ffb6c1); font-size: 0.8rem; margin: 4px 0;">
+    <input type="text" id="new-poll-options" placeholder="Options separated by commas (e.g. Matcha, Vanilla, Strawberry)" style="width: 100%; box-sizing: border-box; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color, #ffb6c1); font-size: 0.8rem;">
+</div>
+
             <div class="modal-buttons" style="margin-top: 1.5rem;">
                 <button class="modal-btn cancel" onclick="closeAdminModal()">Close / Cancel</button>
                 <button class="modal-btn save" id="save-post-btn" onclick="savePostData()">Save Entry 🚀</button>
@@ -2448,11 +2461,54 @@ function initYouTubeAPI() {
             }
 
             const contentEl = document.getElementById('reader-content-wrapper');
-            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}`;
+          contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}${renderFullCommentsSection(post, index, sessionStorage.getItem('falafel_admin') === 'true')}`;
 
             switchView('post-reader');
         }
+// --- YOUTUBE STYLE COMMENT SECTION FOR READER MODAL ---
+function renderFullCommentsSection(p, index, isAdmin) {
+    const comments = Array.isArray(p.comments) ? p.comments : [];
+    const sorted = [...comments].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+    
+    let commentsList = sorted.map((c, cIdx) => {
+        const isOwner = c.isOwner || (c.alias && c.alias.toLowerCase().includes('falafel'));
+        const ownerBadge = isOwner ? `<span style="background: var(--accent-color, #ffb6c1); color: #fff; font-size: 0.7em; padding: 1px 6px; border-radius: 8px; margin-left: 4px; font-weight: bold;">the big falafel 𝜗ৎ</span>` : '';
+        return `
+            <div style="padding: 10px; margin-top: 8px; background: var(--bg-card, #fff); border-radius: 10px; border: 1px solid var(--border-color, rgba(255,182,193,0.3)); font-size: 0.9em;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${c.alias || 'anonymous 🌸'}</b> ${ownerBadge} ${c.hearted ? '❤️' : ''} ${c.pinned ? '📌' : ''}</div>
+                    <div>
+                        ${isAdmin ? `<button onclick="togglePinComment(${index},${cIdx})" style="background:none;border:none;cursor:pointer;">📌</button><button onclick="toggleHeartComment(${index},${cIdx})" style="background:none;border:none;cursor:pointer;">❤️</button>` : ''}
+                        ${(isAdmin || c.canDelete) ? `<button onclick="deleteComment(${index},${cIdx})" style="background:none;border:none;cursor:pointer;color:#ff6b6b;">🗑️</button>` : ''}
+                    </div>
+                </div>
+                <div style="margin-top: 4px; color: var(--text-color, #444);">${c.text}</div>
+            </div>`;
+    }).join('');
 
+    return `
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 2px dashed var(--border-color, #ffb6c1);">
+            <h4 style="margin-bottom: 12px; color: var(--text-color, #333);">💬 Notes & Comments (${comments.length})</h4>
+            <input type="text" id="modal-alias-${index}" placeholder="Your Alias (blank for anonymous 🌸)" style="width:100%; box-sizing:border-box; padding:8px; margin-bottom:8px; border-radius:8px; border:1px solid var(--border-color, #ffb6c1); font-size:0.85em;">
+            <div style="display:flex; gap:8px;">
+                <input type="text" id="modal-comment-${index}" placeholder="Leave a note..." style="flex:1; padding:8px; border-radius:8px; border:1px solid var(--border-color, #ffb6c1); font-size:0.85em;">
+                <button onclick="submitModalComment(${index})" style="background:var(--accent-color, #ffb6c1); color:#fff; border:none; border-radius:8px; padding:8px 16px; cursor:pointer; font-weight:bold;">Post</button>
+            </div>
+            <div style="margin-top: 12px;">${commentsList || '<div style="font-size:0.85em; opacity:0.6; text-align:center;">No comments yet. Be the first! 🌸</div>'}</div>
+        </div>`;
+}
+
+function submitModalComment(i) {
+    const aliasIn = document.getElementById(`modal-alias-${i}`);
+    const textIn = document.getElementById(`modal-comment-${i}`);
+    if(!textIn || !textIn.value.trim()) return;
+    let alias = aliasIn && aliasIn.value.trim() ? aliasIn.value.trim() : 'anonymous 🌸';
+    if(alias.toLowerCase().includes('falafel')) alias = 'the big falafel 𝜗ৎ';
+    if(!posts[i].comments) posts[i].comments = [];
+    posts[i].comments.push({ alias, text: textIn.value.trim(), isOwner: alias === 'the big falafel 𝜗ৎ', pinned: false, hearted: false });
+    if(typeof savePostsToStorage === 'function') savePostsToStorage();
+    if(typeof openPostReader === 'function') openPostReader(i);
+}
         let clickCount = 0;
         let clickTimer = null;
         document.getElementById('secret-trigger').addEventListener('click', () => {
@@ -2600,7 +2656,19 @@ function initYouTubeAPI() {
 
             postObj.images = currentPostPhotos;
             postObj.imageUrl = currentPostPhotos[0] || '';
+// --- CAPTURE YOUTUBE & POLL INPUTS ---
+        const youtubeUrl = document.getElementById('new-youtube-url')?.value || '';
+        const pollQuestion = document.getElementById('new-poll-question')?.value || '';
+        const pollOptionsRaw = document.getElementById('new-poll-options')?.value || '';
 
+        postObj.youtubeUrl = youtubeUrl.trim();
+
+        if (pollQuestion.trim() && pollOptionsRaw.trim()) {
+            postObj.poll = {
+                question: pollQuestion.trim(),
+                options: pollOptionsRaw.split(',').map(opt => ({ text: opt.trim(), votes: 0 }))
+            };
+        }
             if (entryType === 'blog') {
                 const tag = document.getElementById('new-tag').value;
                 postObj.tag = tag;
@@ -2660,14 +2728,14 @@ function savePostsToStorage() {
             renderAllPosts();
             updateWidgetTrackDisplay();
         });
-        // --- PASTE THIS AT THE VERY BOTTOM OF YOUR SCRIPT ---
+     // --- THEME-ADAPTIVE SOCIAL CARD ADDONS ---
 function renderSocialCardAddons(p, originalIndex, isAdmin) {
     try {
         const likes = p.likes || 0;
         const comments = Array.isArray(p.comments) ? p.comments : [];
         const poll = p.poll || null;
 
-        // Polls with percentage & winner crown
+        // Dynamic Poll HTML matching mood theme variables
         let pollHtml = '';
         if (poll && poll.question && Array.isArray(poll.options)) {
             const totalVotes = poll.options.reduce((sum, opt) => sum + (opt.votes || 0), 0);
@@ -2676,94 +2744,45 @@ function renderSocialCardAddons(p, originalIndex, isAdmin) {
             let optionsList = poll.options.map((opt, optIdx) => {
                 const percentage = totalVotes > 0 ? Math.round(((opt.votes || 0) / totalVotes) * 100) : 0;
                 const isLeading = (opt.votes || 0) === maxVotes && maxVotes > 0;
-                
                 return `
-                    <div onclick="voteOnPoll(${originalIndex}, ${optIdx})" style="margin: 6px 0; padding: 8px 12px; background: var(--bg-card, rgba(255,255,255,0.6)); border: 2px solid ${isLeading ? 'var(--accent-color, #ffb6c1)' : 'var(--border-color, rgba(255,182,193,0.4))'}; border-radius: 10px; cursor: pointer; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top:0; left:0; bottom:0; width: ${percentage}%; background: var(--accent-color, #ffb6c1); opacity: 0.2; z-index: 0;"></div>
-                        <div style="position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 0.85em; color: var(--text-color, #333);">
+                    <div onclick="voteOnPoll(${originalIndex}, ${optIdx})" style="margin: 4px 0; padding: 6px 10px; background: var(--bg-card, #fff); border: 1px solid ${isLeading ? 'var(--accent-color, #ffb6c1)' : 'var(--border-color, rgba(255,182,193,0.4))'}; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top:0; left:0; bottom:0; width: ${percentage}%; background: var(--accent-color, #ffb6c1); opacity: 0.3;"></div>
+                        <div style="position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 0.8em; color: var(--text-color, #333);">
                             <span>${opt.text} ${isLeading ? '👑' : ''}</span>
-                            <span><b>${percentage}%</b> (${opt.votes || 0})</span>
+                            <span><b>${percentage}%</b></span>
                         </div>
                     </div>`;
             }).join('');
 
-            pollHtml = `
-                <div style="margin: 12px 0; padding: 12px; background: var(--bg-secondary, rgba(255,182,193,0.15)); border-radius: 12px; border: 1px dashed var(--border-color, #ffb6c1);">
-                    <div style="font-weight: bold; margin-bottom: 8px; color: var(--text-color, #333); font-size: 0.9em;">📊 ${poll.question}</div>
-                    ${optionsList}
-                </div>`;
+            pollHtml = `<div style="margin: 8px 0; padding: 8px; background: var(--bg-secondary, rgba(255,182,193,0.1)); border-radius: 10px; border: 1px solid var(--border-color, rgba(255,182,193,0.3));">
+                <div style="font-weight: bold; font-size: 0.85em; margin-bottom: 4px; color: var(--text-color, #333);">📊 ${poll.question}</div>
+                ${optionsList}
+            </div>`;
         }
 
-        // Comments with Owner Tag & Pinning
-        const sortedComments = [...comments].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
-        let commentsHtml = sortedComments.map((c, cIdx) => {
-            const isOwner = c.isOwner || (c.alias && c.alias.toLowerCase().includes('falafel'));
-            const ownerBadge = isOwner ? `<span style="background: var(--accent-color, #ffb6c1); color: #fff; font-size: 0.7em; padding: 1px 6px; border-radius: 8px; margin-left: 4px; font-weight: bold;">the big falafel 𝜗ৎ</span>` : '';
-
-            return `
-                <div style="font-size: 0.85em; padding: 8px 10px; margin-bottom: 6px; background: var(--bg-card, rgba(255,255,255,0.7)); border-radius: 8px; border: 1px solid var(--border-color, rgba(255,182,193,0.3));">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
-                        <div>
-                            <b style="color: var(--accent-color, #d87093);">${c.alias || 'anonymous 🌸'}</b>
-                            ${ownerBadge} ${c.hearted ? '❤️' : ''} ${c.pinned ? '📌' : ''}
-                        </div>
-                        <div style="display: flex; gap: 4px;">
-                            ${isAdmin ? `
-                                <button onclick="togglePinComment(${originalIndex},${cIdx})" style="background:none; border:none; cursor:pointer;" title="Pin">📌</button>
-                                <button onclick="toggleHeartComment(${originalIndex},${cIdx})" style="background:none; border:none; cursor:pointer;" title="Heart">❤️</button>
-                            ` : ''}
-                            ${(isAdmin || c.canDelete) ? `<button onclick="deleteComment(${originalIndex},${cIdx})" style="background:none; border:none; cursor:pointer; color:#ff6b6b;" title="Delete">🗑️</button>` : ''}
-                        </div>
-                    </div>
-                    <div style="color: var(--text-color, #444);">${c.text}</div>
+        // YouTube Embed render
+        let ytHtml = '';
+        if (p.youtubeUrl) {
+            const videoId = p.youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1];
+            if (videoId) {
+                ytHtml = `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; margin:8px 0;">
+                    <iframe src="https://www.youtube.com/embed/${videoId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
                 </div>`;
-        }).join('');
+            }
+        }
 
         return `
+            ${ytHtml}
             ${pollHtml}
-            <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0;">
-                <button onclick="handleLike(${originalIndex})" style="background: var(--bg-secondary, #ffe4e1); border: 1px solid var(--border-color, #ffb6c1); border-radius: 20px; padding: 5px 12px; cursor: pointer; color: var(--text-color, #333); font-size: 0.85em;">
-                    🤍 send a little love (<span id="like-count-${originalIndex}">${likes}</span>)
+            <div style="display: inline-flex; align-items: center; gap: 8px; margin-left: 6px;">
+                <button onclick="handleLike(${originalIndex})" style="background: var(--bg-secondary, #fff0f5); border: 1.5px solid var(--accent-color, #ffb6c1); border-radius: 16px; padding: 4px 10px; cursor: pointer; font-size: 0.8em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 5px var(--border-color, rgba(255,182,193,0.3)); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    🤍 ${likes}
                 </button>
-                <button onclick="toggleCommentDrawer(${originalIndex})" style="background: var(--bg-secondary, #ffe4e1); border: 1px solid var(--border-color, #ffb6c1); border-radius: 20px; padding: 5px 12px; cursor: pointer; color: var(--text-color, #333); font-size: 0.85em;">
-                    💬 leave a note (${comments.length})
+                <button onclick="openPostReader(${originalIndex})" style="background: var(--bg-secondary, #fff0f5); border: 1.5px solid var(--accent-color, #ffb6c1); border-radius: 16px; padding: 4px 10px; cursor: pointer; font-size: 0.8em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 5px var(--border-color, rgba(255,182,193,0.3)); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    💬 ${comments.length}
                 </button>
-            </div>
-            <div id="comment-drawer-${originalIndex}" style="display: none; margin-top: 8px; padding: 10px; background: var(--bg-secondary, rgba(255,182,193,0.08)); border-radius: 10px; border: 1px dashed var(--border-color, #ffb6c1);">
-                <div style="max-height: 150px; overflow-y: auto; margin-bottom: 8px;">${commentsHtml || '<div style="font-size: 0.8em; color: var(--text-muted, #777); text-align: center;">No notes yet 🌸</div>'}</div>
-                <input type="text" id="comment-alias-${originalIndex}" placeholder="your alias (blank for anonymous 🌸)" style="width: 100%; box-sizing: border-box; padding: 5px 8px; margin-bottom: 6px; border-radius: 6px; border: 1px solid var(--border-color, #ffb6c1); background: var(--bg-card, #fff); font-size: 0.8em; color: var(--text-color, #333);">
-                <div style="display: flex; gap: 4px;">
-                    <input type="text" id="comment-input-${originalIndex}" placeholder="leave a note..." style="flex: 1; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border-color, #ffb6c1); background: var(--bg-card, #fff); font-size: 0.8em; color: var(--text-color, #333);" onkeypress="if(event.key==='Enter')submitComment(${originalIndex})">
-                    <button onclick="submitComment(${originalIndex})" style="background: var(--accent-color, #ffb6c1); color: #fff; border: none; border-radius: 6px; padding: 5px 10px; cursor: pointer; font-size: 0.8em;">Post</button>
-                </div>
             </div>`;
     } catch(e) { return ""; }
-}
-
-function toggleCommentDrawer(i) { const d = document.getElementById(`comment-drawer-${i}`); if(d) d.style.display = d.style.display === 'none' ? 'block' : 'none'; }
-function handleLike(i) { if(posts[i]){ posts[i].likes = (posts[i].likes || 0) + 1; document.getElementById(`like-count-${i}`).innerText = posts[i].likes; if(typeof savePostsToStorage === 'function') savePostsToStorage(); } }
-function submitComment(i) {
-    const aliasIn = document.getElementById(`comment-alias-${i}`);
-    const textIn = document.getElementById(`comment-input-${i}`);
-    if(!textIn || !textIn.value.trim()) return;
-    let alias = aliasIn && aliasIn.value.trim() ? aliasIn.value.trim() : 'anonymous 🌸';
-    if(alias.toLowerCase().includes('falafel')) alias = 'the big falafel 𝜗ৎ';
-    if(!posts[i].comments) posts[i].comments = [];
-    posts[i].comments.push({ alias, text: textIn.value.trim(), isOwner: alias === 'the big falafel 𝜗ৎ', pinned: false,hearted: false });
-    if(typeof savePostsToStorage === 'function') savePostsToStorage();
-    if(typeof renderFeed === 'function') renderFeed();
-}
-function deleteComment(pI, cI) { posts[pI].comments.splice(cI, 1); if(typeof savePostsToStorage === 'function') savePostsToStorage(); if(typeof renderFeed === 'function') renderFeed(); }
-function togglePinComment(pI, cI) { posts[pI].comments[cI].pinned = !posts[pI].comments[cI].pinned; if(typeof savePostsToStorage === 'function') savePostsToStorage(); if(typeof renderFeed === 'function') renderFeed(); }
-function toggleHeartComment(pI, cI) { posts[pI].comments[cI].hearted = !posts[pI].comments[cI].hearted; if(typeof savePostsToStorage === 'function') savePostsToStorage(); if(typeof renderFeed === 'function') renderFeed(); }
-function voteOnPoll(pI, oI) {
-    if(!posts[pI].poll.voted) {
-        if(!posts[pI].poll.options[oI].votes) posts[pI].poll.options[oI].votes = 0;
-        posts[pI].poll.options[oI].votes++;
-        posts[pI].poll.voted = true;
-        if(typeof savePostsToStorage === 'function') savePostsToStorage();
-        if(typeof renderFeed === 'function') renderFeed();
-    }
 }
     </script>
 </body>
