@@ -1253,138 +1253,95 @@
             cursor: pointer;
             font-family: 'Quicksand', sans-serif;
         }
-        /* Base Theme-Aware Cutesy Volume Control */
-/* Dynamic Theme-Matching Volume Control */
-/* Theme-Matching Volume Control */
-/* Theme-Matching Volume Control */
-.cutesy-volume-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 6px 12px;
-    border-radius: 20px;
-    border: 2px dashed currentColor;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 0.85rem;
-    color: inherit;
-    margin-top: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
 
-.cutesy-slider {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 85px;
-    height: 6px;
-    border-radius: 3px;
-    background: currentColor;
-    opacity: 0.3;
-    outline: none;
-}
+        .cutesy-volume-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 2px dashed currentColor;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.85rem;
+            color: inherit;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
 
-.cutesy-slider::-webkit-slider-thumb {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: currentColor;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: transform 0.15s ease;
-    opacity: 1;
-}
+        .cutesy-slider {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 85px;
+            height: 6px;
+            border-radius: 3px;
+            background: currentColor;
+            opacity: 0.3;
+            outline: none;
+        }
 
-.cutesy-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.25);
-}
+        .cutesy-slider::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: currentColor;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.15s ease;
+            opacity: 1;
+        }
 
-.volume-icon,
-.volume-percentage {
-    color: inherit;
-}
+        .cutesy-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+        }
 
-/* Mood-specific tint overrides */
-body.mood-pink .cutesy-volume-wrapper {
-    border-color: #ffb6c1;
-    color: #d87093;
-}
-body.mood-pink .cutesy-slider::-webkit-slider-thumb {
-    background: #ff69b4;
-}
+        .volume-icon,
+        .volume-percentage {
+            color: inherit;
+        }
 
-body.mood-dark .cutesy-volume-wrapper {
-    background: rgba(30, 30, 30, 0.6);
-    border-color: #dda0dd;
-    color: #dda0dd;
-}
-body.mood-dark .cutesy-slider::-webkit-slider-thumb {
-    background: #dda0dd;
-}
-        /* 🌸 MOOD SYNC FOR KIT FORM BUTTONS 🌸 */
-    .contact-envelope-box .warning-badge {
-      background-color: var(--accent-color, #f48fb1) !important;
-      color: #ffffff !important;
-      transition: background-color 0.3s ease;
-    }
+        body.mood-pink .cutesy-volume-wrapper { border-color: #ffb6c1; color: #d87093; }
+        body.mood-pink .cutesy-slider::-webkit-slider-thumb { background: #ff69b4; }
 
-    .contact-envelope-box form,
-    .contact-envelope-box .formkit-form {
-      max-width: 100% !important;
-      background: transparent !important;
-      border: none !important;
-    }
+        body.mood-dark .cutesy-volume-wrapper { background: rgba(30, 30, 30, 0.6); border-color: #dda0dd; color: #dda0dd; }
+        body.mood-dark .cutesy-slider::-webkit-slider-thumb { background: #dda0dd; }
 
-    .contact-envelope-box button[type="submit"],
-    .contact-envelope-box .formkit-submit,
-    .contact-envelope-box button.formkit-submit {
-      background-color: var(--accent-color, currentColor) !important;
-      background: var(--accent-color, currentColor) !important;
-      color: #ffffff !important;
-      border-radius: 12px !important;
-      font-family: 'Quicksand', sans-serif !important;
-      font-weight: 700 !important;
-      border: none !important;
-      padding: 12px 24px !important;
-      transition: all 0.3s ease !important;
-    }
+        .contact-envelope-box .warning-badge {
+            background-color: var(--accent-color, #f48fb1) !important;
+            color: #ffffff !important;
+            transition: background-color 0.3s ease;
+        }
 
-    .contact-envelope-box button[type="submit"]:hover,
-    .contact-envelope-box .formkit-submit:hover {
-      opacity: 0.85 !important;
-      transform: translateY(-1px) !important;
-    }
+        .contact-envelope-box form,
+        .contact-envelope-box .formkit-form {
+            max-width: 100% !important;
+            background: transparent !important;
+            border: none !important;
+        }
 
-    body.mood-cyber .contact-envelope-box .warning-badge,
-    body.mood-cyber .contact-envelope-box button[type="submit"],
-    body.mood-cyber .contact-envelope-box .formkit-submit {
-      background-color: #00ffcc !important;
-      color: #0d0221 !important;
-    }
+        .contact-envelope-box button[type="submit"],
+        .contact-envelope-box .formkit-submit,
+        .contact-envelope-box button.formkit-submit {
+            background-color: var(--accent-color, currentColor) !important;
+            background: var(--accent-color, currentColor) !important;
+            color: #ffffff !important;
+            border-radius: 12px !important;
+            font-family: 'Quicksand', sans-serif !important;
+            font-weight: 700 !important;
+            border: none !important;
+            padding: 12px 24px !important;
+            transition: all 0.3s ease !important;
+        }
 
-    body.mood-midnight .contact-envelope-box .warning-badge,
-    body.mood-midnight .contact-envelope-box button[type="submit"],
-    body.mood-midnight .contact-envelope-box .formkit-submit {
-      background-color: #7aa2f7 !important;
-      color: #1a1b26 !important;
-    }
-
-    body.mood-matcha .contact-envelope-box .warning-badge,
-    body.mood-matcha .contact-envelope-box button[type="submit"],
-    body.mood-matcha .contact-envelope-box .formkit-submit {
-      background-color: #87a96b !important;
-      color: #ffffff !important;
-    }
-
-    body.mood-lavender .contact-envelope-box .warning-badge,
-    body.mood-lavender .contact-envelope-box button[type="submit"],
-    body.mood-lavender .contact-envelope-box .formkit-submit {
-      background-color: #c084fc !important;
-      color: #ffffff !important;
-    }
+        .contact-envelope-box button[type="submit"]:hover,
+        .contact-envelope-box .formkit-submit:hover {
+            opacity: 0.85 !important;
+            transform: translateY(-1px) !important;
+        }
     </style>
 </head>
 <body class="mood-pink">
@@ -1395,7 +1352,24 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
     <!-- Global Bouncing Emu Characters Layer -->
     <div id="emu-layer"></div>
 
-   
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="logo" onclick="switchView('home')">
+            <span class="avatar">🥣</span>
+            <span>falafelwithfeelings 🎀</span>
+        </div>
+        <nav class="nav-links">
+            <a onclick="switchView('home')" class="active" id="nav-home">home</a>
+            <a onclick="switchView('blog')" id="nav-blog">blog</a>
+            <a onclick="switchView('announcements')" id="nav-announcements">announcements</a>
+            <a onclick="switchView('about')" id="nav-about">about</a>
+            <a onclick="switchView('contact')" id="nav-contact">contact</a>
+            <button class="mood-selector-pill" onclick="openMoodModal()">🎨 Mood</button>
+            <button class="local-bg-btn" onclick="openBgMenuModal()">🖼️ Background</button>
+            <button class="emu-toggle-pill" onclick="toggleEmus()">🦆 Emus</button>
+            <button class="admin-badge" id="admin-mode-toggle-btn" onclick="toggleAdminMode()">🔒 Admin</button>
+        </nav>
+    </header>
 
     <!-- Lightbox Image Zoom Modal -->
     <div id="image-lightbox-modal" onclick="closeLightbox()">
@@ -1413,7 +1387,6 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
         <div class="music-song-artist" id="widget-song-artist">super_toki</div>
         
         <select class="music-select" id="playlist-track-select" onchange="onTrackDropdownChange(this.value)">
-           
             <option value="0">🎵 Track 1: LIKE A DINO</option>
             <option value="1">🎵 Track 2: IT'S OK NOT TO BE OKAY</option>
             <option value="2">🎵 Track 3: GOOD LUCK TODAY</option>
@@ -1421,1501 +1394,711 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
             <option value="4">🎵 Track 5: I'M SO EXCITED!</option>
             <option value="5">🎵 Track 6: It Is What It Is</option>
             <option value="6">🎵 Track 7: A Silver Lining</option>
-            <option value="7">🎵 Track 8: SO SÜß</option>
-            <option value="8">🎵 Track 9: YOU MADE MY DAY</option>
-            <option value="9">🎵 Track 10: MARRIAGE PROPOSAL</option>
-            <option value="10">🎵 Track 11: OVER THE MOON</option>
-            <option value="11">🎵 Track 12: WADDLE WADDLE</option>
         </select>
-        <div class="cutesy-volume-wrapper">
-    <span class="volume-icon">♡︎</span>
-    <input type="range" id="widget-volume-slider" min="0" max="100" value="80" class="cutesy-slider" oninput="changeWidgetVolume(this.value)">
-    <span class="volume-percentage" id="volume-display">80%</span>
-</div>
-
-        <div class="music-controls-row">
-            <button class="music-btn" onclick="skipAudioTrack(-1)">⏮ Prev</button>
-            <button class="music-btn" id="audio-play-pause-btn" onclick="toggleAudioPlayback()">▶ Play</button>
-            <button class="music-btn" onclick="skipAudioTrack(1)">Next ⏭</button>
-        </div>
-    </div>
-
-    <!-- Hidden Audio IFrame Streamer for Playlist -->
-    <div id="hidden-audio-container">
-       <iframe id="bg-playlist-iframe" src="https://www.youtube.com/embed?listType=playlist&list=PL70l4ypNo0_7a7-JAZcwm5bdRGPbTT2E-&enablejsapi=1&autoplay=0" allow="autoplay"></iframe>
-    </div>
-
-    <!-- Clean Header Navigation with Single BG Settings Button -->
-    <header class="site-header">
-        <div class="logo" id="mobile-secret-logo-trigger" onclick="switchView('home')">
-            <span class="avatar">🧆</span>
-            <span class="logo-text">falafelwithfeelings</span>
-        </div>
-        <nav class="nav-links">
-            <select class="mood-selector-pill" id="mood-picker" onchange="changeMoodTheme(this.value)">
-                <option value="pink">🌸 Cozy Pink</option>
-                <option value="midnight">🌙 Midnight Spiral</option>
-                <option value="matcha">🍵 Matcha Sage</option>
-                <option value="lemonade">🍋 Lemonade</option>
-                <option value="strawberry">🍓 Strawberry Milkshake</option>
-                <option value="cyber">⚡ Cyber Neon</option>
-                <option value="lavender">🔮 Lavender Dream</option>
-                <option value="sunset">☀️ Sunset Peach</option>
-            </select>
-
-            <!-- Single Clean Button for All Wallpaper Options -->
-            <button class="local-bg-btn" onclick="openBgSettingsModal()">🖼️ BG Settings</button>
-            <input type="file" id="local-png-file-input" accept="image/png, image/jpeg, image/webp" style="display: none;" onchange="handleLocalPngUpload(event)">
-
-            <button class="emu-toggle-pill" id="emu-toggle-btn" onclick="toggleGlobalEmus()">🩰 Emu: ON</button>
-            <button id="admin-indicator" class="admin-badge" onclick="openNewPostModal()">+ New ✨</button>
-
-            <a id="nav-blog" onclick="switchView('blog')">Blog</a>
-            <a id="nav-announcements" onclick="switchView('announcements')">Announcements</a>
-            <a id="nav-about" onclick="switchView('about')">About</a>
-            <a id="nav-contact" onclick="switchView('contact')">Contact</a>
-        </nav>
-    </header>
-
-    <!-- VIEW: HOME -->
-    <main id="view-home" class="view active-view">
-        <section class="hero">
-            <div class="hero-title-box">
-                <h1 class="main-title">falafel<span class="highlight">with</span>feelings</h1>
-                <p class="subtitle">a blog about feelings, falafel, and everything in between</p>
-            </div>
-            <button class="cta-btn" onclick="switchView('blog')">read the latest ✨</button>
-        </section>
-
-        <section class="blog-grid" id="home-posts-grid"></section>
-
-        <section class="bio-section">
-            <div class="bio-card-preview">
-                <div class="bio-avatar">🧆</div>
-                <div class="bio-text">
-                    <h2>hi, it's me 🩷</h2>
-                    <p>Hi, I'm falafelwithfeelings. I write about feelings, snacks, and the general chaos of being a person. Sometimes all three at once.</p>
-                    <button class="secondary-btn" onclick="switchView('about')">learn more about me →</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="newsletter-box">
-            <h2>stick around, will you?</h2>
-            <p>New essays land whenever the feelings get too big to keep inside (I might spam you with Genshin Impact and PJSK related emails)</p>
-            <button class="pink-pill-btn" onclick="switchView('contact')">yes, I want the feelings 💌</button>
-        </section>
-    </main>
-
-    <!-- VIEW: BLOG -->
-    <main id="view-blog" class="view">
-        <div class="page-header-box">
-            <h1 style="font-size: 2.8rem; margin: 0;" class="about-section-title">the blog 📖</h1>
-            <p class="subtitle" style="margin-bottom: 0;">the things i write abt when im too lazy to study something. grab a snack.</p>
-        </div>
-        <div id="dynamic-blog-container"></div>
-    </main>
-
-    <!-- VIEW: ANNOUNCEMENTS -->
-    <main id="view-announcements" class="view">
-        <div class="page-header-box">
-            <h1 style="font-size: 3.2rem; margin: 0;" class="about-section-title">WONDERHOI!! ⭐</h1>
-            <p class="subtitle" style="font-weight: 600; margin-bottom: 0;">the official Emu Otori wall for all my notes ˚ʚ♡ɞ˚</p>
-        </div>
-        <div class="announcements-container" id="announcements-wall-container"></div>
-    </main>
-
-    <!-- VIEW: POST READER -->
-    <main id="view-post-reader" class="view">
-        <div class="post-reader-container">
-            <button class="back-to-blog" onclick="switchView('blog')">← back to all posts</button>
-            <div id="reader-tag-row"></div>
-            <div id="reader-hashtags" class="card-hashtags"></div>
-            <h1 id="reader-title" class="post-reader-title"></h1>
-            <div class="post-reader-meta">
-                <span id="reader-time"></span>
-            </div>
-            <div id="reader-content-wrapper" class="post-reader-content"></div>
-        </div>
-    </main>
-
-    <!-- VIEW: ABOUT -->
-    <main id="view-about" class="view">
-        <div class="page-header-box">
-            <div style="font-size: 2.5rem; margin-bottom: -0.5rem;">🧆</div>
-            <h1 style="font-size: 2.8rem; margin: 0.5rem 0;" class="about-section-title">hi, im just a person on the internet</h1>
-            <p class="subtitle" style="max-width: 600px; margin: 0.5rem auto 0 auto;">an IGCSE student, chronically burnt out, and absolutely unhinged about gacha games. welcome to my corner.</p>
-        </div>
-
-        <div class="about-container">
-            <div class="about-scrapbook-card">
-                <div class="about-heading-row">
-                    <div class="about-profile-sticker">🧆</div>
-                    <div>
-                        <h2 class="about-section-title">the story behind the name</h2>
-                        <span style="font-size: 0.85rem; opacity: 0.7; font-weight: 700;">EST. DURING A 3AM PHYSICS BREAKDOWN</span>
-                    </div>
-                </div>
-                <p class="about-text">Falafel is my ultimate comfort food. It's crispy on the outside, soft on the inside, and somehow holds everything together even when it looks like it might fall apart at any second. Honestly? Same.</p>
-                <p class="about-text">I'm an IGCSE student currently navigating what I can only describe as a slow-motion academic burnout. School is a lot, and nobody around me understands the things I genuinely care about — the lore spirals, the gacha banners, and 3am existential thoughts. So I built this cozy corner on the internet to talk to wonderful strangers instead. Hiya!</p>
-            </div>
-
-            <!-- Mascot Video Section -->
-            <div class="about-scrapbook-card">
-                <h2 class="about-section-title" style="margin-bottom: 1rem;">⭐ Meet the Mascot</h2>
-                <p class="about-text">oh? youre wondering whos that as the mascot, emu otori? thats her:</p>
-                
-                <div class="video-container-box">
-                    <div class="video-frame-wrapper">
-                        <iframe id="emu-yt-player" src="https://www.youtube.com/embed/fa7UgRsvICI?enablejsapi=1&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    
-                    <div class="video-custom-controls">
-                       
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-scrapbook-card">
-                <h2 class="about-section-title" style="margin-bottom: 1.5rem;">📁 personal lore & stats ⋆˚✿˖° 𐙚 ₊ ⊹ ♡</h2>
-                
-                <div class="lore-timeline">
-                    <div class="lore-item">
-                        <div class="lore-icon">📖</div>
-                        <div><strong>Academic Status:</strong> IGCSE student, perpetually one assignment away from borderline insanity</div>
-                    </div>
-                    <div class="lore-item">
-                        <div class="lore-icon">🎮</div>
-                        <div><strong>Gacha Poison:</strong> Honkai Star Rail, Genshin Impact, Roblox and Project Sekai: Colorful Stage constitute 90% of my daily brain chemistry.</div>
-                    </div>
-                    <div class="lore-item">
-                        <div class="lore-icon">🌙</div>
-                        <div><strong>Peak Hours:</strong> Most productive between midnight and 3am. Do not contact me before noon.</div>
-                    </div>
-                    <div class="lore-item">
-                        <div class="lore-icon">🇪🇬</div>
-                        <div><strong>Origin:</strong> Egyptian — yes we invented civilization, and no, I will not take questions about history at this time.</div>
-                    </div>
-                    <div class="lore-item">
-                        <div class="lore-icon"> 🎀 </div>
-                        <div><strong>Favorite Food:</strong> Falafel, duh. What did you expect, instant ramen?</div>
-                    </div>
-                </div>
-
-                <div class="tags-container" style="margin-top: 2rem;">
-                    <span class="tag-pill">#feelings</span>
-                    <span class="tag-pill">#burnout</span>
-                    <span class="tag-pill">#gacha_games</span>
-                    <span class="tag-pill">#honkai_star_rail</span>
-                    <span class="tag-pill">#genshin_impact</span>
-                    <span class="tag-pill">#project_sekai</span>
-                    <span class="tag-pill">#being_perceived</span>
-                    <span class="tag-pill">#roblox</span>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 2.5rem;">
-                <button class="cta-btn" onclick="switchView('blog')">back to reading →</button>
-            </div>
-        </div>
-    </main>
-
-    <!-- VIEW: CONTACT -->
-    <main id="view-contact" class="view">
-        <div class="contact-container">
-            <div class="page-header-box">
-                <h1 style="font-size: 3rem; margin: 0 0 0.5rem 0;" class="about-section-title">say something 💌</h1>
-                <p class="subtitle" style="margin: 0;">I'm a person on the internet. you're a person on the internet. let's be weird together.</p>
-            </div>
-
-            <div class="contact-envelope-box">
-                <div class="warning-badge">⚠️ AIRMAIL WARNING</div>
-                <h2 style="margin-top: 0; font-size: 1.8rem;" class="about-section-title">okay FINE. here's my email</h2>
-                <p class="about-text">If you have blog ideas, unsolicited opinions, Varka leaks, or — and I cannot stress this enough — funny Hatsune Miku memes, please send them right over. I will read every single one and laugh.</p>
-                
-                <div style="text-align: center; margin: 2rem 0;">
-                    <a href="mailto:falafelwithfeelings@gmail.com" class="email-pill-btn">falafelwithfeelings@gmail.com 💌</a>
-                
-                </div>
-<!-- Second Box: Official Kit Newsletter Mailbox -->
-        <div class="contact-envelope-box" style="margin-top: 2rem;">
-            <div class="warning-badge" style="background: #f48fb1; color: #fff;">⋆.𐙚 ̊. Join The Community! </div>
-            <h2 style="margin-top: 0; font-size: 1.6rem;" class="about-section-title">sign up so you never miss a new brain dump ────୨ৎ──── </h2>
-            <p class="about-text" style="margin-bottom: 1.5rem;">whenever a new blog drops, get it straight to your inbox! 🪼⋆｡𖦹°🫧⋆.ೃ࿔*:･ </p>
-            
-            <!-- Official Kit Embed Script -->
-            <script async data-uid="efab41ce33" src="https://falafelwithfeelings.kit.com/efab41ce33/index.js"></script>
-            <script>
-    window.addEventListener('load', function() {
-      let checkKitInterval = setInterval(function() {
-        let emailField = document.querySelector('.contact-envelope-box input[name="email_address"]');
-        let nameField = document.querySelector('.contact-envelope-box input[name*="first_name"], .contact-envelope-box input[name*="fields"]');
         
-        if (emailField && nameField) {
-          emailField.placeholder = "your email address ⋆.𐙚 ̊";
-          nameField.placeholder = "your first name ⋆.𐙚 ̊";
-          clearInterval(checkKitInterval);
-        }
-      }, 200);
-    });
-  </script>
-</div>
+        <div class="music-controls-row">
+            <button class="music-btn" id="music-play-btn" onclick="togglePlayMusic()">⏸ Pause</button>
+            <button class="music-btn" onclick="nextTrack()">⏭ Next</button>
         </div>
-            <div class="contact-footer-badge">
-                <div class="contact-main-subtext">that's it. that's the page.</div>
-                <div class="contact-secondary-subtext">no fancy forms, no corporate newsletter. I have archon quests to get to. you're welcome.</div>
+        
+        <div class="cutesy-volume-wrapper">
+            <span class="volume-icon">🔊</span>
+            <input type="range" min="0" max="1" step="0.05" value="0.7" class="cutesy-slider" id="music-volume-slider" oninput="setVolume(this.value)">
+            <span class="volume-percentage" id="volume-pct">70%</span>
+        </div>
+        
+        <div id="hidden-audio-container">
+            <audio id="bg-audio" loop></audio>
+        </div>
+    </div>
+
+    <!-- Mobile Admin Floating Action Button -->
+    <button class="mobile-admin-fab" onclick="toggleAdminMode()">🔒 Admin</button>
+
+    <!-- Views Container -->
+    <main style="flex: 1;">
+        <!-- HOME VIEW -->
+        <section id="view-home" class="view active-view">
+            <div class="hero">
+                <div class="hero-title-box">
+                    <h1 class="main-title">falafelwithfeelings <span class="highlight">🎀</span></h1>
+                    <p class="subtitle" style="font-size: 1.2rem; margin-top: 1rem;">a cozy digital corner for thoughts, feelings, emus, and soft melodies 🎧✨</p>
+                    <button class="cta-btn" style="margin-top: 1.5rem;" onclick="switchView('blog')">explore thoughts 🌸</button>
+                </div>
             </div>
-        </div>
+
+            <div class="bio-section">
+                <div class="bio-card-preview">
+                    <div class="bio-avatar">🥣</div>
+                    <div>
+                        <h2 style="margin-top:0;">hi friend! welcome to my nook 🧸</h2>
+                        <p class="about-text" style="margin-bottom:0;">i collect warm feelings, cozy soundbites, random essays, and cute emu stickers. grab a warm drink and stay as long as you'd like!</p>
+                        <button class="secondary-btn" onclick="switchView('about')">more about me 💌</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG VIEW -->
+        <section id="view-blog" class="view">
+            <div class="page-header-box">
+                <h2 style="font-size: 2.2rem; margin:0 0 0.5rem 0;" class="highlight">thoughts & essays 🌸</h2>
+                <p style="margin:0; opacity: 0.85;">memos from my mind to yours</p>
+                <div id="admin-blog-controls" style="margin-top: 1.2rem; display: none;">
+                    <button class="pink-pill-btn" onclick="openPostModal()">➕ Create New Post</button>
+                </div>
+            </div>
+            <div class="blog-grid" id="blog-posts-grid">
+                <!-- Dynamically populated blog cards -->
+            </div>
+        </section>
+
+        <!-- READER VIEW -->
+        <section id="view-reader" class="view">
+            <div class="post-reader-container">
+                <button class="back-to-blog" onclick="switchView('blog')">← back to all thoughts</button>
+                <h1 class="post-reader-title" id="reader-title"></h1>
+                <div class="post-reader-meta" id="reader-meta"></div>
+                <div class="post-reader-content" id="reader-content"></div>
+            </div>
+        </section>
+
+        <!-- ANNOUNCEMENTS VIEW -->
+        <section id="view-announcements" class="view">
+            <div class="page-header-box">
+                <h2 style="font-size: 2.2rem; margin:0 0 0.5rem 0;" class="highlight">announcements 📢</h2>
+                <p style="margin:0; opacity: 0.85;">important notices and updates</p>
+                <div id="admin-announcement-controls" style="margin-top: 1.2rem; display: none;">
+                    <button class="pink-pill-btn" onclick="openAnnouncementModal()">➕ New Announcement</button>
+                </div>
+            </div>
+            <div class="announcements-container" id="announcements-list-container">
+                <!-- Dynamically populated announcements -->
+            </div>
+        </section>
+
+        <!-- ABOUT VIEW -->
+        <section id="view-about" class="view">
+            <div class="about-container">
+                <div class="about-scrapbook-card">
+                    <div class="about-heading-row">
+                        <div class="about-profile-sticker">🥣</div>
+                        <h2 class="about-section-title">about falafelwithfeelings 🎀</h2>
+                    </div>
+                    <p class="about-text">Welcome to my sanctuary on the web! This site was built with love, HTML, CSS, and a whole lot of cozy vibes. Here, feelings are welcomed and celebrated rather than rushed away.</p>
+                    <p class="about-text">When I'm not tinkering with code or updating music widgets, you can find me sketching emus, listening to lofi beats, or organizing digital scrapbooks.</p>
+                    
+                    <div class="lore-timeline">
+                        <div class="lore-item">
+                            <span class="lore-icon">🌱</span>
+                            <div><strong>Phase 1: The Spark</strong><br>Started as a tiny local folder of random thoughts and journal entries.</div>
+                        </div>
+                        <div class="lore-item">
+                            <span class="lore-icon">🎀</span>
+                            <div><strong>Phase 2: Pastel Evolution</strong><br>Added mood themes, floating widgets, and interactive custom soundscapes.</div>
+                        </div>
+                        <div class="lore-item">
+                            <span class="lore-icon">🦆</span>
+                            <div><strong>Phase 3: Emu Takeover</strong><br>Welcomed standing emu mascots across the entire digital landscape.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-scrapbook-card video-container-box">
+                    <h2 class="about-section-title">favorite cozy tune 🎧</h2>
+                    <p class="about-text" style="margin-top:0.5rem;">A little melody to brighten your session today.</p>
+                    <div class="video-frame-wrapper">
+                        <iframe id="cozy-youtube-frame" src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-custom-controls">
+                        <button class="vid-control-btn" onclick="changeYouTubeVideo('jfKfPfyJRdk')">☕ Lofi Hip Hop</button>
+                        <button class="vid-control-btn" onclick="changeYouTubeVideo('5qap5aO4i9A')">🌧️ Coffee Shop Rain</button>
+                        <button class="vid-control-btn" onclick="changeYouTubeVideo('7NOS82u7uA0')">🌙 Studio Ghibli Lofi</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT VIEW -->
+        <section id="view-contact" class="view">
+            <div class="contact-container">
+                <div class="page-header-box" style="margin-bottom: 0;">
+                    <h2 style="font-size: 2.2rem; margin:0 0 0.5rem 0;" class="highlight">let's connect 💌</h2>
+                    <p style="margin:0; opacity: 0.85;">drop a note or say hello</p>
+                </div>
+
+                <div class="contact-envelope-box">
+                    <span class="warning-badge">✨ Open for friendly chats & notes</span>
+                    <h3 style="font-size: 1.5rem; margin-top:0.5rem;">Send an Airmail Note</h3>
+                    <p class="about-text">Have a question, feedback, or just want to share how your day is going? Feel free to reach out directly via email!</p>
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <a href="mailto:hello@falafelwithfeelings.com" class="email-pill-btn">📬 Email Me Here</a>
+                    </div>
+                </div>
+
+                <div class="contact-footer-badge">
+                    <p class="contact-main-subtext">Thank you for visiting! 🎀</p>
+                    <p class="contact-secondary-subtext">May your day be filled with warm cups of tea and gentle moments.</p>
+                </div>
+            </div>
+        </section>
     </main>
-
-    <!-- Visitor Background Options Modal -->
-    <div id="bg-options-modal" class="modal-overlay">
-        <div class="modal">
-            <h2>🖼️ Wallpaper & Background Options</h2>
-            <p style="opacity: 0.8; font-size: 0.95rem; margin-bottom: 1.2rem;">Customize how the background looks exclusively for you!</p>
-            
-            <div class="bg-menu-options-list">
-                <button class="bg-option-item-btn" onclick="triggerLocalCustomBg()">
-                    <span>✨ Upload "My Custom BG"</span>
-                    <span>📂</span>
-                </button>
-
-                <button class="bg-option-item-btn" onclick="removeLocalCustomBg()">
-                    <span>🗑️ Clear My Custom Wallpaper</span>
-                    <span>❌</span>
-                </button>
-
-                <button class="bg-option-item-btn" onclick="toggleSolidMoodBg()">
-                    <span>🎨 Toggle Solid Mood Color (Hide Site BG)</span>
-                    <span>✨</span>
-                </button>
-            </div>
-
-            <div class="modal-buttons" style="margin-top: 2rem;">
-                <button class="modal-btn cancel" onclick="closeBgSettingsModal()">Done ✨</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Modal -->
-    <div id="admin-modal" class="modal-overlay">
-        <div class="modal">
-            <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
-            <p style="opacity: 0.7; font-size: 0.9rem;" id="modal-sub">Manage entries or customize secret site settings.</p>
-            
-            <input type="hidden" id="edit-index" value="">
-
-            <label>Mode / Action</label>
-            <select id="new-entry-type" onchange="toggleModalTypeFields()">
-                <option value="blog">Blog Post</option>
-                <option value="announcement">Emu Announcement Wall ⭐</option>
-                <option value="custom-bg">🎨 Customize Site-Wide Wallpaper</option>
-            </select>
-
-            <div id="custom-bg-admin-fields" style="display: none; margin-top: 1rem;">
-                <label>Option A: Paste Wallpaper URL or Color Code (Recommended for HD ✨)</label>
-                <input type="text" id="admin-custom-bg-input" placeholder="e.g., #ffe4e1 or https://image.url/wallpaper.jpg">
-                
-                <label style="margin-top: 0.5rem; display: block;">Option B: Upload Wallpaper File (HD Quality)</label>
-                <input type="file" id="admin-custom-bg-file" accept="image/*">
-
-                <button type="button" class="pink-pill-btn" style="width: 100%; margin-top: 1rem; padding: 0.6rem;" onclick="applyAdminCustomBackground()">Apply & Sync Custom BG for Everyone 🎨</button>
-            </div>
-
-            <div id="post-content-admin-wrapper">
-                <label>Title</label>
-                <input type="text" id="new-title" placeholder="Entry title...">
-                
-                <div id="blog-only-fields">
-                    <label>Category Tag</label>
-                    <select id="new-tag">
-                        <option value="feelings">FEELINGS</option>
-                        <option value="essays">ESSAYS</option>
-                        <option value="life">LIFE</option> 
-                    </select>
-
-                    <label>Card Preview Cover Thumbnail</label>
-                    <select id="new-show-cover">
-                        <option value="true">Show Photo on Card Preview</option>
-                        <option value="false">Hide Photo on Card Preview</option>
-                    </select>
-
-                    <label>Hashtags (comma separated)</label>
-                    <input type="text" id="new-hashtags" placeholder="#feelings, #burnout">
-
-                    <label>Read Time</label>
-                    <input type="text" id="new-time" value="4 min read">
-
-                    <label>Snippet</label>
-                    <input type="text" id="new-snippet" placeholder="Preview snippet...">
-                </div>
-
-                <label>Upload File Photos (Up to 3 Photos)</label>
-                <input type="file" id="new-image-files" accept="image/*" multiple onchange="handleFileSelection(event)">
-
-                <label style="margin-top: 0.5rem; display: block;">Or Add Direct Image Links (Recommended for 3+ Photos ✨)</label>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="text" id="new-photo-url-input" placeholder="Paste direct image URL here..." style="margin: 0; flex: 1;">
-                    <button type="button" class="pink-pill-btn" style="padding: 0.4rem 1rem;" onclick="addPhotoUrlFromInput()">Add URL ➕</button>
-                </div>
-
-                <div id="modal-photo-list" style="margin-top: 1rem;"></div>
-
-                <label style="margin-top: 1rem; display: block;">Full Content / Announcement Text</label>
-                <textarea id="new-content" placeholder="Write full content here..."></textarea>
-
-                <div id="announcement-only-fields" style="display: none; margin-top: 1rem;">
-                    <label>Pin Announcement to Top?</label>
-                    <select id="new-pinned">
-                        <option value="false">Normal Announcement</option>
-                        <option value="true">📌 PIN TO TOP ⭐</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- YOUTUBE LINK FIELD -->
-<div style="margin-top: 1rem;">
-    <label style="display: block; font-weight: bold; font-size: 0.85rem;">📺 YouTube Video Link (Optional)</label>
-    <input type="text" id="new-youtube-url" placeholder="https://www.youtube.com/watch?v=..." style="width: 100%; box-sizing: border-box; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color, #ffb6c1); font-size: 0.85rem; margin-top: 4px;">
-</div>
-
-<!-- POLL CREATION FIELD -->
-<div style="margin-top: 1rem; background: rgba(255,182,193,0.1); padding: 10px; border-radius: 10px; border: 1px dashed var(--border-color, #ffb6c1);">
-    <label style="display: block; font-weight: bold; font-size: 0.85rem;">📊 Attach a Poll (Optional)</label>
-    <input type="text" id="new-poll-question" placeholder="Poll Question (e.g. Favorite flavor?)" style="width: 100%; box-sizing: border-box; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color, #ffb6c1); font-size: 0.8rem; margin: 4px 0;">
-    <input type="text" id="new-poll-options" placeholder="Options separated by commas (e.g. Matcha, Vanilla, Strawberry)" style="width: 100%; box-sizing: border-box; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color, #ffb6c1); font-size: 0.8rem;">
-</div>
-
-            <div class="modal-buttons" style="margin-top: 1.5rem;">
-                <button class="modal-btn cancel" onclick="closeAdminModal()">Close / Cancel</button>
-                <button class="modal-btn save" id="save-post-btn" onclick="savePostData()">Save Entry 🚀</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div>
-            <span class="footer-brand" onclick="switchView('home')">falafelwithfeelings</span>
-            <div style="font-size: 0.85rem; margin-top: 0.2rem; opacity: 0.8;">feelings served fresh, daily (or whenever I feel like it)</div>
-        </div>
+        <div class="footer-brand" onclick="switchView('home')">falafelwithfeelings 🎀 2026</div>
         <div class="footer-nav">
-            <a onclick="switchView('blog')">Blog</a>
-            <a onclick="switchView('announcements')">Announcements</a>
-            <a onclick="switchView('about')">About</a>
-            <a onclick="switchView('contact')">Contact</a>
-        </div>
-        <div class="footer-bottom">
-            <span id="secret-trigger" style="cursor: pointer;" title="Secret Admin Trigger">© 2026 falafelwithfeelings</span>
-            <span>made with 🩷 feelings</span>
+            <a onclick="switchView('home')">home</a>
+            <a onclick="switchView('blog')">blog</a>
+            <a onclick="switchView('about')">about</a>
+            <a onclick="switchView('contact')">contact</a>
         </div>
     </footer>
 
-    <!-- YouTube IFrame API Script -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-   
+    <!-- MODALS -->
+    <!-- Mood Selection Modal -->
+    <div class="modal-overlay" id="mood-modal">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h2>🎨 Choose Your Mood Theme</h2>
+            <p>Select a color palette that matches your current vibe:</p>
+            <div class="bg-menu-options-list">
+                <button class="bg-option-item-btn" onclick="setMood('pink')">🌸 Cozy Pink Theme</button>
+                <button class="bg-option-item-btn" onclick="setMood('midnight')">🌙 Midnight Spiral Theme</button>
+                <button class="bg-option-item-btn" onclick="setMood('matcha')">🍵 Matcha Sage Theme</button>
+                <button class="bg-option-item-btn" onclick="setMood('lemonade')">🍋 Lemonade Theme</button>
+                <button class="bg-option-item-btn" onclick="setMood('strawberry')">🍓 Strawberry Milkshake Theme</button>
+                <button class="bg-option-item-btn" onclick="setMood('cyber')">⚡ Cyber Neon Theme</button>
+                <button class="bg-option-item-btn" onclick="setMood('lavender')">🔮 Lavender Dream Theme</button>
+                <button class="bg-option-item-btn" onclick="setMood('sunset')">☀️ Sunset Peach Theme</button>
+            </div>
+            <div class="modal-buttons" style="margin-top: 1.5rem;">
+                <button class="modal-btn cancel" onclick="closeMoodModal()">Close</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Background Menu Modal -->
+    <div class="modal-overlay" id="bg-menu-modal">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h2>🖼️ Background Customizer</h2>
+            <p>Choose an atmospheric falling backdrop animation:</p>
+            <div class="bg-menu-options-list">
+                <button class="bg-option-item-btn" onclick="setFallingBg('stars')">⭐ Falling Stars & Sparkles</button>
+                <button class="bg-option-item-btn" onclick="setFallingBg('hearts')">💖 Falling Hearts & Bows</button>
+                <button class="bg-option-item-btn" onclick="setFallingBg('notes')">🎵 Floating Music Notes</button>
+                <button class="bg-option-item-btn" onclick="setFallingBg('none')">🚫 Clear Background Animation</button>
+            </div>
+            <div class="modal-buttons" style="margin-top: 1.5rem;">
+                <button class="modal-btn cancel" onclick="closeBgMenuModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Edit / Create Modal -->
+    <div class="modal-overlay" id="post-modal">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h2 id="post-modal-title">Create New Thought</h2>
+            <input type="hidden" id="post-edit-id">
+            <label>Title</label>
+            <input type="text" id="post-title-input" placeholder="Thought title...">
+            <label>Category Tag</label>
+            <select id="post-tag-input">
+                <option value="feelings">Feelings</option>
+                <option value="essays">Essays</option>
+                <option value="life">Life</option>
+            </select>
+            <label>Cover Image URL (optional)</label>
+            <input type="text" id="post-image-input" placeholder="https://...">
+            <label>Content Snippet</label>
+            <textarea id="post-snippet-input" placeholder="Short card preview..."></textarea>
+            <label>Full Post Content</label>
+            <textarea id="post-content-input" placeholder="Full essay or journal entry..." style="height: 180px;"></textarea>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closePostModal()">Cancel</button>
+                <button class="modal-btn save" onclick="savePost()">Save Post ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Announcement Edit / Create Modal -->
+    <div class="modal-overlay" id="announcement-modal">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h2>Create Announcement</h2>
+            <input type="hidden" id="announcement-edit-id">
+            <label>Title</label>
+            <input type="text" id="announcement-title-input" placeholder="Announcement title...">
+            <label>Date</label>
+            <input type="text" id="announcement-date-input" placeholder="e.g. October 15, 2026">
+            <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0 1rem 0;">
+                <input type="checkbox" id="announcement-pinned-input" style="width: auto; margin:0;"> Pin to Top
+            </label>
+            <label>Body Content</label>
+            <textarea id="announcement-body-input" style="height: 140px;" placeholder="Announcement details..."></textarea>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeAnnouncementModal()">Cancel</button>
+                <button class="modal-btn save" onclick="saveAnnouncement()">Save Announcement 📢</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal-overlay" id="admin-login-modal">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h2>🔒 Admin Access</h2>
+            <p>Enter the admin passcode to unlock creator controls:</p>
+            <input type="password" id="admin-passcode-input" placeholder="Passcode...">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeAdminLoginModal()">Cancel</button>
+                <button class="modal-btn save" onclick="verifyAdminPasscode()">Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regenerated Script -->
     <script>
-         let logoClickCount = 0;
-        let logoClickTimer = null;
-        const logoTrigger = document.getElementById('mobile-secret-logo-trigger');
-        if (logoTrigger) {
-            logoTrigger.addEventListener('click', (e) => {
-                logoClickCount++;
-                clearTimeout(logoClickTimer);
-                if (logoClickCount >= 3) {
-                    logoClickCount = 0;
-                    e.stopPropagation();
-                    promptAdminLogin();
-                } else {
-                    logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 600);
-                }
-            });
-        }
-   function changeWidgetVolume(val) {
-    const numVal = Number(val);
-    const display = document.getElementById('volume-display');
-    if (display) display.innerHTML = numVal + '%';
-
-    // Save preference
-    localStorage.setItem('widgetVolume', numVal);
-
-    // 1. Try YouTube JS API Player instance methods if they exist
-    try {
-        if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.setVolume === 'function') {
-            ytPlayer.setVolume(numVal);
-            if (numVal > 0 && typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
-        }
-        if (typeof player !== 'undefined' && player && typeof player.setVolume === 'function') {
-            player.setVolume(numVal);
-            if (numVal > 0 && typeof player.unMute === 'function') player.unMute();
-        }
-    } catch (e) {}
-
-    // 2. Directly send postMessage command to the YouTube IFrame
-    const iframe = document.getElementById('bg-playlist-iframe');
-    if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({
-            event: 'command',
-            func: 'setVolume',
-            args: [numVal]
-        }), '*');
-
-        if (numVal > 0) {
-            iframe.contentWindow.postMessage(JSON.stringify({
-                event: 'command',
-                func: 'unMute',
-                args: []
-            }), '*');
-        } else {
-            iframe.contentWindow.postMessage(JSON.stringify({
-                event: 'command',
-                func: 'mute',
-                args: []
-            }), '*');
-        }
-    }
-}
-window.addEventListener('DOMContentLoaded', () => {
-    const savedVol = localStorage.getItem('widgetVolume');
-    if (savedVol !== null) {
-        const slider = document.getElementById('widget-volume-slider');
-        if (slider) slider.value = savedVol;
-        const display = document.getElementById('volume-display');
-        if (display) display.innerHTML = savedVol + '%';
-        
-        setTimeout(() => {
-            if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.setVolume === 'function') {
-                ytPlayer.setVolume(savedVol);
-            }
-        }, 1500);
-    }
-});
-        const BIN_ID = '6aca4a7dac6210605a2587db';
-        const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
-
-        let currentPostPhotos = [];
-        let ytPlayer = null;
-        let audioPlayer = null;
-        let isPlaying = false;
-        let isAudioPlaying = false;
-
-        const playlistTracks = [
-           { title: "LIKE A DINO | Soundtrack #1", artist: "super_toki" },
-            { title: "IT'S OK NOT TO BE OKAY | Soundtrack #2", artist: "super_toki" },
-            { title: "GOOD LUCK TODAY | Soundtrack #3", artist: "super_toki" },
-            { title: "A PIECE OF CAKE | Soundtrack #4", artist: "super_toki" },
-            { title: "I'M SO EXCITED | Soundtrack #5", artist: "super_toki" },
-            { title: "It Is What It Is | Soundtrack #6", artist: "super_toki" },
-            { title: "A Silver Lining | Soundtrack #7", artist: "super_toki" },
-            { title: "SO SÜß | Soundtrack #8", artist: "super_toki" },
-            { title: "YOU MADE MY DAY | Soundtrack #9", artist: "super_toki" },
-            { title: "MARRIAGE PROPOSAL | Soundtrack #10", artist: "super_toki" },
-            { title: "OVER THE MOON | Soundtrack #11", artist: "super_toki" },
-            { title: "WADDLE WADDLE | Soundtrack #12", artist: "super_toki" }
+        // Playlist tracks
+        const playlist = [
+            { title: "Like Dino! Game Theme", artist: "super_toki", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+            { title: "It's Ok Not To Be Okay", artist: "falafel_tunes", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+            { title: "Good Luck Today", artist: "cozy_beats", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+            { title: "A Piece Of Cake", artist: "sweet_notes", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+            { title: "I'm So Excited!", artist: "upbeat_emu", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
+            { title: "It Is What It Is", artist: "zen_garden", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" },
+            { title: "A Silver Lining", artist: "cloud_9", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" }
         ];
+
         let currentTrackIndex = 0;
+        let isPlaying = false;
+        let adminMode = false;
+        let emusEnabled = true;
+        let currentBgType = 'stars';
 
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('emu-yt-player', {
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-            // Lazy loader function for YouTube API
-function initYouTubeAPI() {
-    if (document.getElementById('youtube-api-script')) return;
-    const tag = document.createElement('script');
-    tag.id = 'youtube-api-script';
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-}
+        const audioEl = document.getElementById('bg-audio');
 
-            audioPlayer = new YT.Player('bg-playlist-iframe', {
-                events: {
-                    'onStateChange': onAudioPlayerStateChange
-                }
-            });
+        // Initial default posts
+        let blogPosts = JSON.parse(localStorage.getItem('falafel_posts')) || [
+            {
+                id: 1,
+                title: "Finding Calm in Little Mornings ☕",
+                tag: "feelings",
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80",
+                snippet: "There is an unspoken magic in waking up before the world starts bustling...",
+                content: "There is an unspoken magic in waking up before the world starts bustling. A warm mug in both hands, soft light filtering through the curtains, and zero rush.\n\nLately, I've been trying to protect these quiet moments. We live in such a fast-paced era where productivity is often measured by output rather than peace. But true wellness starts when we allow ourselves to simply exist without having to earn our rest."
+            },
+            {
+                id: 2,
+                title: "The Art of Romanticizing Your Routine 🎀",
+                tag: "life",
+                image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=80",
+                snippet: "Turning everyday mundane tasks into cozy cinematic moments...",
+                content: "Turning everyday mundane tasks into cozy cinematic moments changes everything. Light a scented candle while folding laundry, play your favorite instrumental playlist while washing dishes, or wear your cutest loungewear just because.\n\nLife is made up of these tiny fractions of time. Why not make them feel special?"
+            }
+        ];
+
+        let announcements = JSON.parse(localStorage.getItem('falafel_announcements')) || [
+            {
+                id: 1,
+                title: "Welcome to the New Digital Nook! ✨",
+                date: "October 15, 2026",
+                pinned: true,
+                body: "The website has been freshly updated with vivid mood themes, interactive music controls, falling background animations, and standing emus! Enjoy exploring all the cozy corners."
+            }
+        ];
+
+        // View Switcher
+        function switchView(viewName) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+            if (viewName === 'home') {
+                document.getElementById('view-home').classList.add('active-view');
+                document.getElementById('nav-home')?.classList.add('active');
+            } else if (viewName === 'blog') {
+                document.getElementById('view-blog').classList.add('active-view');
+                document.getElementById('nav-blog')?.classList.add('active');
+                renderBlogPosts();
+            } else if (viewName === 'announcements') {
+                document.getElementById('view-announcements').classList.add('active-view');
+                document.getElementById('nav-announcements')?.classList.add('active');
+                renderAnnouncements();
+            } else if (viewName === 'about') {
+                document.getElementById('view-about').classList.add('active-view');
+                document.getElementById('nav-about')?.classList.add('active');
+            } else if (viewName === 'contact') {
+                document.getElementById('view-contact').classList.add('active-view');
+                document.getElementById('nav-contact')?.classList.add('active');
+            } else if (viewName === 'reader') {
+                document.getElementById('view-reader').classList.add('active-view');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        function onPlayerStateChange(event) {
-            const btn = document.getElementById('play-pause-btn');
-            if (event.data === YT.PlayerState.PLAYING) {
-                isPlaying = true;
-                if(btn) btn.innerText = "⏸️ Pause";
-            } else {
+
+        // Music Widget Player Controls
+        function initAudio() {
+            audioEl.src = playlist[currentTrackIndex].src;
+            audioEl.volume = 0.7;
+            updateWidgetUI();
+        }
+
+        function updateWidgetUI() {
+            document.getElementById('widget-song-title').innerText = playlist[currentTrackIndex].title;
+            document.getElementById('widget-song-artist').innerText = playlist[currentTrackIndex].artist;
+            document.getElementById('playlist-track-select').value = currentTrackIndex;
+        }
+
+        function togglePlayMusic() {
+            if (isPlaying) {
+                audioEl.pause();
                 isPlaying = false;
-                if(btn) btn.innerText = "▶️ Play";
-            }
-        }
-
-        function onAudioPlayerStateChange(event) {
-            const btn = document.getElementById('audio-play-pause-btn');
-            if (event.data === YT.PlayerState.PLAYING) {
-                isAudioPlaying = true;
-                if(btn) btn.innerText = "⏸ Pause";
+                document.getElementById('music-play-btn').innerText = '▶ Play';
             } else {
-                isAudioPlaying = false;
-                if(btn) btn.innerText = "▶ Play";
+                audioEl.play().catch(e => console.log("Audio play blocked by browser policy"));
+                isPlaying = true;
+                document.getElementById('music-play-btn').innerText = '⏸ Pause';
             }
         }
 
-        function toggleAudioPlayback() {
-            if (!audioPlayer || typeof audioPlayer.getPlayerState !== 'function') return;
-            const state = audioPlayer.getPlayerState();
-            if (state === YT.PlayerState.PLAYING) {
-                audioPlayer.pauseVideo();
-            } else {
-                audioPlayer.playVideo();
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            audioEl.src = playlist[currentTrackIndex].src;
+            if (isPlaying) {
+                audioEl.play();
             }
+            updateWidgetUI();
         }
 
-        function skipAudioTrack(direction) {
-            if (!audioPlayer || typeof audioPlayer.nextVideo !== 'function') return;
-            if (direction > 0) {
-                audioPlayer.nextVideo();
-                currentTrackIndex = (currentTrackIndex + 1) % playlistTracks.length;
-            } else {
-                audioPlayer.previousVideo();
-                currentTrackIndex = (currentTrackIndex - 1 + playlistTracks.length) % playlistTracks.length;
+        function onTrackDropdownChange(val) {
+            currentTrackIndex = parseInt(val);
+            audioEl.src = playlist[currentTrackIndex].src;
+            if (isPlaying) {
+                audioEl.play();
             }
-            updateWidgetTrackDisplay();
+            updateWidgetUI();
         }
 
-        function onTrackDropdownChange(indexVal) {
-            const idx = parseInt(indexVal);
-            currentTrackIndex = idx;
-            if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
-                audioPlayer.playVideoAt(idx);
-            }
-            updateWidgetTrackDisplay();
-        }
-
-        function updateWidgetTrackDisplay() {
-            const track = playlistTracks[currentTrackIndex];
-            const titleEl = document.getElementById('widget-song-title');
-            const artistEl = document.getElementById('widget-song-artist');
-            const selectEl = document.getElementById('playlist-track-select');
-            
-            if(titleEl) titleEl.innerText = track.title;
-            if(artistEl) artistEl.innerText = track.artist;
-            if(selectEl) selectEl.value = currentTrackIndex;
+        function setVolume(val) {
+            audioEl.volume = val;
+            document.getElementById('volume-pct').innerText = Math.round(val * 100) + '%';
         }
 
         function toggleMusicWidgetHide() {
             const widget = document.getElementById('music-widget-box');
-            const toggleBtn = document.getElementById('music-widget-toggle-btn');
             widget.classList.toggle('hidden');
-            if (widget.classList.contains('hidden')) {
-                toggleBtn.innerText = "▶";
-            } else {
-                toggleBtn.innerText = "◀";
+            const toggleBtn = document.getElementById('music-widget-toggle-btn');
+            toggleBtn.innerText = widget.classList.contains('hidden') ? '▶' : '◀';
+        }
+
+        // Mood & Theme Selector
+        function openMoodModal() { document.getElementById('mood-modal').style.display = 'flex'; }
+        function closeMoodModal() { document.getElementById('mood-modal').style.display = 'none'; }
+
+        function setMood(moodName) {
+            document.body.className = 'mood-' + moodName;
+            closeMoodModal();
+        }
+
+        // Background Menu
+        function openBgMenuModal() { document.getElementById('bg-menu-modal').style.display = 'flex'; }
+        function closeBgMenuModal() { document.getElementById('bg-menu-modal').style.display = 'none'; }
+
+        function setFallingBg(type) {
+            currentBgType = type;
+            generateFallingBg();
+            closeBgMenuModal();
+        }
+
+        function generateFallingBg() {
+            const container = document.getElementById('falling-bg');
+            container.innerHTML = '';
+            if (currentBgType === 'none') return;
+
+            const symbols = currentBgType === 'stars' ? ['⭐', '✨', '🌟', '💫'] :
+                            currentBgType === 'hearts' ? ['💖', '🎀', '💌', '🌸'] : ['🎵', '🎶', '🎧', '✨'];
+
+            for (let i = 0; i < 22; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'bg-shape';
+                shape.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                shape.style.left = Math.random() * 100 + 'vw';
+                shape.style.top = (Math.random() * -50) - 20 + 'px';
+                shape.style.fontSize = (Math.random() * 1.2 + 0.8) + 'rem';
+                shape.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                shape.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(shape);
             }
         }
 
-        function togglePlayVideo() {
-            if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
-            const state = ytPlayer.getPlayerState();
-            const btn = document.getElementById('play-pause-btn');
-            if (state === YT.PlayerState.PLAYING) {
-                ytPlayer.pauseVideo();
-                if(btn) btn.innerText = "▶️ Play";
-            } else {
-                ytPlayer.playVideo();
-                if(btn) btn.innerText = "⏸️ Pause";
-            }
+        // Emu Toggle & Floating Mascots
+        function toggleEmus() {
+            emusEnabled = !emusEnabled;
+            const emuLayer = document.getElementById('emu-layer');
+            emuLayer.style.display = emusEnabled ? 'block' : 'none';
         }
 
-        function seekVideo(seconds) {
-            if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
-            const currentTime = ytPlayer.getCurrentTime();
-            ytPlayer.seekTo(currentTime + seconds, true);
-        }
-
-        function openBgSettingsModal() {
-            document.getElementById('bg-options-modal').style.display = 'flex';
-        }
-
-        function closeBgSettingsModal() {
-            document.getElementById('bg-options-modal').style.display = 'none';
-        }
-
-        function changeMoodTheme(mood) {
-    document.body.className = 'mood-' + mood;
-    localStorage.setItem('site_mood', mood);
-    applyBackgroundState();
-
-    const picker = document.getElementById('mood-picker');
-    if (picker) picker.value = mood;
-}
-
-        async function getBinData() {
-            try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                    headers: { 'X-Master-Key': MASTER_KEY }
-                });
-                const data = await res.json();
-                const record = data.record;
-                if (Array.isArray(record)) {
-                    return { posts: record, siteBg: null };
-                }
-                return record || { posts: [], siteBg: null };
-            } catch (err) {
-                return { posts: [], siteBg: null };
-            }
-        }
-
-        async function saveBinData(payload) {
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
-                body: JSON.stringify(payload)
+        function generateEmus() {
+            const emuLayer = document.getElementById('emu-layer');
+            emuLayer.innerHTML = '';
+            const positions = [
+                { top: '15vh', left: '3vw' },
+                { top: '65vh', right: '4vw' },
+                { top: '35vh', right: '3vw' }
+            ];
+            positions.forEach((pos, index) => {
+                const emu = document.createElement('div');
+                emu.className = 'bouncing-emu';
+                emu.style.top = pos.top;
+                if (pos.left) emu.style.left = pos.left;
+                if (pos.right) emu.style.right = pos.right;
+                emu.style.fontSize = '2.5rem';
+                emu.innerText = '🦆';
+                emu.style.animation = `emuBounce ${3 + index}s ease-in-out infinite alternate`;
+                emuLayer.appendChild(emu);
             });
         }
 
-        async function applyBackgroundState() {
-            const hideSiteBg = localStorage.getItem('visitor_hide_site_bg') === 'true';
-            if (hideSiteBg) {
-                document.body.style.backgroundImage = 'none';
-                document.body.style.backgroundColor = '';
+        // Blog Post Rendering & CRUD
+        function renderBlogPosts() {
+            const grid = document.getElementById('blog-posts-grid');
+            grid.innerHTML = '';
+
+            blogPosts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div>
+                        ${post.image ? `<img src="${post.image}" class="card-cover-img" alt="Cover">` : ''}
+                        <div class="card-tag-row">
+                            <span class="card-tag ${post.tag}">${post.tag.toUpperCase()}</span>
+                            <span class="read-time">3 min read</span>
+                        </div>
+                        <h3>${post.title}</h3>
+                        <p class="card-snippet">${post.snippet}</p>
+                    </div>
+                    <div class="card-footer-row">
+                        <a class="read-more" onclick="readPost(${post.id})">read essay →</a>
+                        ${adminMode ? `
+                            <div class="admin-actions">
+                                <button class="edit-post-btn" onclick="editPost(${post.id})">Edit</button>
+                                <button class="delete-post-btn" onclick="deletePost(${post.id})">Delete</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function readPost(id) {
+            const post = blogPosts.find(p => p.id === id);
+            if (!post) return;
+            document.getElementById('reader-title').innerText = post.title;
+            document.getElementById('reader-meta').innerText = `Category: ${post.tag.toUpperCase()} • 3 min read`;
+            document.getElementById('reader-content').innerText = post.content;
+            switchView('reader');
+        }
+
+        function openPostModal(id = null) {
+            document.getElementById('post-modal').style.display = 'flex';
+            if (id) {
+                const post = blogPosts.find(p => p.id === id);
+                document.getElementById('post-modal-title').innerText = 'Edit Thought';
+                document.getElementById('post-edit-id').value = post.id;
+                document.getElementById('post-title-input').value = post.title;
+                document.getElementById('post-tag-input').value = post.tag;
+                document.getElementById('post-image-input').value = post.image || '';
+                document.getElementById('post-snippet-input').value = post.snippet;
+                document.getElementById('post-content-input').value = post.content;
+            } else {
+                document.getElementById('post-modal-title').innerText = 'Create New Thought';
+                document.getElementById('post-edit-id').value = '';
+                document.getElementById('post-title-input').value = '';
+                document.getElementById('post-tag-input').value = 'feelings';
+                document.getElementById('post-image-input').value = '';
+                document.getElementById('post-snippet-input').value = '';
+                document.getElementById('post-content-input').value = '';
+            }
+        }
+
+        function closePostModal() { document.getElementById('post-modal').style.display = 'none'; }
+
+        function savePost() {
+            const id = document.getElementById('post-edit-id').value;
+            const title = document.getElementById('post-title-input').value;
+            const tag = document.getElementById('post-tag-input').value;
+            const image = document.getElementById('post-image-input').value;
+            const snippet = document.getElementById('post-snippet-input').value;
+            const content = document.getElementById('post-content-input').value;
+
+            if (!title || !snippet) {
+                alert('Please fill out at least the title and snippet.');
                 return;
             }
 
-            const localCustomBg = localStorage.getItem('visitor_local_custom_png');
-            if (localCustomBg) {
-                document.body.style.backgroundImage = `url('${localCustomBg}')`;
-                document.body.style.backgroundColor = '';
+            if (id) {
+                const post = blogPosts.find(p => p.id == id);
+                post.title = title;
+                post.tag = tag;
+                post.image = image;
+                post.snippet = snippet;
+                post.content = content;
+            } else {
+                const newPost = {
+                    id: Date.now(),
+                    title,
+                    tag,
+                    image,
+                    snippet,
+                    content
+                };
+                blogPosts.unshift(newPost);
+            }
+
+            localStorage.setItem('falafel_posts', JSON.stringify(blogPosts));
+            closePostModal();
+            renderBlogPosts();
+        }
+
+        function editPost(id) { openPostModal(id); }
+
+        function deletePost(id) {
+            if (confirm('Are you sure you want to delete this thought?')) {
+                blogPosts = blogPosts.filter(p => p.id !== id);
+                localStorage.setItem('falafel_posts', JSON.stringify(blogPosts));
+                renderBlogPosts();
+            }
+        }
+
+        // Announcements Rendering & CRUD
+        function renderAnnouncements() {
+            const container = document.getElementById('announcements-list-container');
+            container.innerHTML = '';
+
+            announcements.forEach(ann => {
+                const card = document.createElement('div');
+                card.className = `announcement-card ${ann.pinned ? 'pinned' : ''}`;
+                card.innerHTML = `
+                    ${ann.pinned ? '<div class="pin-badge">📌 Pinned Notice</div>' : ''}
+                    <div class="announcement-date">${ann.date}</div>
+                    <h3 class="announcement-title">${ann.title}</h3>
+                    <div class="announcement-body">${ann.body}</div>
+                    ${adminMode ? `
+                        <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
+                            <button class="edit-post-btn" onclick="deleteAnnouncement(${ann.id})">Delete</button>
+                        </div>
+                    ` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openAnnouncementModal() {
+            document.getElementById('announcement-modal').style.display = 'flex';
+            document.getElementById('announcement-title-input').value = '';
+            document.getElementById('announcement-date-input').value = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            document.getElementById('announcement-pinned-input').checked = false;
+            document.getElementById('announcement-body-input').value = '';
+        }
+
+        function closeAnnouncementModal() { document.getElementById('announcement-modal').style.display = 'none'; }
+
+        function saveAnnouncement() {
+            const title = document.getElementById('announcement-title-input').value;
+            const date = document.getElementById('announcement-date-input').value;
+            const pinned = document.getElementById('announcement-pinned-input').checked;
+            const body = document.getElementById('announcement-body-input').value;
+
+            if (!title || !body) {
+                alert('Please enter a title and body.');
                 return;
             }
 
-            const binData = await getBinData();
-            const savedBg = binData.siteBg;
-
-            if (!savedBg) {
-                document.body.style.backgroundImage = '';
-                document.body.style.backgroundColor = '';
-            } else {
-                document.body.style.backgroundImage = `url('${savedBg}')`;
-                document.body.style.backgroundColor = '';
-            }
-        }
-
-        function triggerLocalCustomBg() {
-            closeBgSettingsModal();
-            document.getElementById('local-png-file-input').click();
-        }
-
-        function removeLocalCustomBg() {
-            localStorage.removeItem('visitor_local_custom_png');
-            applyBackgroundState();
-            alert("Your custom background has been removed! ✨ Returning to the site theme background.");
-            closeBgSettingsModal();
-        }
-
-        function toggleSolidMoodBg() {
-            const currentHide = localStorage.getItem('visitor_hide_site_bg') === 'true';
-            localStorage.setItem('visitor_hide_site_bg', !currentHide);
-            applyBackgroundState();
-            if (!currentHide) {
-                alert("Site background hidden! Now showing a clean solid color from your mood theme ✨");
-            } else {
-                alert("Site background restored! ✨");
-            }
-            closeBgSettingsModal();
-        }
-
-        async function handleLocalPngUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const compressedUrl = await compressImage(file, 1400, 0.88);
-            localStorage.setItem('visitor_local_custom_png', compressedUrl);
-            applyBackgroundState();
-            alert("Your private custom BG has been applied just for you! ✨");
-            event.target.value = "";
-        }
-
-        async function applyAdminCustomBackground() {
-            const urlInput = document.getElementById('admin-custom-bg-input').value.trim();
-            const fileInput = document.getElementById('admin-custom-bg-file').files[0];
-
-            let bgVal = '';
-            if (fileInput) {
-                bgVal = await compressImage(fileInput, 1400, 0.88);
-            } else if (urlInput) {
-                bgVal = urlInput;
-            } else {
-                return;
-            }
-
-            const binData = await getBinData();
-            const newPayload = {
-                posts: binData.posts || [],
-                siteBg: bgVal
+            const newAnn = {
+                id: Date.now(),
+                title,
+                date,
+                pinned,
+                body
             };
 
-            await saveBinData(newPayload);
-            applyBackgroundState();
-            alert("Site-wide HD wallpaper successfully applied and synced for everyone! ✨");
-            closeAdminModal();
+            announcements.unshift(newAnn);
+            localStorage.setItem('falafel_announcements', JSON.stringify(announcements));
+            closeAnnouncementModal();
+            renderAnnouncements();
         }
 
-        function loadSavedBackground() {
-            const savedMood = localStorage.getItem('site_mood') || 'pink';
-            changeMoodTheme(savedMood);
-        }
-
-        function initGlobalEmus() {
-            const emuContainer = document.getElementById('emu-layer');
-            if (!emuContainer) return;
-            emuContainer.innerHTML = '';
-
-            const hideEmus = localStorage.getItem('hide_global_emus') === 'true';
-            const toggleBtn = document.getElementById('emu-toggle-btn');
-            if (toggleBtn) {
-                toggleBtn.innerText = hideEmus ? "🩰 Emu: OFF" : "🩰 Emu: ON";
-            }
-
-            if (hideEmus) return;
-
-            for (let i = 0; i < 15; i++) {
-                const img = document.createElement('img');
-                img.className = 'bouncing-emu';
-                img.src = "EMU/NO EMU.png"; 
-                img.onerror = () => { img.style.display = 'none'; };
-
-                const size = Math.floor(Math.random() * 45) + 50;
-                img.style.width = size + 'px';
-                img.style.height = size + 'px';
-
-                const bounceSpeed = (Math.random() * 3 + 2).toFixed(2);
-                const floatSpeed = (Math.random() * 6 + 4).toFixed(2);
-                img.style.animation = `emuBounce ${bounceSpeed}s ease-in-out infinite alternate, emuFloatSide ${floatSpeed}s ease-in-out infinite alternate`;
-
-                img.style.left = (Math.random() * 88 + 2) + 'vw';
-                img.style.top = (Math.random() * 80 + 10) + 'vh';
-                img.style.animationDelay = (Math.random() * 3) + 's';
-
-                emuContainer.appendChild(img);
+        function deleteAnnouncement(id) {
+            if (confirm('Delete this announcement?')) {
+                announcements = announcements.filter(a => a.id !== id);
+                localStorage.setItem('falafel_announcements', JSON.stringify(announcements));
+                renderAnnouncements();
             }
         }
 
-        function toggleGlobalEmus() {
-            const currentHide = localStorage.getItem('hide_global_emus') === 'true';
-            localStorage.setItem('hide_global_emus', !currentHide);
-            initGlobalEmus();
-        }
-
-        function compressImage(file, maxDimension = 1400, quality = 0.88) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
-
-                        if (width > maxDimension || height > maxDimension) {
-                            if (width > height) {
-                                height = Math.round((height * maxDimension) / width);
-                                width = maxDimension;
-                            } else {
-                                width = Math.round((width * maxDimension) / height);
-                                height = maxDimension;
-                            }
-                        }
-
-                        canvas.width = width;
-                        canvas.height = height;
-
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        resolve(canvas.toDataURL('image/jpeg', quality));
-                    };
-                };
-            });
-        }
-
-        async function handleFileSelection(event) {
-            const files = Array.from(event.target.files);
-            if (files.length === 0) return;
-
-            const remainingSlots = Math.max(0, 3 - currentPostPhotos.length);
-            const filesToProcess = files.slice(0, remainingSlots);
-
-            for (let file of filesToProcess) {
-                const compressedUrl = await compressImage(file, 600, 0.7);
-                currentPostPhotos.push(compressedUrl);
-            }
-
-            renderModalPhotoList();
-            event.target.value = "";
-        }
-
-        function addPhotoUrlFromInput() {
-            const input = document.getElementById('new-photo-url-input');
-            const url = input.value.trim();
-            if (!url) return;
-            if (currentPostPhotos.length >= 3) {
-                alert("You can add up to 3 photos maximum!");
-                return;
-            }
-            currentPostPhotos.push(url);
-            renderModalPhotoList();
-            input.value = "";
-        }
-
-        function initFallingBackground() {
-            const bgContainer = document.getElementById('falling-bg');
-            if(!bgContainer) return;
-            bgContainer.innerHTML = '';
-            
-            const shapes = ['★', '✦', '✧', '●', '•'];
-            const pastelColors = ['#f472b6', '#a855f7', '#fef08a', '#65a30d', '#60a5fa', '#fbcfe8'];
-
-            for (let i = 0; i < 30; i++) {
-                const span = document.createElement('span');
-                span.className = 'bg-shape';
-                span.innerText = shapes[Math.floor(Math.random() * shapes.length)];
-                span.style.fontSize = (Math.floor(Math.random() * 22) + 16) + 'px';
-                span.style.color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-                span.style.left = Math.random() * 95 + 'vw';
-                
-                const duration = Math.random() * 8 + 6;
-                const delay = Math.random() * 8;
-                span.style.animation = `fallDown ${duration}s linear infinite`;
-                span.style.animationDelay = `${delay}s`;
-                
-                bgContainer.appendChild(span);
+        // Admin Mode Toggle & Passcode
+        function toggleAdminMode() {
+            if (!adminMode) {
+                document.getElementById('admin-login-modal').style.display = 'flex';
+            } else {
+                adminMode = false;
+                document.getElementById('admin-mode-toggle-btn').innerText = '🔒 Admin';
+                document.getElementById('admin-blog-controls').style.display = 'none';
+                document.getElementById('admin-announcement-controls').style.display = 'none';
+                renderBlogPosts();
+                renderAnnouncements();
+                alert('Admin mode locked.');
             }
         }
 
-        function switchView(viewName) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-            
-            const targetView = document.getElementById('view-' + viewName);
-            if(targetView) targetView.classList.add('active-view');
-            
-            const navEl = document.getElementById('nav-' + viewName);
-            if(navEl) navEl.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderAllPosts();
+        function closeAdminLoginModal() { document.getElementById('admin-login-modal').style.display = 'none'; }
+
+        function verifyAdminPasscode() {
+            const code = document.getElementById('admin-passcode-input').value;
+            if (code === '1234' || code === 'falafel') {
+                adminMode = true;
+                closeAdminLoginModal();
+                document.getElementById('admin-passcode-input').value = '';
+                document.getElementById('admin-mode-toggle-btn').innerText = '🔓 Admin (Active)';
+                document.getElementById('admin-blog-controls').style.display = 'block';
+                document.getElementById('admin-announcement-controls').style.display = 'block';
+                renderBlogPosts();
+                renderAnnouncements();
+                alert('Admin mode unlocked successfully! 🎀');
+            } else {
+                alert('Incorrect passcode. Try "1234" or "falafel".');
+            }
         }
 
-        async function getPosts() {
-            const binData = await getBinData();
-            return binData.posts || [];
+        // YouTube Video Switcher in About Page
+        function changeYouTubeVideo(videoId) {
+            document.getElementById('cozy-youtube-frame').src = `https://www.youtube.com/embed/${videoId}`;
         }
 
-        async function renderAllPosts() {
-            applyBackgroundState();
-            const items = await getPosts();
-            const blogPosts = items.filter(p => p.type !== 'announcement');
-            const announcements = items.filter(p => p.type === 'announcement');
-
-            const homeGrid = document.getElementById('home-posts-grid');
-            if (homeGrid) {
-                let homeHtml = '';
-                blogPosts.slice(0, 3).forEach((p) => {
-                    homeHtml += createCardHtml(p, items.indexOf(p));
-                });
-                homeGrid.innerHTML = homeHtml;
-            }
-
-            const blogContainer = document.getElementById('dynamic-blog-container');
-            if (blogContainer) {
-                let blogHtml = '<div class="blog-grid">';
-                blogPosts.forEach((p) => {
-                    blogHtml += createCardHtml(p, items.indexOf(p));
-                });
-                blogHtml += '</div>';
-                blogContainer.innerHTML = blogHtml;
-            }
-
-           const annContainer = document.getElementById('announcements-wall-container');
-            if (annContainer) {
-                let annHtml = '';
-                announcements.sort((a, b) => (b.pinned === true || b.pinned === 'true') - (a.pinned === true || a.pinned === 'true')).forEach((ann) => {
-                    annHtml += createAnnouncementCardHtml(ann, items.indexOf(ann));
-                });
-                annContainer.innerHTML = annHtml;
-            }
-
-            checkAdminStateUI();
-        }
-
-        function extractPostPhotos(post) {
-            if (post.images && Array.isArray(post.images) && post.images.length > 0) {
-                return post.images;
-            }
-            if (post.imageUrl) {
-                return [post.imageUrl];
-            }
-            return [];
-        }
-
-        function openLightbox(url) {
+        // Lightbox Zoom
+        function openLightbox(imgSrc) {
             const modal = document.getElementById('image-lightbox-modal');
-            const img = document.getElementById('lightbox-img');
-            img.src = url;
+            document.getElementById('lightbox-img').src = imgSrc;
             modal.style.display = 'flex';
         }
 
         function closeLightbox() {
-            const modal = document.getElementById('image-lightbox-modal');
-            modal.style.display = 'none';
+            document.getElementById('image-lightbox-modal').style.display = 'none';
         }
 
-        function createCardHtml(p, originalIndex) {
-            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-            let tagsHtml = '';
-            if (p.hashtags && Array.isArray(p.hashtags) && p.hashtags.length > 0) {
-                tagsHtml = '<div class="card-hashtags">';
-                p.hashtags.forEach(tag => {
-                    tagsHtml += `<span class="mini-hashtag">${tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim()}</span>`;
-                });
-                tagsHtml += '</div>';
-            }
-
-            const photosArr = extractPostPhotos(p);
-            const showCover = p.showCover !== false && p.showCover !== "false";
-            const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
-            const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')" title="Click to view full size">` : '';
-
-            return `
-                <div class="card">
-                    <div>
-                        ${coverImgHtml}
-                        <div class="card-tag-row">
-                            <span class="card-tag ${p.tag || 'feelings'}">${p.tagText || 'FEELINGS'}</span>
-                            <span class="read-time">${p.time || '4 min read'}</span>
-                        </div>
-                        <h3>${p.title}</h3>
-                        ${tagsHtml}
-                        <p class="card-snippet">${p.snippet}</p>
-                    </div>
-                    <div class="card-footer-row">
-                        <a onclick="openPostReader(${originalIndex})" class="read-more">read more →</a>
-                        ${renderSocialCardAddons(p, originalIndex, isAdmin)}
-                        <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
-                            <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
-                            <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function createAnnouncementCardHtml(ann, originalIndex) {
-            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-            const isPinned = ann.pinned === true || ann.pinned === 'true';
-
-            const photosArr = extractPostPhotos(ann);
-            let galleryHtml = '';
-            if (photosArr.length > 0) {
-                galleryHtml = '<div class="photo-gallery-container">';
-                photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
-                });
-                galleryHtml += '</div>';
-            }
-
-            return `
-                <div class="announcement-card ${isPinned ? 'pinned' : ''}">
-                    ${isPinned ? '<div class="pin-badge">📌 PINNED ANNOUNCEMENT ⭐</div>' : ''}
-                    <div class="announcement-date">⭐ ${ann.date || 'WONDERHOI UPDATE'}</div>
-                    <h2 class="announcement-title">${ann.title}</h2>
-                    <div class="announcement-body">${ann.content}${galleryHtml}</div>
-                    ${renderSocialCardAddons(ann, originalIndex, isAdmin)}
-                    <div style="margin-top:1.5rem; display:${isAdmin ? 'flex' : 'none'}; justify-content:flex-end; gap:0.5rem;">
-                        <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
-                        <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        async function openPostReader(index) {
-            const posts = await getPosts();
-            const post = posts[index];
-            if(!post) return;
-
-            document.getElementById('reader-title').innerText = post.title;
-            document.getElementById('reader-time').innerText = post.time || '';
-            
-            const tagEl = document.getElementById('reader-tag-row');
-            tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || 'FEELINGS'}</span>`;
-
-            const photosArr = extractPostPhotos(post);
-            let galleryHtml = '';
-            if (photosArr.length > 0) {
-                galleryHtml = '<div class="photo-gallery-container">';
-                photosArr.forEach(url => {
-                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
-                });
-                galleryHtml += '</div>';
-            }
-
-            const contentEl = document.getElementById('reader-content-wrapper');
-          contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}${renderFullCommentsSection(post, index, sessionStorage.getItem('falafel_admin') === 'true')}`;
-
-            switchView('post-reader');
-        }
-// --- YOUTUBE STYLE COMMENT SECTION FOR READER MODAL ---
-function renderFullCommentsSection(p, index, isAdmin) {
-    const comments = Array.isArray(p.comments) ? p.comments : [];
-    const sorted = [...comments].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
-    
-    let commentsList = sorted.map((c, cIdx) => {
-        const isOwner = c.isOwner || (c.alias && c.alias.toLowerCase().includes('falafel'));
-        const ownerBadge = isOwner ? `<span style="background: var(--accent-color, #ffb6c1); color: #fff; font-size: 0.7em; padding: 1px 6px; border-radius: 8px; margin-left: 4px; font-weight: bold;">the big falafel 𝜗ৎ</span>` : '';
-        return `
-            <div style="padding: 10px; margin-top: 8px; background: var(--bg-card, #fff); border-radius: 10px; border: 1px solid var(--border-color, rgba(255,182,193,0.3)); font-size: 0.9em;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div><b>${c.alias || 'anonymous 🌸'}</b> ${ownerBadge} ${c.hearted ? '❤️' : ''} ${c.pinned ? '📌' : ''}</div>
-                    <div>
-                        ${isAdmin ? `<button onclick="togglePinComment(${index},${cIdx})" style="background:none;border:none;cursor:pointer;">📌</button><button onclick="toggleHeartComment(${index},${cIdx})" style="background:none;border:none;cursor:pointer;">❤️</button>` : ''}
-                        ${(isAdmin || c.canDelete) ? `<button onclick="deleteComment(${index},${cIdx})" style="background:none;border:none;cursor:pointer;color:#ff6b6b;">🗑️</button>` : ''}
-                    </div>
-                </div>
-                <div style="margin-top: 4px; color: var(--text-color, #444);">${c.text}</div>
-            </div>`;
-    }).join('');
-
-    return `
-        <div style="margin-top: 24px; padding-top: 16px; border-top: 2px dashed var(--border-color, #ffb6c1);">
-            <h4 style="margin-bottom: 12px; color: var(--text-color, #333);">💬 Notes & Comments (${comments.length})</h4>
-            <input type="text" id="modal-alias-${index}" placeholder="Your Alias (blank for anonymous 🌸)" style="width:100%; box-sizing:border-box; padding:8px; margin-bottom:8px; border-radius:8px; border:1px solid var(--border-color, #ffb6c1); font-size:0.85em;">
-            <div style="display:flex; gap:8px;">
-                <input type="text" id="modal-comment-${index}" placeholder="Leave a note..." style="flex:1; padding:8px; border-radius:8px; border:1px solid var(--border-color, #ffb6c1); font-size:0.85em;">
-                <button onclick="submitModalComment(${index})" style="background:var(--accent-color, #ffb6c1); color:#fff; border:none; border-radius:8px; padding:8px 16px; cursor:pointer; font-weight:bold;">Post</button>
-            </div>
-            <div style="margin-top: 12px;">${commentsList || '<div style="font-size:0.85em; opacity:0.6; text-align:center;">No comments yet. Be the first! 🌸</div>'}</div>
-        </div>`;
-}
-
-// --- CUTESY USER ALIAS HELPER (AUTO-ADMIN RECOGNITION) ---
-function getUserAlias() {
-    const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-    if (isAdmin) {
-        return 'the big falafel 𝜗ৎ';
-    }
-
-    let savedAlias = localStorage.getItem('falafel_user_alias');
-    if (!savedAlias) {
-        savedAlias = prompt("🌸 Welcome! What cute alias would you like to use for commenting?");
-        if (savedAlias && savedAlias.trim()) {
-            savedAlias = savedAlias.trim();
-            if (savedAlias.toLowerCase().includes('falafel')) {
-                savedAlias = 'the big falafel 𝜗ৎ';
-            }
-            localStorage.setItem('falafel_user_alias', savedAlias);
-        } else {
-            savedAlias = 'anonymous 🌸';
-        }
-    }
-    return savedAlias;
-}
-
-// --- YOUTUBE-STYLE READER COMMENT SECTION WITH SECURE ID OWNERSHIP ---
-function renderFullCommentsSection(p, index, isAdmin) {
-    const comments = Array.isArray(p.comments) ? p.comments : [];
-    const sorted = [...comments].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
-    
-    // Get current browser user ID for unique ownership checks
-    const userBrowserId = localStorage.getItem('falafel_commenter_id') || '';
-
-    let commentsList = sorted.map((c, cIdx) => {
-        const realCommentIdx = p.comments.indexOf(c);
-
-        const isOwner = c.isOwner || (c.alias && c.alias.toLowerCase().includes('falafel'));
-        const ownerBadge = isOwner ? `<span style="background: var(--accent, #ffb6c1); color: #fff; font-size: 0.7em; padding: 2px 8px; border-radius: 12px; margin-left: 6px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">the big falafel 𝜗ৎ</span>` : '';
-        
-        // Strict Ownership Check: Must match unique authorId, NOT just the alias text!
-        const isMyComment = c.authorId && c.authorId === userBrowserId;
-        const canDelete = isAdmin || isMyComment;
-
-        return `
-            <div style="padding: 12px; margin-top: 10px; background: var(--bg-card, #ffffff); border-radius: 14px; border: 1.5px solid var(--border-color, rgba(255,182,193,0.4)); font-size: 0.9em; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div style="color: var(--text-color, #333);"><b>${c.alias || 'anonymous 🌸'}</b> ${ownerBadge} ${c.hearted ? '❤️' : ''} ${c.pinned ? '📌' : ''}</div>
-                    <div style="display: flex; gap: 4px; align-items: center;">
-                        ${isAdmin ? `
-                            <button onclick="togglePinComment(${index},${realCommentIdx})" title="Pin Comment" style="background:none;border:none;cursor:pointer;font-size:1.1em;opacity:${c.pinned ? '1' : '0.5'};">📌</button>
-                            <button onclick="toggleHeartComment(${index},${realCommentIdx})" title="Heart Comment" style="background:none;border:none;cursor:pointer;font-size:1.1em;opacity:${c.hearted ? '1' : '0.5'};">❤️</button>
-                        ` : ''}
-                        ${canDelete ? `
-                            <button onclick="deleteComment(${index},${realCommentIdx})" title="Delete Comment" style="background:none;border:none;cursor:pointer;color:#ff6b6b;font-size:1.1em;">🗑️</button>
-                        ` : ''}
-                    </div>
-                </div>
-                <div style="margin-top: 6px; color: var(--text-color, #444); line-height: 1.4;">${c.text}</div>
-            </div>`;
-    }).join('');
-
-    const activeAlias = isAdmin ? 'the big falafel 𝜗ৎ' : (localStorage.getItem('falafel_user_alias') || '');
-
-    return `
-        <div style="margin-top: 24px; padding-top: 18px; border-top: 2px dashed var(--border-color, rgba(255,182,193,0.5));">
-            <h4 style="margin-bottom: 12px; color: var(--text-color, #333); font-size: 1.1em;">💬 Notes & Comments (${comments.length})</h4>
-            <div style="display:flex; gap:8px; align-items: center;">
-                <input type="text" id="modal-comment-${index}" placeholder="Leave a cute note..." style="flex:1; padding:10px 14px; border-radius:12px; border:1.5px solid var(--border-color, #ffb6c1); background: var(--bg-card, #fff); color: var(--text-color, #333); font-size:0.9em;">
-                <button onclick="submitModalComment(${index})" style="background: var(--accent, #ffb6c1); color: #fff; border: none; border-radius: 12px; padding: 10px 18px; cursor: pointer; font-weight: bold; font-size: 0.9em; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Post 💖</button>
-            </div>
-            ${activeAlias ? `<div style="font-size: 0.75em; opacity: 0.75; margin-top: 6px; color: var(--text-color, #666);">Posting as: <b>${activeAlias}</b>${isAdmin ? '👑' : `(<a href="#" onclick="localStorage.removeItem('falafel_user_alias'); getUserAlias(); openPostReader(${index}); return false;" style="color: var(--accent, #ffb6c1);">change</a>)`}</div>` : ''}
-            <div style="margin-top: 14px;">${commentsList || '<div style="font-size:0.85em; opacity:0.6; text-align:center; padding: 12px; color: var(--text-color, #666);">No comments yet. Be the first to leave some love! 🌸</div>'}</div>
-        </div>`;
-}
-
-// --- SUBMIT COMMENT WITH UNIQUE AUTHOR ID GENERATION ---
-function submitModalComment(i) {
-    const textIn = document.getElementById(`modal-comment-${i}`);
-    if(!textIn || !textIn.value.trim()) return;
-    
-    const alias = getUserAlias();
-    const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-
-    // Generate a unique permanent device ID for regular users so name collisions don't allow cross-deletions
-    let commenterId = localStorage.getItem('falafel_commenter_id');
-    if (!commenterId) {
-        commenterId = 'user_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
-        localStorage.setItem('falafel_commenter_id', commenterId);
-    }
-
-    if(!posts[i].comments) posts[i].comments = [];
-    posts[i].comments.push({ 
-        alias: alias, 
-        text: textIn.value.trim(), 
-        isOwner: isAdmin || alias === 'the big falafel 𝜗ৎ', 
-        pinned: false, 
-        hearted: false,
-        authorId: isAdmin ? 'admin_falafel' : commenterId
-    });
-
-    if(typeof savePostsToStorage === 'function') savePostsToStorage();
-    if(typeof openPostReader === 'function') openPostReader(i);
-}
-
-// --- ADMIN & USER COMMENT ACTION HELPERS ---
-function togglePinComment(postIdx, commentIdx) {
-    if (!posts[postIdx] || !posts[postIdx].comments || !posts[postIdx].comments[commentIdx]) return;
-    posts[postIdx].comments[commentIdx].pinned = !posts[postIdx].comments[commentIdx].pinned;
-    if (typeof savePostsToStorage === 'function') savePostsToStorage();
-    openPostReader(postIdx);
-}
-
-function toggleHeartComment(postIdx, commentIdx) {
-    if (!posts[postIdx] || !posts[postIdx].comments || !posts[postIdx].comments[commentIdx]) return;
-    posts[postIdx].comments[commentIdx].hearted = !posts[postIdx].comments[commentIdx].hearted;
-    if (typeof savePostsToStorage === 'function') savePostsToStorage();
-    openPostReader(postIdx);
-}
-
-function deleteComment(postIdx, commentIdx) {
-    if (!posts[postIdx] || !posts[postIdx].comments || !posts[postIdx].comments[commentIdx]) return;
-    if (confirm("Delete this note? 🌸")) {
-        posts[postIdx].comments.splice(commentIdx, 1);
-        if (typeof savePostsToStorage === 'function') savePostsToStorage();
-        openPostReader(postIdx);
-    }
-}
-        let clickCount = 0;
-        let clickTimer = null;
-        document.getElementById('secret-trigger').addEventListener('click', () => {
-            clickCount++;
-            clearTimeout(clickTimer);
-            if (clickCount >= 3) {
-                clickCount = 0;
-                promptAdminLogin();
-            } else {
-                clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+        // Image snapshot click listener injection
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('cutesy-snapshot') || e.target.classList.contains('card-cover-img')) {
+                openLightbox(e.target.src);
             }
         });
 
-        function promptAdminLogin() {
-            const pwd = prompt("Enter secret blogger password:");
-            if (pwd === "falafel123") {
-                sessionStorage.setItem('falafel_admin', 'true');
-                alert("Admin unlocked!");
-                renderAllPosts();
-            } else if (pwd !== null) {
-                alert("Incorrect password!");
-            }
-        }
-
-        function checkAdminStateUI() {
-            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-            const badge = document.getElementById('admin-indicator');
-            if(badge) badge.style.display = isAdmin ? 'block' : 'none';
-        }
-
-        function toggleModalTypeFields() {
-            const type = document.getElementById('new-entry-type').value;
-            const customBgFields = document.getElementById('custom-bg-admin-fields');
-            const postFields = document.getElementById('post-content-admin-wrapper');
-            const saveBtn = document.getElementById('save-post-btn');
-
-            if (type === 'custom-bg') {
-                customBgFields.style.display = 'block';
-                postFields.style.display = 'none';
-                saveBtn.style.display = 'none';
-            } else {
-                customBgFields.style.display = 'none';
-                postFields.style.display = 'block';
-                saveBtn.style.display = 'inline-block';
-                document.getElementById('blog-only-fields').style.display = type === 'announcement' ? 'none' : 'block';
-                document.getElementById('announcement-only-fields').style.display = type === 'announcement' ? 'block' : 'none';
-            }
-        }
-
-        function renderModalPhotoList() {
-            const container = document.getElementById('modal-photo-list');
-            if (!container) return;
-            if (currentPostPhotos.length === 0) {
-                container.innerHTML = '<p style="opacity:0.6; font-size:0.85rem;">No photos attached yet.</p>';
-                return;
-            }
-            let html = '';
-            currentPostPhotos.forEach((url, i) => {
-                html += `
-                    <div class="photo-slot-item">
-                        <img src="${url}" class="photo-slot-preview" alt="Thumb">
-                        <span style="font-size:0.85rem; font-weight:600;">Photo #${i + 1}</span>
-                        <button class="remove-single-photo-btn" onclick="removePhotoFromList(${i})">Remove 🗑️</button>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        function removePhotoFromList(index) {
-            currentPostPhotos.splice(index, 1);
-            renderModalPhotoList();
-        }
-
-        function openNewPostModal() {
-            document.getElementById('edit-index').value = "";
-            document.getElementById('new-title').value = "";
-            document.getElementById('new-content').value = "";
-            document.getElementById('admin-custom-bg-input').value = "";
-            document.getElementById('admin-custom-bg-file').value = "";
-            document.getElementById('new-photo-url-input').value = "";
-            currentPostPhotos = [];
-            renderModalPhotoList();
-            document.getElementById('new-entry-type').value = "blog";
-            toggleModalTypeFields();
-            document.getElementById('admin-modal').style.display = 'flex';
-        }
-
-        async function openEditModal(index) {
-            const posts = await getPosts();
-            const post = posts[index];
-            if(!post) return;
-
-            document.getElementById('edit-index').value = index;
-            document.getElementById('new-entry-type').value = post.type || "blog";
-            document.getElementById('new-title').value = post.title;
-            document.getElementById('new-content').value = post.content || post.snippet;
-            
-            if (post.showCover !== undefined) {
-                document.getElementById('new-show-cover').value = post.showCover.toString();
-            }
-
-            currentPostPhotos = extractPostPhotos(post);
-            renderModalPhotoList();
-            toggleModalTypeFields();
-            document.getElementById('admin-modal').style.display = 'flex';
-        }
-
-        function closeAdminModal() {
-            document.getElementById('admin-modal').style.display = 'none';
-        }
-
-        async function deletePost(index) {
-            if (confirm("Delete this entry?")) {
-                const binData = await getBinData();
-                const posts = binData.posts || [];
-                posts.splice(index, 1);
-                
-                const newPayload = {
-                    posts: posts,
-                    siteBg: binData.siteBg || null
-                };
-                await saveBinData(newPayload);
-                renderAllPosts();
-            }
-        }
-
-        async function savePostData() {
-            const editIndex = document.getElementById('edit-index').value;
-            const entryType = document.getElementById('new-entry-type').value;
-            const title = document.getElementById('new-title').value;
-            const content = document.getElementById('new-content').value;
-            const saveBtn = document.getElementById('save-post-btn');
-
-            if(!title || !content) {
-                alert("Please fill in both a title and some content!");
-                return;
-            }
-
-            saveBtn.innerText = "Saving... ⏳";
-            saveBtn.disabled = true;
-
-            const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            let postObj = { type: entryType, title, content, date: todayStr };
-
-            postObj.images = currentPostPhotos;
-            postObj.imageUrl = currentPostPhotos[0] || '';
-// --- CAPTURE YOUTUBE & POLL INPUTS ---
-        const youtubeUrl = document.getElementById('new-youtube-url')?.value || '';
-        const pollQuestion = document.getElementById('new-poll-question')?.value || '';
-        const pollOptionsRaw = document.getElementById('new-poll-options')?.value || '';
-
-        postObj.youtubeUrl = youtubeUrl.trim();
-
-        if (pollQuestion.trim() && pollOptionsRaw.trim()) {
-            postObj.poll = {
-                question: pollQuestion.trim(),
-                options: pollOptionsRaw.split(',').map(opt => ({ text: opt.trim(), votes: 0 }))
-            };
-        }
-            if (entryType === 'blog') {
-                const tag = document.getElementById('new-tag').value;
-                postObj.tag = tag;
-                postObj.tagText = tag.toUpperCase();
-                postObj.showCover = document.getElementById('new-show-cover').value === "true";
-                postObj.hashtags = document.getElementById('new-hashtags').value.split(',').map(h => h.trim()).filter(Boolean);
-                postObj.time = document.getElementById('new-time').value || '4 min read';
-                postObj.snippet = document.getElementById('new-snippet').value || content.substring(0, 100) + '...';
-            } else {
-                postObj.pinned = document.getElementById('new-pinned').value === "true";
-                postObj.snippet = content.substring(0, 120);
-            }
-
-            const binData = await getBinData();
-            let posts = binData.posts || [];
-
-            if (editIndex !== "" && !isNaN(editIndex)) {
-                posts[parseInt(editIndex)] = postObj;
-            } else {
-                posts.unshift(postObj);
-            }
-
-            const newPayload = {
-                posts: posts,
-                siteBg: binData.siteBg || null
-            };
-
-            try {
-                await saveBinData(newPayload);
-                closeAdminModal();
-                renderAllPosts();
-                switchView(entryType === 'announcement' ? 'announcements' : 'blog');
-            } catch (err) {
-                alert("Upload failed because the total file size was too large for JSONBin. Try using direct image URL links instead of uploading large files!");
-            } finally {
-                saveBtn.innerText = "Save Entry 🚀";
-                saveBtn.disabled = false;
-            }
-        }
-// --- BACKEND BRIDGE HELPER ---
-function savePostsToStorage() {
-    try {
-        if (typeof savePostData === 'function') {
-            // If your function expects to be called, we trigger it or call your bin saver
-            if (typeof saveBinData === 'function' && typeof currentPayload !== 'undefined') {
-                saveBinData(currentPayload);
-            } else if (typeof renderAllPosts === 'function') {
-                renderAllPosts();
-            }
-        }
-    } catch(e) { console.error("Backend sync error:", e); }
-}
-        window.addEventListener('DOMContentLoaded', () => {
-            loadSavedBackground();
-            initFallingBackground();
-            initGlobalEmus();
-            renderAllPosts();
-            updateWidgetTrackDisplay();
-        });
-     // --- THEME-ADAPTIVE SOCIAL CARD ADDONS ---
-// --- DYNAMICALLY STYLED CARD ADDONS (LIKES, POLLS, EMBEDS) ---
-function renderSocialCardAddons(p, originalIndex, isAdmin) {
-    try {
-        const likes = p.likes || 0;
-        const comments = Array.isArray(p.comments) ? p.comments : [];
-        const poll = p.poll || null;
-
-        // Poll HTML display using dynamic theme vars
-        let pollHtml = '';
-        if (poll && poll.question && Array.isArray(poll.options)) {
-            const totalVotes = poll.options.reduce((sum, opt) => sum + (opt.votes || 0), 0);
-            const maxVotes = Math.max(...poll.options.map(opt => opt.votes || 0), 0);
-
-            let optionsList = poll.options.map((opt, optIdx) => {
-                const percentage = totalVotes > 0 ? Math.round(((opt.votes || 0) / totalVotes) * 100) : 0;
-                const isLeading = (opt.votes || 0) === maxVotes && maxVotes > 0;
-                return `
-                    <div onclick="voteOnPoll(${originalIndex}, ${optIdx})" style="margin: 5px 0; padding: 8px 12px; background: var(--bg-card, #ffffff); border: 1.5px solid ${isLeading ? 'var(--accent, #ffb6c1)' : 'var(--border-color, rgba(255,182,193,0.4))'}; border-radius: 10px; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.15s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                        <div style="position: absolute; top:0; left:0; bottom:0; width: ${percentage}%; background: var(--accent, #ffb6c1); opacity: 0.25;"></div>
-                        <div style="position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 0.85em; color: var(--text-color, #333); font-weight: 500;">
-                            <span>${opt.text} ${isLeading ? '👑' : ''}</span>
-                            <span><b>${percentage}%</b></span>
-                        </div>
-                    </div>`;
-            }).join('');
-
-            pollHtml = `<div style="margin: 10px 0; padding: 10px; background: var(--bg-secondary, rgba(255,182,193,0.1)); border-radius: 12px; border: 1.5px solid var(--border-color, rgba(255,182,193,0.3));">
-                <div style="font-weight: bold; font-size: 0.9em; margin-bottom: 6px; color: var(--text-color, #333);">📊 ${poll.question}</div>
-                ${optionsList}
-            </div>`;
-        }
-
-        // YouTube Embed render
-        let ytHtml = '';
-        if (p.youtubeUrl) {
-            const videoId = p.youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1];
-            if (videoId) {
-                ytHtml = `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; margin:10px 0;">
-                    <iframe src="https://www.youtube.com/embed/${videoId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
-                </div>`;
-            }
-        }
-
-        return `
-            ${ytHtml}
-            ${pollHtml}
-            <div style="display: inline-flex; align-items: center; gap: 8px; margin-left: 6px;">
-                <button onclick="handleLike(${originalIndex})" style="background: var(--bg-card, #ffffff); border: 1.5px solid var(--accent, #ffb6c1); border-radius: 16px; padding: 5px 12px; cursor: pointer; font-size: 0.85em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-                    🤍 ${likes}
-                </button>
-                <button onclick="openPostReader(${originalIndex})" style="background: var(--bg-card, #ffffff); border: 1.5px solid var(--accent, #ffb6c1); border-radius: 16px; padding: 5px 12px; cursor: pointer; font-size: 0.85em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-                    💬 ${comments.length}
-                </button>
-            </div>`;
-    } catch(e) { return ""; }
-}
-
-// --- INTERACTIVE POLL VOTING FUNCTION ---
-function voteOnPoll(postIdx, optionIdx) {
-    if (!posts[postIdx] || !posts[postIdx].poll) return;
-    if (!posts[postIdx].poll.options[optionIdx]) return;
-    posts[postIdx].poll.options[optionIdx].votes = (posts[postIdx].poll.options[optionIdx].votes || 0) + 1;
-    if (typeof savePostsToStorage === 'function') savePostsToStorage();
-    if (typeof renderAllPosts === 'function') renderAllPosts();
-}
-
-// --- INTERACTIVE LIKE FUNCTION ---
-function handleLike(postIdx) {
-    if (!posts[postIdx]) return;
-    posts[postIdx].likes = (posts[postIdx].likes || 0) + 1;
-    if (typeof savePostsToStorage === 'function') savePostsToStorage();
-    if (typeof renderAllPosts === 'function') renderAllPosts();
-}
+        // Initialize on load
+        window.onload = function() {
+            initAudio();
+            generateFallingBg();
+            generateEmus();
+            renderBlogPosts();
+            renderAnnouncements();
+        };
     </script>
 </body>
 </html>
