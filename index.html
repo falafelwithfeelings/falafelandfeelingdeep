@@ -2498,16 +2498,130 @@ function renderFullCommentsSection(p, index, isAdmin) {
         </div>`;
 }
 
+// --- CUTESY USER ALIAS HELPER (AUTO-ADMIN RECOGNITION) ---
+function getUserAlias() {
+    const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+    if (isAdmin) {
+        return 'the big falafel 𝜗ৎ';
+    }
+
+    let savedAlias = localStorage.getItem('falafel_user_alias');
+    if (!savedAlias) {
+        savedAlias = prompt("🌸 Welcome! What cute alias would you like to use for commenting?");
+        if (savedAlias && savedAlias.trim()) {
+            savedAlias = savedAlias.trim();
+            if (savedAlias.toLowerCase().includes('falafel')) {
+                savedAlias = 'the big falafel 𝜗ৎ';
+            }
+            localStorage.setItem('falafel_user_alias', savedAlias);
+        } else {
+            savedAlias = 'anonymous 🌸';
+        }
+    }
+    return savedAlias;
+}
+
+// --- YOUTUBE-STYLE READER COMMENT SECTION WITH SECURE ID OWNERSHIP ---
+function renderFullCommentsSection(p, index, isAdmin) {
+    const comments = Array.isArray(p.comments) ? p.comments : [];
+    const sorted = [...comments].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+    
+    // Get current browser user ID for unique ownership checks
+    const userBrowserId = localStorage.getItem('falafel_commenter_id') || '';
+
+    let commentsList = sorted.map((c, cIdx) => {
+        const realCommentIdx = p.comments.indexOf(c);
+
+        const isOwner = c.isOwner || (c.alias && c.alias.toLowerCase().includes('falafel'));
+        const ownerBadge = isOwner ? `<span style="background: var(--accent, #ffb6c1); color: #fff; font-size: 0.7em; padding: 2px 8px; border-radius: 12px; margin-left: 6px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">the big falafel 𝜗ৎ</span>` : '';
+        
+        // Strict Ownership Check: Must match unique authorId, NOT just the alias text!
+        const isMyComment = c.authorId && c.authorId === userBrowserId;
+        const canDelete = isAdmin || isMyComment;
+
+        return `
+            <div style="padding: 12px; margin-top: 10px; background: var(--bg-card, #ffffff); border-radius: 14px; border: 1.5px solid var(--border-color, rgba(255,182,193,0.4)); font-size: 0.9em; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="color: var(--text-color, #333);"><b>${c.alias || 'anonymous 🌸'}</b> ${ownerBadge} ${c.hearted ? '❤️' : ''} ${c.pinned ? '📌' : ''}</div>
+                    <div style="display: flex; gap: 4px; align-items: center;">
+                        ${isAdmin ? `
+                            <button onclick="togglePinComment(${index},${realCommentIdx})" title="Pin Comment" style="background:none;border:none;cursor:pointer;font-size:1.1em;opacity:${c.pinned ? '1' : '0.5'};">📌</button>
+                            <button onclick="toggleHeartComment(${index},${realCommentIdx})" title="Heart Comment" style="background:none;border:none;cursor:pointer;font-size:1.1em;opacity:${c.hearted ? '1' : '0.5'};">❤️</button>
+                        ` : ''}
+                        ${canDelete ? `
+                            <button onclick="deleteComment(${index},${realCommentIdx})" title="Delete Comment" style="background:none;border:none;cursor:pointer;color:#ff6b6b;font-size:1.1em;">🗑️</button>
+                        ` : ''}
+                    </div>
+                </div>
+                <div style="margin-top: 6px; color: var(--text-color, #444); line-height: 1.4;">${c.text}</div>
+            </div>`;
+    }).join('');
+
+    const activeAlias = isAdmin ? 'the big falafel 𝜗ৎ' : (localStorage.getItem('falafel_user_alias') || '');
+
+    return `
+        <div style="margin-top: 24px; padding-top: 18px; border-top: 2px dashed var(--border-color, rgba(255,182,193,0.5));">
+            <h4 style="margin-bottom: 12px; color: var(--text-color, #333); font-size: 1.1em;">💬 Notes & Comments (${comments.length})</h4>
+            <div style="display:flex; gap:8px; align-items: center;">
+                <input type="text" id="modal-comment-${index}" placeholder="Leave a cute note..." style="flex:1; padding:10px 14px; border-radius:12px; border:1.5px solid var(--border-color, #ffb6c1); background: var(--bg-card, #fff); color: var(--text-color, #333); font-size:0.9em;">
+                <button onclick="submitModalComment(${index})" style="background: var(--accent, #ffb6c1); color: #fff; border: none; border-radius: 12px; padding: 10px 18px; cursor: pointer; font-weight: bold; font-size: 0.9em; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Post 💖</button>
+            </div>
+            ${activeAlias ? `<div style="font-size: 0.75em; opacity: 0.75; margin-top: 6px; color: var(--text-color, #666);">Posting as: <b>${activeAlias}</b>${isAdmin ? '👑' : `(<a href="#" onclick="localStorage.removeItem('falafel_user_alias'); getUserAlias(); openPostReader(${index}); return false;" style="color: var(--accent, #ffb6c1);">change</a>)`}</div>` : ''}
+            <div style="margin-top: 14px;">${commentsList || '<div style="font-size:0.85em; opacity:0.6; text-align:center; padding: 12px; color: var(--text-color, #666);">No comments yet. Be the first to leave some love! 🌸</div>'}</div>
+        </div>`;
+}
+
+// --- SUBMIT COMMENT WITH UNIQUE AUTHOR ID GENERATION ---
 function submitModalComment(i) {
-    const aliasIn = document.getElementById(`modal-alias-${i}`);
     const textIn = document.getElementById(`modal-comment-${i}`);
     if(!textIn || !textIn.value.trim()) return;
-    let alias = aliasIn && aliasIn.value.trim() ? aliasIn.value.trim() : 'anonymous 🌸';
-    if(alias.toLowerCase().includes('falafel')) alias = 'the big falafel 𝜗ৎ';
+    
+    const alias = getUserAlias();
+    const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+
+    // Generate a unique permanent device ID for regular users so name collisions don't allow cross-deletions
+    let commenterId = localStorage.getItem('falafel_commenter_id');
+    if (!commenterId) {
+        commenterId = 'user_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+        localStorage.setItem('falafel_commenter_id', commenterId);
+    }
+
     if(!posts[i].comments) posts[i].comments = [];
-    posts[i].comments.push({ alias, text: textIn.value.trim(), isOwner: alias === 'the big falafel 𝜗ৎ', pinned: false, hearted: false });
+    posts[i].comments.push({ 
+        alias: alias, 
+        text: textIn.value.trim(), 
+        isOwner: isAdmin || alias === 'the big falafel 𝜗ৎ', 
+        pinned: false, 
+        hearted: false,
+        authorId: isAdmin ? 'admin_falafel' : commenterId
+    });
+
     if(typeof savePostsToStorage === 'function') savePostsToStorage();
     if(typeof openPostReader === 'function') openPostReader(i);
+}
+
+// --- ADMIN & USER COMMENT ACTION HELPERS ---
+function togglePinComment(postIdx, commentIdx) {
+    if (!posts[postIdx] || !posts[postIdx].comments || !posts[postIdx].comments[commentIdx]) return;
+    posts[postIdx].comments[commentIdx].pinned = !posts[postIdx].comments[commentIdx].pinned;
+    if (typeof savePostsToStorage === 'function') savePostsToStorage();
+    openPostReader(postIdx);
+}
+
+function toggleHeartComment(postIdx, commentIdx) {
+    if (!posts[postIdx] || !posts[postIdx].comments || !posts[postIdx].comments[commentIdx]) return;
+    posts[postIdx].comments[commentIdx].hearted = !posts[postIdx].comments[commentIdx].hearted;
+    if (typeof savePostsToStorage === 'function') savePostsToStorage();
+    openPostReader(postIdx);
+}
+
+function deleteComment(postIdx, commentIdx) {
+    if (!posts[postIdx] || !posts[postIdx].comments || !posts[postIdx].comments[commentIdx]) return;
+    if (confirm("Delete this note? 🌸")) {
+        posts[postIdx].comments.splice(commentIdx, 1);
+        if (typeof savePostsToStorage === 'function') savePostsToStorage();
+        openPostReader(postIdx);
+    }
 }
         let clickCount = 0;
         let clickTimer = null;
@@ -2729,13 +2843,14 @@ function savePostsToStorage() {
             updateWidgetTrackDisplay();
         });
      // --- THEME-ADAPTIVE SOCIAL CARD ADDONS ---
+// --- DYNAMICALLY STYLED CARD ADDONS (LIKES, POLLS, EMBEDS) ---
 function renderSocialCardAddons(p, originalIndex, isAdmin) {
     try {
         const likes = p.likes || 0;
         const comments = Array.isArray(p.comments) ? p.comments : [];
         const poll = p.poll || null;
 
-        // Dynamic Poll HTML matching mood theme variables
+        // Poll HTML display using dynamic theme vars
         let pollHtml = '';
         if (poll && poll.question && Array.isArray(poll.options)) {
             const totalVotes = poll.options.reduce((sum, opt) => sum + (opt.votes || 0), 0);
@@ -2745,17 +2860,17 @@ function renderSocialCardAddons(p, originalIndex, isAdmin) {
                 const percentage = totalVotes > 0 ? Math.round(((opt.votes || 0) / totalVotes) * 100) : 0;
                 const isLeading = (opt.votes || 0) === maxVotes && maxVotes > 0;
                 return `
-                    <div onclick="voteOnPoll(${originalIndex}, ${optIdx})" style="margin: 4px 0; padding: 6px 10px; background: var(--bg-card, #fff); border: 1px solid ${isLeading ? 'var(--accent-color, #ffb6c1)' : 'var(--border-color, rgba(255,182,193,0.4))'}; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top:0; left:0; bottom:0; width: ${percentage}%; background: var(--accent-color, #ffb6c1); opacity: 0.3;"></div>
-                        <div style="position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 0.8em; color: var(--text-color, #333);">
+                    <div onclick="voteOnPoll(${originalIndex}, ${optIdx})" style="margin: 5px 0; padding: 8px 12px; background: var(--bg-card, #ffffff); border: 1.5px solid ${isLeading ? 'var(--accent, #ffb6c1)' : 'var(--border-color, rgba(255,182,193,0.4))'}; border-radius: 10px; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.15s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="position: absolute; top:0; left:0; bottom:0; width: ${percentage}%; background: var(--accent, #ffb6c1); opacity: 0.25;"></div>
+                        <div style="position: relative; z-index: 1; display: flex; justify-content: space-between; font-size: 0.85em; color: var(--text-color, #333); font-weight: 500;">
                             <span>${opt.text} ${isLeading ? '👑' : ''}</span>
                             <span><b>${percentage}%</b></span>
                         </div>
                     </div>`;
             }).join('');
 
-            pollHtml = `<div style="margin: 8px 0; padding: 8px; background: var(--bg-secondary, rgba(255,182,193,0.1)); border-radius: 10px; border: 1px solid var(--border-color, rgba(255,182,193,0.3));">
-                <div style="font-weight: bold; font-size: 0.85em; margin-bottom: 4px; color: var(--text-color, #333);">📊 ${poll.question}</div>
+            pollHtml = `<div style="margin: 10px 0; padding: 10px; background: var(--bg-secondary, rgba(255,182,193,0.1)); border-radius: 12px; border: 1.5px solid var(--border-color, rgba(255,182,193,0.3));">
+                <div style="font-weight: bold; font-size: 0.9em; margin-bottom: 6px; color: var(--text-color, #333);">📊 ${poll.question}</div>
                 ${optionsList}
             </div>`;
         }
@@ -2765,7 +2880,7 @@ function renderSocialCardAddons(p, originalIndex, isAdmin) {
         if (p.youtubeUrl) {
             const videoId = p.youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1];
             if (videoId) {
-                ytHtml = `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; margin:8px 0;">
+                ytHtml = `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; margin:10px 0;">
                     <iframe src="https://www.youtube.com/embed/${videoId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
                 </div>`;
             }
@@ -2775,14 +2890,31 @@ function renderSocialCardAddons(p, originalIndex, isAdmin) {
             ${ytHtml}
             ${pollHtml}
             <div style="display: inline-flex; align-items: center; gap: 8px; margin-left: 6px;">
-                <button onclick="handleLike(${originalIndex})" style="background: var(--bg-secondary, #fff0f5); border: 1.5px solid var(--accent-color, #ffb6c1); border-radius: 16px; padding: 4px 10px; cursor: pointer; font-size: 0.8em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 5px var(--border-color, rgba(255,182,193,0.3)); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <button onclick="handleLike(${originalIndex})" style="background: var(--bg-card, #ffffff); border: 1.5px solid var(--accent, #ffb6c1); border-radius: 16px; padding: 5px 12px; cursor: pointer; font-size: 0.85em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
                     🤍 ${likes}
                 </button>
-                <button onclick="openPostReader(${originalIndex})" style="background: var(--bg-secondary, #fff0f5); border: 1.5px solid var(--accent-color, #ffb6c1); border-radius: 16px; padding: 4px 10px; cursor: pointer; font-size: 0.8em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 5px var(--border-color, rgba(255,182,193,0.3)); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <button onclick="openPostReader(${originalIndex})" style="background: var(--bg-card, #ffffff); border: 1.5px solid var(--accent, #ffb6c1); border-radius: 16px; padding: 5px 12px; cursor: pointer; font-size: 0.85em; color: var(--text-color, #333); font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
                     💬 ${comments.length}
                 </button>
             </div>`;
     } catch(e) { return ""; }
+}
+
+// --- INTERACTIVE POLL VOTING FUNCTION ---
+function voteOnPoll(postIdx, optionIdx) {
+    if (!posts[postIdx] || !posts[postIdx].poll) return;
+    if (!posts[postIdx].poll.options[optionIdx]) return;
+    posts[postIdx].poll.options[optionIdx].votes = (posts[postIdx].poll.options[optionIdx].votes || 0) + 1;
+    if (typeof savePostsToStorage === 'function') savePostsToStorage();
+    if (typeof renderAllPosts === 'function') renderAllPosts();
+}
+
+// --- INTERACTIVE LIKE FUNCTION ---
+function handleLike(postIdx) {
+    if (!posts[postIdx]) return;
+    posts[postIdx].likes = (posts[postIdx].likes || 0) + 1;
+    if (typeof savePostsToStorage === 'function') savePostsToStorage();
+    if (typeof renderAllPosts === 'function') renderAllPosts();
 }
     </script>
 </body>
