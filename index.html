@@ -626,8 +626,7 @@
         .music-progress-container { width: 100%; height: 6px; background: rgba(128, 128, 128, 0.2); border-radius: 3px; margin-top: 0.8rem; overflow: hidden; cursor: pointer; }
         .music-progress-bar { height: 100%; width: 0%; background: #db2777; border-radius: 3px; transition: width 0.1s linear; }
     </style>
-</head>
-<body class="mood-pink">
+    <body class="mood-pink">
 
     <div id="falling-bg"></div>
     <div id="emu-layer"></div>
@@ -971,6 +970,12 @@
                 <label style="margin-top: 1rem; display: block;">🎥 Optional YouTube Video Link</label>
                 <input type="text" id="new-video-url" placeholder="e.g., https://youtu.be/... (leave blank if none)">
 
+                <label style="margin-top: 1rem; display: block;">🎥 Display Video on Card?</label>
+                <select id="new-show-video">
+                    <option value="true">Show Video on Card ✨</option>
+                    <option value="false">Hide Video on Card (Only show inside post) 📖</option>
+                </select>
+
                 <label style="margin-top: 1rem; display: block;">📊 Optional Poll Question</label>
                 <input type="text" id="new-poll-question" placeholder="e.g., Which is the best falafel?">
 
@@ -1002,8 +1007,8 @@
             </div>
             <div class="comments-list" id="comments-list-container"></div>
             <div class="comment-input-area">
-                <input type="text" id="comment-alias-input" placeholder="your name / nickname ✨">
-                <textarea id="comment-text-input" placeholder="say something nice... ✨"></textarea>
+                <input type="text" id="comment-alias-input" placeholder="write your alias ˚ʚ♡ɞ˚">
+                <textarea id="comment-text-input" placeholder="say something nice... ⋆.𐩏 ̊"></textarea>
                 <button class="pink-pill-btn" style="align-self: flex-end; padding: 0.6rem 1.5rem;" onclick="submitComment()">post note ✨</button>
             </div>
         </div>
@@ -1136,11 +1141,28 @@
                 isAudioPlaying = true;
                 if(btn) btn.innerText = "⏸ Pause";
                 startProgressTracker();
-            } else {
+                
+                // ✨ FIX: Auto-update the song title when the track changes
+                try {
+                    const idx = audioPlayer.getPlaylistIndex();
+                    if (idx !== undefined && idx !== -1 && idx !== currentTrackIndex) {
+                        currentTrackIndex = idx;
+                        updateWidgetTrackDisplay();
+                    }
+                } catch(e) {}
+            } else if (event.data === YT.PlayerState.PAUSED) {
                 isAudioPlaying = false;
                 if(btn) btn.innerText = "▶ Play";
-                if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-                    clearInterval(progressInterval);
+                clearInterval(progressInterval);
+            } else if (event.data === YT.PlayerState.ENDED) {
+                if (isLooping) {
+                    // ✨ FIX: Manual loop for the current track
+                    audioPlayer.seekTo(0);
+                    audioPlayer.playVideo();
+                } else {
+                    // Auto-advance to the next track
+                    currentTrackIndex = (currentTrackIndex + 1) % playlistTracks.length;
+                    updateWidgetTrackDisplay();
                 }
             }
         }
@@ -1515,6 +1537,22 @@
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
             const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')" title="Click to view full size">` : '';
 
+            // ✨ FIX: Only show video on card if the admin chose to
+            let videoHtml = '';
+            const shouldShowVideo = p.showVideoOnCard !== false && p.showVideoOnCard !== "false";
+            if (p.videoUrl && shouldShowVideo) {
+                const ytId = getYouTubeId(p.videoUrl);
+                if (ytId) {
+                    videoHtml = `
+                        <div class="video-container-box">
+                            <div class="video-frame-wrapper">
+                                <iframe src="https://www.youtube.com/embed/${ytId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
             let socialHtml = renderSocialBar(p, originalIndex);
 
             return `
@@ -1529,6 +1567,7 @@
                         ${tagsHtml}
                         <p class="card-snippet">${p.snippet}</p>
                     </div>
+                    ${videoHtml}
                     ${socialHtml}
                     <div class="card-footer-row">
                         <a onclick="openPostReader(${originalIndex})" class="read-more">read more →</a>
@@ -1554,6 +1593,21 @@
                 galleryHtml += '</div>';
             }
 
+            // Announcements always show video directly on card (no toggle option for announcements)
+            let videoHtml = '';
+            if (ann.videoUrl) {
+                const ytId = getYouTubeId(ann.videoUrl);
+                if (ytId) {
+                    videoHtml = `
+                        <div class="video-container-box">
+                            <div class="video-frame-wrapper">
+                                <iframe src="https://www.youtube.com/embed/${ytId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
             let socialHtml = renderSocialBar(ann, originalIndex);
 
             return `
@@ -1562,6 +1616,7 @@
                     <div class="announcement-date">⭐ ${ann.date || 'WONDERHOI UPDATE'}</div>
                     <h2 class="announcement-title">${ann.title}</h2>
                     <div class="announcement-body">${ann.content}${galleryHtml}</div>
+                    ${videoHtml}
                     ${socialHtml}
                     <div style="margin-top:1.5rem; display:${isAdmin ? 'flex' : 'none'}; justify-content:flex-end; gap:0.5rem;">
                         <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
@@ -1588,8 +1643,24 @@
                 });
                 galleryHtml += '</div>';
             }
+
+            // ✨ FIX: Always show video inside the post reader!
+            let videoHtml = '';
+            if (post.videoUrl) {
+                const ytId = getYouTubeId(post.videoUrl);
+                if (ytId) {
+                    videoHtml = `
+                        <div class="video-container-box">
+                            <div class="video-frame-wrapper">
+                                <iframe src="https://www.youtube.com/embed/${ytId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
             const contentEl = document.getElementById('reader-content-wrapper');
-            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}`;
+            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${videoHtml}${galleryHtml}`;
 
             const socialContainer = document.getElementById('reader-social-bar-container');
             socialContainer.innerHTML = renderSocialBar(post, index);
@@ -1678,6 +1749,7 @@
             document.getElementById('admin-custom-bg-file').value = "";
             document.getElementById('new-photo-url-input').value = "";
             document.getElementById('new-video-url').value = "";
+            document.getElementById('new-show-video').value = "true";
             document.getElementById('new-poll-question').value = "";
             document.getElementById('new-poll-options').value = "";
             currentPostPhotos = [];
@@ -1696,6 +1768,7 @@
             document.getElementById('new-title').value = post.title;
             document.getElementById('new-content').value = post.content || post.snippet;
             document.getElementById('new-video-url').value = post.videoUrl || "";
+            document.getElementById('new-show-video').value = post.showVideoOnCard !== false ? "true" : "false";
             document.getElementById('new-poll-question').value = post.poll ? post.poll.question : "";
             document.getElementById('new-poll-options').value = post.poll ? post.poll.options.join(', ') : "";
             if (post.showCover !== undefined) {
@@ -1760,6 +1833,7 @@
 
             if (hasVideo) {
                 postObj.videoUrl = videoUrl;
+                postObj.showVideoOnCard = document.getElementById('new-show-video').value === "true";
             }
 
             if (editIndex !== "" && !isNaN(editIndex)) {
@@ -1769,7 +1843,10 @@
                     postObj.likes = existingPost.likes || 0;
                     postObj.comments = existingPost.comments || [];
                     if (!postObj.poll && existingPost.poll) postObj.poll = existingPost.poll;
-                    if (!postObj.videoUrl && existingPost.videoUrl) postObj.videoUrl = existingPost.videoUrl;
+                    if (!postObj.videoUrl && existingPost.videoUrl) {
+                        postObj.videoUrl = existingPost.videoUrl;
+                        postObj.showVideoOnCard = existingPost.showVideoOnCard;
+                    }
                 }
             } else {
                 postObj.likes = 0;
@@ -1868,22 +1945,7 @@
                 pollHtml = `<div class="poll-widget"><div class="poll-question">📊 ${escapeHTML(post.poll.question)}</div>${optionsHtml}</div>`;
             }
 
-            let videoHtml = '';
-            if (post.videoUrl) {
-                const ytId = getYouTubeId(post.videoUrl);
-                if (ytId) {
-                    videoHtml = `
-                        <div class="video-container-box">
-                            <div class="video-frame-wrapper">
-                                <iframe src="https://www.youtube.com/embed/${ytId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-
             return `
-                ${videoHtml}
                 ${pollHtml}
                 <div class="social-bar">
                     <button class="social-bar-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${index}, this)">
@@ -2142,12 +2204,14 @@
 
         function toggleLoop() {
             isLooping = !isLooping;
-            if (audioPlayer && typeof audioPlayer.setLoop === 'function') { audioPlayer.setLoop(isLooping); }
             const btn = document.getElementById('loop-btn');
             if (btn) {
                 btn.innerText = isLooping ? "🔁 Looping: ON" : "🔁 Looping: OFF";
                 btn.style.opacity = isLooping ? "1" : "0.6";
             }
+            // If turning ON looping while the song is already playing, we don't need to do anything
+            // because the onStateChange event will handle replaying when it ends.
+            // If turning OFF looping, the playlist will auto-advance on the next ENDED event.
         }
 
         function seekMusic(event) {
@@ -2171,3 +2235,4 @@
     </script>
 </body>
 </html>
+</head>
