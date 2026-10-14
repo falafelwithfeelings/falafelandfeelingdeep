@@ -8,88 +8,6 @@
     <link rel="icon" type="image/png" href="EMU/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* 🌸 MOOD SYNC FOR CUTESY COMPONENTS 🌸 */
-
-/* Default / Pink */
-.falafel-video-wrapper, 
-.falafel-poll-wrapper, 
-.falafel-social-wrapper {
-  --current-card-bg: #fce4ec;
-  --current-border: #f48fb1;
-  --current-text: #5c3a42;
-}
-
-/* Pink */
-body.mood-pink .falafel-video-wrapper,
-body.mood-pink .falafel-poll-wrapper,
-body.mood-pink .falafel-social-wrapper {
-  --current-card-bg: #fce4ec;
-  --current-border: #f48fb1;
-  --current-text: #5c3a42;
-}
-
-/* Midnight */
-body.mood-midnight .falafel-video-wrapper,
-body.mood-midnight .falafel-poll-wrapper,
-body.mood-midnight .falafel-social-wrapper {
-  --current-card-bg: #1a1b26;
-  --current-border: #7aa2f7;
-  --current-text: #c0caf5;
-}
-
-/* Matcha */
-body.mood-matcha .falafel-video-wrapper,
-body.mood-matcha .falafel-poll-wrapper,
-body.mood-matcha .falafel-social-wrapper {
-  --current-card-bg: #eef2ed;
-  --current-border: #87a96b;
-  --current-text: #3b4a38;
-}
-
-/* Lemonade */
-body.mood-lemonade .falafel-video-wrapper,
-body.mood-lemonade .falafel-poll-wrapper,
-body.mood-lemonade .falafel-social-wrapper {
-  --current-card-bg: #fffde7;
-  --current-border: #ffd54f;
-  --current-text: #5e5436;
-}
-
-/* Strawberry */
-body.mood-strawberry .falafel-video-wrapper,
-body.mood-strawberry .falafel-poll-wrapper,
-body.mood-strawberry .falafel-social-wrapper {
-  --current-card-bg: #ffccd5;
-  --current-border: #ff4d6d;
-  --current-text: #591e2b;
-}
-
-/* Cyber */
-body.mood-cyber .falafel-video-wrapper,
-body.mood-cyber .falafel-poll-wrapper,
-body.mood-cyber .falafel-social-wrapper {
-  --current-card-bg: #0d0221;
-  --current-border: #00ffcc;
-  --current-text: #e0fbfc;
-}
-
-/* Lavender */
-body.mood-lavender .falafel-video-wrapper,
-body.mood-lavender .falafel-poll-wrapper,
-body.mood-lavender .falafel-social-wrapper {
-  --current-card-bg: #f3e8ff;
-  --current-border: #c084fc;
-  --current-text: #4c1d95;
-}
-
-/* Sunset */
-body.mood-sunset .falafel-video-wrapper,
-body.mood-sunset .falafel-poll-wrapper,
-body.mood-sunset .falafel-social-wrapper {
-  --current-card-bg: #fff5ed;
-  --current-border: #ff9e7d;
-  --current-text: #5c3321;
-}
         * {
             box-sizing: border-box;
         }
@@ -1780,22 +1698,6 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
     </div>
 
     <!-- Admin Modal -->
-  
-
-
-<div id="alias-modal" class="modal-overlay" style="display: none;">
-    <div class="modal" style="text-align: center; max-width: 380px;">
-        <span style="font-size: 2.5rem;">🌸</span>
-        <h3 style="margin: 10px 0 5px 0; color: var(--current-text, #5c3a42); font-family: 'Quicksand', sans-serif;">what's your name, friend?</h3>
-        <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 15px; font-family: 'Quicksand', sans-serif;">enter a public username/alias so everyone knows who's dropping notes!</p>
-        
-       <input type="text" id="modal-alias-input" placeholder="e.g., mochi_cat or anonymous 🍓" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--current-border, #f48fb1); border-radius: 10px; font-family: 'Quicksand', sans-serif; font-size: 13px; margin-bottom: 15px; box-sizing: border-box; outline: none;">
-        
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <button type="button" class="modal-btn save" onclick="saveUserAlias()" style="width: 100%;">save alias ✨</button>
-        </div>
-    </div>
-</div>
     <div id="admin-modal" class="modal-overlay">
         <div class="modal">
             <h2 id="modal-heading">✨ Secret Blogger Mode</h2>
@@ -1870,19 +1772,6 @@ body.mood-dark .cutesy-slider::-webkit-slider-thumb {
                     </select>
                 </div>
             </div>
-
-            
-        <label style="margin-top: 1rem; display: block;">🎥 Optional YouTube Video Link</label>
-        <input type="text" id="new-video-url" placeholder="Paste YouTube link here (e.g., https://youtu.be/...)">
-
-        <div id="poll-admin-section" style="margin-top: 1rem;">
-            <label>📊 Optional Poll Question</label>
-            <input type="text" id="new-poll-question" placeholder="e.g., What snack are you eating right now?">
-            
-            <label style="margin-top: 0.5rem; display: block;">📊 Poll Options (Comma separated)</label>
-            <input type="text" id="new-poll-options" placeholder="e.g., Matcha, Falafel, Sleep, Chips">
-        </div>
-       
 
             <div class="modal-buttons" style="margin-top: 1.5rem;">
                 <button class="modal-btn cancel" onclick="closeAdminModal()">Close / Cancel</button>
@@ -2145,181 +2034,8 @@ function initYouTubeAPI() {
 
     const picker = document.getElementById('mood-picker');
     if (picker) picker.value = mood;
-
-
-            
-}
-    
-// Generates or retrieves a unique local user ID for comment ownership
-function getLocalUserId() {
-    let uid = localStorage.getItem('falafel_user_uid');
-    if (!uid) {
-        uid = 'user_' + Math.random().toString(36).substring(2, 9);
-        localStorage.setItem('falafel_user_uid', uid);
-    }
-    return uid;
 }
 
-// Renders pretty poll progress bars
-function renderPollHTML(post) {
-    if (!post.pollQuestion || !post.pollOptions || post.pollOptions.length === 0) return '';
-
-    const votes = post.pollVotes || {};
-    let totalVotes = 0;
-    Object.values(votes).forEach(count => totalVotes += count);
-
-    let optionsHTML = '';
-    post.pollOptions.forEach((optionText, index) => {
-        const optionVotes = votes[index] || 0;
-        const percentage = totalVotes > 0 ? Math.round((optionVotes / totalVotes) * 100) : 0;
-
-        optionsHTML += `
-            <div style="margin-bottom: 10px; cursor: pointer;" onclick="castPollVote('${post.id}', ${index})">
-                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-family: 'Quicksand', sans-serif; color: var(--current-text, #5c3a42); margin-bottom: 4px; font-weight: 600;">
-                    <span>🌸 ${optionText}</span>
-                    <span>${percentage}% (${optionVotes})</span>
-                </div>
-                <div style="width: 100%; height: 16px; background: rgba(255, 255, 255, 0.7); border: 1.5px solid var(--current-border, #f48fb1); border-radius: 10px; overflow: hidden;">
-                    <div style="width: ${percentage}%; height: 100%; background: var(--current-border, #f48fb1); opacity: 0.7; transition: width 0.4s ease;"></div>
-                </div>
-            </div>
-        `;
-    });
-
-    return `
-        <div class="falafel-poll-wrapper" style="margin-top: 15px; padding: 14px 18px; background: var(--current-card-bg, #fce4ec); border: 1.5px dashed var(--current-border, #f48fb1); border-radius: 16px;">
-            <div style="font-weight: bold; font-size: 0.95rem; margin-bottom: 12px; font-family: 'Quicksand', sans-serif; color: var(--current-text, #5c3a42);">📊 ${post.pollQuestion}</div>
-            ${optionsHTML}
-            <div style="text-align: right; font-size: 0.75rem; opacity: 0.7; font-family: 'Quicksand', sans-serif; margin-top: 6px;">${totalVotes} total votes</div>
-        </div>
-    `;
-}
-
-// Renders YouTube-style comment threads with author edit/delete & replies
-function renderCommentsList(postId, comments) {
-    if (!comments || comments.length === 0) {
-        return `<div style="font-size: 0.8rem; opacity: 0.6; font-family: 'Quicksand', sans-serif; font-style: italic; padding: 4px 0;">No notes yet. Be the first to leave one! 🌸</div>`;
-    }
-
-    const currentUserId = getLocalUserId();
-    const isUserAdmin = typeof isAdminLoggedIn === 'function' && isAdminLoggedIn();
-
-    return comments.map((comment, index) => {
-        const isAuthor = comment.userId === currentUserId;
-
-        return `
-            <div style="display: flex; gap: 10px; margin-bottom: 12px; font-family: 'Quicksand', sans-serif; border-bottom: 1px dashed rgba(244, 143, 177, 0.3); padding-bottom: 10px;">
-                <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--current-border, #f48fb1); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; flex-shrink: 0;">
-                    ${(comment.alias || 'A')[0].toUpperCase()}
-                </div>
-                <div style="flex-grow: 1;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
-                        <span style="font-weight: 700; font-size: 0.85rem; color: var(--current-text, #5c3a42);">${escapeHtml(comment.alias)}</span>
-                        <span style="font-size: 0.7rem; opacity: 0.6;">${comment.date || 'just now'}</span>
-                    </div>
-
-                    <div id="comment-text-view-${postId}-${index}" style="font-size: 0.85rem; color: var(--current-text, #5c3a42); line-height: 1.4; word-break: break-word;">
-                        ${escapeHtml(comment.text)}
-                    </div>
-                    <div id="comment-edit-box-${postId}-${index}" style="display: none; margin-top: 6px;">
-                        <input type="text" id="comment-edit-input-${postId}-${index}" value="${escapeHtml(comment.text)}" style="width: 100%; padding: 6px; font-size: 0.8rem; border-radius: 8px; border: 1px solid var(--current-border, #f48fb1); outline: none;" />
-                        <button type="button" onclick="saveEditedComment('${postId}', ${index})" style="margin-top: 4px; background: var(--current-border, #f48fb1); color: white; border: none; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; cursor: pointer;">Save ✨</button>
-                    </div>
-
-                    <div style="display: flex; gap: 12px; margin-top: 6px; align-items: center;">
-                        <button type="button" onclick="openReplyBox('${postId}', ${index})" style="background: transparent; border: none; font-family: 'Quicksand', sans-serif; font-size: 0.75rem; color: var(--current-text, #5c3a42); opacity: 0.7; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 3px;">
-                            <span>💬</span> reply
-                        </button>
-
-                        ${isAuthor ? `
-                            <button type="button" onclick="toggleEditComment('${postId}',${index})" style="background: transparent; border: none; font-family: 'Quicksand', sans-serif; font-size: 0.75rem; color: var(--current-text, #5c3a42); opacity: 0.7; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 3px;">
-                                <span>✏️</span> edit
-                            </button>
-                        ` : ''}
-
-                        ${isAuthor || isUserAdmin ? `
-                            <button type="button" onclick="deleteComment('${postId}',${index})" style="background: transparent; border: none; font-family: 'Quicksand', sans-serif; font-size: 0.75rem; color: #ff4d6d; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 3px;">
-                                <span>🗑️</span> delete
-                            </button>
-                        ` : ''}
-                    </div>
-
-                    ${comment.replies && comment.replies.length > 0 ? `
-                        <div style="margin-top: 8px; margin-left: 15px; padding-left: 10px; border-left: 2px solid var(--current-border, #f48fb1); display: flex; flex-direction: column; gap: 6px;">
-                            ${comment.replies.map(r => `
-                                <div style="font-size: 0.8rem;">
-                                    <strong style="color: var(--current-text, #5c3a42);">${escapeHtml(r.alias)}:</strong> 
-                                    <span style="color: var(--current-text, #5c3a42);">${escapeHtml(r.text)}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    ` : ''}
-
-                    <div id="reply-box-${postId}-${index}" style="display: none; margin-top: 8px; gap: 6px;">
-                        <input type="text" id="reply-input-${postId}-${index}" placeholder="Write a reply..." style="width: 100%; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; font-size: 0.8rem; outline: none; background: white;" />
-                        <button type="button" onclick="submitReply('${postId}', ${index})" style="background: var(--current-border, #f48fb1); color: white; border: none; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-family: 'Quicksand', sans-serif;">send</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-function openReplyBox(postId, commentIndex) {
-    const box = document.getElementById(`reply-box-${postId}-${commentIndex}`);
-    if (box) {
-        box.style.display = box.style.display === 'none' ? 'flex' : 'none';
-    }
-}
-
-function toggleEditComment(postId, commentIndex) {
-    const viewEl = document.getElementById(`comment-text-view-${postId}-${commentIndex}`);
-    const editEl = document.getElementById(`comment-edit-box-${postId}-${commentIndex}`);
-    if (editEl) {
-        editEl.style.display = editEl.style.display === 'none' ? 'block' : 'none';
-        viewEl.style.display = editEl.style.display === 'block' ? 'none' : 'block';
-    }
-}
-
-function toggleCommentBox(postId) {
-    const el = document.getElementById(`comment-section-${postId}`);
-    if (el) {
-        el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
-    }
-}
-
-let pendingCommentPostId = null;
-
-function submitComment(postId) {
-    const savedAlias = localStorage.getItem('user_alias');
-    const commentInput = document.getElementById(`comment-input-${postId}`);
-    const text = commentInput.value.trim();
-
-    if (!text) return;
-
-    if (!savedAlias) {
-        pendingCommentPostId = postId;
-        document.getElementById('alias-modal').style.display = 'flex';
-    } else {
-        executeAddComment(postId, savedAlias, text);
-    }
-}
-
-        async function toggleLike(postId) {
-    const posts = await getPosts();
-    const post = posts.find(p => p.id === postId);
-    if (!post) return;
-
-    post.likes = (post.likes || 0) + 1;
-    await updateRemoteData();
-    renderAll();
-
-    // Instant update on active cards/readers
-    const countEl = document.getElementById(`like-count-${postId}`);
-    if (countEl) countEl.innerText = post.likes;
-    const readerCountEl = document.getElementById(`like-count-reader-${postId}`);
-    if (readerCountEl) readerCountEl.innerText = post.likes;
-}
         async function getBinData() {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
@@ -2640,366 +2356,101 @@ function submitComment(postId) {
             const modal = document.getElementById('image-lightbox-modal');
             modal.style.display = 'none';
         }
-function createCardHtml(p, originalIndex) {
-    const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-    let tagsHtml = '';
-    if (p.hashtags && Array.isArray(p.hashtags) && p.hashtags.length > 0) {
-        tagsHtml = '<div class="card-hashtags">';
-        p.hashtags.forEach(tag => {
-            tagsHtml += `<span class="mini-hashtag">${tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim()}</span>`;
-        });
-        tagsHtml += '</div>';
-    }
 
-    const photosArr = extractPostPhotos(p);
-    const showCover = p.showCover !== false && p.showCover !== "false";
-    const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
-    const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')">` : '';
+        function createCardHtml(p, originalIndex) {
+            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+            let tagsHtml = '';
+            if (p.hashtags && Array.isArray(p.hashtags) && p.hashtags.length > 0) {
+                tagsHtml = '<div class="card-hashtags">';
+                p.hashtags.forEach(tag => {
+                    tagsHtml += `<span class="mini-hashtag">${tag.trim().startsWith('#') ? tag.trim() : '#' + tag.trim()}</span>`;
+                });
+                tagsHtml += '</div>';
+            }
 
-    return `
-<div class="card">
-    <div>
-        ${coverImgHtml}
-        <h3>${p.title}</h3>
-        ${tagsHtml}
-        <p class="card-snippet">${p.snippet || ''}</p>
-    </div>
+            const photosArr = extractPostPhotos(p);
+            const showCover = p.showCover !== false && p.showCover !== "false";
+            const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
+            const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')" title="Click to view full size">` : '';
 
-    <div class="card-footer-row" style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-        <a onclick="openPostReader(${originalIndex})" class="read-more" style="cursor: pointer;">read more →</a>
-        <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'}; gap: 6px;">
-            <button class="edit-post-btn" onclick="event.stopPropagation(); openEditModal(${originalIndex})" style="border: none; background: #fff3bf; border-radius: 10px; padding: 4px 8px; cursor: pointer;">✏️</button>
-            <button class="delete-post-btn" onclick="event.stopPropagation(); deletePost(${originalIndex})" style="border: none; background: #ffe3e3; border-radius: 10px; padding: 4px 8px; cursor: pointer;">🗑️</button>
-        </div>
-    </div>
+            return `
+                <div class="card">
+                    <div>
+                        ${coverImgHtml}
+                        <div class="card-tag-row">
+                            <span class="card-tag ${p.tag || 'feelings'}">${p.tagText || 'FEELINGS'}</span>
+                            <span class="read-time">${p.time || '4 min read'}</span>
+                        </div>
+                        <h3>${p.title}</h3>
+                        ${tagsHtml}
+                        <p class="card-snippet">${p.snippet}</p>
+                    </div>
+                    <div class="card-footer-row">
+                        <a onclick="openPostReader(${originalIndex})" class="read-more">read more →</a>
+                        <div class="admin-actions" style="display: ${isAdmin ? 'flex' : 'none'};">
+                            <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
+                            <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-    <!-- 🌸 PRETTY SIDE-BY-SIDE PILL BUTTONS 🌸 -->
-    <div class="falafel-social-bar" style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
-        <button type="button" class="cutesy-pill-btn" onclick="event.stopPropagation(); toggleLike('${p.id}')" style="flex: 1; background: #fff0f3; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, #5c3a42); padding: 6px 10px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-weight: 600;">
-            <span>🤍</span> 
-            <span>send a little love (<strong id="like-count-${p.id}">${p.likes || 0}</strong>)</span>
-        </button>
+        function createAnnouncementCardHtml(ann, originalIndex) {
+            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+            const isPinned = ann.pinned === true || ann.pinned === 'true';
 
-        <button type="button" class="cutesy-pill-btn" onclick="event.stopPropagation(); toggleCommentBox('${p.id}')" style="flex: 1; background: #f0f7ff; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, #5c3a42); padding: 6px 10px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-weight: 600;">
-            <span>💬</span> 
-            <span>leave a note (${(p.comments || []).length})</span>
-        </button>
-    </div>
+            const photosArr = extractPostPhotos(ann);
+            let galleryHtml = '';
+            if (photosArr.length > 0) {
+                galleryHtml = '<div class="photo-gallery-container">';
+                photosArr.forEach(url => {
+                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
+                });
+                galleryHtml += '</div>';
+            }
 
-    <!-- PRETTY POLL -->
-    ${renderPollHTML(p)}
+            return `
+                <div class="announcement-card ${isPinned ? 'pinned' : ''}">
+                    ${isPinned ? '<div class="pin-badge">📌 PINNED ANNOUNCEMENT ⭐</div>' : ''}
+                    <div class="announcement-date">⭐ ${ann.date || 'WONDERHOI UPDATE'}</div>
+                    <h2 class="announcement-title">${ann.title}</h2>
+                    <div class="announcement-body">${ann.content}${galleryHtml}</div>
+                    
+                    <div style="margin-top:1.5rem; display:${isAdmin ? 'flex' : 'none'}; justify-content:flex-end; gap:0.5rem;">
+                        <button class="edit-post-btn" onclick="openEditModal(${originalIndex})">✏️</button>
+                        <button class="delete-post-btn" onclick="deletePost(${originalIndex})">🗑️</button>
+                    </div>
+                </div>
+            `;
+        }
 
-    <!-- PRETTY YOUTUBE-STYLE COMMENT DRAWER -->
-    <div id="comment-section-${p.id}" style="display: none; margin-top: 12px; padding: 12px; background: rgba(255, 255, 255, 0.85); border-radius: 16px; border: 1.5px dashed var(--current-border, #f48fb1); box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-        <div id="comments-list-${p.id}" style="margin-bottom: 10px; display: flex; flex-direction: column;">
-            ${renderCommentsList(p.id, p.comments)}
-        </div>
+        async function openPostReader(index) {
+            const posts = await getPosts();
+            const post = posts[index];
+            if(!post) return;
 
-        <div style="display: flex; flex-direction: column; gap: 6px;">
-            <textarea id="comment-input-${p.id}" placeholder="say something nice... ✨" style="width: 100%; height: 48px; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; font-size: 0.8rem; resize: none; outline: none; box-sizing: border-box; background: white; color: var(--current-text, #5c3a42);"></textarea>
-            <button type="button" onclick="submitComment('${p.id}')" style="align-self: flex-end; background: var(--current-border, #f48fb1); color: white; border: none; padding: 5px 14px; border-radius: 12px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(244,143,177,0.4);">post note ✨</button>
-        </div>
-    </div>
-</div>
-`;
-}
-
-        function renderVideoEmbed(url) {
-    if (!url) return '';
-    let embedUrl = url;
-    if (url.includes('youtube.com/watch?v=')) {
-        embedUrl = url.replace('watch?v=', 'embed/');
-    } else if (url.includes('youtu.be/')) {
-        const videoId = url.split('youtu.be/')[1]?.split('?')[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    }
-    return `
-        <div style="margin-top: 12px; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-            <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
-        </div>
-    `;
-}
-
-function renderVideoEmbed(url) {
-    if (!url) return '';
-    let embedUrl = url;
-    if (url.includes('youtube.com/watch?v=')) {
-        embedUrl = url.replace('watch?v=', 'embed/');
-    } else if (url.includes('youtu.be/')) {
-        const videoId = url.split('youtu.be/')[1]?.split('?')[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    }
-    return `
-        <div style="margin-top: 12px; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-            <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
-        </div>
-    `;
-}
-
-function renderVideoEmbed(url) {
-    if (!url) return '';
-    let embedUrl = url;
-    if (url.includes('youtube.com/watch?v=')) {
-        embedUrl = url.replace('watch?v=', 'embed/');
-    } else if (url.includes('youtu.be/')) {
-        const videoId = url.split('youtu.be/')[1]?.split('?')[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    }
-    return `
-        <div style="margin-top: 12px; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-            <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
-        </div>
-    `;
-}
-
-function createAnnouncementCardHtml(ann, originalIndex) {
-    const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-    const isPinned = ann.pinned === true || ann.pinned === "true";
-    
-    const photosArr = typeof extractPostPhotos === 'function' ? extractPostPhotos(ann) : (ann.images || []);
-    let galleryHtml = '';
-    if (photosArr.length > 0) {
-        galleryHtml = '<div class="photo-gallery-container">';
-        photosArr.forEach(url => {
-            galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
-        });
-        galleryHtml += '</div>';
-    }
-
-    const videoHtml = renderVideoEmbed(ann.videoUrl);
-    const pollHtml = typeof renderPollHTML === 'function' ? renderPollHTML(ann) : '';
-    const commentsListHtml = typeof renderCommentsList === 'function' ? renderCommentsList(ann.id, ann.comments) : '';
-
-    return `
-<div class="announcement-card ${isPinned ? 'pinned' : ''}" style="background: var(--current-card-bg, #fff); color: var(--current-text, #5c3a42); border-color: var(--current-border, #f48fb1);">
-    ${isPinned ? '<div class="pin-badge">📌 PINNED ANNOUNCEMENT ⭐</div>' : ''}
-    <div class="announcement-date" style="color: var(--current-text, #5c3a42); opacity: 0.8;">⭐ ${ann.date || 'WONDERHOI UPDATE'}</div>
-    <h2 class="announcement-title" style="color: var(--current-text, #5c3a42);">${ann.title}</h2>
-    <div class="announcement-body" style="color: var(--current-text, #5c3a42);">${ann.content}${galleryHtml}${videoHtml}</div>
-    
-    <!-- ANNOUNCEMENT POLL -->
-    ${pollHtml}
-
-    <!-- 🌸 SOCIAL BAR & COMMENTS (THEME-SYNCED) 🌸 -->
-    <div class="falafel-social-bar" style="display: flex; gap: 8px; align-items: center; margin-top: 16px;">
-        <button type="button" class="cutesy-pill-btn" onclick="toggleLike('${ann.id}')" style="flex: 1; background: var(--current-card-bg, transparent); border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, inherit); padding: 6px 10px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-weight: 650;">
-            <span>🤍</span> 
-            <span>send a little love (<strong id="like-count-${ann.id}">${ann.likes || 0}</strong>)</span>
-        </button>
-
-        <button type="button" class="cutesy-pill-btn" onclick="toggleCommentBox('${ann.id}')" style="flex: 1; background: var(--current-card-bg, transparent); border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, inherit); padding: 6px 10px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-weight: 650;">
-            <span>💬</span> 
-            <span>leave a note (${(ann.comments || []).length})</span>
-        </button>
-    </div>
-
-    <!-- COMMENT DRAWER -->
-    <div id="comment-section-${ann.id}" style="display: none; margin-top: 12px; padding: 12px; background: var(--current-card-bg, rgba(255, 255, 255, 0.85)); border-radius: 16px; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, inherit);">
-        <div id="comments-list-${ann.id}" style="margin-bottom: 10px; display: flex; flex-direction: column;">
-            ${commentsListHtml}
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 6px;">
-            <input type="text" id="comment-author-${ann.id}" placeholder="your name / nickname ~" style="width: 100%; padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--current-border, #f48fb1); background: var(--current-input-bg, #fff); color: var(--current-text, #5c3a42); font-family: 'Quicksand', sans-serif; font-size: 0.78rem; box-sizing: border-box;" />
-            <textarea id="comment-input-${ann.id}" placeholder="say something nice... ✨" style="width: 100%; height: 42px; padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--current-border, #f48fb1); background: var(--current-input-bg, #fff); color: var(--current-text, #5c3a42); font-family: 'Quicksand', sans-serif; font-size: 0.78rem; resize: none; box-sizing: border-box;"></textarea>
-            <button type="button" onclick="submitComment('${ann.id}')" style="align-self: flex-end; background: var(--current-border, #f48fb1); color: var(--current-text, #fff); border: none; padding: 4px 12px; border-radius: 10px; font-family: 'Quicksand', sans-serif; font-size: 0.75rem; cursor: pointer; font-weight: bold;">post note ✨</button>
-        </div>
-    </div>
-
-    <!-- ADMIN BUTTONS AT BOTTOM -->
-    <div style="margin-top:1.5rem; display:${isAdmin ? 'flex' : 'none'}; justify-content:flex-end; gap:0.5rem;">
-        <button class="edit-post-btn" onclick="openEditModal(${originalIndex})" style="border: none; background: #fff3bf; border-radius: 10px; padding: 4px 8px; cursor: pointer;">✏️</button>
-        <button class="delete-post-btn" onclick="deletePost(${originalIndex})" style="border: none; background: #ffe3e3; border-radius: 10px; padding: 4px 8px; cursor: pointer;">🗑️</button>
-    </div>
-</div>
-`;
-}
-
-
-     async function openPostReader(index) {
-    const posts = await getPosts();
-    const post = posts[index];
-    if (!post) return;
-
-    document.getElementById('reader-title').innerText = post.title;
-    document.getElementById('reader-time').innerText = post.date || '';
-
-    const tagEl = document.getElementById('reader-tag-row');
-    if (tagEl) {
-        tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || 'FEELINGS'}</span>`;
-    }
-
-    const photosArr = extractPostPhotos(post);
-    let galleryHtml = '';
-    if (photosArr.length > 0) {
-        galleryHtml = '<div class="photo-gallery-container">';
-        photosArr.forEach(url => {
-            galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
-        });
-        galleryHtml += '</div>';
-    }
-
-    const contentEl = document.getElementById('reader-content-wrapper');
-    if (contentEl) {
-        contentEl.innerHTML = `
-            <div class="reader-body-text">${post.content || ''}</div>
-            ${galleryHtml}
+            document.getElementById('reader-title').innerText = post.title;
+            document.getElementById('reader-time').innerText = post.time || '';
             
-            <div class="falafel-social-bar" style="display: flex; gap: 8px; align-items: center; margin-top: 16px;">
-                <button type="button" class="cutesy-pill-btn" onclick="toggleLike('${post.id}')" style="flex: 1; background: #fff0f3; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, #5c3a42); padding: 8px 12px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600;">
-                    <span>🤍</span> <span>send a little love (<strong id="like-count-reader-${post.id}">${post.likes || 0}</strong>)</span>
-                </button>
-            </div>
+            const tagEl = document.getElementById('reader-tag-row');
+            tagEl.innerHTML = `<span class="card-tag ${post.tag || 'feelings'}" style="display:inline-block;">${post.tagText || 'FEELINGS'}</span>`;
 
-            <div class="reader-comment-box" style="margin-top: 20px; padding: 16px; background: rgba(255, 255, 255, 0.85); border-radius: 16px; border: 1.5px dashed var(--current-border, #f48fb1);">
-                <h4 style="margin: 0 0 10px 0; font-family: 'Quicksand', sans-serif; color: var(--current-text, #5c3a42);">💬 leave a little note ~</h4>
-                <div id="comments-list-reader-${post.id}" style="margin-bottom: 12px;">
-                    ${renderCommentsList(post.id, post.comments)}
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <input type="text" id="comment-author-reader-${post.id}" placeholder="your name / nickname ~" style="width: 100%; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; box-sizing: border-box;" />
-                    <textarea id="comment-input-reader-${post.id}" placeholder="say something nice... ✨" style="width: 100%; height: 60px; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--current-border, #f48fb1); font-family: 'Quicksand', sans-serif; resize: none; box-sizing: border-box;"></textarea>
-                    <button type="button" onclick="submitComment('${post.id}', true)" style="align-self: flex-end; background: var(--current-border, #f48fb1); color: white; border: none; padding: 6px 16px; border-radius: 12px; font-family: 'Quicksand', sans-serif; cursor: pointer; font-weight: bold;">post note ✨</button>
-                </div>
-            </div>
-        `;
-    }
+            const photosArr = extractPostPhotos(post);
+            let galleryHtml = '';
+            if (photosArr.length > 0) {
+                galleryHtml = '<div class="photo-gallery-container">';
+                photosArr.forEach(url => {
+                    galleryHtml += `<img src="${url}" class="cutesy-snapshot" alt="Photo" onclick="openLightbox('${url}')" title="Click to view full size">`;
+                });
+                galleryHtml += '</div>';
+            }
 
-    switchView('post-reader');
-}
+            const contentEl = document.getElementById('reader-content-wrapper');
+            contentEl.innerHTML = `<div>${post.content || post.snippet}</div>${galleryHtml}`;
 
-        function getYouTubeEmbedUrl(url) {
-    if (!url) return '';
-    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    if (match && match[2].length === 11) { return 'https://www.youtube.com/embed/' + match[2]; }
-    return url;
-}
-
-function voteDynamicPoll(btn, index) {
-    var wrapper = btn.closest('.falafel-poll-wrapper');
-    if (wrapper.dataset.voted === 'true') return;
-    wrapper.dataset.voted = 'true';
-    var buttons = wrapper.querySelectorAll('.poll-option-btn');
-    var votes = [12, 19, 7, 25]; 
-    votes[index]++;
-    var total = votes.reduce((a, b) => a + b, 0);
-    buttons.forEach((b, i) => {
-        var pct = Math.min(100, Math.round(((votes[i] || 5) / total) * 100));
-        b.querySelector('.poll-pct').textContent = pct + '%';
-        b.querySelector('.poll-fill').style.width = pct + '%';
-        b.style.cursor = 'default';
-    });
-    wrapper.querySelector('.poll-footer-text').textContent = 'thanks for voting! ✨';
-}
-
-function togglePostLike(btn) {
-    var countSpan = btn.querySelector('.like-count');
-    var heartSpan = btn.querySelector('.heart-icon');
-    var current = parseInt(countSpan.textContent);
-    if (btn.dataset.liked === 'true') {
-        btn.dataset.liked = 'false';
-        countSpan.textContent = current - 1;
-        heartSpan.textContent = '🤍';
-        btn.style.backgroundColor = '#ffffff';
-    } else {
-        btn.dataset.liked = 'true';
-        countSpan.textContent = current + 1;
-        heartSpan.textContent = '💖';
-        btn.style.backgroundColor = 'var(--current-border, #f48fb1)';
-    }
-}
-
-// --- UPDATED ALIAS, COMMENT & MODERATION LOGIC ---
-
-let pendingCommentForm = null;
-let pendingCommentText = '';
-
-function submitDynamicComment(e, form) {
-    e.preventDefault();
-    var textInput = form.querySelector('.comment-text-input');
-    if (!textInput.value) return;
-
-    var savedAlias = localStorage.getItem('falafel_user_alias');
-    
-    if (!savedAlias) {
-        pendingCommentForm = form;
-        pendingCommentText = textInput.value;
-        document.getElementById('alias-modal').style.display = 'flex';
-        document.getElementById('modal-alias-input').focus();
-    } else {
-        postCommentWithAlias(savedAlias, textInput.value, form);
-        textInput.value = '';
-    }
-}
-
-function saveUserAlias() {
-    var inputVal = document.getElementById('modal-alias-input').value.trim();
-    if (!inputVal) return;
-
-    localStorage.setItem('falafel_user_alias', inputVal);
-    document.getElementById('alias-modal').style.display = 'none';
-
-    if (pendingCommentForm && pendingCommentText) {
-        postCommentWithAlias(inputVal, pendingCommentText, pendingCommentForm);
-        var textInput = pendingCommentForm.querySelector('.comment-text-input');
-        if (textInput) textInput.value = '';
-        pendingCommentForm = null;
-        pendingCommentText = '';
-    }
-}
-
-function postCommentWithAlias(author, text, form) {
-    var listContainer = form.nextElementSibling;
-    var bubble = document.createElement('div');
-    bubble.className = 'comment-bubble';
-    bubble.style.cssText = 'background: #ffffff; border: 1.5px solid var(--current-border, #f48fb1); border-radius: 10px; padding: 12px; margin-top: 10px; position: relative;';
-    
-    // Shows delete & reply buttons automatically if Admin mode is open!
-    var adminButtonsHtml = '';
-    var isAdminActive = document.getElementById('admin-modal').style.display === 'flex' || window.isFalafelAdmin === true;
-    
-    if (isAdminActive) {
-        adminButtonsHtml = `
-            <div style="margin-top: 8px; font-size: 11px; display: flex; gap: 10px;">
-                <span onclick="replyToComment(this)" style="cursor: pointer; color: #e91e63; font-weight: 700;">💬 reply</span>
-                <span onclick="deleteComment(this)" style="cursor: pointer; color: #d32f2f; font-weight: 700;">🗑️ delete</span>
-            </div>`;
-    }
-
-    bubble.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-weight: 700; font-size: 12px; color: var(--current-text, #5c3a42); margin-bottom: 4px;">${escapeHtml(author)} 🌸</div>
-        </div>
-        <div style="font-size: 13px; color: #444444;" class="comment-content-body">${escapeHtml(text)}</div>
-        ${adminButtonsHtml}`;
-
-    listContainer.prepend(bubble);
-}
-
-function deleteComment(el) {
-    var bubble = el.closest('.comment-bubble');
-    if (confirm('delete this note? ✨')) {
-        bubble.style.transition = 'opacity 0.3s ease';
-        bubble.style.opacity = '0';
-        setTimeout(function() { bubble.remove(); }, 300);
-    }
-}
-
-function replyToComment(el) {
-    var bubble = el.closest('.comment-bubble');
-    var replyText = prompt('Write your owner reply:');
-    if (!replyText) return;
-
-    var replyBox = document.createElement('div');
-    replyBox.style.cssText = 'margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--current-border, #f48fb1); font-size: 12px; color: #555555;';
-    replyBox.innerHTML = '<strong>the great falafel ────୨ৎ────:</strong> ' + escapeHtml(replyText);
-    bubble.appendChild(replyBox);
-}
-
-function escapeHtml(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
+            switchView('post-reader');
+        }
 
         let clickCount = 0;
         let clickTimer = null;
@@ -3127,145 +2578,67 @@ function escapeHtml(str) {
                 renderAllPosts();
             }
         }
-async function savePostData() {
-    const editIndexEl = document.getElementById('edit-index') || document.getElementById('admin-edit-index');
-    const editIndex = editIndexEl ? editIndexEl.value : '-1';
 
-    const entryTypeEl = document.getElementById('new-entry-type') || document.getElementById('admin-entry-type');
-    const entryType = entryTypeEl ? entryTypeEl.value : 'blog';
+        async function savePostData() {
+            const editIndex = document.getElementById('edit-index').value;
+            const entryType = document.getElementById('new-entry-type').value;
+            const title = document.getElementById('new-title').value;
+            const content = document.getElementById('new-content').value;
+            const saveBtn = document.getElementById('save-post-btn');
 
-    const titleEl = document.getElementById('new-title') || document.getElementById('admin-title');
-    const title = titleEl ? titleEl.value.trim() : '';
+            if(!title || !content) {
+                alert("Please fill in both a title and some content!");
+                return;
+            }
 
-    const contentEl = document.getElementById('new-content') || document.getElementById('admin-content');
-    const content = contentEl ? contentEl.value.trim() : '';
+            saveBtn.innerText = "Saving... ⏳";
+            saveBtn.disabled = true;
 
-    const videoEl = document.getElementById('admin-video-input') || document.getElementById('new-video-input');
-    const videoUrl = videoEl ? videoEl.value.trim() : '';
+            const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            let postObj = { type: entryType, title, content, date: todayStr };
 
-    const pollEl = document.getElementById('admin-poll-question') || document.getElementById('new-poll-question');
-    const pollQuestion = pollEl ? pollEl.value.trim() : '';
+            postObj.images = currentPostPhotos;
+            postObj.imageUrl = currentPostPhotos[0] || '';
 
-    const pollOptsEl = document.getElementById('admin-poll-options') || document.getElementById('new-poll-options');
-    const pollOptions = pollOptsEl ? pollOptsEl.value.split(',').map(o => o.trim()).filter(Boolean) : [];
+            if (entryType === 'blog') {
+                const tag = document.getElementById('new-tag').value;
+                postObj.tag = tag;
+                postObj.tagText = tag.toUpperCase();
+                postObj.showCover = document.getElementById('new-show-cover').value === "true";
+                postObj.hashtags = document.getElementById('new-hashtags').value.split(',').map(h => h.trim()).filter(Boolean);
+                postObj.time = document.getElementById('new-time').value || '4 min read';
+                postObj.snippet = document.getElementById('new-snippet').value || content.substring(0, 100) + '...';
+            } else {
+                postObj.pinned = document.getElementById('new-pinned').value === "true";
+                postObj.snippet = content.substring(0, 120);
+            }
 
-    const saveBtn = document.getElementById('save-post-btn') || document.getElementById('admin-save-btn');
+            const binData = await getBinData();
+            let posts = binData.posts || [];
 
-    if (!title || (!content && !videoUrl && !pollQuestion)) {
-        alert("Please fill in a title and either text content, a video link, or a poll!");
-        return;
-    }
+            if (editIndex !== "" && !isNaN(editIndex)) {
+                posts[parseInt(editIndex)] = postObj;
+            } else {
+                posts.unshift(postObj);
+            }
 
-    if (saveBtn) {
-        saveBtn.innerText = "Saving... ⌛";
-        saveBtn.disabled = true;
-    }
+            const newPayload = {
+                posts: posts,
+                siteBg: binData.siteBg || null
+            };
 
-    const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    const dataList = typeof items !== 'undefined' ? items : (typeof posts !== 'undefined' ? posts : []);
-    
-    const existingItem = (editIndex !== '-1' && dataList[editIndex]) ? dataList[editIndex] : {};
-
-    const postObj = {
-        id: existingItem.id || 'post_' + Date.now(),
-        type: entryType,
-        title: title,
-        content: content,
-        date: todayStr,
-        videoUrl: videoUrl,
-        pollQuestion: pollQuestion,
-        pollOptions: pollOptions.length > 0 ? pollOptions : (existingItem.pollOptions || []),
-        pollVotes: existingItem.pollVotes || {},
-        likes: existingItem.likes || 0,
-        comments: existingItem.comments || []
-    };
-
-    if (entryType === 'blog') {
-        const tagEl = document.getElementById('new-tag');
-        if (tagEl) postObj.tag = tagEl.value;
-        if (postObj.tag) postObj.tagText = postObj.tag.toUpperCase();
-    } else {
-        const pinnedEl = document.getElementById('new-pinned');
-        if (pinnedEl) postObj.pinned = pinnedEl.value === "true";
-    }
-
-    if (editIndex !== '-1' && dataList[editIndex]) {
-        dataList[editIndex] = { ...dataList[editIndex], ...postObj };
-    } else {
-        dataList.unshift(postObj);
-    }
-
-    try {
-        if (typeof saveBinData === 'function') await saveBinData();
-        else if (typeof updateRemoteData === 'function') await updateRemoteData();
-        
-        if (typeof closeAdminModal === 'function') closeAdminModal();
-        if (typeof closeModal === 'function') closeModal();
-        if (typeof renderAllPosts === 'function') renderAllPosts();
-        if (typeof renderAll === 'function') renderAll();
-    } catch (err) {
-        alert("Saving failed. Check your data size or connection!");
-    } finally {
-        if (saveBtn) {
-            saveBtn.innerText = "Save Entry 🚀";
-            saveBtn.disabled = false;
+            try {
+                await saveBinData(newPayload);
+                closeAdminModal();
+                renderAllPosts();
+                switchView(entryType === 'announcement' ? 'announcements' : 'blog');
+            } catch (err) {
+                alert("Upload failed because the total file size was too large for JSONBin. Try using direct image URL links instead of uploading large files!");
+            } finally {
+                saveBtn.innerText = "Save Entry 🚀";
+                saveBtn.disabled = false;
+            }
         }
-    }
-}
-        function renderPollHTML(ann) {
-    if (!ann.pollQuestion || !ann.pollOptions || ann.pollOptions.length === 0) return '';
-    
-    const userVotes = ann.pollVotes || {};
-    const totalVotes = Object.values(userVotes).reduce((a, b) => a + b, 0);
-    
-    let optionsHtml = '';
-    ann.pollOptions.forEach((opt, idx) => {
-        const votesForOpt = userVotes[idx] || 0;
-        const percentage = totalVotes > 0 ? Math.round((votesForOpt / totalVotes) * 100) : 0;
-        
-        optionsHtml += `
-            <div onclick="votePoll('${ann.id}', ${idx})" style="cursor: pointer; padding: 8px 12px; margin-bottom: 6px; background: var(--current-input-bg, #fff); border: 1px solid var(--current-border, #f48fb1); border-radius: 10px; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; bottom: 0; width: ${percentage}%; background: var(--current-border, #f48fb1); opacity: 0.2; z-index: 1;"></div>
-                <div style="position: relative; z-index: 2; display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 650;">
-                    <span>${opt}</span>
-                    <span>${percentage}% (${votesForOpt})</span>
-                </div>
-            </div>
-        `;
-    });
-
-    return `
-        <div style="margin-top: 14px; padding: 12px; background: var(--current-card-bg, rgba(255,255,255,0.6)); border-radius: 14px; border: 1.5px dashed var(--current-border, #f48fb1);">
-            <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--current-text, inherit);">📊 ${ann.pollQuestion}</div>
-            ${optionsHtml}
-        </div>
-    `;
-}
-
-function renderCommentsList(annId, comments) {
-    if (!comments || comments.length === 0) {
-        return '<div style="font-size: 0.78rem; opacity: 0.7; font-style: italic;">no notes yet. be the first! ✨</div>';
-    }
-    return comments.map(c => `
-        <div style="margin-bottom: 6px; font-size: 0.78rem; border-bottom: 1px dashed var(--current-border, #f48fb1); padding-bottom: 4px;">
-            <strong style="color: var(--current-text, inherit);">${c.author || 'anonymous'}</strong>: ${c.text}
-        </div>
-    `).join('');
-}
-
-function toggleCommentBox(id) {
-    const box = document.getElementById(`comment-section-${id}`);
-    if (box) {
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-}
-
-window.renderVideoEmbed = renderVideoEmbed;
-window.createAnnouncementCardHtml = createAnnouncementCardHtml;
-window.savePostData = savePostData;
-window.renderPollHTML = renderPollHTML;
-window.renderCommentsList = renderCommentsList;
-window.toggleCommentBox = toggleCommentBox;
 
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedBackground();
