@@ -2736,11 +2736,27 @@ function renderVideoEmbed(url) {
     `;
 }
 
+function renderVideoEmbed(url) {
+    if (!url) return '';
+    let embedUrl = url;
+    if (url.includes('youtube.com/watch?v=')) {
+        embedUrl = url.replace('watch?v=', 'embed/');
+    } else if (url.includes('youtu.be/')) {
+        const videoId = url.split('youtu.be/')[1]?.split('?')[0];
+        embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    }
+    return `
+        <div style="margin-top: 12px; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+            <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+        </div>
+    `;
+}
+
 function createAnnouncementCardHtml(ann, originalIndex) {
     const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
     const isPinned = ann.pinned === true || ann.pinned === "true";
     
-    const photosArr = extractPostPhotos(ann);
+    const photosArr = typeof extractPostPhotos === 'function' ? extractPostPhotos(ann) : (ann.images || []);
     let galleryHtml = '';
     if (photosArr.length > 0) {
         galleryHtml = '<div class="photo-gallery-container">';
@@ -2751,6 +2767,8 @@ function createAnnouncementCardHtml(ann, originalIndex) {
     }
 
     const videoHtml = renderVideoEmbed(ann.videoUrl);
+    const pollHtml = typeof renderPollHTML === 'function' ? renderPollHTML(ann) : '';
+    const commentsListHtml = typeof renderCommentsList === 'function' ? renderCommentsList(ann.id, ann.comments) : '';
 
     return `
 <div class="announcement-card ${isPinned ? 'pinned' : ''}" style="background: var(--current-card-bg, #fff); color: var(--current-text, #5c3a42); border-color: var(--current-border, #f48fb1);">
@@ -2760,7 +2778,7 @@ function createAnnouncementCardHtml(ann, originalIndex) {
     <div class="announcement-body" style="color: var(--current-text, #5c3a42);">${ann.content}${galleryHtml}${videoHtml}</div>
     
     <!-- ANNOUNCEMENT POLL -->
-    ${renderPollHTML(ann)}
+    ${pollHtml}
 
     <!-- 🌸 SOCIAL BAR & COMMENTS (THEME-SYNCED) 🌸 -->
     <div class="falafel-social-bar" style="display: flex; gap: 8px; align-items: center; margin-top: 16px;">
@@ -2778,7 +2796,7 @@ function createAnnouncementCardHtml(ann, originalIndex) {
     <!-- COMMENT DRAWER -->
     <div id="comment-section-${ann.id}" style="display: none; margin-top: 12px; padding: 12px; background: var(--current-card-bg, rgba(255, 255, 255, 0.85)); border-radius: 16px; border: 1.5px dashed var(--current-border, #f48fb1); color: var(--current-text, inherit);">
         <div id="comments-list-${ann.id}" style="margin-bottom: 10px; display: flex; flex-direction: column;">
-            ${renderCommentsList(ann.id, ann.comments)}
+            ${commentsListHtml}
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 6px;">
@@ -2795,6 +2813,7 @@ function createAnnouncementCardHtml(ann, originalIndex) {
     </div>
 </div>
 `;
+}
 }
 
      async function openPostReader(index) {
@@ -3143,19 +3162,22 @@ async function savePostData() {
     }
 
     const todayStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const dataList = typeof items !== 'undefined' ? items : (typeof posts !== 'undefined' ? posts : []);
     
+    const existingItem = (editIndex !== '-1' && dataList[editIndex]) ? dataList[editIndex] : {};
+
     const postObj = {
-        id: editIndex !== '-1' && items[editIndex] ? items[editIndex].id : 'post_' + Date.now(),
+        id: existingItem.id || 'post_' + Date.now(),
         type: entryType,
         title: title,
         content: content,
         date: todayStr,
         videoUrl: videoUrl,
         pollQuestion: pollQuestion,
-        pollOptions: pollOptions.length > 0 ? pollOptions : (editIndex !== '-1' && items[editIndex] ? items[editIndex].pollOptions : []),
-        pollVotes: (editIndex !== '-1' && items[editIndex] && items[editIndex].pollVotes) ? items[editIndex].pollVotes : {},
-        likes: (editIndex !== '-1' && items[editIndex]) ? (items[editIndex].likes || 0) : 0,
-        comments: (editIndex !== '-1' && items[editIndex]) ? (items[editIndex].comments || []) : []
+        pollOptions: pollOptions.length > 0 ? pollOptions : (existingItem.pollOptions || []),
+        pollVotes: existingItem.pollVotes || {},
+        likes: existingItem.likes || 0,
+        comments: existingItem.comments || []
     };
 
     if (entryType === 'blog') {
@@ -3167,22 +3189,22 @@ async function savePostData() {
         if (pinnedEl) postObj.pinned = pinnedEl.value === "true";
     }
 
-    if (editIndex !== '-1' && items[editIndex]) {
-        items[editIndex] = { ...items[editIndex], ...postObj };
+    if (editIndex !== '-1' && dataList[editIndex]) {
+        dataList[editIndex] = { ...dataList[editIndex], ...postObj };
     } else {
-        items.unshift(postObj);
+        dataList.unshift(postObj);
     }
 
     try {
-        if (typeof updateRemoteData === 'function') {
-            await updateRemoteData();
-        } else if (typeof saveBinData === 'function') {
-            await saveBinData();
-        }
+        if (typeof saveBinData === 'function') await saveBinData();
+        else if (typeof updateRemoteData === 'function') await updateRemoteData();
+        
+        if (typeof closeAdminModal === 'function') closeAdminModal();
         if (typeof closeModal === 'function') closeModal();
+        if (typeof renderAllPosts === 'function') renderAllPosts();
         if (typeof renderAll === 'function') renderAll();
     } catch (err) {
-        alert("Saving failed. Please check your connection or data size!");
+        alert("Saving failed. Check your data size or connection!");
     } finally {
         if (saveBtn) {
             saveBtn.innerText = "Save Entry 🚀";
@@ -3190,6 +3212,60 @@ async function savePostData() {
         }
     }
 }
+        wfunction renderPollHTML(ann) {
+    if (!ann.pollQuestion || !ann.pollOptions || ann.pollOptions.length === 0) return '';
+    
+    const userVotes = ann.pollVotes || {};
+    const totalVotes = Object.values(userVotes).reduce((a, b) => a + b, 0);
+    
+    let optionsHtml = '';
+    ann.pollOptions.forEach((opt, idx) => {
+        const votesForOpt = userVotes[idx] || 0;
+        const percentage = totalVotes > 0 ? Math.round((votesForOpt / totalVotes) * 100) : 0;
+        
+        optionsHtml += `
+            <div onclick="votePoll('${ann.id}', ${idx})" style="cursor: pointer; padding: 8px 12px; margin-bottom: 6px; background: var(--current-input-bg, #fff); border: 1px solid var(--current-border, #f48fb1); border-radius: 10px; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; bottom: 0; width: ${percentage}%; background: var(--current-border, #f48fb1); opacity: 0.2; z-index: 1;"></div>
+                <div style="position: relative; z-index: 2; display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 650;">
+                    <span>${opt}</span>
+                    <span>${percentage}% (${votesForOpt})</span>
+                </div>
+            </div>
+        `;
+    });
+
+    return `
+        <div style="margin-top: 14px; padding: 12px; background: var(--current-card-bg, rgba(255,255,255,0.6)); border-radius: 14px; border: 1.5px dashed var(--current-border, #f48fb1);">
+            <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--current-text, inherit);">📊 ${ann.pollQuestion}</div>
+            ${optionsHtml}
+        </div>
+    `;
+}
+
+function renderCommentsList(annId, comments) {
+    if (!comments || comments.length === 0) {
+        return '<div style="font-size: 0.78rem; opacity: 0.7; font-style: italic;">no notes yet. be the first! ✨</div>';
+    }
+    return comments.map(c => `
+        <div style="margin-bottom: 6px; font-size: 0.78rem; border-bottom: 1px dashed var(--current-border, #f48fb1); padding-bottom: 4px;">
+            <strong style="color: var(--current-text, inherit);">${c.author || 'anonymous'}</strong>: ${c.text}
+        </div>
+    `).join('');
+}
+
+function toggleCommentBox(id) {
+    const box = document.getElementById(`comment-section-${id}`);
+    if (box) {
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+window.renderVideoEmbed = renderVideoEmbed;
+window.createAnnouncementCardHtml = createAnnouncementCardHtml;
+window.savePostData = savePostData;
+window.renderPollHTML = renderPollHTML;
+window.renderCommentsList = renderCommentsList;
+window.toggleCommentBox = toggleCommentBox;
 
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedBackground();
