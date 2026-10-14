@@ -2639,7 +2639,241 @@ function initYouTubeAPI() {
                 saveBtn.disabled = false;
             }
         }
+// ==========================================
+// STEP 1: Foolproof Video Embed Helper
+// ==========================================
+function renderVideoEmbed(url) {
+    if (!url || typeof url !== 'string') return '';
+    let embedUrl = url.trim();
+    
+    try {
+        if (embedUrl.includes('youtube.com/watch?v=')) {
+            embedUrl = embedUrl.replace('watch?v=', 'embed/');
+        } else if (embedUrl.includes('youtu.be/')) {
+            const parts = embedUrl.split('youtu.be/');
+            if (parts[1]) {
+                const videoId = parts[1].split('?')[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            }
+        }
+    } catch (err) {
+        console.warn("Video embed parse warning:", err);
+        return '';
+    }
 
+    return `
+        <div style="margin-top: 12px; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+            <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+        </div>
+    `;
+}
+
+// Bind immediately to global scope
+window.renderVideoEmbed = renderVideoEmbed;
+
+        // ==========================================
+// STEP 2: Foolproof Polls, Comments, & Likes Helpers
+// ==========================================
+function renderPollHTML(ann) {
+    if (!ann || !ann.pollQuestion || !ann.pollOptions || !Array.isArray(ann.pollOptions) || ann.pollOptions.length === 0) return '';
+    
+    const userVotes = (ann.pollVotes && typeof ann.pollVotes === 'object') ? ann.pollVotes : {};
+    const totalVotes = Object.values(userVotes).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0);
+    
+    let optionsHtml = '';
+    ann.pollOptions.forEach((opt, idx) => {
+        const votesForOpt = userVotes[idx] || 0;
+        const percentage = totalVotes > 0 ? Math.round((votesForOpt / totalVotes) * 100) : 0;
+        
+        optionsHtml += `
+            <div onclick="votePoll('${ann.id}', ${idx})" style="cursor: pointer; padding: 8px 12px; margin-bottom: 6px; background: var(--current-input-bg, #fff); border: 1.5px solid var(--current-border, #f48fb1); border-radius: 10px; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; bottom: 0; width: ${percentage}%; background: var(--current-border, #f48fb1); opacity: 0.2; z-index: 1;"></div>
+                <div style="position: relative; z-index: 2; display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 650;">
+                    <span>${opt}</span>
+                    <span>${percentage}% (${votesForOpt})</span>
+                </div>
+            </div>
+        `;
+    });
+
+    return `
+        <div style="margin-top: 14px; padding: 12px; background: var(--current-card-bg, rgba(255,255,255,0.6)); border-radius: 14px; border: 1.5px dashed var(--current-border, #f48fb1);">
+            <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; color: var(--current-text, inherit);">📊 ${ann.pollQuestion}</div>
+            ${optionsHtml}
+        </div>
+    `;
+}
+
+function renderCommentsList(annId, comments) {
+    if (!comments || !Array.isArray(comments) || comments.length === 0) {
+        return '<div style="font-size: 0.78rem; opacity: 0.7; font-style: italic;">no notes yet. be the first! ✨</div>';
+    }
+    return comments.map(c => `
+        <div style="margin-bottom: 6px; font-size: 0.78rem; border-bottom: 1px dashed var(--current-border, #f48fb1); padding-bottom: 4px;">
+            <strong style="color: var(--current-text, inherit);">${c.author || 'anonymous'}</strong>: ${c.text || ''}
+        </div>
+    `).join('');
+}
+
+function toggleCommentBox(id) {
+    const box = document.getElementById(`comment-section-${id}`);
+    if (box) {
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+async function toggleLike(id) {
+    const dataList = typeof items !== 'undefined' ? items : (typeof posts !== 'undefined' ? posts : []);
+    const post = dataList.find(p => p.id === id);
+    if (!post) return;
+    
+    post.likes = (post.likes || 0) + 1;
+    
+    const countEl = document.getElementById(`like-count-${id}`);
+    if (countEl) countEl.innerText = post.likes;
+
+    try {
+        if (typeof saveBinData === 'function') await saveBinData();
+        else if (typeof updateRemoteData === 'function') await updateRemoteData();
+        if (typeof renderAllPosts === 'function') renderAllPosts();
+    } catch (err) {
+        console.warn("Failed to sync like:", err);
+    }
+}
+
+async function votePoll(annId, optionIndex) {
+    const dataList = typeof items !== 'undefined' ? items : (typeof posts !== 'undefined' ? posts : []);
+    const ann = dataList.find(p => p.id === annId);
+    if (!ann) return;
+    
+    if (!ann.pollVotes) ann.pollVotes = {};
+    ann.pollVotes[optionIndex] = (ann.pollVotes[optionIndex] || 0) + 1;
+
+    try {
+        if (typeof saveBinData === 'function') await saveBinData();
+        else if (typeof updateRemoteData === 'function') await updateRemoteData();
+        if (typeof renderAllPosts === 'function') renderAllPosts();
+    } catch (err) {
+        console.warn("Failed to sync vote:", err);
+    }
+}
+
+async function submitComment(id) {
+    const authorInput = document.getElementById(`comment-author-${id}`);
+    const textInput = document.getElementById(`comment-input-${id}`);
+    
+    const author = authorInput ? authorInput.value.trim() : '';
+    const text = textInput ? textInput.value.trim() : '';
+    
+    if (!text) {
+        alert("Please write something nice before posting! ✨");
+        return;
+    }
+
+    const dataList = typeof items !== 'undefined' ? items : (typeof posts !== 'undefined' ? posts : []);
+    const post = dataList.find(p => p.id === id);
+    if (!post) return;
+
+    if (!post.comments) post.comments = [];
+    post.comments.push({
+        author: author || 'anonymous 🌸',
+        text: text,
+        date: new Date().toLocaleDateString()
+    });
+
+    try {
+        if (typeof saveBinData === 'function') await saveBinData();
+        else if (typeof updateRemoteData === 'function') await updateRemoteData();
+        if (typeof renderAllPosts === 'function') renderAllPosts();
+    } catch (err) {
+        alert("Failed to post comment!");
+    }
+}
+
+// Bind interactive functions globally
+window.renderPollHTML = renderPollHTML;
+window.renderCommentsList = renderCommentsList;
+window.toggleCommentBox = toggleCommentBox;
+window.toggleLike = toggleLike;
+window.votePoll = votePoll;
+window.submitComment = submitComment;
+
+        // ==========================================
+// STEP 3: Announcement Card HTML & Saving Logic
+// ==========================================
+function createAnnouncementCardHtml(ann) {
+    if (!ann) return '';
+    
+    const videoHtml = ann.videoUrl ? renderVideoEmbed(ann.videoUrl) : '';
+    const pollHtml = renderPollHTML(ann);
+    const commentsHtml = renderCommentsList(ann.id, ann.comments);
+    const likesCount = ann.likes || 0;
+    
+    return `
+        <div style="background: var(--current-card-bg, #fff); border: 1.5px solid var(--current-border, #f48fb1); border-radius: 16px; padding: 18px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 0.8rem; opacity: 0.7;">${ann.date || ''}</span>
+                <span style="font-size: 0.75rem; background: var(--current-border, #f48fb1); color: var(--current-bg, #fff); padding: 2px 8px; border-radius: 20px; font-weight: bold;">announcement ✨</span>
+            </div>
+            <h3 style="margin: 0 0 8px 0; color: var(--current-text, inherit); font-size: 1.1rem;">${ann.title || ''}</h3>
+            <p style="margin: 0 0 12px 0; color: var(--current-text, inherit); font-size: 0.9rem; white-space: pre-wrap;">${ann.content || ''}</p>
+            
+            ${videoHtml}
+            ${pollHtml}
+            
+            <!-- Social Actions Bar -->
+            <div style="display: flex; gap: 12px; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--current-border, #f48fb1);">
+                <button onclick="toggleLike('${ann.id}')" style="background: transparent; border: 1px solid var(--current-border, #f48fb1); border-radius: 20px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; color: var(--current-text, inherit); display: flex; align-items: center; gap: 4px;">
+                    ❤️ <span id="like-count-${ann.id}">${likesCount}</span>
+                </button>
+                <button onclick="toggleCommentBox('${ann.id}')" style="background: transparent; border: 1px solid var(--current-border, #f48fb1); border-radius: 20px; padding: 4px 12px; cursor: pointer; font-size: 0.8rem; color: var(--current-text, inherit);">
+                    💬 notes (${(ann.comments || []).length})
+                </button>
+            </div>
+            
+            <!-- Comment Drawer Section -->
+            <div id="comment-section-${ann.id}" style="display: none; margin-top: 12px; padding: 10px; background: var(--current-input-bg, rgba(0,0,0,0.02)); border-radius: 10px; border: 1px solid var(--current-border, #f48fb1);">
+                <div style="margin-bottom: 8px; max-height: 120px; overflow-y: auto;">
+                    ${commentsHtml}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                    <input type="text" id="comment-author-${ann.id}" placeholder="your name (optional)" style="padding: 6px 10px; border-radius: 8px; border: 1px solid var(--current-border, #f48fb1); font-size: 0.8rem; background: var(--current-bg, #fff); color: var(--current-text, inherit);">
+                    <textarea id="comment-input-${ann.id}" placeholder="leave a nice note... ✨" style="padding: 6px 10px; border-radius: 8px; border: 1px solid var(--current-border, #f48fb1); font-size: 0.8rem; resize: vertical; min-height: 40px; background: var(--current-bg, #fff); color: var(--current-text, inherit);"></textarea>
+                    <button onclick="submitComment('${ann.id}')" style="align-self: flex-end; padding: 4px 12px; background: var(--current-border, #f48fb1); color: var(--current-bg, #fff); border: none; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold;">post ✨</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function savePostData(entryType) {
+    const titleInput = document.getElementById('adminTitle') || document.getElementById('postTitle');
+    const contentInput = document.getElementById('adminContent') || document.getElementById('postContent');
+    const videoInput = document.getElementById('adminVideoUrl') || document.getElementById('videoUrlInput');
+    const pollQInput = document.getElementById('adminPollQuestion') || document.getElementById('pollQuestionInput');
+    const pollOptsInput = document.getElementById('adminPollOptions') || document.getElementById('pollOptionsInput');
+
+    const newEntry = {
+        id: 'post_' + Date.now(),
+        date: new Date().toLocaleDateString(),
+        type: entryType || 'announcement',
+        title: titleInput ? titleInput.value.trim() : '',
+        content: contentInput ? contentInput.value.trim() : '',
+        videoUrl: videoInput ? videoInput.value.trim() : '',
+        pollQuestion: pollQInput ? pollQInput.value.trim() : '',
+        pollOptions: pollOptsInput && pollOptsInput.value ? pollOptsInput.value.split(',').map(s => s.trim()).filter(Boolean) : [],
+        pollVotes: {},
+        likes: 0,
+        comments: []
+    };
+    return newEntry;
+}
+
+// Bind globally
+window.createAnnouncementCardHtml = createAnnouncementCardHtml;
+window.savePostData = savePostData;
+
+        
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedBackground();
             initFallingBackground();
