@@ -16,10 +16,13 @@
             display: flex; flex-direction: column; position: relative;
             background-size: cover; background-position: center;
             background-repeat: no-repeat; background-attachment: fixed;
+            --accent: #db2777;
+            --accent-soft: rgba(219, 39, 119, 0.35);
+            --accent-glow: rgba(219, 39, 119, 0.5);
         }
 
         /* 🌸 Cozy Pink Theme */
-        body.mood-pink { background-color: rgba(255, 230, 242, 0.94); color: #4a1525; }
+        body.mood-pink { background-color: rgba(255, 230, 242, 0.94); color: #4a1525; --accent: #db2777; --accent-soft: rgba(219, 39, 119, 0.35); --accent-glow: rgba(244, 114, 182, 0.55); }
         body.mood-pink .page-header-box, body.mood-pink .card, body.mood-pink .announcement-card, body.mood-pink .bio-card-preview, body.mood-pink .about-scrapbook-card, body.mood-pink .video-container-box, body.mood-pink .contact-envelope-box, body.mood-pink .post-reader-container, body.mood-pink .contact-footer-badge { background-color: rgba(255, 240, 246, 0.96); border-color: #f472b6; color: #4a1525; box-shadow: 0 10px 30px rgba(244, 114, 182, 0.25); }
         body.mood-pink .music-widget { background-color: rgba(255, 240, 246, 0.85); border-color: #f472b6; color: #4a1525; box-shadow: 0 15px 40px rgba(244, 114, 182, 0.3); }
         body.mood-pink .card-snippet, body.mood-pink .about-text, body.mood-pink .subtitle, body.mood-pink .post-reader-content { color: #6b2d45; }
@@ -29,7 +32,7 @@
         body.mood-pink .lightbox-content-box { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 20px 50px rgba(244, 114, 182, 0.4); }
 
         /* 🌙 Midnight Spiral Theme */
-        body.mood-midnight { background-color: rgba(18, 16, 26, 0.95); color: #f3e8ff; }
+        body.mood-midnight { background-color: rgba(18, 16, 26, 0.95); color: #f3e8ff; --accent: #a855f7; --accent-soft: rgba(168, 85, 247, 0.35); --accent-glow: rgba(168, 85, 247, 0.6); }
         body.mood-midnight .page-header-box, body.mood-midnight .card, body.mood-midnight .announcement-card, body.mood-midnight .bio-card-preview, body.mood-midnight .about-scrapbook-card, body.mood-midnight .video-container-box, body.mood-midnight .contact-envelope-box, body.mood-midnight .post-reader-container, body.mood-midnight .contact-footer-badge { background-color: rgba(30, 27, 46, 0.96); border-color: #a855f7; color: #f3e8ff; box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3); }
         body.mood-midnight .music-widget { background-color: rgba(30, 27, 46, 0.85); border-color: #a855f7; color: #f3e8ff; box-shadow: 0 15px 40px rgba(168, 85, 247, 0.35); }
         body.mood-midnight .card-snippet, body.mood-midnight .about-text, body.mood-midnight .subtitle, body.mood-midnight .post-reader-content { color: #e9d5ff; }
@@ -39,7 +42,7 @@
         body.mood-midnight .lightbox-content-box { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 20px 50px rgba(168, 85, 247, 0.4); }
 
         /* 🍵 Matcha Sage Theme */
-        body.mood-matcha { background-color: rgba(234, 244, 237, 0.94); color: #1e3322; }
+        body.mood-matcha { background-color: rgba(234, 244, 237, 0.94); color: #1e3322; --accent: #65a30d; --accent-soft: rgba(101, 163, 13, 0.35); --accent-glow: rgba(101, 163, 13, 0.55); }
         body.mood-matcha .page-header-box, body.mood-matcha .card, body.mood-matcha .announcement-card, body.mood-matcha .bio-card-preview, body.mood-matcha .about-scrapbook-card, body.mood-matcha .video-container-box, body.mood-matcha .contact-envelope-box, body.mood-matcha .post-reader-container, body.mood-matcha .contact-footer-badge { background-color: rgba(244, 251, 245, 0.96); border-color: #65a30d; color: #1e3322; box-shadow: 0 10px 30px rgba(101, 163, 13, 0.22); }
         body.mood-matcha .music-widget { background-color: rgba(244, 251, 245, 0.85); border-color: #65a30d; color: #1e3322; box-shadow: 0 15px 40px rgba(101, 163, 13, 0.3); }
         body.mood-matcha .card-snippet, body.mood-matcha .about-text, body.mood-matcha .subtitle, body.mood-matcha .post-reader-content { color: #365314; }
@@ -49,7 +52,7 @@
         body.mood-matcha .lightbox-content-box { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 20px 50px rgba(101, 163, 13, 0.4); }
 
         /* 🍋 Lemonade Theme */
-        body.mood-lemonade { background-color: rgba(255, 253, 240, 0.94); color: #382e0a; }
+        body.mood-lemonade { background-color: rgba(255, 253, 240, 0.94); color: #382e0a; --accent: #ca8a04; --accent-soft: rgba(202, 138, 4, 0.35); --accent-glow: rgba(202, 138, 4, 0.55); }
         body.mood-lemonade .page-header-box, body.mood-lemonade .card, body.mood-lemonade .announcement-card, body.mood-lemonade .bio-card-preview, body.mood-lemonade .about-scrapbook-card, body.mood-lemonade .video-container-box, body.mood-lemonade .contact-envelope-box, body.mood-lemonade .post-reader-container, body.mood-lemonade .contact-footer-badge { background-color: rgba(255, 254, 247, 0.96); border-color: #ca8a04; color: #382e0a; box-shadow: 0 10px 30px rgba(202, 138, 4, 0.22); }
         body.mood-lemonade .music-widget { background-color: rgba(255, 254, 247, 0.85); border-color: #ca8a04; color: #382e0a; box-shadow: 0 15px 40px rgba(202, 138, 4, 0.3); }
         body.mood-lemonade .card-snippet, body.mood-lemonade .about-text, body.mood-lemonade .subtitle, body.mood-lemonade .post-reader-content { color: #713f12; }
@@ -59,7 +62,7 @@
         body.mood-lemonade .lightbox-content-box { background: #fffef7; border: 3px dashed #ca8a04; box-shadow: 0 20px 50px rgba(202, 138, 4, 0.4); }
 
         /* 🍓 Strawberry Milkshake Theme */
-        body.mood-strawberry { background-color: rgba(255, 224, 230, 0.95); color: #500e21; }
+        body.mood-strawberry { background-color: rgba(255, 224, 230, 0.95); color: #500e21; --accent: #e11d48; --accent-soft: rgba(225, 29, 72, 0.35); --accent-glow: rgba(225, 29, 72, 0.55); }
         body.mood-strawberry .page-header-box, body.mood-strawberry .card, body.mood-strawberry .announcement-card, body.mood-strawberry .bio-card-preview, body.mood-strawberry .about-scrapbook-card, body.mood-strawberry .video-container-box, body.mood-strawberry .contact-envelope-box, body.mood-strawberry .post-reader-container, body.mood-strawberry .contact-footer-badge { background-color: rgba(255, 235, 240, 0.96); border-color: #e11d48; color: #500e21; box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3); }
         body.mood-strawberry .music-widget { background-color: rgba(255, 235, 240, 0.85); border-color: #e11d48; color: #500e21; box-shadow: 0 15px 40px rgba(225, 29, 72, 0.35); }
         body.mood-strawberry .card-snippet, body.mood-strawberry .about-text, body.mood-strawberry .subtitle, body.mood-strawberry .post-reader-content { color: #881337; }
@@ -69,7 +72,7 @@
         body.mood-strawberry .lightbox-content-box { background: #ffebf0; border: 3px dashed #e11d48; box-shadow: 0 20px 50px rgba(225, 29, 72, 0.4); }
 
         /* ⚡ Cyber Neon Theme */
-        body.mood-cyber { background-color: rgba(10, 10, 20, 0.96); color: #ecfdf5; }
+        body.mood-cyber { background-color: rgba(10, 10, 20, 0.96); color: #ecfdf5; --accent: #38bdf8; --accent-soft: rgba(56, 189, 248, 0.35); --accent-glow: rgba(56, 189, 248, 0.6); }
         body.mood-cyber .page-header-box, body.mood-cyber .card, body.mood-cyber .announcement-card, body.mood-cyber .bio-card-preview, body.mood-cyber .about-scrapbook-card, body.mood-cyber .video-container-box, body.mood-cyber .contact-envelope-box, body.mood-cyber .post-reader-container, body.mood-cyber .contact-footer-badge { background-color: rgba(20, 20, 38, 0.96); border-color: #38bdf8; color: #f0fdf4; box-shadow: 0 10px 30px rgba(56, 189, 248, 0.35); }
         body.mood-cyber .music-widget { background-color: rgba(20, 20, 38, 0.85); border-color: #38bdf8; color: #f0fdf4; box-shadow: 0 15px 40px rgba(56, 189, 248, 0.4); }
         body.mood-cyber .card-snippet, body.mood-cyber .about-text, body.mood-cyber .subtitle, body.mood-cyber .post-reader-content { color: #a7f3d0; }
@@ -79,7 +82,7 @@
         body.mood-cyber .lightbox-content-box { background: #141426; border: 3px dashed #38bdf8; box-shadow: 0 20px 50px rgba(56, 189, 248, 0.5); }
 
         /* 🔮 Lavender Dream Theme */
-        body.mood-lavender { background-color: rgba(243, 232, 255, 0.95); color: #3b0764; }
+        body.mood-lavender { background-color: rgba(243, 232, 255, 0.95); color: #3b0764; --accent: #8b5cf6; --accent-soft: rgba(139, 92, 246, 0.35); --accent-glow: rgba(139, 92, 246, 0.55); }
         body.mood-lavender .page-header-box, body.mood-lavender .card, body.mood-lavender .announcement-card, body.mood-lavender .bio-card-preview, body.mood-lavender .about-scrapbook-card, body.mood-lavender .video-container-box, body.mood-lavender .contact-envelope-box, body.mood-lavender .post-reader-container, body.mood-lavender .contact-footer-badge { background-color: rgba(248, 240, 255, 0.96); border-color: #8b5cf6; color: #3b0764; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25); }
         body.mood-lavender .music-widget { background-color: rgba(248, 240, 255, 0.85); border-color: #8b5cf6; color: #3b0764; box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3); }
         body.mood-lavender .card-snippet, body.mood-lavender .about-text, body.mood-lavender .subtitle, body.mood-lavender .post-reader-content { color: #581c87; }
@@ -89,7 +92,7 @@
         body.mood-lavender .lightbox-content-box { background: #f8f0ff; border: 3px dashed #8b5cf6; box-shadow: 0 20px 50px rgba(139, 92, 246, 0.4); }
 
         /* ☀️ Sunset Peach Theme */
-        body.mood-sunset { background-color: rgba(255, 237, 213, 0.95); color: #431407; }
+        body.mood-sunset { background-color: rgba(255, 237, 213, 0.95); color: #431407; --accent: #f97316; --accent-soft: rgba(249, 115, 22, 0.35); --accent-glow: rgba(249, 115, 22, 0.55); }
         body.mood-sunset .page-header-box, body.mood-sunset .card, body.mood-sunset .announcement-card, body.mood-sunset .bio-card-preview, body.mood-sunset .about-scrapbook-card, body.mood-sunset .video-container-box, body.mood-sunset .contact-envelope-box, body.mood-sunset .post-reader-container, body.mood-sunset .contact-footer-badge { background-color: rgba(255, 243, 224, 0.96); border-color: #f97316; color: #431407; box-shadow: 0 10px 30px rgba(249, 115, 22, 0.25); }
         body.mood-sunset .music-widget { background-color: rgba(255, 243, 224, 0.85); border-color: #f97316; color: #431407; box-shadow: 0 15px 40px rgba(249, 115, 22, 0.3); }
         body.mood-sunset .card-snippet, body.mood-sunset .about-text, body.mood-sunset .subtitle, body.mood-sunset .post-reader-content { color: #7c2d12; }
@@ -107,7 +110,7 @@
         @keyframes emuBounce { 0% { transform: translateY(0px) rotate(-12deg) scale(0.92); } 100% { transform: translateY(-45px) rotate(12deg) scale(1.08); } }
         @keyframes emuFloatSide { 0% { margin-left: 0px; } 100% { margin-left: 60px; } }
 
-        /* ✨ CUTEST NEW ANIMATIONS ✨ */
+        /* ✨ Elegant animations (no more spinning!) ✨ */
         @keyframes etherealFloat {
             0%, 100% { transform: translateY(0px) rotate(-0.5deg); }
             50% { transform: translateY(-8px) rotate(0.5deg); }
@@ -116,21 +119,12 @@
             0% { opacity: 0; transform: translateY(15px) scale(0.98); }
             100% { opacity: 1; transform: translateY(0px) scale(1); }
         }
-        @keyframes softGlow {
-            0%, 100% { box-shadow: 0 0 0px rgba(255, 255, 255, 0); }
-            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
-        }
-        @keyframes gentlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-        @keyframes sparkleSpin {
-            0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
-            50% { transform: rotate(180deg) scale(1.15); opacity: 1; }
-            100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
+        @keyframes gentleBreathe {
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.03) translateY(-2px); }
         }
 
-        /* Enhanced photo animation - gentle float + hover glow */
+        /* Photos — gentle float + hover glow with MOOD colors */
         .cutesy-snapshot, .card-cover-img {
             animation: etherealFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, etherealFloat 6s ease-in-out infinite;
             animation-delay: 0s, 1.2s;
@@ -141,7 +135,7 @@
         .cutesy-snapshot:hover, .card-cover-img:hover {
             transform: translateY(-8px) scale(1.04) rotate(-1deg) !important;
             filter: brightness(1.1) saturate(1.1);
-            box-shadow: 0 20px 45px rgba(219, 39, 119, 0.35), 0 0 30px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 45px var(--accent-soft), 0 0 30px var(--accent-glow);
             z-index: 30 !important;
         }
         .cutesy-snapshot {
@@ -160,7 +154,7 @@
             transform: translateY(-6px) scale(1.005);
         }
 
-        /* Buttons get a shine sweep + lift */
+        /* Buttons — shine sweep + MOOD-COLORED shadow on hover */
         .cta-btn, .pink-pill-btn {
             position: relative;
             overflow: hidden;
@@ -178,28 +172,29 @@
         .cta-btn:hover::before, .pink-pill-btn:hover::before { left: 100%; }
         .cta-btn:hover, .pink-pill-btn:hover {
             transform: scale(1.06) translateY(-2px);
-            box-shadow: 0 8px 25px rgba(219, 39, 119, 0.5) !important;
+            box-shadow: 0 8px 25px var(--accent-glow) !important;
         }
 
-        /* Social bar buttons get a heart-flutter */
+        /* Social bar buttons — heart flutter + MOOD-colored shadow */
         .social-bar-btn { transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .social-bar-btn:hover { transform: translateY(-3px) scale(1.05); }
-        .social-bar-btn.liked { animation: gentlePulse 0.6s ease; }
+        .social-bar-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 18px var(--accent-glow); }
+        .social-bar-btn.liked { animation: gentleBreathe 0.8s ease infinite; }
 
-        /* Toggle pills get soft glow */
+        /* Toggle pills — mood-colored glow on hover */
         .admin-badge:hover, .mood-selector-pill:hover, .emu-toggle-pill:hover, .local-bg-btn:hover {
             transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 18px var(--accent-glow);
         }
 
-        /* Sparkly header decorations */
-        .page-header-box::before, .page-header-box::after, .about-scrapbook-card::before, .contact-envelope-box::before, .bio-card-preview::before, .post-reader-container::before {
-            animation: sparkleSpin 4s ease-in-out infinite;
+        /* Ribbons, bows, scrapbook entry, express airmail — STATIC (no spinning!) */
+        .page-header-box::before, .page-header-box::after,
+        .about-scrapbook-card::before, .contact-envelope-box::before,
+        .bio-card-preview::before, .post-reader-container::before {
+            animation: none;
         }
 
-        /* Logo avatar gently floats */
+        /* Logo avatar gently floats (no spin on hover) */
         .avatar { animation: etherealFloat 4s ease-in-out infinite; }
-        .logo:hover .avatar { animation: sparkleSpin 1s ease; }
 
         /* Poll options soft hover lift */
         .poll-option { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease; }
@@ -242,7 +237,7 @@
 
         .music-widget { position: fixed; bottom: 25px; right: 25px; border-radius: 24px; padding: 1.2rem; width: 320px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 1500; border: 3px dashed; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease; }
         .music-widget.hidden { transform: translateX(calc(100% + 35px)); }
-        .music-widget-toggle { position: absolute; left: -38px; top: 15px; width: 38px; height: 42px; border-radius: 16px 0 0 16px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'Quicksand', sans-serif; backdrop-filter: blur(8px); box-shadow: -4px 4px 15px rgba(0,0,0,0.15); }
+        .music-widget-toggle { position: absolute; left: -38px; top: 15px; width: 38px; height: 42px; border-radius: 16px 0 0 16px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'Quicksand', sans-serif; backdrop-filter: blur(8px); box-shadow: -4px 4px 15px var(--accent-soft); }
         body.mood-pink .music-widget-toggle { background: rgba(255, 240, 246, 0.9); border: 2px dashed #f472b6; border-right: none; color: #db2777; }
         body.mood-midnight .music-widget-toggle { background: rgba(30, 27, 46, 0.9); border: 2px dashed #a855f7; border-right: none; color: #c084fc; }
         body.mood-matcha .music-widget-toggle { background: rgba(244, 251, 245, 0.9); border: 2px dashed #65a30d; border-right: none; color: #65a30d; }
@@ -281,7 +276,7 @@
 
         .bg-menu-options-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
         .bg-option-item-btn { width: 100%; padding: 0.85rem 1.2rem; font-size: 0.95rem; font-weight: 700; border-radius: 16px; cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between; border: 2px dashed; font-family: 'Quicksand', sans-serif; transition: transform 0.2s, background 0.3s; }
-        .bg-option-item-btn:hover { transform: translateY(-2px); }
+        .bg-option-item-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--accent-glow); }
         body.mood-pink .bg-option-item-btn { background: #ffe4e6; border-color: #f472b6; color: #db2777; }
         body.mood-midnight .bg-option-item-btn { background: #28243d; border-color: #a855f7; color: #d8b4fe; }
         body.mood-matcha .bg-option-item-btn { background: #e1efe2; border-color: #65a30d; color: #3f6212; }
@@ -448,7 +443,8 @@
         body.mood-lavender .bio-avatar { background: #ede9fe; border: 2px dashed #8b5cf6; }
         body.mood-sunset .bio-avatar { background: #ffedd5; border: 2px dashed #f97316; }
 
-        .secondary-btn { background: transparent; border-width: 2px; border-style: solid; padding: 0.6rem 1.4rem; border-radius: 20px; font-weight: 700; cursor: pointer; margin-top: 1rem; font-family: 'Quicksand', sans-serif; }
+        .secondary-btn { background: transparent; border-width: 2px; border-style: solid; padding: 0.6rem 1.4rem; border-radius: 20px; font-weight: 700; cursor: pointer; margin-top: 1rem; font-family: 'Quicksand', sans-serif; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .secondary-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--accent-glow); }
         body.mood-pink .secondary-btn { border-color: #f472b6; color: #db2777; }
         body.mood-midnight .secondary-btn { border-color: #a855f7; color: #d8b4fe; }
         body.mood-matcha .secondary-btn { border-color: #65a30d; color: #3f6212; }
@@ -564,7 +560,8 @@
         body.mood-sunset .contact-envelope-box::before { background: #ffedd5; color: #c2410c; border: 1px solid #f97316; }
 
         .warning-badge { background: #fef3c7; color: #d97706; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-block; margin-bottom: 0.8rem; }
-        .email-pill-btn { display: inline-block; color: white; padding: 0.9rem 2.2rem; font-weight: 700; border-radius: 30px; text-decoration: none; margin: 1rem 0; font-size: 1.05rem; }
+        .email-pill-btn { display: inline-block; color: white; padding: 0.9rem 2.2rem; font-weight: 700; border-radius: 30px; text-decoration: none; margin: 1rem 0; font-size: 1.05rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .email-pill-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
         body.mood-pink .email-pill-btn { background-color: #db2777; }
         body.mood-midnight .email-pill-btn { background-color: #9333ea; }
         body.mood-matcha .email-pill-btn { background-color: #65a30d; }
@@ -630,14 +627,17 @@
 
         .modal textarea { height: 100px; resize: vertical; }
         .modal-buttons { display: flex; justify-content: flex-end; gap: 1rem; }
-        .modal-btn { padding: 0.6rem 1.3rem; border-radius: 20px; border: none; font-weight: 700; cursor: pointer; font-family: 'Quicksand', sans-serif; }
+        .modal-btn { padding: 0.6rem 1.3rem; border-radius: 20px; border: none; font-weight: 700; cursor: pointer; font-family: 'Quicksand', sans-serif; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--accent-glow); }
         .modal-btn.cancel { background: #f3f4f6; color: #4b5563; }
         .modal-btn.save { background: #db2777; color: white; }
 
-        #image-lightbox-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 2500; cursor: zoom-out; padding: 2rem; }
+        /* ✨ LIGHTBOX FIX — close button is now clickable */
+        #image-lightbox-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 2500; padding: 2rem; }
         .lightbox-content-box { padding: 1.2rem; border-radius: 24px; max-width: 92vw; max-height: 92vh; display: flex; flex-direction: column; align-items: center; position: relative; animation: etherealFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .lightbox-content-box::before { content: '🎀✧ sparkle view ✧🎀'; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.8rem; letter-spacing: 1px; opacity: 0.85; }
-        #lightbox-img { max-width: 85vw; max-height: 78vh; border-radius: 14px; object-fit: contain; }
+        #lightbox-img { max-width: 85vw; max-height: 78vh; border-radius: 14px; object-fit: contain; cursor: default; }
+        #lightbox-close-btn { margin-top: 1rem; padding: 0.6rem 1.5rem; font-size: 0.95rem; cursor: pointer; position: relative; z-index: 10; }
 
         .photo-slot-item { border: 1px dashed; padding: 0.8rem; border-radius: 12px; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
         body.mood-pink .photo-slot-item { background: #ffe4e6; border-color: #f472b6; }
@@ -673,7 +673,7 @@
         body.mood-lavender .contact-envelope-box .warning-badge, body.mood-lavender .contact-envelope-box button[type="submit"], body.mood-lavender .contact-envelope-box .formkit-submit { background-color: #c084fc !important; color: #ffffff !important; }
 
         /* ==========================================
-           🎀 MODERN SOCIAL ECOSYSTEM & POLLS 🎀
+           🎀 SOCIAL ECOSYSTEM & POLLS 🎀
            ========================================== */
 
         .social-bar { display: flex; gap: 0.8rem; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 2px dashed rgba(128, 128, 128, 0.2); flex-wrap: wrap; }
@@ -697,7 +697,7 @@
         .comment-body { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; }
         .comment-actions { display: flex; gap: 0.8rem; font-size: 0.8rem; opacity: 0.7; flex-wrap: wrap; }
         .comment-actions button { background: none; border: none; cursor: pointer; color: inherit; font-family: 'Quicksand', sans-serif; font-weight: 700; padding: 0; display: flex; align-items: center; gap: 0.2rem; }
-        .comment-actions button:hover { opacity: 1; color: #db2777; }
+        .comment-actions button:hover { opacity: 1; color: var(--accent); }
         .comment-replies { margin-top: 0.8rem; padding-left: 1rem; border-left: 2px dashed rgba(128,128,128,0.2); }
 
         .comment-input-area { display: flex; flex-direction: column; gap: 0.8rem; border-top: 2px dashed rgba(128, 128, 128, 0.2); padding-top: 1.2rem; }
@@ -708,16 +708,16 @@
         .poll-question { font-weight: 800; font-size: 1.05rem; margin-bottom: 1rem; }
         .poll-option { position: relative; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(128, 128, 128, 0.15); margin-bottom: 0.6rem; cursor: pointer; overflow: hidden; }
         .poll-option.voted { cursor: default; }
-        .poll-progress { position: absolute; top: 0; left: 0; height: 100%; background: rgba(219, 39, 119, 0.15); width: 0%; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
-        .poll-option.voted .poll-progress { background: rgba(219, 39, 119, 0.25); }
+        .poll-progress { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent-soft); width: 0%; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
         .poll-text { position: relative; z-index: 2; font-weight: 700; font-size: 0.9rem; display: flex; justify-content: space-between; }
-        .poll-percent { font-weight: 800; color: #db2777; }
+        .poll-percent { font-weight: 800; color: var(--accent); }
         .poll-crown { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; z-index: 3; animation: etherealFloat 2s ease-in-out infinite; }
 
+        /* ✨ Music progress bar now uses MOOD color */
         .music-progress-container { width: 100%; height: 6px; background: rgba(128, 128, 128, 0.2); border-radius: 3px; margin-top: 0.8rem; overflow: hidden; cursor: pointer; }
-        .music-progress-bar { height: 100%; width: 0%; background: #db2777; border-radius: 3px; transition: width 0.1s linear; }
+        .music-progress-bar { height: 100%; width: 0%; background: var(--accent); border-radius: 3px; transition: width 0.1s linear; box-shadow: 0 0 8px var(--accent-glow); }
 
-        /* Alias Modal (the little popup that asks for a name) */
+        /* Alias Modal */
         #alias-modal .modal { max-width: 420px; text-align: center; }
         #alias-modal h2 { font-size: 1.5rem; }
         #alias-input-field { margin: 1rem 0; text-align: center; font-size: 1rem; }
@@ -728,10 +728,11 @@
     <div id="falling-bg"></div>
     <div id="emu-layer"></div>
 
-    <div id="image-lightbox-modal" onclick="closeLightbox()">
-        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+    <!-- Lightbox with separate close button that's ALWAYS clickable -->
+    <div id="image-lightbox-modal">
+        <div class="lightbox-content-box">
             <img id="lightbox-img" src="" alt="Zoomed Photo">
-            <button class="pink-pill-btn" style="margin-top: 1rem; padding: 0.4rem 1.2rem; font-size: 0.85rem;" onclick="closeLightbox()">Close ✨</button>
+            <button class="pink-pill-btn" id="lightbox-close-btn" onclick="closeLightbox()">Close ✨</button>
         </div>
     </div>
 
@@ -1110,7 +1111,7 @@
         </div>
     </div>
 
-    <!-- ✨ Cutesy Alias Modal (only pops up when someone without a saved alias wants to comment) -->
+    <!-- ✨ Cutesy Alias Modal -->
     <div id="alias-modal" class="modal-overlay">
         <div class="modal">
             <h2>✿ what should we call you? ✿</h2>
@@ -1250,7 +1251,6 @@
                 isAudioPlaying = true;
                 if(btn) btn.innerText = "⏸ Pause";
                 startProgressTracker();
-                // ✨ Auto-update the song title when the track changes
                 try {
                     const idx = audioPlayer.getPlaylistIndex();
                     if (idx !== undefined && idx !== -1 && idx !== currentTrackIndex) {
@@ -1263,16 +1263,11 @@
                 if(btn) btn.innerText = "▶ Play";
                 clearInterval(progressInterval);
             } else if (event.data === YT.PlayerState.ENDED) {
-                if (isLooping) {
-                    // ✨ FIXED LOOP: manually seek to 0 and replay
-                    try {
-                        audioPlayer.seekTo(0);
-                        audioPlayer.playVideo();
-                    } catch(e) {}
-                } else {
+                if (!isLooping) {
                     currentTrackIndex = (currentTrackIndex + 1) % playlistTracks.length;
                     updateWidgetTrackDisplay();
                 }
+                // If looping IS on, the stateWatcher interval will handle the restart.
             }
         }
 
@@ -1646,7 +1641,6 @@
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
             const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')" title="Click to view full size">` : '';
 
-            // ✨ Only show video on card if the admin chose to
             let videoHtml = '';
             const shouldShowVideo = p.showVideoOnCard !== false && p.showVideoOnCard !== "false";
             if (p.videoUrl && shouldShowVideo) {
@@ -1702,7 +1696,6 @@
                 galleryHtml += '</div>';
             }
 
-            // Announcements always show video directly on card
             let videoHtml = '';
             if (ann.videoUrl) {
                 const ytId = getYouTubeId(ann.videoUrl);
@@ -1753,7 +1746,6 @@
                 galleryHtml += '</div>';
             }
 
-            // ✨ Always show video inside the post reader
             let videoHtml = '';
             if (post.videoUrl) {
                 const ytId = getYouTubeId(post.videoUrl);
@@ -2007,8 +1999,8 @@
         // ==========================================
 
         let currentPostIndexForComments = null;
-        let pendingCommentText = null; // stores comment text while we ask for alias
-        let pendingReplyData = null;   // { postIndex, parentCommentId, text }
+        let pendingCommentText = null;
+        let pendingReplyData = null;
         
         let currentVisitorId = localStorage.getItem('visitor_id');
         if (!currentVisitorId) {
@@ -2200,7 +2192,6 @@
             }
         }
 
-        // ✨ NEW: submitComment now checks for saved alias first
         async function submitComment() {
             const textInput = document.getElementById('comment-text-input');
             const text = textInput.value.trim();
@@ -2209,31 +2200,26 @@
             const savedAlias = localStorage.getItem('visitor_alias');
             
             if (!savedAlias) {
-                // No saved alias yet — ask for one via the cute modal
                 pendingCommentText = text;
                 document.getElementById('alias-input-field').value = "";
                 document.getElementById('alias-modal').style.display = 'flex';
                 return;
             }
             
-            // Has saved alias — post directly
             await actuallyPostComment(savedAlias, text);
         }
 
-        // ✨ NEW: handles alias modal confirm
         async function confirmAliasModal() {
             const aliasInput = document.getElementById('alias-input-field').value.trim();
             const alias = aliasInput || "anonymous 🌸";
             localStorage.setItem('visitor_alias', alias);
             document.getElementById('alias-modal').style.display = 'none';
             
-            // Case 1: a new comment is pending
             if (pendingCommentText) {
                 const text = pendingCommentText;
                 pendingCommentText = null;
                 await actuallyPostComment(alias, text);
             }
-            // Case 2: a reply is pending
             else if (pendingReplyData) {
                 const { postIndex, parentCommentId, text } = pendingReplyData;
                 pendingReplyData = null;
@@ -2241,14 +2227,12 @@
             }
         }
 
-        // ✨ NEW: handles alias modal cancel
         function cancelAliasModal() {
             document.getElementById('alias-modal').style.display = 'none';
             pendingCommentText = null;
             pendingReplyData = null;
         }
 
-        // ✨ NEW: actually posts the comment (separated from submitComment for alias flow)
         async function actuallyPostComment(alias, text) {
             try {
                 const binData = await getBinData();
@@ -2311,7 +2295,6 @@
             } catch (e) { console.error(e); }
         }
 
-        // ✨ NEW: reply flow also uses the alias modal
         window.openReplyInput = function(postIndex, parentCommentId) {
             const replyText = prompt("Write your reply:");
             if (!replyText || !replyText.trim()) return;
@@ -2345,9 +2328,10 @@
         }
 
         // ==========================================
-        // 🎵 MUSIC WIDGET PROGRESS BAR & FIXED LOOPING 🎵
+        // 🎵 MUSIC WIDGET: PROGRESS BAR + LOOP (FIXED!) 🎵
         // ==========================================
         let progressInterval;
+        let stateWatcher; // <-- the FIX for looping
         let isLooping = false;
 
         function startProgressTracker() {
@@ -2365,13 +2349,39 @@
             }, 1000);
         }
 
+        // ✨ THE REAL LOOP FIX ✨
+        // This watcher runs every second. If looping is ON and the current time
+        // is within 0.6 seconds of the total duration, we manually seek back to 0.
+        // This works even when YouTube playlists ignore setLoop() and don't fire ENDED.
+        function startStateWatcher() {
+            clearInterval(stateWatcher);
+            stateWatcher = setInterval(() => {
+                try {
+                    if (!audioPlayer || typeof audioPlayer.getCurrentTime !== 'function') return;
+                    if (!isLooping) return;
+                    const state = audioPlayer.getPlayerState();
+                    // Only track while actually playing
+                    if (state !== YT.PlayerState.PLAYING) return;
+                    const current = audioPlayer.getCurrentTime() || 0;
+                    const duration = audioPlayer.getDuration() || 0;
+                    if (duration > 0 && current >= duration - 0.6) {
+                        audioPlayer.seekTo(0, true);
+                        audioPlayer.playVideo();
+                    }
+                } catch (e) {}
+            }, 1000);
+        }
+
         function toggleLoop() {
             isLooping = !isLooping;
             const btn = document.getElementById('loop-btn');
             if (btn) {
                 btn.innerText = isLooping ? "🔁 Looping: ON" : "🔁 Looping: OFF";
                 btn.style.opacity = isLooping ? "1" : "0.6";
+                btn.style.boxShadow = isLooping ? "0 0 15px var(--accent-glow)" : "none";
             }
+            // Always keep the watcher running so it can act the moment we hit the end
+            startStateWatcher();
         }
 
         function seekMusic(event) {
@@ -2391,6 +2401,7 @@
             initGlobalEmus();
             renderAllPosts();
             updateWidgetTrackDisplay();
+            startStateWatcher(); // Start the loop watcher on page load
         });
     </script>
 </body>
