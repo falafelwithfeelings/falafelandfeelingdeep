@@ -584,94 +584,8 @@
         body.mood-pink .cutesy-slider::-webkit-slider-thumb { background: #ff69b4; }
 
         /* ==========================================
-           🎨 FORMKIT OVERRIDE — full nuclear option
+           🎀 COMMENT OWNER + FALAFEL BADGE
            ========================================== */
-        .contact-envelope-box .warning-badge {
-            background-color: var(--accent-color) !important;
-            background: var(--accent-color) !important;
-            color: #ffffff !important;
-            transition: background-color 0.5s ease !important;
-        }
-        .contact-envelope-box form,
-        .contact-envelope-box .formkit-form {
-            max-width: 100% !important;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
-        .contact-envelope-box .formkit-outer,
-        .contact-envelope-box .formkit-inner,
-        .contact-envelope-box .formkit-input-wrap,
-        .contact-envelope-box .formkit-wrapper,
-        .contact-envelope-box [class^="formkit-"] {
-            background: transparent !important;
-            box-shadow: none !important;
-            border-color: var(--accent-color) !important;
-        }
-        .contact-envelope-box input,
-        .contact-envelope-box input[type="text"],
-        .contact-envelope-box input[type="email"],
-        .contact-envelope-box .formkit-input,
-        .contact-envelope-box .formkit-inner input,
-        .contact-envelope-box [data-class="formkit-input"],
-        .contact-envelope-box .formkit-outer input {
-            border: 2px solid var(--accent-color) !important;
-            border-radius: 12px !important;
-            background: rgba(255, 255, 255, 0.95) !important;
-            color: #2d2a32 !important;
-            padding: 12px 16px !important;
-            transition: border-color 0.5s ease, box-shadow 0.3s ease !important;
-            box-shadow: none !important;
-            outline: none !important;
-        }
-        .contact-envelope-box .formkit-inner,
-        .contact-envelope-box .formkit-outer {
-            border: none !important;
-            outline: none !important;
-        }
-        .contact-envelope-box input:focus,
-        .contact-envelope-box .formkit-input:focus,
-        .contact-envelope-box .formkit-inner input:focus {
-            outline: none !important;
-            border-color: var(--accent-color) !important;
-            box-shadow: 0 0 0 3px var(--accent-soft) !important;
-        }
-        .contact-envelope-box button,
-        .contact-envelope-box button[type="submit"],
-        .contact-envelope-box .formkit-submit,
-        .contact-envelope-box button.formkit-submit,
-        .contact-envelope-box input[type="submit"],
-        .contact-envelope-box [data-class="formkit-submit"] {
-            background: var(--accent-color) !important;
-            background-color: var(--accent-color) !important;
-            background-image: none !important;
-            color: #ffffff !important;
-            border: none !important;
-            border-radius: 12px !important;
-            font-family: 'Quicksand', sans-serif !important;
-            font-weight: 700 !important;
-            font-size: 1rem !important;
-            padding: 14px 24px !important;
-            min-height: 48px !important;
-            line-height: 1.3 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            transition: all 0.3s ease !important;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.15) !important;
-            box-shadow: 0 4px 14px var(--accent-soft) !important;
-            width: 100% !important;
-            cursor: pointer !important;
-        }
-        .contact-envelope-box button:hover,
-        .contact-envelope-box button[type="submit"]:hover,
-        .contact-envelope-box .formkit-submit:hover {
-            opacity: 0.92 !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 20px var(--accent-glow) !important;
-        }
-        .contact-envelope-box .formkit-submit .formkit-inner { background: transparent !important; }
-
         .social-bar { display: flex; gap: 0.8rem; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 2px dashed rgba(128, 128, 128, 0.2); flex-wrap: wrap; }
         .social-bar-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 20px; border: 2px solid transparent; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; background: rgba(255, 255, 255, 0.5); color: inherit; }
         .social-bar-btn.liked { background: #ffe4e6; color: #db2777; border-color: #f472b6; }
@@ -688,8 +602,34 @@
         .comment-item { padding: 1rem; border-radius: 16px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(128, 128, 128, 0.1); position: relative; }
         .comment-item.pinned { border: 2px dashed #f59e0b; background: rgba(254, 243, 199, 0.5); }
         .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; }
-        .comment-alias { font-weight: 800; display: flex; align-items: center; gap: 0.4rem; }
+        .comment-alias { font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
         .owner-badge { background: #db2777; color: white; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 10px; font-weight: 800; letter-spacing: 0.5px; box-shadow: 0 2px 6px rgba(219, 39, 119, 0.4); }
+
+        /* 🧆 "the falafel liked it!" badge */
+        .falafel-liked-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: linear-gradient(135deg, #ffe4e6, #fbcfe8);
+            color: #db2777;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 0.2rem 0.55rem;
+            border-radius: 10px;
+            margin-left: 0.4rem;
+            border: 1.5px dashed #f472b6;
+            box-shadow: 0 2px 6px rgba(219, 39, 119, 0.25);
+            animation: gentleBreathe 2.5s ease-in-out infinite;
+            letter-spacing: 0.2px;
+        }
+        body.mood-midnight .falafel-liked-badge { background: linear-gradient(135deg, #3b1e5c, #4c1d95); color: #e9d5ff; border-color: #a855f7; box-shadow: 0 2px 6px rgba(168, 85, 247, 0.4); }
+        body.mood-matcha .falafel-liked-badge { background: linear-gradient(135deg, #dcfce7, #d9f99d); color: #365314; border-color: #65a30d; box-shadow: 0 2px 6px rgba(101, 163, 13, 0.3); }
+        body.mood-lemonade .falafel-liked-badge { background: linear-gradient(135deg, #fef9c3, #fde68a); color: #854d0e; border-color: #ca8a04; box-shadow: 0 2px 6px rgba(202, 138, 4, 0.3); }
+        body.mood-strawberry .falafel-liked-badge { background: linear-gradient(135deg, #ffe4e6, #fecdd3); color: #9f1239; border-color: #e11d48; box-shadow: 0 2px 6px rgba(225, 29, 72, 0.3); }
+        body.mood-cyber .falafel-liked-badge { background: linear-gradient(135deg, #1e293b, #0f172a); color: #7dd3fc; border-color: #38bdf8; box-shadow: 0 2px 6px rgba(56, 189, 248, 0.4); }
+        body.mood-lavender .falafel-liked-badge { background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #6d28d9; border-color: #8b5cf6; box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3); }
+        body.mood-sunset .falafel-liked-badge { background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #c2410c; border-color: #f97316; box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3); }
+
         .comment-body { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; }
         .comment-actions { display: flex; gap: 0.8rem; font-size: 0.8rem; opacity: 0.7; flex-wrap: wrap; }
         .comment-actions button { background: none; border: none; cursor: pointer; color: inherit; font-family: 'Quicksand', sans-serif; font-weight: 700; padding: 0; display: flex; align-items: center; gap: 0.2rem; }
@@ -932,7 +872,7 @@
             <div class="contact-envelope-box" style="margin-top: 2rem;">
                 <div class="warning-badge" style="background: #f48fb1; color: #fff;">⋆.𐙚 ̊. Join The Community! </div>
                 <h2 style="margin-top: 0; font-size: 1.6rem;" class="about-section-title">sign up so you never miss a new brain dump ────୨ৎ──── </h2>
-                <p class="about-text" style="margin-bottom: 1.5rem;">whenever a new blog drops, get it straight to your inbox! ༘˚⋆𐙚｡⋆𖦹.✧˚ </p>
+                <p class="about-text" style="margin-bottom: 1.5rem;">whenever a new blog drops, get it straight to your inbox! 🪼⋆｡𖦹°🫧⋆.ೃ࿔*:･ </p>
                 <script async data-uid="efab41ce33" src="https://falafelwithfeelings.kit.com/efab41ce33/index.js"></script>
                 <script>
                     window.addEventListener('load', function() {
@@ -1068,7 +1008,7 @@
             </div>
             <div class="comments-list" id="comments-list-container"></div>
             <div class="comment-input-area">
-               <textarea id="comment-text-input" placeholder="say something nice... ♡" style="min-height: 80px;"></textarea>
+                <textarea id="comment-text-input" placeholder="say something nice... ♡" style="min-height: 80px;"></textarea>
                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                     <button id="change-alias-btn" onclick="openChangeAliasModal()" style="background: none; border: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.8rem; opacity: 0.65; cursor: pointer; color: inherit; padding: 0; text-decoration: underline dotted;">✎ change alias</button>
                     <button class="pink-pill-btn" style="padding: 0.6rem 1.5rem;" onclick="submitComment()">post note ✨</button>
@@ -1119,97 +1059,7 @@
             <span>made with 🩷 feelings</span>
         </div>
     </footer>
-        <!-- 🌈 FORMKIT NUCLEAR OVERRIDE — placed at bottom so it wins the CSS cascade -->
-    <style>
-        .contact-envelope-box form,
-        .contact-envelope-box form *:not(svg):not(path),
-        .contact-envelope-box .formkit-form,
-        .contact-envelope-box .formkit-form *:not(svg):not(path),
-        .contact-envelope-box [class*="formkit"] {
-            --fk-color-primary: var(--accent-color) !important;
-            --fk-color-primary-dark: var(--accent-color) !important;
-            --fk-color-primary-light: var(--accent-color) !important;
-            --fk-color-primary-lighter: var(--accent-color) !important;
-            --fk-color-primary-lightest: var(--accent-color) !important;
-            --fk-color-input: #ffffff !important;
-            --fk-color-error: var(--accent-color) !important;
-            --fk-border-color: var(--accent-color) !important;
-            --fk-bg-primary: var(--accent-color) !important;
-            --fk-bg-primary-dark: var(--accent-color) !important;
-            --fk-focus-ring: var(--accent-soft) !important;
-            --fk-border-radius: 12px !important;
-            --fk-font-family: 'Quicksand', sans-serif !important;
-        }
-
-        body .contact-envelope-box input[type="text"],
-        body .contact-envelope-box input[type="email"],
-        body .contact-envelope-box input[type="email_address"],
-        body .contact-envelope-box input,
-        body .contact-envelope-box .formkit-input,
-        body .contact-envelope-box .formkit-inner,
-        body .contact-envelope-box .formkit-inner input,
-        body .contact-envelope-box [data-class="formkit-input"],
-        body .contact-envelope-box [class*="formkit-input"] {
-            border: 2px solid var(--accent-color) !important;
-            border-color: var(--accent-color) !important;
-            outline-color: var(--accent-color) !important;
-            background: #ffffff !important;
-            background-color: #ffffff !important;
-            background-image: none !important;
-            box-shadow: none !important;
-            border-radius: 12px !important;
-        }
-
-        body .contact-envelope-box .formkit-outer,
-        body .contact-envelope-box .formkit-wrapper,
-        body .contact-envelope-box .formkit-inner,
-        body .contact-envelope-box [class*="formkit-outer"],
-        body .contact-envelope-box [class*="formkit-inner"],
-        body .contact-envelope-box fieldset,
-        body .contact-envelope-box .formkit-fieldset {
-            border-color: var(--accent-color) !important;
-            background: transparent !important;
-            background-color: transparent !important;
-            box-shadow: none !important;
-        }
-
-        body .contact-envelope-box button,
-        body .contact-envelope-box button[type="submit"],
-        body .contact-envelope-box input[type="submit"],
-        body .contact-envelope-box .formkit-submit,
-        body .contact-envelope-box [class*="formkit-submit"],
-        body .contact-envelope-box [data-class="formkit-submit"],
-        body .contact-envelope-box .formkit-submit > .formkit-inner,
-        body .contact-envelope-box button.formkit-submit,
-        body form[data-uid] button,
-        body .formkit-form button[type="submit"] {
-            background: var(--accent-color) !important;
-            background-color: var(--accent-color) !important;
-            background-image: linear-gradient(var(--accent-color), var(--accent-color)) !important;
-            border: none !important;
-            border-color: var(--accent-color) !important;
-            color: #ffffff !important;
-            border-radius: 12px !important;
-            font-family: 'Quicksand', sans-serif !important;
-            font-weight: 700 !important;
-            padding: 14px 24px !important;
-            min-height: 48px !important;
-            width: 100% !important;
-            box-shadow: 0 4px 14px var(--accent-soft) !important;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.15) !important;
-        }
-
-        body .contact-envelope-box button:hover,
-        body .contact-envelope-box button[type="submit"]:hover,
-        body .contact-envelope-box .formkit-submit:hover {
-            background: var(--accent-color) !important;
-            background-color: var(--accent-color) !important;
-            opacity: 0.92 !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 20px var(--accent-glow) !important;
-        }
-    </style>
-        <script src="https://www.youtube.com/iframe_api"></script>
+       <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
     let logoClickCount = 0;
@@ -2233,6 +2083,8 @@
                 const isOwner = comment.isAdmin;
                 const isMyComment = comment.visitorId === currentVisitorId;
                 const canDelete = isAdmin() || isMyComment;
+                const myHeartKey = `hearted_comment_${comment.id}`;
+                const iHeartedThis = localStorage.getItem(myHeartKey) === 'true';
                 
                 let replyHtml = '';
                 if (comment.replies && comment.replies.length > 0) {
@@ -2261,13 +2113,17 @@
                     <div class="comment-item ${comment.pinned ? 'pinned' : ''}">
                         ${comment.pinned ? '<div style="position:absolute; top:-10px; right:10px; font-size:1.2rem;">📌</div>' : ''}
                         <div class="comment-header">
-                            <span class="comment-alias">${escapeHTML(comment.alias)}${isOwner ? '<span class="owner-badge">the big falafel 𝜗ৎ</span>' : ''}</span>
+                            <span class="comment-alias">
+                                ${escapeHTML(comment.alias)}
+                                ${isOwner ? '<span class="owner-badge">the big falafel 𝜗ৎ</span>' : ''}
+                                ${comment.falafelLiked ? '<span class="falafel-liked-badge">🩷 the falafel liked it!</span>' : ''}
+                            </span>
                             <span style="opacity: 0.5; font-size: 0.7rem;">${new Date(comment.timestamp).toLocaleDateString()}</span>
                         </div>
                         <div class="comment-body">${escapeHTML(comment.text)}</div>
                         <div class="comment-actions">
                             ${isAdmin() ? `<button onclick="togglePinComment(${currentPostIndexForComments}, '${comment.id}')">${comment.pinned ? '📍 Unpin' : '📌 Pin'}</button>` : ''}
-                            ${isAdmin() ? `<button onclick="toggleHeartComment(${currentPostIndexForComments}, '${comment.id}')">❤️ ${comment.hearts || 0}</button>` : ''}
+                            <button onclick="toggleHeartComment(${currentPostIndexForComments}, '${comment.id}')">${iHeartedThis ? '🩷' : '🤍'} ${comment.hearts || 0}</button>
                             <button onclick="openReplyInput(${currentPostIndexForComments}, '${comment.id}')">💬 Reply</button>
                             ${canDelete ? `<button onclick="deleteComment(${currentPostIndexForComments}, '${comment.id}')">🗑️ Delete</button>` : ''}
                         </div>
@@ -2353,7 +2209,7 @@
             const newComment = {
                 id: 'comment_' + Math.random().toString(36).substr(2, 9),
                 visitorId: currentVisitorId, alias: alias, text: text,
-                isAdmin: isAdmin(), hearts: 0, pinned: false,
+                isAdmin: isAdmin(), hearts: 0, pinned: false, falafelLiked: false,
                 timestamp: new Date().toISOString(), replies: []
             };
             posts[currentPostIndexForComments].comments.push(newComment);
@@ -2392,16 +2248,31 @@
         } catch (e) { console.error(e); }
     }
 
+    // ✨ TOGGLE HEART — now a real toggle with falafel badge for admin likes
     async function toggleHeartComment(postIndex, commentId) {
         try {
+            const heartedKey = `hearted_comment_${commentId}`;
+            const hasHearted = localStorage.getItem(heartedKey) === 'true';
             const binData = await getBinData();
             let posts = binData.posts || [];
             const comment = posts[postIndex].comments.find(c => c.id === commentId);
-            if (comment) {
-                comment.hearts = (comment.hearts || 0) + 1;
-                await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
-                await renderComments();
+            if (!comment) return;
+            
+            if (!comment.hearts) comment.hearts = 0;
+            
+            if (hasHearted) {
+                // Unlike
+                comment.hearts = Math.max(0, comment.hearts - 1);
+                localStorage.setItem(heartedKey, 'false');
+                if (isAdmin()) comment.falafelLiked = false;
+            } else {
+                // Like
+                comment.hearts += 1;
+                localStorage.setItem(heartedKey, 'true');
+                if (isAdmin()) comment.falafelLiked = true;
             }
+            await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
+            await renderComments();
         } catch (e) { console.error(e); }
     }
 
@@ -2535,4 +2406,4 @@
     });
     </script>
 </body>
-</html>
+</html> 
