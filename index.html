@@ -1119,6 +1119,96 @@
             <span>made with 🩷 feelings</span>
         </div>
     </footer>
+        <!-- 🌈 FORMKIT NUCLEAR OVERRIDE — placed at bottom so it wins the CSS cascade -->
+    <style>
+        .contact-envelope-box form,
+        .contact-envelope-box form *:not(svg):not(path),
+        .contact-envelope-box .formkit-form,
+        .contact-envelope-box .formkit-form *:not(svg):not(path),
+        .contact-envelope-box [class*="formkit"] {
+            --fk-color-primary: var(--accent-color) !important;
+            --fk-color-primary-dark: var(--accent-color) !important;
+            --fk-color-primary-light: var(--accent-color) !important;
+            --fk-color-primary-lighter: var(--accent-color) !important;
+            --fk-color-primary-lightest: var(--accent-color) !important;
+            --fk-color-input: #ffffff !important;
+            --fk-color-error: var(--accent-color) !important;
+            --fk-border-color: var(--accent-color) !important;
+            --fk-bg-primary: var(--accent-color) !important;
+            --fk-bg-primary-dark: var(--accent-color) !important;
+            --fk-focus-ring: var(--accent-soft) !important;
+            --fk-border-radius: 12px !important;
+            --fk-font-family: 'Quicksand', sans-serif !important;
+        }
+
+        body .contact-envelope-box input[type="text"],
+        body .contact-envelope-box input[type="email"],
+        body .contact-envelope-box input[type="email_address"],
+        body .contact-envelope-box input,
+        body .contact-envelope-box .formkit-input,
+        body .contact-envelope-box .formkit-inner,
+        body .contact-envelope-box .formkit-inner input,
+        body .contact-envelope-box [data-class="formkit-input"],
+        body .contact-envelope-box [class*="formkit-input"] {
+            border: 2px solid var(--accent-color) !important;
+            border-color: var(--accent-color) !important;
+            outline-color: var(--accent-color) !important;
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            border-radius: 12px !important;
+        }
+
+        body .contact-envelope-box .formkit-outer,
+        body .contact-envelope-box .formkit-wrapper,
+        body .contact-envelope-box .formkit-inner,
+        body .contact-envelope-box [class*="formkit-outer"],
+        body .contact-envelope-box [class*="formkit-inner"],
+        body .contact-envelope-box fieldset,
+        body .contact-envelope-box .formkit-fieldset {
+            border-color: var(--accent-color) !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+
+        body .contact-envelope-box button,
+        body .contact-envelope-box button[type="submit"],
+        body .contact-envelope-box input[type="submit"],
+        body .contact-envelope-box .formkit-submit,
+        body .contact-envelope-box [class*="formkit-submit"],
+        body .contact-envelope-box [data-class="formkit-submit"],
+        body .contact-envelope-box .formkit-submit > .formkit-inner,
+        body .contact-envelope-box button.formkit-submit,
+        body form[data-uid] button,
+        body .formkit-form button[type="submit"] {
+            background: var(--accent-color) !important;
+            background-color: var(--accent-color) !important;
+            background-image: linear-gradient(var(--accent-color), var(--accent-color)) !important;
+            border: none !important;
+            border-color: var(--accent-color) !important;
+            color: #ffffff !important;
+            border-radius: 12px !important;
+            font-family: 'Quicksand', sans-serif !important;
+            font-weight: 700 !important;
+            padding: 14px 24px !important;
+            min-height: 48px !important;
+            width: 100% !important;
+            box-shadow: 0 4px 14px var(--accent-soft) !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15) !important;
+        }
+
+        body .contact-envelope-box button:hover,
+        body .contact-envelope-box button[type="submit"]:hover,
+        body .contact-envelope-box .formkit-submit:hover {
+            background: var(--accent-color) !important;
+            background-color: var(--accent-color) !important;
+            opacity: 0.92 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 20px var(--accent-glow) !important;
+        }
+    </style>
         <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
