@@ -583,9 +583,16 @@
         body.mood-pink .cutesy-volume-wrapper { border-color: #ffb6c1; color: #d87093; }
         body.mood-pink .cutesy-slider::-webkit-slider-thumb { background: #ff69b4; }
 
-        /* ==========================================
-           🎀 COMMENT OWNER + FALAFEL BADGE
-           ========================================== */
+        /* FORM KIT override + comment drawer + sparkle code styles */
+        .contact-envelope-box .warning-badge { background-color: var(--accent-color) !important; color: #ffffff !important; transition: background-color 0.5s ease; }
+        .contact-envelope-box form, .contact-envelope-box .formkit-form { max-width: 100% !important; background: transparent !important; border: none !important; box-shadow: none !important; }
+        .contact-envelope-box .formkit-outer, .contact-envelope-box .formkit-inner, .contact-envelope-box .formkit-input-wrap, .contact-envelope-box .formkit-wrapper, .contact-envelope-box [class^="formkit-"] { background: transparent !important; box-shadow: none !important; border-color: var(--accent-color) !important; }
+        .contact-envelope-box input, .contact-envelope-box input[type="text"], .contact-envelope-box input[type="email"], .contact-envelope-box .formkit-input, .contact-envelope-box .formkit-inner input, .contact-envelope-box [data-class="formkit-input"], .contact-envelope-box .formkit-outer input { border: 2px solid var(--accent-color) !important; border-radius: 12px !important; background: rgba(255, 255, 255, 0.95) !important; color: #2d2a32 !important; padding: 12px 16px !important; transition: border-color 0.5s ease, box-shadow 0.3s ease !important; box-shadow: none !important; outline: none !important; }
+        .contact-envelope-box .formkit-inner, .contact-envelope-box .formkit-outer { border: none !important; outline: none !important; }
+        .contact-envelope-box input:focus, .contact-envelope-box .formkit-input:focus, .contact-envelope-box .formkit-inner input:focus { outline: none !important; border-color: var(--accent-color) !important; box-shadow: 0 0 0 3px var(--accent-soft) !important; }
+        .contact-envelope-box button, .contact-envelope-box button[type="submit"], .contact-envelope-box .formkit-submit, .contact-envelope-box button.formkit-submit, .contact-envelope-box input[type="submit"], .contact-envelope-box [data-class="formkit-submit"] { background: var(--accent-color) !important; background-color: var(--accent-color) !important; background-image: none !important; color: #ffffff !important; border: none !important; border-radius: 12px !important; font-family: 'Quicksand', sans-serif !important; font-weight: 700 !important; padding: 14px 24px !important; min-height: 48px !important; width: 100% !important; cursor: pointer !important; }
+        .contact-envelope-box button:hover, .contact-envelope-box button[type="submit"]:hover, .contact-envelope-box .formkit-submit:hover { opacity: 0.92 !important; transform: translateY(-2px) !important; }
+
         .social-bar { display: flex; gap: 0.8rem; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 2px dashed rgba(128, 128, 128, 0.2); flex-wrap: wrap; }
         .social-bar-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 20px; border: 2px solid transparent; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; background: rgba(255, 255, 255, 0.5); color: inherit; }
         .social-bar-btn.liked { background: #ffe4e6; color: #db2777; border-color: #f472b6; }
@@ -605,30 +612,23 @@
         .comment-alias { font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
         .owner-badge { background: #db2777; color: white; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 10px; font-weight: 800; letter-spacing: 0.5px; box-shadow: 0 2px 6px rgba(219, 39, 119, 0.4); }
 
-        /* 🧆 "the falafel liked it!" badge */
         .falafel-liked-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
+            display: inline-flex; align-items: center; gap: 0.3rem;
             background: linear-gradient(135deg, #ffe4e6, #fbcfe8);
-            color: #db2777;
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 0.2rem 0.55rem;
-            border-radius: 10px;
-            margin-left: 0.4rem;
-            border: 1.5px dashed #f472b6;
+            color: #db2777; font-size: 0.65rem; font-weight: 800;
+            padding: 0.2rem 0.55rem; border-radius: 10px;
+            margin-left: 0.4rem; border: 1.5px dashed #f472b6;
             box-shadow: 0 2px 6px rgba(219, 39, 119, 0.25);
             animation: gentleBreathe 2.5s ease-in-out infinite;
             letter-spacing: 0.2px;
         }
-        body.mood-midnight .falafel-liked-badge { background: linear-gradient(135deg, #3b1e5c, #4c1d95); color: #e9d5ff; border-color: #a855f7; box-shadow: 0 2px 6px rgba(168, 85, 247, 0.4); }
-        body.mood-matcha .falafel-liked-badge { background: linear-gradient(135deg, #dcfce7, #d9f99d); color: #365314; border-color: #65a30d; box-shadow: 0 2px 6px rgba(101, 163, 13, 0.3); }
-        body.mood-lemonade .falafel-liked-badge { background: linear-gradient(135deg, #fef9c3, #fde68a); color: #854d0e; border-color: #ca8a04; box-shadow: 0 2px 6px rgba(202, 138, 4, 0.3); }
-        body.mood-strawberry .falafel-liked-badge { background: linear-gradient(135deg, #ffe4e6, #fecdd3); color: #9f1239; border-color: #e11d48; box-shadow: 0 2px 6px rgba(225, 29, 72, 0.3); }
-        body.mood-cyber .falafel-liked-badge { background: linear-gradient(135deg, #1e293b, #0f172a); color: #7dd3fc; border-color: #38bdf8; box-shadow: 0 2px 6px rgba(56, 189, 248, 0.4); }
-        body.mood-lavender .falafel-liked-badge { background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #6d28d9; border-color: #8b5cf6; box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3); }
-        body.mood-sunset .falafel-liked-badge { background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #c2410c; border-color: #f97316; box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3); }
+        body.mood-midnight .falafel-liked-badge { background: linear-gradient(135deg, #3b1e5c, #4c1d95); color: #e9d5ff; border-color: #a855f7; }
+        body.mood-matcha .falafel-liked-badge { background: linear-gradient(135deg, #dcfce7, #d9f99d); color: #365314; border-color: #65a30d; }
+        body.mood-lemonade .falafel-liked-badge { background: linear-gradient(135deg, #fef9c3, #fde68a); color: #854d0e; border-color: #ca8a04; }
+        body.mood-strawberry .falafel-liked-badge { background: linear-gradient(135deg, #ffe4e6, #fecdd3); color: #9f1239; border-color: #e11d48; }
+        body.mood-cyber .falafel-liked-badge { background: linear-gradient(135deg, #1e293b, #0f172a); color: #7dd3fc; border-color: #38bdf8; }
+        body.mood-lavender .falafel-liked-badge { background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #6d28d9; border-color: #8b5cf6; }
+        body.mood-sunset .falafel-liked-badge { background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #c2410c; border-color: #f97316; }
 
         .comment-body { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; }
         .comment-actions { display: flex; gap: 0.8rem; font-size: 0.8rem; opacity: 0.7; flex-wrap: wrap; }
@@ -652,9 +652,37 @@
         .music-progress-container { width: 100%; height: 6px; background: rgba(128, 128, 128, 0.2); border-radius: 3px; margin-top: 0.8rem; overflow: hidden; cursor: pointer; }
         .music-progress-bar { height: 100%; width: 0%; background: var(--accent); border-radius: 3px; transition: width 0.1s linear; box-shadow: 0 0 8px var(--accent-glow); }
 
-        #alias-modal .modal, #change-alias-modal .modal { max-width: 420px; text-align: center; }
-        #alias-modal h2, #change-alias-modal h2 { font-size: 1.5rem; }
+        #alias-modal .modal, #change-alias-modal .modal, #sparkle-code-modal .modal, #enter-sparkle-code-modal .modal { max-width: 460px; text-align: center; }
+        #alias-modal h2, #change-alias-modal h2, #sparkle-code-modal h2, #enter-sparkle-code-modal h2 { font-size: 1.4rem; }
         #alias-input-field, #change-alias-input-field { margin: 1rem 0; text-align: center; font-size: 1rem; }
+
+        /* ✨ SPARKLE CODE SYSTEM ✨ */
+        .sparkle-btn-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; width: 100%; }
+        .sparkle-mini-btn { background: none; border: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.8rem; opacity: 0.65; cursor: pointer; color: inherit; padding: 0; text-decoration: underline dotted; transition: opacity 0.2s, color 0.2s; }
+        .sparkle-mini-btn:hover { opacity: 1; color: var(--accent); }
+
+        .sparkle-code-display {
+            display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+            background: linear-gradient(135deg, rgba(255,240,246,0.9), rgba(255,228,240,0.9));
+            border: 3px dashed var(--accent-color); border-radius: 18px;
+            padding: 1.2rem 1.5rem; margin: 1rem 0;
+            font-family: 'Quicksand', sans-serif; font-weight: 800;
+            font-size: 1.3rem; letter-spacing: 2px;
+            color: var(--accent); text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+            word-break: break-all; animation: gentleBreathe 3s ease-in-out infinite;
+        }
+        body.mood-midnight .sparkle-code-display { background: linear-gradient(135deg, rgba(30,27,46,0.9), rgba(59,7,100,0.9)); color: #e9d5ff; }
+        body.mood-matcha .sparkle-code-display { background: linear-gradient(135deg, rgba(234,244,237,0.9), rgba(225,239,226,0.9)); color: #365314; }
+        body.mood-lemonade .sparkle-code-display { background: linear-gradient(135deg, rgba(255,253,240,0.9), rgba(254,249,195,0.9)); color: #713f12; }
+        body.mood-strawberry .sparkle-code-display { background: linear-gradient(135deg, rgba(255,235,240,0.9), rgba(255,224,230,0.9)); color: #881337; }
+        body.mood-cyber .sparkle-code-display { background: linear-gradient(135deg, rgba(20,20,38,0.9), rgba(15,23,42,0.9)); color: #7dd3fc; }
+        body.mood-lavender .sparkle-code-display { background: linear-gradient(135deg, rgba(248,240,255,0.9), rgba(237,233,254,0.9)); color: #6d28d9; }
+        body.mood-sunset .sparkle-code-display { background: linear-gradient(135deg, rgba(255,243,224,0.9), rgba(255,237,213,0.9)); color: #c2410c; }
+
+        .sparkle-copy-btn { background: var(--accent-color); color: white; border: none; border-radius: 12px; padding: 0.6rem 1.2rem; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .sparkle-copy-btn:hover { transform: scale(1.05); box-shadow: 0 6px 18px var(--accent-glow); }
+
+        #enter-sparkle-code-field { margin: 1rem 0; text-align: center; font-size: 1rem; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; }
     </style>
 </head>
 <body class="mood-pink">
@@ -1003,15 +1031,17 @@
     <div id="comment-drawer-overlay">
         <div id="comment-drawer" class="modal">
             <div class="drawer-header">
-                <span>💬 left a little note!</span>
+                <span>💬 leave a little note</span>
                 <button class="close-drawer-btn" onclick="closeCommentDrawer()">✕</button>
             </div>
             <div class="comments-list" id="comments-list-container"></div>
             <div class="comment-input-area">
                 <textarea id="comment-text-input" placeholder="say something nice... ♡" style="min-height: 80px;"></textarea>
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                    <button id="change-alias-btn" onclick="openChangeAliasModal()" style="background: none; border: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.8rem; opacity: 0.65; cursor: pointer; color: inherit; padding: 0; text-decoration: underline dotted;">✎ change alias</button>
-                    <button class="pink-pill-btn" style="padding: 0.6rem 1.5rem;" onclick="submitComment()">post note ✨</button>
+                <div class="sparkle-btn-row">
+                    <button id="change-alias-btn" class="sparkle-mini-btn" onclick="openChangeAliasModal()">✎ change alias</button>
+                    <button id="generate-sparkle-btn" class="sparkle-mini-btn" onclick="openSparkleCodeModal()">✨ share sparkle code</button>
+                    <button id="enter-sparkle-btn" class="sparkle-mini-btn" onclick="openEnterSparkleCodeModal()">🔗 have a code?</button>
+                    <button class="pink-pill-btn" style="padding: 0.6rem 1.5rem; margin-left: auto;" onclick="submitComment()">post note ✨</button>
                 </div>
             </div>
         </div>
@@ -1043,6 +1073,30 @@
         </div>
     </div>
 
+    <div id="sparkle-code-modal" class="modal-overlay">
+        <div class="modal">
+            <h2>✿ your sparkle code ✿</h2>
+            <p style="opacity: 0.75; font-size: 0.9rem; margin-bottom: 1rem;">save this somewhere safe! enter it on any device to keep your alias, likes, and hearts 🎀</p>
+            <div class="sparkle-code-display" id="sparkle-code-display">...</div>
+            <div style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
+                <button class="sparkle-copy-btn" onclick="copySparkleCode()">📋 copy code</button>
+                <button class="modal-btn cancel" onclick="closeSparkleCodeModal()">done</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="enter-sparkle-code-modal" class="modal-overlay">
+        <div class="modal">
+            <h2>✿ enter your sparkle code ✿</h2>
+            <p style="opacity: 0.75; font-size: 0.9rem; margin-bottom: 1rem;">paste your code to restore your alias, likes, and hearts on this device! 🎀</p>
+            <input type="text" id="enter-sparkle-code-field" placeholder="FALAFEL-XXXX-XXXX" maxlength="20">
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn cancel" onclick="closeEnterSparkleCodeModal()">cancel</button>
+                <button class="modal-btn save" onclick="applySparkleCode()">restore ✨</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <div>
             <span class="footer-brand" onclick="switchView('home')">falafelwithfeelings</span>
@@ -1059,7 +1113,7 @@
             <span>made with 🩷 feelings</span>
         </div>
     </footer>
-       <script src="https://www.youtube.com/iframe_api"></script>
+        <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
     let logoClickCount = 0;
@@ -1297,17 +1351,27 @@
         if (picker) picker.value = mood;
     }
 
+    // ✨ Cached syncCodes shared between getBinData and saveBinData
+    let cachedSyncCodes = {};
+
     async function getBinData() {
         try {
             const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': MASTER_KEY } });
             const data = await res.json();
             const record = data.record;
-            if (Array.isArray(record)) return { posts: record, siteBg: null };
-            return record || { posts: [], siteBg: null };
-        } catch (err) { return { posts: [], siteBg: null }; }
+            if (Array.isArray(record)) return { posts: record, siteBg: null, syncCodes: cachedSyncCodes };
+            const result = record || { posts: [], siteBg: null, syncCodes: {} };
+            if (result.syncCodes) cachedSyncCodes = result.syncCodes;
+            return result;
+        } catch (err) { return { posts: [], siteBg: null, syncCodes: cachedSyncCodes }; }
     }
 
     async function saveBinData(payload) {
+        if (!payload.syncCodes) {
+            payload.syncCodes = cachedSyncCodes;
+        } else {
+            cachedSyncCodes = payload.syncCodes;
+        }
         await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
@@ -1938,6 +2002,10 @@
         }
     }
 
+    // ==========================================
+    // 🎀 SOCIAL ECOSYSTEM, COMMENTS & POLLS LOGIC 🎀
+    // ==========================================
+
     let currentPostIndexForComments = null;
     let pendingCommentText = null;
     let pendingReplyData = null;
@@ -1994,11 +2062,11 @@
             <div class="social-bar">
                 <button class="social-bar-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${index}, this)">
                     <span>${isLiked ? '🩷' : '🤍'}</span>
-                    <span class="like-count">${likeCount}</span> sent a little love!
+                    <span class="like-count">${likeCount}</span> send a little love
                 </button>
                 <button class="social-bar-btn" onclick="openCommentDrawer(${index})">
                     <span>💬</span>
-                    <span class="comment-count">${commentCount}</span> left a note!
+                    <span class="comment-count">${commentCount}</span> leave a note
                 </button>
             </div>
         `;
@@ -2025,7 +2093,9 @@
                 btnElement.querySelector('span:first-child').innerText = '🩷';
             }
             btnElement.querySelector('.like-count').innerText = posts[index].likes;
-            await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
+            
+            const syncCodes = updateMySyncCodeInteractions();
+            await saveBinData({ posts: posts, siteBg: binData.siteBg || null, syncCodes: syncCodes });
         } catch (e) { console.error("Error toggling like:", e); }
     }
 
@@ -2248,7 +2318,6 @@
         } catch (e) { console.error(e); }
     }
 
-    // ✨ TOGGLE HEART — now a real toggle with falafel badge for admin likes
     async function toggleHeartComment(postIndex, commentId) {
         try {
             const heartedKey = `hearted_comment_${commentId}`;
@@ -2261,17 +2330,17 @@
             if (!comment.hearts) comment.hearts = 0;
             
             if (hasHearted) {
-                // Unlike
                 comment.hearts = Math.max(0, comment.hearts - 1);
                 localStorage.setItem(heartedKey, 'false');
                 if (isAdmin()) comment.falafelLiked = false;
             } else {
-                // Like
                 comment.hearts += 1;
                 localStorage.setItem(heartedKey, 'true');
                 if (isAdmin()) comment.falafelLiked = true;
             }
-            await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
+            
+            const syncCodes = updateMySyncCodeInteractions();
+            await saveBinData({ posts: posts, siteBg: binData.siteBg || null, syncCodes: syncCodes });
             await renderComments();
         } catch (e) { console.error(e); }
     }
@@ -2308,6 +2377,181 @@
         } catch (e) { console.error(e); }
     }
 
+    // ==========================================
+    // ✨ SPARKLE CODE — cross-device identity sync
+    // ==========================================
+    function generateSparkleCode() {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let code = 'FALAFEL-';
+        for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+        code += '-';
+        for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+        return code;
+    }
+
+    async function openSparkleCodeModal() {
+        try {
+            const binData = await getBinData();
+            const syncCodes = binData.syncCodes || {};
+            const alias = localStorage.getItem('visitor_alias') || "anonymous 🌸";
+            
+            let myCode = null;
+            for (const [code, info] of Object.entries(syncCodes)) {
+                if (info.visitorId === currentVisitorId) { myCode = code; break; }
+            }
+            
+            const likedPosts = [];
+            const heartedComments = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('liked_post_') && localStorage.getItem(key) === 'true') {
+                    likedPosts.push(parseInt(key.replace('liked_post_', '')));
+                }
+                if (key.startsWith('hearted_comment_') && localStorage.getItem(key) === 'true') {
+                    heartedComments.push(key.replace('hearted_comment_', ''));
+                }
+            }
+            
+            if (!myCode) {
+                myCode = generateSparkleCode();
+                syncCodes[myCode] = {
+                    visitorId: currentVisitorId,
+                    alias: alias,
+                    likedPosts: likedPosts,
+                    heartedComments: heartedComments,
+                    updatedAt: new Date().toISOString()
+                };
+            } else {
+                syncCodes[myCode].alias = alias;
+                syncCodes[myCode].likedPosts = likedPosts;
+                syncCodes[myCode].heartedComments = heartedComments;
+                syncCodes[myCode].updatedAt = new Date().toISOString();
+            }
+            
+            cachedSyncCodes = syncCodes;
+            
+            await saveBinData({ 
+                posts: binData.posts || [], 
+                siteBg: binData.siteBg || null,
+                syncCodes: syncCodes
+            });
+            
+            document.getElementById('sparkle-code-display').innerText = myCode;
+            document.getElementById('sparkle-code-modal').style.display = 'flex';
+        } catch (e) {
+            console.error(e);
+            alert("Couldn't generate your sparkle code. Try again in a sec! 😢");
+        }
+    }
+
+    function closeSparkleCodeModal() {
+        document.getElementById('sparkle-code-modal').style.display = 'none';
+    }
+
+    function copySparkleCode() {
+        const code = document.getElementById('sparkle-code-display').innerText;
+        if (!code || code === '...') return;
+        navigator.clipboard.writeText(code).then(() => {
+            alert("✨ Code copied! Save it somewhere safe 🎀");
+        }).catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = code;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            alert("✨ Code copied! Save it somewhere safe 🎀");
+        });
+    }
+
+    function openEnterSparkleCodeModal() {
+        document.getElementById('enter-sparkle-code-field').value = "";
+        document.getElementById('enter-sparkle-code-modal').style.display = 'flex';
+    }
+
+    function closeEnterSparkleCodeModal() {
+        document.getElementById('enter-sparkle-code-modal').style.display = 'none';
+    }
+
+    async function applySparkleCode() {
+        const raw = document.getElementById('enter-sparkle-code-field').value.trim().toUpperCase();
+        if (!raw) { alert("Please enter a sparkle code! ✨"); return; }
+        
+        try {
+            const binData = await getBinData();
+            const syncCodes = binData.syncCodes || {};
+            const entry = syncCodes[raw];
+            
+            if (!entry) {
+                alert("Hmm, that code doesn't exist. Double-check the spelling? 🌸");
+                return;
+            }
+            
+            localStorage.setItem('visitor_id', entry.visitorId);
+            localStorage.setItem('visitor_alias', entry.alias);
+            currentVisitorId = entry.visitorId;
+            
+            (entry.likedPosts || []).forEach(idx => {
+                localStorage.setItem(`liked_post_${idx}`, 'true');
+            });
+            (entry.heartedComments || []).forEach(id => {
+                localStorage.setItem(`hearted_comment_${id}`, 'true');
+            });
+            
+            closeEnterSparkleCodeModal();
+            await renderComments();
+            await renderAllPosts();
+            
+            setTimeout(() => {
+                alert(`✨ Welcome back, ${entry.alias}! Your identity, likes, and hearts are restored on this device 🎀`);
+            }, 100);
+        } catch (e) {
+            console.error(e);
+            alert("Something went wrong restoring your code. Try again! 😢");
+        }
+    }
+
+    function updateMySyncCodeInteractions() {
+        const mine = Object.entries(cachedSyncCodes).find(([code, info]) => info.visitorId === currentVisitorId);
+        if (!mine) return cachedSyncCodes;
+        
+        const [code, entry] = mine;
+        const likedPosts = [];
+        const heartedComments = [];
+        
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('liked_post_') && localStorage.getItem(key) === 'true') {
+                likedPosts.push(parseInt(key.replace('liked_post_', '')));
+            }
+            if (key.startsWith('hearted_comment_') && localStorage.getItem(key) === 'true') {
+                heartedComments.push(key.replace('hearted_comment_', ''));
+            }
+        }
+        
+        entry.likedPosts = likedPosts;
+        entry.heartedComments = heartedComments;
+        entry.updatedAt = new Date().toISOString();
+        cachedSyncCodes[code] = entry;
+        return cachedSyncCodes;
+    }
+
+    function restoreMyInteractionsFromServer() {
+        const mine = Object.entries(cachedSyncCodes).find(([code, info]) => info.visitorId === currentVisitorId);
+        if (!mine) return;
+        
+        const [_, entry] = mine;
+        (entry.likedPosts || []).forEach(idx => {
+            localStorage.setItem(`liked_post_${idx}`, 'true');
+        });
+        (entry.heartedComments || []).forEach(id => {
+            localStorage.setItem(`hearted_comment_${id}`, 'true');
+        });
+    }
+
+    // ==========================================
+    // 🎵 MUSIC WIDGET: PROGRESS BAR + LOOP 🎵
+    // ==========================================
     let progressInterval;
     let stateWatcher;
     let isLooping = false;
@@ -2396,14 +2640,20 @@
         audioPlayer.seekTo(seekTime, true);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
         loadSavedBackground();
         initFallingBackground();
         initGlobalEmus();
+        
+        try {
+            await getBinData();
+            restoreMyInteractionsFromServer();
+        } catch (e) { console.error(e); }
+        
         renderAllPosts();
         updateWidgetTrackDisplay();
         startStateWatcher();
     });
     </script>
 </body>
-</html> 
+</html>
