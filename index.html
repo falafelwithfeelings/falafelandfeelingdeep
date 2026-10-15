@@ -106,16 +106,111 @@
         .bouncing-emu { position: fixed; object-fit: contain; background: transparent; border: none; box-shadow: none; pointer-events: none; z-index: 2; user-select: none; }
         @keyframes emuBounce { 0% { transform: translateY(0px) rotate(-12deg) scale(0.92); } 100% { transform: translateY(-45px) rotate(12deg) scale(1.08); } }
         @keyframes emuFloatSide { 0% { margin-left: 0px; } 100% { margin-left: 60px; } }
-        @keyframes etherealFloat { 0%, 100% { transform: translateY(0px) rotate(-0.5deg); } 50% { transform: translateY(-8px) rotate(0.5deg); } }
-        @keyframes etherealFadeIn { 0% { opacity: 0; transform: translateY(15px) scale(0.98); } 100% { opacity: 1; transform: translateY(0px) scale(1); } }
 
-        .cutesy-snapshot, .card-cover-img { animation: etherealFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, etherealFloat 6s ease-in-out infinite; animation-delay: 0s, 1.2s; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease, filter 0.5s ease; cursor: zoom-in; transform-origin: center center; }
-        .cutesy-snapshot:hover, .card-cover-img:hover { transform: translateY(-4px) scale(1.02) rotate(0deg) !important; filter: brightness(1.04); z-index: 30 !important; }
-        .cutesy-snapshot { padding: 10px; border-radius: 20px; width: 100%; max-width: 480px; max-height: 400px; object-fit: cover; position: relative; display: block; margin: 0 auto; }
+        /* ✨ CUTEST NEW ANIMATIONS ✨ */
+        @keyframes etherealFloat {
+            0%, 100% { transform: translateY(0px) rotate(-0.5deg); }
+            50% { transform: translateY(-8px) rotate(0.5deg); }
+        }
+        @keyframes etherealFadeIn {
+            0% { opacity: 0; transform: translateY(15px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0px) scale(1); }
+        }
+        @keyframes softGlow {
+            0%, 100% { box-shadow: 0 0 0px rgba(255, 255, 255, 0); }
+            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+        }
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        @keyframes sparkleSpin {
+            0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
+            50% { transform: rotate(180deg) scale(1.15); opacity: 1; }
+            100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
+        }
+
+        /* Enhanced photo animation - gentle float + hover glow */
+        .cutesy-snapshot, .card-cover-img {
+            animation: etherealFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, etherealFloat 6s ease-in-out infinite;
+            animation-delay: 0s, 1.2s;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, filter 0.6s ease;
+            cursor: zoom-in;
+            transform-origin: center center;
+        }
+        .cutesy-snapshot:hover, .card-cover-img:hover {
+            transform: translateY(-8px) scale(1.04) rotate(-1deg) !important;
+            filter: brightness(1.1) saturate(1.1);
+            box-shadow: 0 20px 45px rgba(219, 39, 119, 0.35), 0 0 30px rgba(255, 255, 255, 0.3);
+            z-index: 30 !important;
+        }
+        .cutesy-snapshot {
+            padding: 10px; border-radius: 20px;
+            width: 100%; max-width: 480px; max-height: 400px;
+            object-fit: cover; position: relative;
+            display: block; margin: 0 auto;
+        }
+
+        /* Cards gently breathe + fade in */
+        .card, .announcement-card, .bio-card-preview, .about-scrapbook-card, .post-reader-container, .page-header-box, .contact-envelope-box {
+            animation: etherealFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease, border-color 0.5s ease;
+        }
+        .card:hover, .announcement-card:hover, .bio-card-preview:hover, .about-scrapbook-card:hover {
+            transform: translateY(-6px) scale(1.005);
+        }
+
+        /* Buttons get a shine sweep + lift */
+        .cta-btn, .pink-pill-btn {
+            position: relative;
+            overflow: hidden;
+            animation: etherealFadeIn 1s ease;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        }
+        .cta-btn::before, .pink-pill-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.6s ease;
+        }
+        .cta-btn:hover::before, .pink-pill-btn:hover::before { left: 100%; }
+        .cta-btn:hover, .pink-pill-btn:hover {
+            transform: scale(1.06) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(219, 39, 119, 0.5) !important;
+        }
+
+        /* Social bar buttons get a heart-flutter */
+        .social-bar-btn { transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .social-bar-btn:hover { transform: translateY(-3px) scale(1.05); }
+        .social-bar-btn.liked { animation: gentlePulse 0.6s ease; }
+
+        /* Toggle pills get soft glow */
+        .admin-badge:hover, .mood-selector-pill:hover, .emu-toggle-pill:hover, .local-bg-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        /* Sparkly header decorations */
+        .page-header-box::before, .page-header-box::after, .about-scrapbook-card::before, .contact-envelope-box::before, .bio-card-preview::before, .post-reader-container::before {
+            animation: sparkleSpin 4s ease-in-out infinite;
+        }
+
+        /* Logo avatar gently floats */
+        .avatar { animation: etherealFloat 4s ease-in-out infinite; }
+        .logo:hover .avatar { animation: sparkleSpin 1s ease; }
+
+        /* Poll options soft hover lift */
+        .poll-option { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease; }
+        .poll-option:hover { transform: translateY(-2px) scale(1.02); }
+
+        /* Comment items fade in cutely */
+        .comment-item { animation: etherealFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 
         header, .view, .site-footer, .modal-overlay, .music-widget { position: relative; z-index: 10; }
         .view { display: none; flex: 1 0 auto; }
-        .view.active-view { display: block; }
+        .view.active-view { display: block; animation: etherealFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 
         .photo-gallery-container { display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; align-items: center; margin: 2rem 0; width: 100%; }
 
@@ -130,7 +225,7 @@
         body.mood-sunset .site-header { background-color: rgba(255, 237, 213, 0.92); border-bottom: 2px dashed #f97316; }
 
         .logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.15rem; cursor: pointer; }
-        .avatar { background: rgba(255,255,255,0.6); padding: 0.35rem 0.55rem; border-radius: 50%; font-size: 1.2rem; animation: etherealFloat 4s ease-in-out infinite; }
+        .avatar { background: rgba(255,255,255,0.6); padding: 0.35rem 0.55rem; border-radius: 50%; font-size: 1.2rem; }
         .nav-links { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
         .nav-links a { text-decoration: none; color: inherit; font-weight: 600; cursor: pointer; transition: color 0.2s; }
         .nav-links a:hover, .nav-links a.active { opacity: 0.75; }
@@ -208,7 +303,7 @@
         body.mood-sunset .hero-title-box { background: rgba(255, 243, 224, 0.9); border: 3px dashed #f97316; box-shadow: 0 10px 30px rgba(249, 115, 22, 0.25); }
 
         .main-title { font-size: 3.8rem; font-weight: 800; margin: 0; letter-spacing: -1.5px; }
-        .cta-btn, .pink-pill-btn { color: white; border: none; padding: 0.85rem 2rem; font-size: 1rem; font-weight: 600; border-radius: 30px; cursor: pointer; transition: transform 0.2s, background-color 0.3s; font-family: 'Quicksand', sans-serif; }
+        .cta-btn, .pink-pill-btn { color: white; border: none; padding: 0.85rem 2rem; font-size: 1rem; font-weight: 600; border-radius: 30px; cursor: pointer; font-family: 'Quicksand', sans-serif; }
         body.mood-pink .cta-btn, body.mood-pink .pink-pill-btn { background-color: #db2777; box-shadow: 0 4px 14px rgba(219, 39, 119, 0.45); }
         body.mood-midnight .cta-btn, body.mood-midnight .pink-pill-btn { background-color: #9333ea; box-shadow: 0 4px 14px rgba(147, 51, 234, 0.4); }
         body.mood-matcha .cta-btn, body.mood-matcha .pink-pill-btn { background-color: #65a30d; box-shadow: 0 4px 14px rgba(101, 163, 13, 0.4); }
@@ -217,7 +312,6 @@
         body.mood-cyber .cta-btn, body.mood-cyber .pink-pill-btn { background-color: #0284c7; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.5); }
         body.mood-lavender .cta-btn, body.mood-lavender .pink-pill-btn { background-color: #8b5cf6; box-shadow: 0 4px 14px rgba(139, 92, 246, 0.45); }
         body.mood-sunset .cta-btn, body.mood-sunset .pink-pill-btn { background-color: #f97316; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.45); }
-        .cta-btn:hover, .pink-pill-btn:hover { transform: scale(1.05); }
 
         .page-header-box { backdrop-filter: blur(10px); border-radius: 24px; max-width: 750px; margin: 2.5rem auto 1.5rem auto; padding: 2.5rem 1.5rem; position: relative; text-align: center; }
         body.mood-pink .page-header-box { background: rgba(255, 240, 246, 0.95); border: 3px dashed #f472b6; box-shadow: 0 10px 30px rgba(244, 114, 182, 0.22); }
@@ -234,7 +328,7 @@
         .page-header-box::after { right: 20px; }
 
         .blog-grid { display: flex; justify-content: center; gap: 2rem; padding: 2rem; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; }
-        .card { border-radius: 24px; padding: 2rem; width: 350px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .card { border-radius: 24px; padding: 2rem; width: 350px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; position: relative; }
         body.mood-pink .card { background: #fff0f6; border: 3px dashed #f472b6; box-shadow: 0 10px 25px rgba(244, 114, 182, 0.18); }
         body.mood-midnight .card { background: #1e1b2e; border: 3px dashed #a855f7; box-shadow: 0 10px 25px rgba(168, 85, 247, 0.25); }
         body.mood-matcha .card { background: #f4fbf5; border: 3px dashed #65a30d; box-shadow: 0 10px 25px rgba(101, 163, 13, 0.18); }
@@ -244,7 +338,6 @@
         body.mood-lavender .card { background: #f8f0ff; border: 3px dashed #8b5cf6; box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2); }
         body.mood-sunset .card { background: #fff3e0; border: 3px dashed #f97316; box-shadow: 0 10px 25px rgba(249, 115, 22, 0.2); }
 
-        .card:hover { transform: translateY(-4px); }
         .card-cover-img { width: 100%; max-height: 240px; object-fit: cover; border-radius: 14px; margin-bottom: 1rem; }
         .card-tag-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
         .card-tag { font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 6px; }
@@ -584,8 +677,7 @@
            ========================================== */
 
         .social-bar { display: flex; gap: 0.8rem; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 2px dashed rgba(128, 128, 128, 0.2); flex-wrap: wrap; }
-        .social-bar-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 20px; border: 2px solid transparent; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); background: rgba(255, 255, 255, 0.5); color: inherit; }
-        .social-bar-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .social-bar-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 20px; border: 2px solid transparent; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; background: rgba(255, 255, 255, 0.5); color: inherit; }
         .social-bar-btn.liked { background: #ffe4e6; color: #db2777; border-color: #f472b6; }
 
         #comment-drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); z-index: 3000; display: none; justify-content: flex-end; flex-direction: column; align-items: center; }
@@ -614,8 +706,7 @@
 
         .poll-widget { margin-top: 1.5rem; padding: 1.2rem; border-radius: 18px; background: rgba(255, 255, 255, 0.5); border: 2px dashed rgba(128, 128, 128, 0.2); }
         .poll-question { font-weight: 800; font-size: 1.05rem; margin-bottom: 1rem; }
-        .poll-option { position: relative; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(128, 128, 128, 0.15); margin-bottom: 0.6rem; cursor: pointer; overflow: hidden; transition: transform 0.2s; }
-        .poll-option:hover { transform: scale(1.01); }
+        .poll-option { position: relative; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(128, 128, 128, 0.15); margin-bottom: 0.6rem; cursor: pointer; overflow: hidden; }
         .poll-option.voted { cursor: default; }
         .poll-progress { position: absolute; top: 0; left: 0; height: 100%; background: rgba(219, 39, 119, 0.15); width: 0%; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
         .poll-option.voted .poll-progress { background: rgba(219, 39, 119, 0.25); }
@@ -625,8 +716,14 @@
 
         .music-progress-container { width: 100%; height: 6px; background: rgba(128, 128, 128, 0.2); border-radius: 3px; margin-top: 0.8rem; overflow: hidden; cursor: pointer; }
         .music-progress-bar { height: 100%; width: 0%; background: #db2777; border-radius: 3px; transition: width 0.1s linear; }
+
+        /* Alias Modal (the little popup that asks for a name) */
+        #alias-modal .modal { max-width: 420px; text-align: center; }
+        #alias-modal h2 { font-size: 1.5rem; }
+        #alias-input-field { margin: 1rem 0; text-align: center; font-size: 1rem; }
     </style>
-    <body class="mood-pink">
+</head>
+<body class="mood-pink">
 
     <div id="falling-bg"></div>
     <div id="emu-layer"></div>
@@ -862,7 +959,7 @@
             <div class="contact-envelope-box" style="margin-top: 2rem;">
                 <div class="warning-badge" style="background: #f48fb1; color: #fff;">⋆.𐙚 ̊. Join The Community! </div>
                 <h2 style="margin-top: 0; font-size: 1.6rem;" class="about-section-title">sign up so you never miss a new brain dump ────୨ৎ──── </h2>
-                <p class="about-text" style="margin-bottom: 1.5rem;">whenever a new blog drops, get it straight to your inbox! . ݁₊ ⊹ . ݁ ⟡ ݁ . ⊹ ₊ ݁. </p>
+                <p class="about-text" style="margin-bottom: 1.5rem;">whenever a new blog drops, get it straight to your inbox! 🪼⋆｡𖦹°🫧⋆.ೃ࿔*:･ </p>
                 <script async data-uid="efab41ce33" src="https://falafelwithfeelings.kit.com/efab41ce33/index.js"></script>
                 <script>
                     window.addEventListener('load', function() {
@@ -1007,9 +1104,22 @@
             </div>
             <div class="comments-list" id="comments-list-container"></div>
             <div class="comment-input-area">
-                <input type="text" id="comment-alias-input" placeholder="write your alias ˚ʚ♡ɞ˚">
-                <textarea id="comment-text-input" placeholder="say something nice... ⋆.𐩏 ̊"></textarea>
+                <textarea id="comment-text-input" placeholder="say something nice... ⋆.𐩏 ̊" style="min-height: 80px;"></textarea>
                 <button class="pink-pill-btn" style="align-self: flex-end; padding: 0.6rem 1.5rem;" onclick="submitComment()">post note ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✨ Cutesy Alias Modal (only pops up when someone without a saved alias wants to comment) -->
+    <div id="alias-modal" class="modal-overlay">
+        <div class="modal">
+            <h2>✿ what should we call you? ✿</h2>
+            <p style="opacity: 0.75; font-size: 0.9rem; margin-bottom: 1.2rem;">pick a cute name/nickname so people know who's leaving notes! 🎀</p>
+            <input type="text" id="alias-input-field" placeholder="your alias here... ♡" maxlength="30">
+            <p style="opacity: 0.55; font-size: 0.8rem; margin: -0.4rem 0 1rem 0;">leave blank to post as anonymous 🌸</p>
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn cancel" onclick="cancelAliasModal()">cancel</button>
+                <button class="modal-btn save" onclick="confirmAliasModal()">save ✨</button>
             </div>
         </div>
     </div>
@@ -1031,8 +1141,7 @@
             <span>made with 🩷 feelings</span>
         </div>
     </footer>
-
-    <!-- YouTube IFrame API Script -->
+        <!-- YouTube IFrame API Script -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
@@ -1141,8 +1250,7 @@
                 isAudioPlaying = true;
                 if(btn) btn.innerText = "⏸ Pause";
                 startProgressTracker();
-                
-                // ✨ FIX: Auto-update the song title when the track changes
+                // ✨ Auto-update the song title when the track changes
                 try {
                     const idx = audioPlayer.getPlaylistIndex();
                     if (idx !== undefined && idx !== -1 && idx !== currentTrackIndex) {
@@ -1156,11 +1264,12 @@
                 clearInterval(progressInterval);
             } else if (event.data === YT.PlayerState.ENDED) {
                 if (isLooping) {
-                    // ✨ FIX: Manual loop for the current track
-                    audioPlayer.seekTo(0);
-                    audioPlayer.playVideo();
+                    // ✨ FIXED LOOP: manually seek to 0 and replay
+                    try {
+                        audioPlayer.seekTo(0);
+                        audioPlayer.playVideo();
+                    } catch(e) {}
                 } else {
-                    // Auto-advance to the next track
                     currentTrackIndex = (currentTrackIndex + 1) % playlistTracks.length;
                     updateWidgetTrackDisplay();
                 }
@@ -1537,7 +1646,7 @@
             const coverImgUrl = (showCover && photosArr.length > 0) ? photosArr[0] : null;
             const coverImgHtml = coverImgUrl ? `<img src="${coverImgUrl}" class="card-cover-img" alt="Cover" onclick="event.stopPropagation(); openLightbox('${coverImgUrl}')" title="Click to view full size">` : '';
 
-            // ✨ FIX: Only show video on card if the admin chose to
+            // ✨ Only show video on card if the admin chose to
             let videoHtml = '';
             const shouldShowVideo = p.showVideoOnCard !== false && p.showVideoOnCard !== "false";
             if (p.videoUrl && shouldShowVideo) {
@@ -1593,7 +1702,7 @@
                 galleryHtml += '</div>';
             }
 
-            // Announcements always show video directly on card (no toggle option for announcements)
+            // Announcements always show video directly on card
             let videoHtml = '';
             if (ann.videoUrl) {
                 const ytId = getYouTubeId(ann.videoUrl);
@@ -1644,7 +1753,7 @@
                 galleryHtml += '</div>';
             }
 
-            // ✨ FIX: Always show video inside the post reader!
+            // ✨ Always show video inside the post reader
             let videoHtml = '';
             if (post.videoUrl) {
                 const ytId = getYouTubeId(post.videoUrl);
@@ -1898,6 +2007,9 @@
         // ==========================================
 
         let currentPostIndexForComments = null;
+        let pendingCommentText = null; // stores comment text while we ask for alias
+        let pendingReplyData = null;   // { postIndex, parentCommentId, text }
+        
         let currentVisitorId = localStorage.getItem('visitor_id');
         if (!currentVisitorId) {
             currentVisitorId = 'user_' + Math.random().toString(36).substr(2, 9);
@@ -2008,8 +2120,6 @@
         async function openCommentDrawer(postIndex) {
             currentPostIndexForComments = postIndex;
             document.getElementById('comment-drawer-overlay').style.display = 'flex';
-            const savedAlias = localStorage.getItem('visitor_alias');
-            if (savedAlias) document.getElementById('comment-alias-input').value = savedAlias;
             await renderComments();
         }
 
@@ -2090,14 +2200,56 @@
             }
         }
 
+        // ✨ NEW: submitComment now checks for saved alias first
         async function submitComment() {
-            const aliasInput = document.getElementById('comment-alias-input');
             const textInput = document.getElementById('comment-text-input');
-            let alias = aliasInput.value.trim();
             const text = textInput.value.trim();
             if (!text) { alert("Please write something nice before posting! ✨"); return; }
-            if (!alias) { alias = "anonymous 🌸"; } else { localStorage.setItem('visitor_alias', alias); }
             
+            const savedAlias = localStorage.getItem('visitor_alias');
+            
+            if (!savedAlias) {
+                // No saved alias yet — ask for one via the cute modal
+                pendingCommentText = text;
+                document.getElementById('alias-input-field').value = "";
+                document.getElementById('alias-modal').style.display = 'flex';
+                return;
+            }
+            
+            // Has saved alias — post directly
+            await actuallyPostComment(savedAlias, text);
+        }
+
+        // ✨ NEW: handles alias modal confirm
+        async function confirmAliasModal() {
+            const aliasInput = document.getElementById('alias-input-field').value.trim();
+            const alias = aliasInput || "anonymous 🌸";
+            localStorage.setItem('visitor_alias', alias);
+            document.getElementById('alias-modal').style.display = 'none';
+            
+            // Case 1: a new comment is pending
+            if (pendingCommentText) {
+                const text = pendingCommentText;
+                pendingCommentText = null;
+                await actuallyPostComment(alias, text);
+            }
+            // Case 2: a reply is pending
+            else if (pendingReplyData) {
+                const { postIndex, parentCommentId, text } = pendingReplyData;
+                pendingReplyData = null;
+                await actuallyPostReply(postIndex, parentCommentId, alias, text);
+            }
+        }
+
+        // ✨ NEW: handles alias modal cancel
+        function cancelAliasModal() {
+            document.getElementById('alias-modal').style.display = 'none';
+            pendingCommentText = null;
+            pendingReplyData = null;
+        }
+
+        // ✨ NEW: actually posts the comment (separated from submitComment for alias flow)
+        async function actuallyPostComment(alias, text) {
             try {
                 const binData = await getBinData();
                 let posts = binData.posts || [];
@@ -2112,7 +2264,7 @@
                 };
                 posts[currentPostIndexForComments].comments.push(newComment);
                 await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
-                textInput.value = '';
+                document.getElementById('comment-text-input').value = '';
                 await renderComments();
                 const countEl = document.querySelector(`.social-bar-btn[onclick="openCommentDrawer(${currentPostIndexForComments})"] .comment-count`);
                 if (countEl) countEl.innerText = posts[currentPostIndexForComments].comments.length;
@@ -2159,19 +2311,28 @@
             } catch (e) { console.error(e); }
         }
 
+        // ✨ NEW: reply flow also uses the alias modal
         window.openReplyInput = function(postIndex, parentCommentId) {
             const replyText = prompt("Write your reply:");
-            if (replyText && replyText.trim()) { submitReply(postIndex, parentCommentId, replyText.trim()); }
+            if (!replyText || !replyText.trim()) return;
+            const cleanText = replyText.trim();
+            const savedAlias = localStorage.getItem('visitor_alias');
+            if (savedAlias) {
+                actuallyPostReply(postIndex, parentCommentId, savedAlias, cleanText);
+            } else {
+                pendingReplyData = { postIndex, parentCommentId, text: cleanText };
+                document.getElementById('alias-input-field').value = "";
+                document.getElementById('alias-modal').style.display = 'flex';
+            }
         };
 
-        async function submitReply(postIndex, parentCommentId, text) {
+        async function actuallyPostReply(postIndex, parentCommentId, alias, text) {
             try {
                 const binData = await getBinData();
                 let posts = binData.posts || [];
                 const parentComment = posts[postIndex].comments.find(c => c.id === parentCommentId);
                 if (parentComment) {
                     if (!parentComment.replies) parentComment.replies = [];
-                    let alias = localStorage.getItem('visitor_alias') || "anonymous 🌸";
                     parentComment.replies.push({
                         id: 'reply_' + Math.random().toString(36).substr(2, 9),
                         visitorId: currentVisitorId, alias: alias, text: text,
@@ -2183,7 +2344,9 @@
             } catch (e) { console.error(e); }
         }
 
-        // MUSIC WIDGET PROGRESS BAR & LOOPING
+        // ==========================================
+        // 🎵 MUSIC WIDGET PROGRESS BAR & FIXED LOOPING 🎵
+        // ==========================================
         let progressInterval;
         let isLooping = false;
 
@@ -2209,9 +2372,6 @@
                 btn.innerText = isLooping ? "🔁 Looping: ON" : "🔁 Looping: OFF";
                 btn.style.opacity = isLooping ? "1" : "0.6";
             }
-            // If turning ON looping while the song is already playing, we don't need to do anything
-            // because the onStateChange event will handle replaying when it ends.
-            // If turning OFF looping, the playlist will auto-advance on the next ENDED event.
         }
 
         function seekMusic(event) {
@@ -2235,4 +2395,3 @@
     </script>
 </body>
 </html>
-</head>
