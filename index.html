@@ -121,7 +121,8 @@
         body.mood-lavender .cta-btn, body.mood-lavender .pink-pill-btn { background-color: #8b5cf6; box-shadow: 0 4px 14px rgba(139, 92, 246, 0.45); }
         body.mood-sunset .cta-btn, body.mood-sunset .pink-pill-btn { background-color: #f97316; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.45); }
 
-        .social-bar-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 20px; border: 2px dashed var(--accent-color); font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; background: var(--accent-soft); color: inherit; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .social-bar { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1.5rem; align-items: center; }
+        .social-bar-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; border-radius: 20px; border: 2px dashed var(--accent-color); font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; background: var(--accent-soft); color: inherit; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .social-bar-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 18px var(--accent-glow); }
         .social-bar-btn.liked { background: var(--accent-color); color: #ffffff; border-color: var(--accent-color); border-style: solid; animation: gentleBreathe 0.8s ease infinite; }
         body.mood-midnight .social-bar-btn, body.mood-cyber .social-bar-btn { background: rgba(255, 255, 255, 0.12); }
@@ -169,7 +170,6 @@
         .music-widget { position: fixed; bottom: 25px; right: 25px; border-radius: 24px; padding: 1.2rem; width: 320px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 1500; border: 3px dashed; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease; }
         .music-widget.hidden { transform: translateX(calc(100% + 35px)); }
 
-        /* 🔒 The little X button INSIDE the widget (top-right corner) — always visible */
         .music-widget-close {
             position: absolute;
             top: 10px;
@@ -194,7 +194,6 @@
         }
         .music-widget-close:hover { transform: scale(1.1); background: var(--accent-soft); }
 
-        /* 🎵 Floating music button — appears when widget is hidden */
         #music-float-btn {
             display: none;
             position: fixed;
@@ -563,7 +562,19 @@
         .comment-item.pinned { border: 2px dashed #f59e0b; background: rgba(254, 243, 199, 0.5); }
         .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; flex-wrap: wrap; gap: 0.4rem; }
         .comment-alias { font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-        .owner-badge { background: #db2777; color: white; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 10px; font-weight: 800; letter-spacing: 0.5px; box-shadow: 0 2px 6px rgba(219, 39, 119, 0.4); }
+        
+        .owner-badge { 
+            background: var(--accent-color); 
+            color: #ffffff; 
+            font-size: 0.65rem; 
+            padding: 0.15rem 0.5rem; 
+            border-radius: 10px; 
+            font-weight: 800; 
+            letter-spacing: 0.5px; 
+            box-shadow: 0 2px 6px var(--accent-soft); 
+            transition: all 0.3s ease;
+        }
+        
         .falafel-liked-badge { display: inline-flex; align-items: center; gap: 0.3rem; background: linear-gradient(135deg, #ffe4e6, #fbcfe8); color: #db2777; font-size: 0.65rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 10px; margin-left: 0.4rem; border: 1.5px dashed #f472b6; box-shadow: 0 2px 6px rgba(219, 39, 119, 0.25); animation: gentleBreathe 2.5s ease-in-out infinite; letter-spacing: 0.2px; }
         body.mood-midnight .falafel-liked-badge { background: linear-gradient(135deg, #3b1e5c, #4c1d95); color: #e9d5ff; border-color: #a855f7; }
         body.mood-matcha .falafel-liked-badge { background: linear-gradient(135deg, #dcfce7, #d9f99d); color: #365314; border-color: #65a30d; }
@@ -608,7 +619,7 @@
         #alias-input-field, #change-alias-input-field { margin: 1rem 0; text-align: center; font-size: 1rem; }
 
         .sparkle-btn-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; width: 100%; }
-        .sparkle-mini-btn { background: none; border: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.8rem; opacity: 0.75; cursor: pointer; color: var(--accent-color); padding: 0; text-decoration: underline dotted; }
+        .sparkle-mini-btn { background: none; border: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.8rem; opacity: 0.75; cursor: pointer; color: var(--accent-color); padding: 0; text-decoration: none; }
         .sparkle-mini-btn:hover { opacity: 1; }
 
         .sparkle-code-display { display: flex; align-items: center; justify-content: center; gap: 0.6rem; border-width: 3px; border-style: dashed; border-radius: 18px; padding: 1.2rem 1.5rem; margin: 1rem 0; font-family: 'Quicksand', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: 2px; word-break: break-all; animation: gentleBreathe 3s ease-in-out infinite; }
@@ -2257,6 +2268,10 @@
                         const isReplyOwner = reply.isAdmin;
                         const isMyReply = reply.visitorId === currentVisitorId;
                         const canDeleteReply = isAdmin() || isMyReply;
+                        const canEditReply = isAdmin() || isMyReply;
+                        const iHeartedThisReply = localStorage.getItem(`hearted_reply_${reply.id}`) === 'true';
+                        const replyHearts = reply.hearts || 0;
+                        
                         replyHtml += `
                             <div class="comment-item" style="margin-top: 0.5rem; padding: 0.6rem;">
                                 <div class="comment-header">
@@ -2265,7 +2280,9 @@
                                 </div>
                                 <div class="comment-body">${escapeHTML(reply.text)}</div>
                                 <div class="comment-actions">
-                                    ${canDeleteReply ? `<button onclick="deleteComment(${currentPostIndexForComments}, '${reply.id}')">🗑️ Delete</button>` : ''}
+                                    ${canEditReply ? `<button data-text="${escapeHTML(reply.text)}" onclick="openEditReplyInput('${comment.id}', '${reply.id}', this.getAttribute('data-text'))">✏️ Edit</button>` : ''}
+                                    <button onclick="toggleHeartReply('${comment.id}', '${reply.id}')">${iHeartedThisReply ? '🩷' : '🤍'} ${replyHearts}</button>
+                                    ${canDeleteReply ? `<button onclick="deleteComment(${currentPostIndexForComments}, '${reply.id}', true, '${comment.id}')">🗑️ Delete</button>` : ''}
                                 </div>
                             </div>
                         `;
@@ -2388,15 +2405,25 @@
         } catch (e) { console.error(e); alert("Failed to post comment. Please try again! 😢"); }
     }
 
-    async function deleteComment(postIndex, commentId) {
+    async function deleteComment(postIndex, commentId, isReply = false, parentId = null) {
         if (!confirm("Are you sure you want to delete this note? 🗑️")) return;
         try {
             const binData = await getBinData();
             let posts = binData.posts || [];
-            if (!posts[postIndex] || !posts[postIndex].comments) return;
-            posts[postIndex].comments = posts[postIndex].comments.filter(c => c.id !== commentId);
+            if (!posts[postIndex]) return;
+
+            if (isReply && parentId) {
+                const parentComment = posts[postIndex].comments.find(c => c.id === parentId);
+                if (parentComment && parentComment.replies) {
+                    parentComment.replies = parentComment.replies.filter(r => r.id !== commentId);
+                }
+            } else {
+                posts[postIndex].comments = posts[postIndex].comments.filter(c => c.id !== commentId);
+            }
+            
             await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
             await renderComments();
+            
             const countEl = document.querySelector(`.social-bar-btn[onclick="openCommentDrawer(${postIndex})"] .comment-count`);
             if (countEl) countEl.innerText = posts[postIndex].comments.length;
         } catch (e) { console.error(e); }
@@ -2462,6 +2489,56 @@
         }
     };
 
+    window.openEditReplyInput = function(parentCommentId, replyId, currentText) {
+        const newText = prompt("Edit your reply:", currentText);
+        if (newText === null || newText.trim() === "" || newText.trim() === currentText.trim()) return;
+        actuallyEditReply(currentPostIndexForComments, parentCommentId, replyId, newText.trim());
+    };
+
+    async function actuallyEditReply(postIndex, parentCommentId, replyId, newText) {
+        try {
+            const binData = await getBinData();
+            let posts = binData.posts || [];
+            const parentComment = posts[postIndex].comments.find(c => c.id === parentCommentId);
+            if (parentComment && parentComment.replies) {
+                const reply = parentComment.replies.find(r => r.id === replyId);
+                if (reply) {
+                    reply.text = newText;
+                    reply.editedAt = new Date().toISOString();
+                    await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
+                    await renderComments();
+                }
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    async function toggleHeartReply(parentCommentId, replyId) {
+        try {
+            const heartedKey = `hearted_reply_${replyId}`;
+            const hasHearted = localStorage.getItem(heartedKey) === 'true';
+            const binData = await getBinData();
+            let posts = binData.posts || [];
+            const parentComment = posts[currentPostIndexForComments].comments.find(c => c.id === parentCommentId);
+            if (!parentComment || !parentComment.replies) return;
+            const reply = parentComment.replies.find(r => r.id === replyId);
+            if (!reply) return;
+
+            if (!reply.hearts) reply.hearts = 0;
+
+            if (hasHearted) {
+                reply.hearts = Math.max(0, reply.hearts - 1);
+                localStorage.setItem(heartedKey, 'false');
+            } else {
+                reply.hearts += 1;
+                localStorage.setItem(heartedKey, 'true');
+            }
+            
+            const syncCodes = updateMySyncCodeInteractions();
+            await saveBinData({ posts: posts, siteBg: binData.siteBg || null, syncCodes: syncCodes });
+            await renderComments();
+        } catch (e) { console.error(e); }
+    }
+
     async function actuallyPostReply(postIndex, parentCommentId, alias, text) {
         try {
             const binData = await getBinData();
@@ -2472,7 +2549,7 @@
                 parentComment.replies.push({
                     id: 'reply_' + Math.random().toString(36).substr(2, 9),
                     visitorId: currentVisitorId, alias: alias, text: text,
-                    isAdmin: isAdmin(), timestamp: new Date().toISOString()
+                    isAdmin: isAdmin(), hearts: 0, timestamp: new Date().toISOString()
                 });
                 await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
                 await renderComments();
@@ -2502,6 +2579,7 @@
             
             const likedPosts = [];
             const heartedComments = [];
+            const heartedReplies = [];
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 if (key.startsWith('liked_post_') && localStorage.getItem(key) === 'true') {
@@ -2509,6 +2587,9 @@
                 }
                 if (key.startsWith('hearted_comment_') && localStorage.getItem(key) === 'true') {
                     heartedComments.push(key.replace('hearted_comment_', ''));
+                }
+                if (key.startsWith('hearted_reply_') && localStorage.getItem(key) === 'true') {
+                    heartedReplies.push(key.replace('hearted_reply_', ''));
                 }
             }
             
@@ -2519,12 +2600,14 @@
                     alias: alias,
                     likedPosts: likedPosts,
                     heartedComments: heartedComments,
+                    heartedReplies: heartedReplies,
                     updatedAt: new Date().toISOString()
                 };
             } else {
                 syncCodes[myCode].alias = alias;
                 syncCodes[myCode].likedPosts = likedPosts;
                 syncCodes[myCode].heartedComments = heartedComments;
+                syncCodes[myCode].heartedReplies = heartedReplies;
                 syncCodes[myCode].updatedAt = new Date().toISOString();
             }
             
@@ -2597,6 +2680,9 @@
             (entry.heartedComments || []).forEach(id => {
                 localStorage.setItem(`hearted_comment_${id}`, 'true');
             });
+            (entry.heartedReplies || []).forEach(id => {
+                localStorage.setItem(`hearted_reply_${id}`, 'true');
+            });
             
             closeEnterSparkleCodeModal();
             await renderComments();
@@ -2618,6 +2704,7 @@
         const [code, entry] = mine;
         const likedPosts = [];
         const heartedComments = [];
+        const heartedReplies = [];
         
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -2627,10 +2714,14 @@
             if (key.startsWith('hearted_comment_') && localStorage.getItem(key) === 'true') {
                 heartedComments.push(key.replace('hearted_comment_', ''));
             }
+            if (key.startsWith('hearted_reply_') && localStorage.getItem(key) === 'true') {
+                heartedReplies.push(key.replace('hearted_reply_', ''));
+            }
         }
         
         entry.likedPosts = likedPosts;
         entry.heartedComments = heartedComments;
+        entry.heartedReplies = heartedReplies;
         entry.updatedAt = new Date().toISOString();
         cachedSyncCodes[code] = entry;
         return cachedSyncCodes;
@@ -2646,6 +2737,9 @@
         });
         (entry.heartedComments || []).forEach(id => {
             localStorage.setItem(`hearted_comment_${id}`, 'true');
+        });
+        (entry.heartedReplies || []).forEach(id => {
+            localStorage.setItem(`hearted_reply_${id}`, 'true');
         });
     }
 
