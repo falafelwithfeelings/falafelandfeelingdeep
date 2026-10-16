@@ -2275,6 +2275,7 @@
                 const isOwner = comment.isAdmin;
                 const isMyComment = comment.visitorId === currentVisitorId;
                 const canDelete = isAdmin() || isMyComment;
+                const canEdit = isAdmin() || isMyComment;
                 const myHeartKey = `hearted_comment_${comment.id}`;
                 const iHeartedThis = localStorage.getItem(myHeartKey) === 'true';
                 
@@ -2320,6 +2321,7 @@
                         <div class="comment-body">${escapeHTML(comment.text)}</div>
                         <div class="comment-actions">
                             ${isAdmin() ? `<button onclick="togglePinComment(${currentPostIndexForComments}, '${comment.id}')">${comment.pinned ? '📍 Unpin' : '📌 Pin'}</button>` : ''}
+                            ${canEdit ? `<button data-text="${escapeHTML(comment.text)}" onclick="openEditCommentInput('${comment.id}', this.getAttribute('data-text'))">✏️ Edit</button>` : ''}
                             <button onclick="toggleHeartComment(${currentPostIndexForComments}, '${comment.id}')">${iHeartedThis ? '🩷' : '🤍'} ${comment.hearts || 0}</button>
                             <button onclick="openReplyInput(${currentPostIndexForComments}, '${comment.id}')">💬 Reply</button>
                             ${canDelete ? `<button onclick="deleteComment(${currentPostIndexForComments}, '${comment.id}')">🗑️ Delete</button>` : ''}
@@ -2483,6 +2485,25 @@
             const syncCodes = updateMySyncCodeInteractions();
             await saveBinData({ posts: posts, siteBg: binData.siteBg || null, syncCodes: syncCodes });
             await renderComments();
+        } catch (e) { console.error(e); }
+    }
+            window.openEditCommentInput = function(commentId, currentText) {
+        const newText = prompt("Edit your comment:", currentText);
+        if (newText === null || newText.trim() === "" || newText.trim() === currentText.trim()) return;
+        actuallyEditComment(currentPostIndexForComments, commentId, newText.trim());
+    };
+
+    async function actuallyEditComment(postIndex, commentId, newText) {
+        try {
+            const binData = await getBinData();
+            let posts = binData.posts || [];
+            const comment = posts[postIndex].comments.find(c => c.id === commentId);
+            if (comment) {
+                comment.text = newText;
+                comment.editedAt = new Date().toISOString();
+                await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
+                await renderComments();
+            }
         } catch (e) { console.error(e); }
     }
 
