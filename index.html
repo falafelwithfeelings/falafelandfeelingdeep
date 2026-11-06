@@ -9,7 +9,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 
     <style>
         /* ================= THEME VARIABLES ================= */
@@ -24,8 +24,7 @@
             --win-gray: #c0c0c0;
             --win-blue: #0a246a;
             --font-pixel: 'Press Start 2P', cursive;
-            --font-retro: 'VT323', monospace;
-            --font-body: 'Quicksand', sans-serif;
+            --font-body: 'VT323', monospace;
         }
 
         /* 8 Preset Moods */
@@ -43,6 +42,7 @@
             box-sizing: border-box; 
             cursor: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/favicon.png') 8 8, auto; 
             font-family: var(--font-body); 
+            font-size: 1.2rem;
             image-rendering: pixelated;
         }
         
@@ -51,15 +51,12 @@
             background-image: var(--bg-outside);
             background-size: cover; background-position: center; background-attachment: fixed;
             color: var(--text-main);
-            overflow-x: hidden;
+            overflow: hidden;
             display: flex; justify-content: center; align-items: center;
             position: relative;
         }
 
-        @keyframes driftIn {
-            0% { transform: translateX(150vw) rotate(5deg); opacity: 0; }
-            100% { transform: translateX(0) rotate(0deg); opacity: 1; }
-        }
+        input, textarea, select { font-family: var(--font-body); font-size: 1.1rem; }
 
         /* Sparkles Background */
         .bg-sparkles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -69,7 +66,6 @@
         a { color: var(--accent-color); text-decoration: none; }
         a:hover { text-decoration: underline; }
         
-        /* THE STICKER EFFECT: Removes white backgrounds by outlining the image in white! */
         .sticker-img { 
             filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff);
         }
@@ -77,9 +73,8 @@
         /* Whimsical Animations */
         @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
         @keyframes wiggle { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         
-        /* FIXED DANCING BACKGROUND ANIMATION */
+        /* Falling Dancers */
         @keyframes fallDown { 
             0% { transform: translateY(-100px) rotate(0deg); opacity: 0; } 
             10% { opacity: 1; } 
@@ -87,13 +82,15 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } 
         }
 
-        /* Cute Vector Flourish Border */
-        @keyframes magicalBorder {
-            0% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff; border-color: #fff; }
-            50% { box-shadow: 0 0 20px var(--accent-color), inset 0 0 20px var(--accent-color); border-color: var(--accent-color); }
-            100% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff; border-color: #fff; }
+        /* Flowing Rainbow Vector Flourish */
+        @keyframes rainbowBorder {
+            0% { box-shadow: 0 0 10px #ffb6c1, 0 0 20px #ffb6c1; border-color: #ffb6c1; }
+            25% { box-shadow: 0 0 10px #b3e5fc, 0 0 20px #b3e5fc; border-color: #b3e5fc; }
+            50% { box-shadow: 0 0 10px #fef08a, 0 0 20px #fef08a; border-color: #fef08a; }
+            75% { box-shadow: 0 0 10px #d8b4fe, 0 0 20px #d8b4fe; border-color: #d8b4fe; }
+            100% { box-shadow: 0 0 10px #ffb6c1, 0 0 20px #ffb6c1; border-color: #ffb6c1; }
         }
-        
+
         /* Neon Dance Border */
         @keyframes neonBorder {
             0% { box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff; border-color: #ff00ff; }
@@ -105,7 +102,7 @@
 
         /* Buttons */
         button, .v-tab, .web-button, .win-btn, .akito-btn, .read-more, .email-pill-btn { transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        button:hover, .v-tab:hover, .web-button:hover, .win-btn:hover, .akito-btn:hover, .read-more:hover { transform: translateY(-3px) scale(1.05); }
+        button:hover, .web-button:hover, .win-btn:hover, .akito-btn:hover, .read-more:hover { transform: translateY(-3px) scale(1.05); }
         button:active, .v-tab:active, .web-button:active, .win-btn:active, .akito-btn:active, .read-more:active, .email-pill-btn:active { animation: squish 0.2s ease; }
         @keyframes squish { 0% { transform: scale(1); } 50% { transform: scale(0.85); } 100% { transform: scale(1); } }
 
@@ -119,19 +116,31 @@
             background-image: var(--bg-inside); background-size: cover; background-position: center;
             border: 3px solid var(--border-color);
             display: flex; flex-direction: column; 
-            /* OVERFLOW VISIBLE SO BLADE CAN ESCAPE */
             overflow: visible; 
-            position: relative;
-            animation: driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, magicalBorder 3s infinite alternate;
+            position: absolute; 
+            top: 2.5vh; left: 2.5vw; 
+            animation: rainbowBorder 4s infinite alternate;
             z-index: 10;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .window-frame.maximized {
+            width: 100vw !important; height: 100vh !important;
+            top: 0 !important; left: 0 !important;
+            border-radius: 0;
+            border: none;
         }
 
         .window-frame.neon-mode {
-            animation: driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, neonBorder 0.5s infinite alternate !important;
+            animation: neonBorder 0.5s infinite alternate !important;
         }
 
-        .window-bar { background: var(--border-color); height: 24px; display: flex; justify-content: space-between; align-items: center; padding: 0 5px; border-radius: 12px 12px 0 0; }
-        .window-title { font-family: var(--font-pixel); font-size: 0.6rem; color: #fff; margin-left: 5px; }
+        .window-bar { 
+            background: var(--border-color); height: 24px; display: flex; justify-content: space-between; align-items: center; padding: 0 5px; border-radius: 12px 12px 0 0; 
+            cursor: grab;
+        }
+        .window-bar:active { cursor: grabbing; }
+        .window-title { font-family: var(--font-pixel); font-size: 0.6rem; color: #fff; margin-left: 5px; pointer-events: none;}
         .window-controls { display: flex; gap: 2px; }
         .win-btn { background: var(--win-gray); border: 2px outset #fff; width: 18px; height: 18px; display: flex; justify-content: center; align-items: center; font-size: 0.7rem; cursor: pointer; color: #000; font-family: var(--font-pixel); border-radius: 4px; }
         .win-btn.close { background: #ff4d4d; color: #fff; }
@@ -141,14 +150,15 @@
         /* ================= LEFT SIDEBAR ================= */
         .left-sidebar { width: 200px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
         
-        .profile-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 15px; animation: pulse 3s infinite ease-in-out; }
+        .profile-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 15px; }
         .profile-pic { width: 70px; height: 70px; object-fit: cover; border: 2px solid var(--border-color); border-radius: 10px; }
         .profile-name { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin: 0; }
-        .profile-mood { font-size: 1.1rem; color: var(--text-light); margin: 5px 0 0 0; line-height: 1; }
+        .profile-mood { font-size: 1.2rem; color: var(--text-light); margin: 5px 0 0 0; line-height: 1; }
 
-        .winamp-player { background: linear-gradient(135deg, var(--panel-bg), var(--border-color)); border: 2px solid #fff; border-radius: 15px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.8), inset -2px -2px 5px rgba(0,0,0,0.1), 2px 2px 0 var(--accent-color); padding: 10px; width: 100%; transition: background 0.5s ease; }
+        /* Winamp Player - STILL */
+        .winamp-player { background: linear-gradient(135deg, var(--panel-bg), var(--border-color)); border: 2px solid #fff; border-radius: 15px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.8), inset -2px -2px 5px rgba(0,0,0,0.1), 2px 2px 0 var(--accent-color); padding: 10px; width: 100%; }
         .winamp-title { background: #fff; color: var(--accent-color); font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px; display: flex; justify-content: space-between; border-bottom: 2px solid var(--border-color); margin-bottom: 5px; border-radius: 6px; }
-        .winamp-select { width: 100%; font-family: var(--font-retro); font-size: 1rem; background: var(--panel-bg); color: var(--accent-color); border: 2px inset #fff; border-radius: 8px; margin-bottom: 5px; padding: 2px; cursor: pointer; outline: none;}
+        .winamp-select { width: 100%; font-family: var(--font-pixel); font-size: 0.5rem; background: var(--panel-bg); color: var(--accent-color); border: 2px inset #fff; border-radius: 8px; margin-bottom: 5px; padding: 4px; cursor: pointer; outline: none;}
         .winamp-progress { width: 100%; height: 6px; background: #fff; margin-bottom: 8px; cursor: pointer; border: 1px solid var(--border-color); border-radius: 3px; overflow: hidden;}
         .winamp-bar { height: 100%; background: var(--accent-color); width: 0%; border-radius: 3px; }
         .winamp-controls { display: flex; gap: 4px; justify-content: space-between; padding: 0 2px; }
@@ -167,6 +177,7 @@
 
         .top-banner { text-align: center; padding: 10px 0; cursor: pointer; font-family: var(--font-pixel); font-size: 1.5rem; color: var(--accent-color); text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; animation: wiggle 3s ease-in-out infinite; }
 
+        /* Blinkies Marquee */
         .blinkies-container { background: var(--panel-bg); border: 2px dotted var(--border-color); padding: 5px 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 10px; overflow: hidden; }
         .blinkies-title { background: var(--accent-color); color: #fff; font-family: var(--font-pixel); padding: 4px 8px; font-size: 0.6rem; white-space: nowrap; border-radius: 6px; z-index: 2; display: flex; align-items: center; gap: 5px;}
         .blinkies-marquee-wrapper { flex: 1; overflow: hidden; white-space: nowrap; }
@@ -180,9 +191,10 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         .about-layout { display: flex; gap: 15px; margin-bottom: 15px; }
-        .about-collage { flex: 1.2; border: 2px solid var(--border-color); overflow: hidden; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 8px; }
+        .about-collage { flex: 1.2; border: 2px solid var(--border-color); overflow: hidden; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 8px; transition: transform 0.3s; }
+        .about-collage:hover { transform: scale(1.02); }
         .about-collage img { width: 100%; height: 100%; object-fit: cover; }
-        .about-text { flex: 1; font-size: 1.2rem; line-height: 1.2; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+        .about-text { flex: 1; font-size: 1.3rem; line-height: 1.1; max-height: 200px; overflow-y: auto; padding-right: 5px; }
         .about-text p { margin-top: 0; }
         .about-list { list-style: none; padding: 0; margin: 0; }
         .about-list li { margin-bottom: 4px; }
@@ -213,25 +225,25 @@
         .calendar-badge { position: absolute; left: -25px; top: -10px; width: 50px; z-index: 10; transform: rotate(-15deg); filter: drop-shadow(2px 2px 0 #fff); transition: transform 0.2s; }
         .calendar-badge:hover { transform: rotate(-5deg) scale(1.1); }
         .calendar-header { background: #ffb6c1; color: white; text-align: center; font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px; margin-bottom: 5px; border-radius: 4px; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; text-align: center; font-size: 0.9rem; color: #333; font-family: var(--font-pixel); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; text-align: center; font-size: 1rem; color: #333; font-family: var(--font-pixel); }
         .cal-day-header { font-size: 0.45rem; color: #ff69b4; margin-bottom: 2px; }
-        .cal-day { padding: 2px; border: 1px solid transparent; cursor: pointer; border-radius: 4px; }
-        .cal-day:hover { background: #ffe4e1; border: 1px solid #ffb6c1; }
+        .cal-day { padding: 2px; border: 1px solid transparent; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
+        .cal-day:hover { background: #ffe4e1; border: 1px solid #ffb6c1; transform: scale(1.1); }
         
         .food-log-box { margin-top: 15px; text-align: center; margin-left: 20px; }
         .food-log-title { font-family: var(--font-pixel); color: #ff69b4; font-size: 0.5rem; margin-bottom: 5px; display: flex; justify-content: center; align-items: center; gap: 10px;}
         .food-add-btn { background: var(--accent-color); color: #fff; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; }
         .food-items { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px;}
-        .food-item { width: 80px; min-height: 100px; border: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; color: #ff69b4; text-align: center; box-shadow: 2px 2px 0 #aaa; font-family: var(--font-pixel); border-radius: 10px; transition: transform 0.2s; padding: 5px; }
-        .food-item:hover { transform: translateY(-3px); }
+        .food-item { width: 80px; min-height: 100px; border: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.9rem; color: #ff69b4; text-align: center; box-shadow: 2px 2px 0 #aaa; font-family: var(--font-pixel); border-radius: 10px; transition: transform 0.2s; padding: 5px; }
+        .food-item:hover { transform: translateY(-5px) rotate(3deg); }
         .food-item .food-emoji { font-size: 2.5rem; margin-bottom: 5px; }
-        .food-recipe { font-size: 0.6rem; color: #888; margin-top: 5px; font-family: var(--font-body); display: none; }
+        .food-recipe { font-size: 0.8rem; color: #888; margin-top: 5px; font-family: var(--font-body); display: none; }
         .food-item:hover .food-recipe { display: block; position: absolute; background: #fff; border: 1px solid #ccc; padding: 5px; border-radius: 5px; z-index: 10; max-width: 120px; }
 
         .right-bottom-column { display: flex; flex-direction: column; gap: 10px; }
         .updates-box { background: var(--panel-bg); border: 2px solid #ccc; box-shadow: 2px 2px 0 #aaa; border-radius: 8px; overflow: hidden;}
         .updates-header { background: var(--win-gray); border-bottom: 2px outset #fff; font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px; color: #000; display: flex; justify-content: space-between; }
-        .update-content { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 5px; height: 80px; overflow-y: auto; font-size: 1.1rem; line-height: 1.1; }
+        .update-content { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 5px; height: 80px; overflow-y: auto; font-size: 1.2rem; line-height: 1.1; }
         
         /* Akito Tamagotchi */
         .akito-box { background: var(--panel-bg); border: 2px solid #ccc; padding: 5px; box-shadow: 2px 2px 0 #aaa; border-radius: 8px; }
@@ -270,7 +282,8 @@
         
         .vertical-tabs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; z-index: 20; }
         .v-tab { background: var(--panel-bg); border: 2px solid var(--border-color); border-left: none; padding: 8px 10px; font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); cursor: pointer; box-shadow: 3px 3px 0 var(--accent-color), inset 0 0 5px var(--border-color); text-transform: lowercase; border-radius: 0 15px 15px 0; transition: all 0.2s;}
-        .v-tab.active { background: var(--accent-color); color: #fff; transform: translateX(3px); box-shadow: 3px 3px 0 #000; animation: pulse 2s infinite; }
+        .v-tab.active { background: var(--accent-color); color: #fff; transform: translateX(3px); box-shadow: 3px 3px 0 #000; }
+        .v-tab:hover { background: var(--border-color); color: #fff; transform: translateX(5px) rotate(2deg); }
 
         /* HUGE BLADE (OUT OF GRID) */
         .blade-bottle { position: absolute; bottom: -50px; right: -100px; width: 280px; height: 700px; z-index: 100; pointer-events: none; }
@@ -278,7 +291,7 @@
         .blade-bottle:hover img { transform: scale(1.05) rotate(-5deg); }
 
         /* ================= MODALS & OVERLAYS ================= */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 15px; width: 90%; max-width: 400px; box-shadow: 4px 4px 0 var(--accent-color); max-height: 85vh; overflow-y: auto; border-radius: 12px; }
         .modal-box h3 { font-family: var(--font-pixel); color: var(--accent-color); margin-top: 0; font-size: 0.8rem; }
         
@@ -344,12 +357,12 @@
     <div id="dancing-bg" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:9999; overflow:hidden;"></div>
 
     <div class="window-frame" id="main-window">
-        <div class="window-bar">
+        <div class="window-bar" id="window-bar">
             <div class="window-title">falafelwithfeelings.html</div>
             <div class="window-controls">
                 <div class="win-btn">_</div>
-                <div class="win-btn">□</div>
-                <div class="win-btn close">×</div>
+                <div class="win-btn" onclick="toggleMaximize()">□</div>
+                <div class="win-btn close" onclick="closeWindow()">×</div>
             </div>
         </div>
 
@@ -357,13 +370,15 @@
             <!-- LEFT SIDEBAR -->
             <aside class="left-sidebar">
                 <div class="profile-box">
-                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU%20BANNER.jpe" class="profile-pic" alt="PFP">
+                  
+                    <img src="https://github.com/falafelwithfeelings/falafelandfeelingdeep/blob/main/me" class="profile-pic" alt="PFP">
                     <div class="profile-info">
                         <div class="profile-name">Falafel</div>
                         <div class="profile-mood">Mood:<br>gacha goblin</div>
                     </div>
                 </div>
 
+                <!-- WINAMP PLAYER (STILL) -->
                 <div class="winamp-player">
                     <div class="winamp-title">
                         <span>WINAMP</span>
@@ -427,7 +442,6 @@
                 <div class="blinkies-container">
                     <div class="blinkies-title">
                         Blinkies
-                        <span class="blinkies-edit-btn" id="edit-blinkies-btn" onclick="editBlinkies()">+</span>
                     </div>
                     <div class="blinkies-marquee-wrapper">
                         <div class="blinkies-list" id="blinkies-container">
@@ -697,19 +711,6 @@
                             <h2 style="margin-top: 0; font-size: 1.2rem;">sign up so you never miss a new brain dump ────୨ৎ──── </h2>
                             <p class="about-text" style="margin-bottom: 1.5rem; font-size:1.1rem;">whenever a new blog drops, get it straight to your inbox! 🪼⋆｡𖦹°🫧⋆.ೃ࿔*:･ </p>
                             <script async data-uid="efab41ce33" src="https://falafelwithfeelings.kit.com/efab41ce33/index.js"></script>
-                            <script>
-                                window.addEventListener('load', function() {
-                                    let checkKitInterval = setInterval(function() {
-                                        let emailField = document.querySelector('.contact-envelope-box input[name="email_address"]');
-                                        let nameField = document.querySelector('.contact-envelope-box input[name*="first_name"], .contact-envelope-box input[name*="fields"]');
-                                        if (emailField && nameField) {
-                                            emailField.placeholder = "your email address ⋆.𐙚 ̊";
-                                            nameField.placeholder = "your first name ⋆.𐙚 ̊";
-                                            clearInterval(checkKitInterval);
-                                        }
-                                    }, 200);
-                                });
-                            </script>
                             <style>
                                 .contact-envelope-box form, .contact-envelope-box .formkit-form { background: transparent !important; border: none !important; box-shadow: none !important; }
                                 .contact-envelope-box input { border: 2px solid var(--border-color) !important; border-radius: 8px !important; padding: 10px !important; font-family: var(--font-body) !important; background: #fff !important; color: #000 !important; margin-bottom: 10px !important;}
@@ -730,6 +731,24 @@
                         <div id="reader-content-wrapper" style="font-size:1.3rem; line-height:1.2;"></div>
                         <div id="reader-social-bar-container"></div>
                     </div>
+
+                    <!-- SETTINGS VIEW -->
+                    <div id="view-settings" class="view-section">
+                        <h2 style="font-family:var(--font-pixel); font-size:0.8rem; color:var(--accent-color); margin-top:0;">Custom Wallpapers 🖼️</h2>
+                        <p style="font-size:1.2rem;">Upload your own images to customize the site!</p>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="font-family:var(--font-pixel); font-size:0.6rem;">Inside Window Background:</label>
+                            <input type="file" accept="image/*" onchange="uploadBg('inner', event)" style="display:block; margin-top:5px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="font-family:var(--font-pixel); font-size:0.6rem;">Outside Page Background:</label>
+                            <input type="file" accept="image/*" onchange="uploadBg('outer', event)" style="display:block; margin-top:5px;">
+                        </div>
+                        
+                        <button class="modal-btn cancel" onclick="resetBgs()">Reset to Default</button>
+                    </div>
                 </div>
             </main>
 
@@ -741,6 +760,7 @@
                     <a class="v-tab" id="nav-announcements" onclick="switchView('announcements')">updates</a>
                     <a class="v-tab" id="nav-about" onclick="switchView('about')">about</a>
                     <a class="v-tab" id="nav-contact" onclick="switchView('contact')">contact</a>
+                    <a class="v-tab" id="nav-settings" onclick="switchView('settings')">settings ⚙️</a>
                 </div>
                 <div class="blade-bottle">
                     <!-- BLADE ESCAPING THE FRAME -->
@@ -753,12 +773,35 @@
     <!-- ADMIN BADGE -->
     <div id="admin-indicator" class="admin-badge" onclick="openNewPostModal('blog')">+ NEW POST</div>
 
-    <!-- MODALS & OVERLAYS -->
+    <!-- ADMIN MODAL -->
     <div class="modal-overlay" id="admin-modal">
         <div class="modal-box">
             <h3>✨ Secret Blogger Mode</h3>
             <input type="hidden" id="edit-index" value="">
-            <label>Type</label>
+            
+            <!-- ADMIN MOOD SWITCHER -->
+            <label>🎨 Site Theme</label>
+            <select id="admin-mood-select" onchange="changeMood(this.value)">
+                <option value="pink">Pink</option>
+                <option value="midnight">Midnight</option>
+                <option value="matcha">Matcha</option>
+                <option value="lemonade">Lemonade</option>
+                <option value="strawberry">Strawberry</option>
+                <option value="cyber">Cyber</option>
+                <option value="lavender">Lavender</option>
+                <option value="sunset">Sunset</option>
+            </select>
+
+            <!-- ADMIN BLINKIES MANAGER -->
+            <label>✨ Manage Blinkies</label>
+            <div style="display:flex; gap:5px; margin-bottom:10px;">
+                <input type="text" id="new-blinkie-url" placeholder="Blinkie Image URL" style="margin:0; flex:1;">
+                <button class="modal-btn save" onclick="addBlinkie()">Add</button>
+            </div>
+
+            <hr style="border:1px dashed var(--border-color); margin: 15px 0;">
+
+            <label>Post Type</label>
             <select id="new-entry-type" onchange="toggleModalTypeFields()">
                 <option value="blog">Blog Post</option>
                 <option value="announcement">Announcement</option>
@@ -806,14 +849,31 @@
         </div>
     </div>
 
-    <!-- COMMENT OVERLAY -->
+    <!-- BLADE POPUP MODAL -->
+    <div class="modal-overlay" id="blade-modal" style="z-index: 10000;">
+        <div class="modal-box" style="text-align: center; background: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe'); background-size: cover;">
+            <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/BLADE.png" alt="Blade" style="width: 150px; margin-bottom: 10px; filter: drop-shadow(0 0 10px #000);">
+            <h3 style="color: #fff; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000; font-size: 1rem;">WHERE DO YOU THINK YOU'RE GOING?!</h3>
+            <p style="font-family: var(--font-pixel); font-size: 0.6rem; color: #fff; text-shadow: 1px 1px 0 #000; margin-bottom: 20px;">You can't escape the falafelverse.</p>
+            <button class="modal-btn save" style="font-size: 0.8rem; padding: 10px 20px;" onclick="forceOpenWindow()">I'M SORRY 😭</button>
+        </div>
+    </div>
+
+    <!-- COMMENT OVERLAY (With Replies, Hearts, & Sparkle Codes) -->
     <div id="comment-drawer-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
-        <div id="comment-drawer" style="background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; width: 90%; max-width: 400px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 4px 4px 0 var(--accent-color); border-radius: 12px;">
+        <div id="comment-drawer" style="background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; width: 90%; max-width: 400px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 4px 4px 0 var(--accent-color); border-radius: 12px;">
             <div class="drawer-header" style="border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px; display: flex; justify-content: space-between;">
                 <span style="font-family: var(--font-pixel); font-size: 0.6rem; color: var(--accent-color);">💬 Comments</span>
                 <button style="background:none; border:none; font-size:1.2rem; cursor:pointer; color: var(--text-main);" onclick="closeCommentDrawer()">✕</button>
             </div>
+            
+            <div style="display:flex; gap:5px; margin-bottom:10px;">
+                <button class="modal-btn save" style="flex:1; font-size:0.4rem;" onclick="generateSparkleCode()">✨ Share Sparkle Code</button>
+                <button class="modal-btn cancel" style="flex:1; font-size:0.4rem;" onclick="applySparkleCode()">🔗 Enter Code</button>
+            </div>
+
             <div class="comments-list" id="comments-list-container" style="flex: 1; overflow-y: auto;"></div>
+            
             <div class="comment-input-area" style="border-top: 2px solid var(--border-color); padding-top: 10px;">
                 <textarea id="comment-text-input" placeholder="say something nice... ♡" style="width:100%; height:60px; border:2px inset #fff; padding:5px; font-family:var(--font-retro); font-size:1.1rem; background:#fff; color:#000; margin-bottom:10px; border-radius:6px;"></textarea>
                 <button class="modal-btn save" style="width:100%;" onclick="submitComment()">post note ✨</button>
@@ -828,6 +888,73 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // ================= USER IDENTIFIER =================
+        let visitorAlias = localStorage.getItem('visitor_alias');
+        if (!visitorAlias) {
+            visitorAlias = prompt("What should we call you? (Leave blank for Anonymous)") || "Anonymous";
+            localStorage.setItem('visitor_alias', visitorAlias);
+        }
+
+        // ================= WINDOW DRAG & MAXIMIZE =================
+        const windowFrame = document.getElementById('main-window');
+        const windowBar = document.getElementById('window-bar');
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        windowBar.addEventListener('mousedown', (e) => {
+            if(e.target.classList.contains('win-btn')) return;
+            isDragging = true;
+            offsetX = e.clientX - windowFrame.getBoundingClientRect().left;
+            offsetY = e.clientY - windowFrame.getBoundingClientRect().top;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && !windowFrame.classList.contains('maximized')) {
+                windowFrame.style.left = (e.clientX - offsetX) + 'px';
+                windowFrame.style.top = (e.clientY - offsetY) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', () => isDragging = false);
+
+        function toggleMaximize() {
+            windowFrame.classList.toggle('maximized');
+        }
+
+        function closeWindow() {
+            windowFrame.style.transform = 'translateY(100vh)';
+            windowFrame.style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('blade-modal').style.display = 'flex';
+            }, 500);
+        }
+
+        function forceOpenWindow() {
+            document.getElementById('blade-modal').style.display = 'none';
+            windowFrame.style.transform = 'translateY(0)';
+            windowFrame.style.opacity = '1';
+        }
+
+        // ================= CUSTOM WALLPAPERS =================
+        function uploadBg(type, event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (type === 'inner') {
+                    document.documentElement.style.setProperty('--bg-inside', `url(${e.target.result})`);
+                } else {
+                    document.documentElement.style.setProperty('--bg-outside', `url(${e.target.result})`);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetBgs() {
+            document.documentElement.style.setProperty('--bg-inside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe')`);
+            document.documentElement.style.setProperty('--bg-outside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe')`);
+        }
+
         // ================= BACKGROUND SPARKLES =================
         const sparkleContainer = document.createElement('div');
         sparkleContainer.className = 'bg-sparkles';
@@ -846,6 +973,7 @@
         // ================= THEME SWITCHER =================
         function changeMood(mood) {
             document.body.setAttribute('data-mood', mood);
+            document.getElementById('admin-mood-select').value = mood;
         }
 
         // ================= BACKGROUND DANCERS =================
@@ -872,7 +1000,6 @@
                 img.style.position = 'absolute'; img.style.top = '-100px';
                 img.style.width = (Math.random() * 40 + 30) + 'px';
                 img.style.left = (Math.random() * 90) + 'vw';
-                // FIXED ANIMATION: fallDown instead of float!
                 img.style.animation = `fallDown ${Math.random() * 10 + 10}s linear infinite`;
                 img.style.animationDelay = (Math.random() * 10) + 's';
                 img.onerror = () => { img.style.display = 'none'; };
@@ -988,11 +1115,6 @@
             if(currentTool === 'eraser') setTool('pencil'); 
         }
 
-        function clearCanvas() {
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
         function floodFill(startX, startY, fillColor) {
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
@@ -1039,7 +1161,6 @@
         let partyTimeout;
         let currentAkitoIndex = 0;
 
-        // 7 Akito Sprites
         const akitoSprites = [
             'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%201.png',
             'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%202.png',
@@ -1056,7 +1177,8 @@
             work: ["I'll show you how it's done.", "Ugh, fine. Watch this.", "I'm gonna work so hard!", "Let me show you my true power."],
             arcade: ["VBS PARTY TIME! 🎉", "I'll beat you at this!", "ARCADE LET'S GOOOO!", "I'm gonna get the high score!", "You're on!"],
             interrupted: ["HOW DARE YOU INTERRUPT MY DANCE!", "Hey! I wasn't finished!", "Oh, you didn't let me finish my dance...", "Rude! I was in the zone!", "Excuse me?! I was dancing!"],
-            apologize: ["S-sorry! I got a little carried away...", "Did I break the screen? My bad.", "Wait, why is everything shaking? Oh, it was me.", "Please don't tell the webmaster I did that.", "I'm just... really passionate about working.", "Did the HTML survive? I hope the CSS is okay."]
+            apologize: ["S-sorry! I got a little carried away...", "Did I break the screen? My bad.", "Wait, why is everything shaking? Oh, it was me.", "Please don't tell the webmaster I did that.", "I'm just... really passionate about working.", "Did the HTML survive? I hope the CSS is okay."],
+            danceComplete: ["WOO! I'm the best dancer! Did you see that?!", "That was awesome! I should do that more often.", "I think I broke a sweat... worth it!"]
         };
 
         function cycleAkito() {
@@ -1084,7 +1206,7 @@
                 setTamaDialogue(akitoReplies.interrupted[Math.floor(Math.random() * akitoReplies.interrupted.length)]);
                 tama.mood = Math.max(0, tama.mood - 20);
             } else {
-                setTamaDialogue("Phew... that was exhausting.");
+                setTamaDialogue(akitoReplies.danceComplete[Math.floor(Math.random() * akitoReplies.danceComplete.length)]);
             }
             updateTamaUI();
         }
@@ -1099,7 +1221,7 @@
             document.getElementById('main-window').classList.add('neon-mode');
             
             setTamaDialogue(akitoReplies.arcade[Math.floor(Math.random() * akitoReplies.arcade.length)]);
-            partyTimeout = setTimeout(() => { stopParty(false); }, 20000); 
+            partyTimeout = setTimeout(() => { stopParty(false); }, 15000); // 15 seconds
         }
 
         function aggressiveWork() {
@@ -1107,7 +1229,6 @@
             isWorking = true;
             
             const sprite = document.getElementById('tama-sprite');
-            const frame = document.getElementById('main-window');
             
             const spriteClone = sprite.cloneNode(true);
             spriteClone.id = 'akito-clone';
@@ -1133,7 +1254,7 @@
                 spriteClone.style.left = `${randomX}vw`;
                 spriteClone.style.top = `${randomY}vh`;
                 spriteClone.style.transform = `rotate(${rotation}deg) scale(1.5)`;
-                if(bounces > 20) { // 20 bounces * 400ms = 8 seconds
+                if(bounces > 17) { // 17 bounces * 400ms = ~7 seconds
                     clearInterval(interval);
                     spriteClone.remove();
                     sprite.style.opacity = '1';
@@ -1147,7 +1268,7 @@
         }
 
         function tamaAction(action) {
-            cycleAkito(); // Cycle every time you do an action!
+            cycleAkito(); 
             
             if (isPartying) { stopParty(true); return; }
             if (isWorking) return;
@@ -1211,7 +1332,7 @@
             renderFoodLog();
         }
 
-        // ================= ADMIN TRIGGER =================
+        // ================= ADMIN TRIGGER & BLINKIES =================
         let clickCount = 0;
         let clickTimer = null;
         document.getElementById('admin-trigger').addEventListener('click', () => {
@@ -1240,18 +1361,24 @@
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             const badge = document.getElementById('admin-indicator');
             const editUpdatesBtn = document.getElementById('edit-updates-btn');
-            const editBlinkiesBtn = document.getElementById('edit-blinkies-btn');
+            
             if(badge) badge.style.display = isAdmin ? 'block' : 'none';
             if(editUpdatesBtn) editUpdatesBtn.style.display = isAdmin ? 'inline' : 'none';
-            if(editBlinkiesBtn) editBlinkiesBtn.style.display = isAdmin ? 'flex' : 'none';
         }
 
-        function editBlinkies() {
-            const newUrl = prompt("Enter a new image URL for your Blinkies:");
-            if (newUrl && newUrl.trim() !== "") {
-                document.getElementById('blinkies-container').innerHTML += `<img src="${newUrl}" class="blinkie-img">`;
-                document.getElementById('blinkies-container').innerHTML += `<img src="${newUrl}" class="blinkie-img">`;
-            }
+        function addBlinkie() {
+            const url = document.getElementById('new-blinkie-url').value;
+            if(!url) return;
+            const img1 = document.createElement('img');
+            img1.src = url;
+            img1.className = 'blinkie-img';
+            const img2 = document.createElement('img');
+            img2.src = url;
+            img2.className = 'blinkie-img'; // duplicate for marquee
+            
+            document.getElementById('blinkies-container').appendChild(img1);
+            document.getElementById('blinkies-container').appendChild(img2);
+            document.getElementById('new-blinkie-url').value = '';
         }
 
         function toggleModalTypeFields() {
@@ -1345,20 +1472,24 @@
             audioPlayer.seekTo(percent * duration, true);
         }
 
-        // ================= JSONBIN BLOG ENGINE =================
+        // ================= JSONBIN BLOG ENGINE & SPARKLE CODES =================
         const BIN_ID = '6aca4a7dac6210605a2587db';
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
         let currentPostIndexForComments = null;
+        let cachedSyncCodes = {};
 
         async function getBinData() {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': MASTER_KEY } });
                 const data = await res.json();
-                return data.record || { posts: [] };
-            } catch (err) { return { posts: [] }; }
+                const result = data.record || { posts: [], syncCodes: {} };
+                if (result.syncCodes) cachedSyncCodes = result.syncCodes;
+                return result;
+            } catch (err) { return { posts: [], syncCodes: cachedSyncCodes }; }
         }
 
         async function saveBinData(payload) {
+            if (!payload.syncCodes) payload.syncCodes = cachedSyncCodes;
             await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
@@ -1496,13 +1627,15 @@
             alert("Post saved successfully! 🚀");
         }
 
-        // Comments (Now with Replies!)
+        // Comments (With Heart, Edit, Admin, Replies)
         async function openCommentDrawer(index) {
             currentPostIndexForComments = index;
             document.getElementById('comment-drawer-overlay').style.display = 'flex';
             const data = await getBinData();
             const post = data.posts.filter(p => p.type !== 'announcement')[index];
             const comments = post.comments || [];
+            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
+
             document.getElementById('comments-list-container').innerHTML = comments.length > 0 ? comments.map(c => {
                 let repliesHtml = '';
                 if (c.replies && c.replies.length > 0) {
@@ -1516,14 +1649,26 @@
                     });
                     repliesHtml += '</div>';
                 }
+                
+                const canEdit = isAdmin || c.alias === visitorAlias;
+                const canDelete = isAdmin;
+                const hearted = localStorage.getItem(`hearted_${c.id}`) === 'true';
+                const heartCount = c.hearts || 0;
+
                 return `
                 <div style="border-bottom:1px solid #ccc; padding:5px 0;">
                     <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#888; margin-bottom:3px;">
                         <span style="font-weight:bold; color:var(--accent-color);">${c.alias}</span>
                         <span>${new Date(c.timestamp).toLocaleDateString()}</span>
                     </div>
-                    <div style="font-size:1.1rem; margin-bottom: 5px;">${c.text}</div>
-                    <button class="modal-btn cancel" style="font-size:0.5rem; padding:2px 5px;" onclick="openReplyInput(${index}, '${c.id}')">Reply</button>
+                    <div style="font-size:1.1rem; margin-bottom: 5px;" id="comment-text-${c.id}">${c.text}</div>
+                    
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <button class="modal-btn cancel" style="font-size:0.5rem; padding:2px 5px;" onclick="heartComment(${index}, '${c.id}')">${hearted ? '🩷' : '🤍'} ${heartCount}</button>
+                        <button class="modal-btn cancel" style="font-size:0.5rem; padding:2px 5px;" onclick="openReplyInput(${index}, '${c.id}')">Reply</button>
+                        ${canEdit ? `<button class="modal-btn cancel" style="font-size:0.5rem; padding:2px 5px;" onclick="editComment(${index}, '${c.id}')">Edit</button>` : ''}
+                        ${canDelete ? `<button class="modal-btn cancel" style="font-size:0.5rem; padding:2px 5px; background:#ffcccc;" onclick="deleteComment(${index}, '${c.id}')">Delete</button>` : ''}
+                    </div>
                     ${repliesHtml}
                 </div>
             `}).join('') : '<p style="text-align:center; color:#888; font-size:1.1rem;">No comments yet!</p>';
@@ -1542,11 +1687,60 @@
             const realIndex = posts.indexOf(actualPosts[currentPostIndexForComments]);
 
             if(!posts[realIndex].comments) posts[realIndex].comments = [];
-            posts[realIndex].comments.push({ id: Date.now().toString(), alias: 'Guest', text: text, timestamp: new Date().toISOString(), replies: [] });
+            posts[realIndex].comments.push({ id: Date.now().toString(), alias: visitorAlias, text: text, timestamp: new Date().toISOString(), replies: [], hearts: 0 });
             
             await saveBinData({ posts: posts });
             document.getElementById('comment-text-input').value = '';
             openCommentDrawer(currentPostIndexForComments); 
+        }
+
+        async function heartComment(postIndex, commentId) {
+            const heartedKey = `hearted_${commentId}`;
+            const isHearted = localStorage.getItem(heartedKey) === 'true';
+            const data = await getBinData();
+            let posts = data.posts;
+            const actualPosts = posts.filter(p => p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[postIndex]);
+            const comment = posts[realIndex].comments.find(c => c.id === commentId);
+            
+            if(comment) {
+                if(isHearted) {
+                    comment.hearts = Math.max(0, (comment.hearts || 1) - 1);
+                    localStorage.setItem(heartedKey, 'false');
+                } else {
+                    comment.hearts = (comment.hearts || 0) + 1;
+                    localStorage.setItem(heartedKey, 'true');
+                }
+                await saveBinData({ posts: posts });
+                openCommentDrawer(postIndex);
+            }
+        }
+
+        async function editComment(postIndex, commentId) {
+            const data = await getBinData();
+            let posts = data.posts;
+            const actualPosts = posts.filter(p => p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[postIndex]);
+            const comment = posts[realIndex].comments.find(c => c.id === commentId);
+            
+            if(comment) {
+                const newText = prompt("Edit your comment:", comment.text);
+                if(newText && newText.trim() !== "") {
+                    comment.text = newText;
+                    await saveBinData({ posts: posts });
+                    openCommentDrawer(postIndex);
+                }
+            }
+        }
+
+        async function deleteComment(postIndex, commentId) {
+            const data = await getBinData();
+            let posts = data.posts;
+            const actualPosts = posts.filter(p => p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[postIndex]);
+            posts[realIndex].comments = posts[realIndex].comments.filter(c => c.id !== commentId);
+            await saveBinData({ posts: posts });
+            openCommentDrawer(postIndex);
         }
 
         async function openReplyInput(index, parentId) {
@@ -1561,9 +1755,45 @@
             const parentComment = posts[realIndex].comments.find(c => c.id === parentId);
             if(parentComment) {
                 if(!parentComment.replies) parentComment.replies = [];
-                parentComment.replies.push({ alias: 'Guest', text: replyText, timestamp: new Date().toISOString() });
+                parentComment.replies.push({ alias: visitorAlias, text: replyText, timestamp: new Date().toISOString() });
                 await saveBinData({ posts: posts });
                 openCommentDrawer(index);
+            }
+        }
+
+        // ================= SPARKLE CODES =================
+        function generateSparkleCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = 'FALAFEL-';
+            for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+            code += '-';
+            for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+            
+            // Store their current identity
+            cachedSyncCodes[code] = {
+                alias: visitorAlias,
+                timestamp: new Date().toISOString()
+            };
+            
+            saveBinData({ posts: [], syncCodes: cachedSyncCodes }).then(() => {
+                prompt("Save your Sparkle Code! Enter it on another device to restore your alias.", code);
+            });
+        }
+
+        async function applySparkleCode() {
+            const code = prompt("Enter your Sparkle Code:");
+            if(!code) return;
+            
+            const data = await getBinData();
+            const syncCodes = data.syncCodes || {};
+            const entry = syncCodes[code.toUpperCase()];
+            
+            if(entry) {
+                visitorAlias = entry.alias;
+                localStorage.setItem('visitor_alias', visitorAlias);
+                alert(`✨ Welcome back, ${visitorAlias}! Your identity has been restored.`);
+            } else {
+                alert("Hmm, that code doesn't exist. Double-check the spelling!");
             }
         }
 
