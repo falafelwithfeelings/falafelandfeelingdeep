@@ -14,7 +14,8 @@
     <style>
         /* ================= THEME VARIABLES ================= */
         :root {
-            --bg-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe');
+            /* Using the new background from the screenshot */
+            --bg-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe');
             --panel-bg: #ffffff;
             --border-color: #ffb6c1;
             --accent-color: #ff69b4;
@@ -47,7 +48,13 @@
             color: var(--text-main);
             overflow-x: hidden;
             display: flex; justify-content: center; align-items: center;
+            position: relative;
         }
+
+        /* Decorated Outside Background */
+        .bg-sparkles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
+        .sparkle { position: absolute; color: #fff; font-size: 2rem; text-shadow: 0 0 10px var(--accent-color); animation: twinkle 2s infinite alternate; }
+        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2) rotate(15deg); } }
 
         a { color: var(--accent-color); text-decoration: none; }
         a:hover { text-decoration: underline; }
@@ -56,15 +63,14 @@
         img { image-rendering: pixelated; }
         .transparent-img { 
             mix-blend-mode: multiply; 
-            filter: contrast(1.1) brightness(1.1); /* Helps white backgrounds blend in */
+            filter: contrast(1.1) brightness(1.1);
         }
 
         /* Whimsical Animations */
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        @keyframes glow { 0%, 100% { box-shadow: 0 0 5px var(--accent-color); } 50% { box-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--border-color); } }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 10px var(--accent-color); } 50% { box-shadow: 0 0 30px var(--accent-color), 0 0 50px var(--border-color); } }
         @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
         @keyframes squish { 0% { transform: scale(1); } 50% { transform: scale(0.9); } 100% { transform: scale(1); } }
-        @keyframes slideTab { 0% { transform: translateX(0); } 100% { transform: translateX(5px); } }
         @keyframes screenGlow { 0%, 100% { text-shadow: 0 0 2px var(--accent-color); } 50% { text-shadow: 0 0 10px var(--accent-color); } }
 
         /* Apply squish animation globally to buttons */
@@ -87,7 +93,7 @@
             border: 3px solid var(--border-color);
             box-shadow: 4px 4px 0px var(--accent-color), 0 0 0 2px #fff;
             display: flex; flex-direction: column; overflow: hidden; position: relative;
-            animation: glow 4s infinite alternate;
+            animation: glow 4s infinite alternate; z-index: 10;
         }
 
         /* Top Window Bar */
@@ -114,11 +120,13 @@
             padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color);
             border-radius: 15px; animation: float 4s ease-in-out infinite;
         }
+        
+        /* Meme PFP using the EMU BANNER */
         .profile-pic { width: 70px; height: 70px; object-fit: cover; border: 2px solid var(--border-color); border-radius: 10px; }
         .profile-name { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin: 0; }
         .profile-mood { font-size: 1.1rem; color: var(--text-light); margin: 5px 0 0 0; line-height: 1; }
 
-        /* Winamp Player (Aesthetic) */
+        /* Winamp Player */
         .winamp-player { 
             background: linear-gradient(135deg, #ffe4e1, #ffb6c1); 
             border: 2px solid #fff; 
@@ -134,12 +142,23 @@
         .winamp-btn { background: #fff; border: 2px solid #ffb6c1; color: var(--accent-color); font-family: var(--font-pixel); font-size: 0.5rem; cursor: pointer; padding: 5px; border-radius: 50%; width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; box-shadow: 1px 1px 0 #ffb6c1;}
         .winamp-btn:active { box-shadow: none; transform: translate(1px, 1px); }
 
-        /* Mood Button Wall */
-        .button-wall { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 5px; }
-        .web-button { height: 30px; background: var(--win-gray); border: 2px solid #fff; border-right-color: #888; border-bottom-color: #888; display: flex; justify-content: center; align-items: center; font-family: var(--font-pixel); font-size: 0.4rem; color: #000; cursor: pointer; text-transform: uppercase; border-radius: 8px; }
-        .web-button:hover { background: #fff; }
+        /* Vector Flourish Buttons */
+        .button-wall { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px; }
+        .web-button { 
+            height: 32px; 
+            background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+            border: 2px solid var(--border-color); 
+            display: flex; justify-content: center; align-items: center; 
+            font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); 
+            cursor: pointer; text-transform: uppercase; 
+            border-radius: 20px;
+            box-shadow: 0 4px 0 var(--border-color), 0 5px 5px rgba(0,0,0,0.1);
+            position: relative; top: 0;
+        }
+        .web-button:hover { background: #fff; color: var(--accent-color); filter: brightness(1.1); }
+        .web-button:active { top: 4px; box-shadow: 0 0 0 var(--border-color); }
 
-        /* Dance Toggle (Cleverly placed in sidebar) */
+        /* Dance Toggle */
         .dance-toggle-box { background: var(--panel-bg); border: 2px solid var(--border-color); padding: 8px; border-radius: 12px; margin-top: 5px; text-align: center; box-shadow: 2px 2px 0 var(--accent-color); }
         .dance-toggle-box label { font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); display: block; margin-bottom: 5px; }
         .dance-toggle-box select { width: 100%; padding: 4px; font-family: var(--font-pixel); font-size: 0.4rem; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; color: var(--text-main); background: #fff; }
@@ -158,8 +177,12 @@
 
         /* Blinkies Header */
         .blinkies-container { background: var(--panel-bg); border: 2px dotted var(--border-color); padding: 5px 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 10px; }
-        .blinkies-title { background: var(--accent-color); color: #fff; font-family: var(--font-pixel); padding: 4px 8px; font-size: 0.6rem; white-space: nowrap; border-radius: 6px; }
-        .blinkies-list { display: flex; gap: 5px; overflow-x: auto; }
+        .blinkies-title { background: var(--accent-color); color: #fff; font-family: var(--font-pixel); padding: 4px 8px; font-size: 0.6rem; white-space: nowrap; border-radius: 6px; display: flex; align-items: center; gap: 5px; }
+        .blinkies-edit-btn { cursor: pointer; display: none; background: #fff; color: var(--accent-color); border-radius: 50%; width: 16px; height: 16px; justify-content: center; align-items: center; font-size: 0.7rem; }
+        .blinkies-list { display: flex; gap: 5px; overflow-x: auto; align-items: center;}
+        
+        /* Using exact images */
+        .blinkie-img { height: 31px; object-fit: cover; }
 
         /* Main Content Box (Scalloped) */
         .main-content-box {
@@ -176,30 +199,35 @@
 
         /* About Me Layout */
         .about-layout { display: flex; gap: 15px; margin-bottom: 15px; }
+        
         .about-collage { flex: 1.2; border: 2px solid var(--border-color); overflow: hidden; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 8px; }
         .about-collage img { width: 100%; height: 100%; object-fit: cover; }
+        
         .about-text { flex: 1; font-size: 1.2rem; line-height: 1.2; max-height: 200px; overflow-y: auto; padding-right: 5px; }
         .about-text p { margin-top: 0; }
         .about-list { list-style: none; padding: 0; margin: 0; }
         .about-list li { margin-bottom: 4px; }
         .about-list li::before { content: '💿'; font-size: 1rem; margin-right: 5px; }
 
-        /* MS Paint Window */
+        /* MS Paint Window (Interactive Canvas) */
         .mspaint-window { background: var(--win-gray); border: 2px outset #fff; display: flex; flex-direction: column; width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden;}
         .mspaint-titlebar { background: var(--win-blue); color: white; padding: 2px 5px; font-family: var(--font-pixel); font-size: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
         .mspaint-titlebar .win-btn { width: 14px; height: 14px; font-size: 0.5rem; }
         .mspaint-menubar { background: var(--win-gray); display: flex; gap: 8px; padding: 2px 5px; font-family: var(--font-pixel); font-size: 0.4rem; border-bottom: 1px solid #888; }
-        .mspaint-workspace { display: flex; height: 200px; padding: 2px; gap: 2px; }
+        .mspaint-workspace { display: flex; height: 250px; padding: 2px; gap: 2px; }
         .mspaint-toolbar { width: 50px; background: var(--win-gray); display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding: 2px; border: 2px inset #fff; }
         .mspaint-tool { background: var(--win-gray); border: 2px outset #fff; height: 20px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 0.6rem; color: #000; border-radius: 3px; }
+        .mspaint-tool.active { border-style: inset; background: #aaa; }
         .mspaint-canvas-container { flex: 1; background: #808080; padding: 2px; border: 2px inset #fff; display: flex; }
-        .mspaint-canvas { background: #fff; width: 100%; height: 100%; position: relative; cursor: crosshair; overflow: hidden; border: 1px solid #000; }
-        .paint-dot { position: absolute; font-size: 1.2rem; user-select: none; animation: squish 0.3s ease; }
+        
+        /* THE ACTUAL CANVAS */
+        #paint-canvas { background: #fff; width: 100%; height: 100%; cursor: crosshair; border: 1px solid #000; }
         
         .mspaint-bottom-area { display: flex; flex-direction: column; border-top: 1px solid #fff; }
         .mspaint-palette { background: var(--win-gray); padding: 2px; display: grid; grid-template-columns: repeat(14, 1fr); gap: 1px; border-bottom: 1px solid #888; }
-        .color-box { width: 100%; height: 12px; border: 1px solid #888; cursor: pointer; }
-        .mspaint-statusbar { background: var(--win-gray); padding: 2px 5px; font-family: var(--font-pixel); font-size: 0.4rem; border-top: 1px solid #fff; }
+        .color-box { width: 100%; height: 15px; border: 1px solid #888; cursor: pointer; }
+        .color-box.active { border: 2px solid #000; }
+        .mspaint-statusbar { background: var(--win-gray); padding: 2px 5px; font-family: var(--font-pixel); font-size: 0.4rem; border-top: 1px solid #fff; display: flex; justify-content: space-between; }
 
         /* Bottom Section Layout */
         .latest-update-bar { background: var(--win-gray); border: 2px outset #fff; padding: 4px 10px; font-family: var(--font-pixel); font-size: 0.5rem; display: flex; justify-content: space-between; color: #000; border-radius: 5px; }
@@ -235,7 +263,9 @@
         .akito-header { display: flex; justify-content: space-between; font-family: var(--font-pixel); font-size: 0.4rem; color: #87cefa; margin-bottom: 4px; }
         .akito-stats { display: flex; justify-content: space-between; font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); margin-bottom: 5px; }
         .akito-main { display: flex; gap: 5px; }
-        .akito-room { flex: 1; background: #b3e5fc; border: 2px solid var(--border-color); height: 110px; position: relative; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; background-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/otori%20emu%20bedroom.png'); background-size: cover; background-position: center; transition: background 0.5s; border-radius: 6px; }
+        
+        /* Akito Room */
+        .akito-room { flex: 1; background: #b3e5fc; border: 2px solid var(--border-color); height: 110px; position: relative; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; transition: background 0.5s; border-radius: 6px; }
         
         /* Party Mode Animations */
         @keyframes neonFlash {
@@ -255,9 +285,9 @@
 
         .akito-sprite { height: 70px; margin-bottom: 5px; cursor: pointer; animation: bounce 1s infinite alternate; transition: transform 0.2s; }
         .akito-side { width: 80px; display: flex; flex-direction: column; gap: 4px; }
-        .akito-btn { background: #fff; border: 2px solid var(--border-color); border-radius: 8px; font-family: var(--font-pixel); font-size: 0.4rem; padding: 4px; cursor: pointer; text-align: center; color: var(--accent-color); box-shadow: 2px 2px 0 var(--border-color); }
-        .akito-btn:hover { background: var(--panel-bg); transform: translateY(-2px); }
-        .akito-btn:active { box-shadow: none; transform: translateY(2px); }
+        .akito-btn { background: linear-gradient(to bottom, #ffffff, #f0f0f0); border: 2px solid var(--border-color); border-radius: 10px; font-family: var(--font-pixel); font-size: 0.4rem; padding: 4px; cursor: pointer; text-align: center; color: var(--accent-color); box-shadow: 0 3px 0 var(--border-color); position: relative; top:0; }
+        .akito-btn:hover { background: #fff; }
+        .akito-btn:active { top: 3px; box-shadow: none; }
         .akito-dialogue { background: #f9f9f9; border: 1px solid #ccc; height: 45px; font-size: 1rem; padding: 2px; overflow-y: auto; margin-top: 5px; font-family: monospace; line-height: 1; color: #000; border-radius: 4px; }
         
         /* ================= RIGHT SIDEBAR ================= */
@@ -360,7 +390,7 @@
             <aside class="left-sidebar">
                 <!-- Profile -->
                 <div class="profile-box">
-                    <img src="https://i.imgflip.com/7q5q2e.jpg" class="profile-pic" alt="Falafel PFP" style="object-fit: cover;">
+                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/EMU%20BANNER.jpe" class="profile-pic" alt="Falafel PFP">
                     <div class="profile-info">
                         <div class="profile-name">Falafel</div>
                         <div class="profile-mood">Mood:<br>gacha goblin</div>
@@ -419,11 +449,15 @@
 
                 <!-- Blinkies -->
                 <div class="blinkies-container">
-                    <div class="blinkies-title">Blinkies</div>
-                    <div class="blinkies-list">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/DANCING%20MIKUUU.png" height="25">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png" height="25">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Screenshot%202026-11-06%20170703.png" height="25">
+                    <div class="blinkies-title">
+                        Blinkies
+                        <span class="blinkies-edit-btn" id="edit-blinkies-btn" onclick="editBlinkies()">+</span>
+                    </div>
+                    <div class="blinkies-list" id="blinkies-container">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/DANCING%20MIKUUU.png" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/badge%20genshin!%20(make%20it%20transparent.jpe" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Screenshot%202026-11-06%20170703.png" class="blinkie-img">
                     </div>
                 </div>
 
@@ -436,7 +470,7 @@
                         <!-- About Me -->
                         <div class="about-layout">
                             <div class="about-collage">
-                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/emu%20banner.png" alt="Emu Banner" onerror="this.src='https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Screenshot%202026-11-06%20170703.png'">
+                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/EMU%20BANNER.jpe" alt="Emu Banner">
                             </div>
                             <div class="about-text">
                                 <p>hi!!! im this website's webmaster! I rlly enjoy learning to code even tho it pmo sometimes. I made this on a macbook air using chrome (2560x1600 px), so it will probably look best on that device. Hopefully it doesn't look to bad on other devices tho.</p>
@@ -450,7 +484,7 @@
                             </div>
                         </div>
 
-                        <!-- MS Paint Window -->
+                        <!-- MS Paint Window (Fully Functional) -->
                         <div class="mspaint-window">
                             <div class="mspaint-titlebar">
                                 <span>untitled - Paint</span>
@@ -465,40 +499,49 @@
                             </div>
                             <div class="mspaint-workspace">
                                 <div class="mspaint-toolbar">
-                                    <div class="mspaint-tool">✂️</div><div class="mspaint-tool">🖱️</div>
-                                    <div class="mspaint-tool">🧽</div><div class="mspaint-tool">🪣</div>
-                                    <div class="mspaint-tool">💧</div><div class="mspaint-tool">🔍</div>
-                                    <div class="mspaint-tool">✏️</div><div class="mspaint-tool">🖌️</div>
-                                    <div class="mspaint-tool">🅰️</div><div class="mspaint-tool">📏</div>
-                                    <div class="mspaint-tool">〰️</div><div class="mspaint-tool">📐</div>
-                                    <div class="mspaint-tool">⬛</div><div class="mspaint-tool">🔲</div>
-                                    <div class="mspaint-tool">🔘</div><div class="mspaint-tool">⭕</div>
+                                    <div class="mspaint-tool active" id="tool-pencil" onclick="setTool('pencil')">✏️</div>
+                                    <div class="mspaint-tool" id="tool-eraser" onclick="setTool('eraser')">🧽</div>
+                                    <div class="mspaint-tool" onclick="clearCanvas()">🗑️</div>
                                 </div>
                                 <div class="mspaint-canvas-container">
-                                    <div class="mspaint-canvas" id="paint-canvas" onclick="placePaintItem(event)">
-                                        <!-- Click to paint -->
-                                    </div>
+                                    <!-- THE ACTUAL WORKING CANVAS -->
+                                    <canvas id="paint-canvas" width="600" height="250"></canvas>
                                 </div>
                             </div>
                             <div class="mspaint-bottom-area">
                                 <div class="mspaint-palette">
-                                    <div class="color-box" style="background:#000;"></div><div class="color-box" style="background:#808080;"></div>
-                                    <div class="color-box" style="background:#800000;"></div><div class="color-box" style="background:#808000;"></div>
-                                    <div class="color-box" style="background:#008000;"></div><div class="color-box" style="background:#008080;"></div>
-                                    <div class="color-box" style="background:#000080;"></div><div class="color-box" style="background:#800080;"></div>
-                                    <div class="color-box" style="background:#808040;"></div><div class="color-box" style="background:#004040;"></div>
-                                    <div class="color-box" style="background:#0080ff;"></div><div class="color-box" style="background:#004080;"></div>
-                                    <div class="color-box" style="background:#8000ff;"></div><div class="color-box" style="background:#804000;"></div>
-                                    <div class="color-box" style="background:#fff;"></div><div class="color-box" style="background:#c0c0c0;"></div>
-                                    <div class="color-box" style="background:#ff0000;"></div><div class="color-box" style="background:#ffff00;"></div>
-                                    <div class="color-box" style="background:#00ff00;"></div><div class="color-box" style="background:#00ffff;"></div>
-                                    <div class="color-box" style="background:#0000ff;"></div><div class="color-box" style="background:#ff00ff;"></div>
-                                    <div class="color-box" style="background:#ffff80;"></div><div class="color-box" style="background:#00ff80;"></div>
-                                    <div class="color-box" style="background:#80ffff;"></div><div class="color-box" style="background:#8080ff;"></div>
-                                    <div class="color-box" style="background:#ff0080;"></div><div class="color-box" style="background:#ff8040;"></div>
+                                    <div class="color-box active" style="background:#000;" onclick="setColor('#000000', this)"></div>
+                                    <div class="color-box" style="background:#808080;" onclick="setColor('#808080', this)"></div>
+                                    <div class="color-box" style="background:#800000;" onclick="setColor('#800000', this)"></div>
+                                    <div class="color-box" style="background:#808000;" onclick="setColor('#808000', this)"></div>
+                                    <div class="color-box" style="background:#008000;" onclick="setColor('#008000', this)"></div>
+                                    <div class="color-box" style="background:#008080;" onclick="setColor('#008080', this)"></div>
+                                    <div class="color-box" style="background:#000080;" onclick="setColor('#000080', this)"></div>
+                                    <div class="color-box" style="background:#800080;" onclick="setColor('#800080', this)"></div>
+                                    <div class="color-box" style="background:#808040;" onclick="setColor('#808040', this)"></div>
+                                    <div class="color-box" style="background:#004040;" onclick="setColor('#004040', this)"></div>
+                                    <div class="color-box" style="background:#0080ff;" onclick="setColor('#0080ff', this)"></div>
+                                    <div class="color-box" style="background:#004080;" onclick="setColor('#004080', this)"></div>
+                                    <div class="color-box" style="background:#8000ff;" onclick="setColor('#8000ff', this)"></div>
+                                    <div class="color-box" style="background:#804000;" onclick="setColor('#804000', this)"></div>
+                                    <div class="color-box" style="background:#fff;" onclick="setColor('#ffffff', this)"></div>
+                                    <div class="color-box" style="background:#c0c0c0;" onclick="setColor('#c0c0c0', this)"></div>
+                                    <div class="color-box" style="background:#ff0000;" onclick="setColor('#ff0000', this)"></div>
+                                    <div class="color-box" style="background:#ffff00;" onclick="setColor('#ffff00', this)"></div>
+                                    <div class="color-box" style="background:#00ff00;" onclick="setColor('#00ff00', this)"></div>
+                                    <div class="color-box" style="background:#00ffff;" onclick="setColor('#00ffff', this)"></div>
+                                    <div class="color-box" style="background:#0000ff;" onclick="setColor('#0000ff', this)"></div>
+                                    <div class="color-box" style="background:#ff00ff;" onclick="setColor('#ff00ff', this)"></div>
+                                    <div class="color-box" style="background:#ffff80;" onclick="setColor('#ffff80', this)"></div>
+                                    <div class="color-box" style="background:#00ff80;" onclick="setColor('#00ff80', this)"></div>
+                                    <div class="color-box" style="background:#80ffff;" onclick="setColor('#80ffff', this)"></div>
+                                    <div class="color-box" style="background:#8080ff;" onclick="setColor('#8080ff', this)"></div>
+                                    <div class="color-box" style="background:#ff0080;" onclick="setColor('#ff0080', this)"></div>
+                                    <div class="color-box" style="background:#ff8040;" onclick="setColor('#ff8040', this)"></div>
                                 </div>
                                 <div class="mspaint-statusbar">
-                                    For Help, click Help Topics on the Help Menu.
+                                    <span>For Help, click Help Topics on the Help Menu.</span>
+                                    <span id="canvas-coords">0,0</span>
                                 </div>
                             </div>
                         </div>
@@ -572,7 +615,8 @@
                                     </div>
                                     <div class="akito-main">
                                         <div class="akito-room" id="akito-room" onclick="tamaInteract()">
-                                            <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/akitoes%201.png" class="akito-sprite transparent-img" id="tama-sprite" alt="Akito">
+                                            <!-- Using exact image name -->
+                                            <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%201.jpe" class="akito-sprite transparent-img" id="tama-sprite" alt="Akito">
                                         </div>
                                         <div class="akito-side">
                                             <div style="font-family:var(--font-pixel); font-size:0.4rem; text-align:center; margin-bottom:2px;">Actions:</div>
@@ -661,7 +705,7 @@
                         <div class="announcements-container" id="announcements-wall-container"></div>
                     </div>
 
-                    <!-- CONTACT VIEW (Restored exact code) -->
+                    <!-- CONTACT VIEW -->
                     <div id="view-contact" class="view-section">
                         <div class="page-header-box">
                             <h1 style="font-size: 3rem; margin: 0 0 0.5rem 0; font-family:var(--font-pixel); color:var(--accent-color);">say something 💌</h1>
@@ -735,7 +779,8 @@
 
                 <!-- Blade Bottle -->
                 <div class="blade-bottle">
-                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/blade%20eeek.png" alt="Blade" onerror="this.src='https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png'">
+                    <!-- Using exact image name -->
+                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Blade%20EEEK.jpe" alt="Blade">
                 </div>
             </aside>
 
@@ -810,6 +855,21 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // ================= BACKGROUND SPARKLES =================
+        const sparkleContainer = document.createElement('div');
+        sparkleContainer.className = 'bg-sparkles';
+        document.body.appendChild(sparkleContainer);
+        const sparkleChars = ['✨', '🌟', '⋆', '°', '✩'];
+        for(let i=0; i<20; i++) {
+            const s = document.createElement('div');
+            s.className = 'sparkle';
+            s.innerText = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+            s.style.left = (Math.random() * 100) + 'vw';
+            s.style.top = (Math.random() * 100) + 'vh';
+            s.style.animationDelay = (Math.random() * 2) + 's';
+            sparkleContainer.appendChild(s);
+        }
+
         // ================= THEME SWITCHER =================
         function changeMood(mood) {
             document.body.setAttribute('data-mood', mood);
@@ -847,20 +907,69 @@
         }
         updateDancingBg();
 
-        // ================= MS PAINT =================
-        function placePaintItem(e) {
-            const canvas = document.getElementById('paint-canvas');
+        // ================= MS PAINT ENGINE =================
+        const canvas = document.getElementById('paint-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let currentTool = 'pencil';
+        let currentColor = '#000000';
+
+        // Resize canvas to fit container properly
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            // Fill with white background initially
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        setTimeout(resizeCanvas, 100); // Wait for layout
+
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 3;
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            ctx.beginPath();
             const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            document.getElementById('canvas-coords').innerText = `${Math.floor(e.clientX - rect.left)},${Math.floor(e.clientY - rect.top)}`;
             
-            const dot = document.createElement('div');
-            dot.className = 'paint-dot';
-            const emojis = ['🍮', '🍓', '🎀', '⭐', '🌸', '🎨'];
-            dot.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            dot.style.left = (x - 12) + 'px';
-            dot.style.top = (y - 12) + 'px';
-            canvas.appendChild(dot);
+            if (!isDrawing) return;
+            
+            ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
+            ctx.lineWidth = currentTool === 'eraser' ? 20 : 3;
+            
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => { isDrawing = false; });
+        canvas.addEventListener('mouseout', () => { isDrawing = false; });
+
+        function setTool(tool) {
+            currentTool = tool;
+            document.getElementById('tool-pencil').classList.remove('active');
+            document.getElementById('tool-eraser').classList.remove('active');
+            if(tool === 'pencil') document.getElementById('tool-pencil').classList.add('active');
+            if(tool === 'eraser') document.getElementById('tool-eraser').classList.add('active');
+        }
+
+        function setColor(color, element) {
+            currentColor = color;
+            document.querySelectorAll('.color-box').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+            if(currentTool === 'eraser') setTool('pencil'); // Auto switch to pencil if picking color
+        }
+
+        function clearCanvas() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
         // ================= TAMAGOTCHI (AKITO) =================
@@ -869,10 +978,10 @@
         let partyTimeout;
         
         const akitoSprites = {
-            happy: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/akitoes%202.png',
-            normal: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/akitoes%201.png',
-            sad: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/akitoes%203.png',
-            angry: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/akitoes%204.png'
+            happy: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%202.jpe',
+            normal: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%201.jpe',
+            sad: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%203.jpe',
+            angry: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%204.jpe'
         };
 
         const akitoReplies = {
@@ -947,10 +1056,11 @@
             
             if (interrupted) {
                 setTamaDialogue(akitoReplies.interrupted[Math.floor(Math.random() * akitoReplies.interrupted.length)]);
+                tama.mood = Math.max(0, tama.mood - 20); // He gets mad
             } else {
                 setTamaDialogue("Phew... that was exhausting.");
-                updateTamaUI();
             }
+            updateTamaUI();
         }
 
         function startParty() {
@@ -999,7 +1109,7 @@
         }
         updateTamaUI();
 
-        // ================= ADMIN TRIGGER =================
+        // ================= ADMIN TRIGGER & BLINKIES =================
         let clickCount = 0;
         let clickTimer = null;
         document.getElementById('admin-trigger').addEventListener('click', () => {
@@ -1028,8 +1138,20 @@
             const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             const badge = document.getElementById('admin-indicator');
             const editUpdatesBtn = document.getElementById('edit-updates-btn');
+            const editBlinkiesBtn = document.getElementById('edit-blinkies-btn');
+            
             if(badge) badge.style.display = isAdmin ? 'block' : 'none';
             if(editUpdatesBtn) editUpdatesBtn.style.display = isAdmin ? 'inline' : 'none';
+            if(editBlinkiesBtn) editBlinkiesBtn.style.display = isAdmin ? 'flex' : 'none';
+        }
+
+        function editBlinkies() {
+            const currentBlinkies = document.getElementById('blinkies-container').innerHTML;
+            const newUrl = prompt("Enter a new image URL for your Blinkies (or leave blank to cancel):");
+            if (newUrl && newUrl.trim() !== "") {
+                // Replace the first image as a test, or append
+                document.getElementById('blinkies-container').innerHTML += `<img src="${newUrl}" class="blinkie-img">`;
+            }
         }
 
         function toggleModalTypeFields() {
