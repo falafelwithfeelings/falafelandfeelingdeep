@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>falafelwithfeelings ⋆｡°✩</title>
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/favicon.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/favicon.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,8 @@
     <style>
         /* ================= THEME VARIABLES ================= */
         :root {
-            --bg-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe');
+            /* FIXED RAW URLS */
+            --bg-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe');
             --panel-bg: #ffffff;
             --border-color: #ffb6c1;
             --accent-color: #ff69b4;
@@ -38,7 +39,7 @@
         body[data-mood="sunset"] { --panel-bg: #fff3e0; --border-color: #f97316; --accent-color: #ea580c; --text-main: #431407; --text-light: #7c2d12; }
 
         /* ================= BASE & SCROLLBARS ================= */
-        * { box-sizing: border-box; cursor: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/favicon.png') 8 8, auto; font-family: var(--font-body); }
+        * { box-sizing: border-box; cursor: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/favicon.png') 8 8, auto; font-family: var(--font-body); }
         
         body {
             margin: 0; padding: 0; min-height: 100vh;
@@ -77,6 +78,36 @@
         @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
         @keyframes squish { 0% { transform: scale(1); } 50% { transform: scale(0.85); } 100% { transform: scale(1); } }
         @keyframes screenGlow { 0%, 100% { text-shadow: 0 0 2px var(--accent-color); } 50% { text-shadow: 0 0 10px var(--accent-color); } }
+
+        /* Aggressive Screen Shake */
+        @keyframes screenShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* Aggressive Spin & Bounce */
+        @keyframes spinAndBounce {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            10% { transform: translate(-20vw, -20vh) rotate(360deg) scale(1.5); }
+            20% { transform: translate(20vw, -10vh) rotate(720deg) scale(1.2); }
+            30% { transform: translate(-30vw, 20vh) rotate(1080deg) scale(1.6); }
+            40% { transform: translate(30vw, 30vh) rotate(1440deg) scale(1.3); }
+            50% { transform: translate(-10vw, -30vh) rotate(1800deg) scale(1.8); }
+            60% { transform: translate(40vw, -20vh) rotate(2160deg) scale(1.4); }
+            70% { transform: translate(-40vw, 10vh) rotate(2520deg) scale(1.7); }
+            80% { transform: translate(20vw, -40vh) rotate(2880deg) scale(1.2); }
+            90% { transform: translate(0, 0) rotate(3240deg) scale(1.5); }
+            100% { transform: translate(0, 0) rotate(3600deg) scale(1); }
+        }
 
         /* Apply squish animation globally to buttons */
         button, .v-tab, .web-button, .win-btn, .akito-btn, .read-more, .email-pill-btn { 
@@ -127,7 +158,6 @@
             border-radius: 15px; animation: float 4s ease-in-out infinite;
         }
         
-        /* Exact encoded Profile Pic */
         .profile-pic { width: 70px; height: 70px; object-fit: cover; border: 2px solid var(--border-color); border-radius: 10px; }
         .profile-name { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin: 0; }
         .profile-mood { font-size: 1.1rem; color: var(--text-light); margin: 5px 0 0 0; line-height: 1; }
@@ -217,15 +247,15 @@
         .about-list li { margin-bottom: 4px; }
         .about-list li::before { content: '💿'; font-size: 1rem; margin-right: 5px; }
 
-        /* MS Paint Window (Interactive Canvas) */
+        /* MS Paint Window (Expanded Tools) */
         .mspaint-window { background: var(--win-gray); border: 2px outset #fff; display: flex; flex-direction: column; width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden;}
         .mspaint-titlebar { background: var(--win-blue); color: white; padding: 2px 5px; font-family: var(--font-pixel); font-size: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
         .mspaint-titlebar .win-btn { width: 14px; height: 14px; font-size: 0.5rem; }
         .mspaint-menubar { background: var(--win-gray); display: flex; gap: 8px; padding: 2px 5px; font-family: var(--font-pixel); font-size: 0.4rem; border-bottom: 1px solid #888; }
         .mspaint-workspace { display: flex; height: 250px; padding: 2px; gap: 2px; }
-        .mspaint-toolbar { width: 50px; background: var(--win-gray); display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding: 2px; border: 2px inset #fff; }
-        .mspaint-tool { background: var(--win-gray); border: 2px outset #fff; height: 20px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 0.6rem; color: #000; border-radius: 3px; }
-        .mspaint-tool.active { border-style: inset; background: #aaa; }
+        .mspaint-toolbar { width: 60px; background: var(--win-gray); display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 2px; border: 2px inset #fff; align-content: start; }
+        .mspaint-tool { background: var(--win-gray); border: 2px outset #fff; height: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 0.7rem; color: #000; border-radius: 2px; }
+        .mspaint-tool.active { border-style: inset; background: #a0a0a0; }
         .mspaint-canvas-container { flex: 1; background: #808080; padding: 2px; border: 2px inset #fff; display: flex; }
         
         /* ACTUAL CANVAS */
@@ -254,11 +284,15 @@
         .cal-day:hover { background: #ffe4e1; border: 1px solid #ffb6c1; }
         
         .food-log-box { margin-top: 15px; text-align: center; margin-left: 20px; }
-        .food-log-title { font-family: var(--font-pixel); color: #ff69b4; font-size: 0.5rem; margin-bottom: 5px; }
-        .food-items { display: flex; gap: 10px; justify-content: center; }
-        .food-item { width: 70px; height: 90px; border: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; color: #ff69b4; text-align: center; box-shadow: 2px 2px 0 #aaa; font-family: var(--font-pixel); border-radius: 10px; transition: transform 0.2s; }
+        .food-log-title { font-family: var(--font-pixel); color: #ff69b4; font-size: 0.5rem; margin-bottom: 5px; display: flex; justify-content: center; align-items: center; gap: 10px;}
+        .food-add-btn { background: var(--accent-color); color: #fff; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        
+        .food-items { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px;}
+        .food-item { width: 80px; min-height: 100px; border: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; color: #ff69b4; text-align: center; box-shadow: 2px 2px 0 #aaa; font-family: var(--font-pixel); border-radius: 10px; transition: transform 0.2s; padding: 5px; }
         .food-item:hover { transform: translateY(-3px); }
         .food-item .food-emoji { font-size: 2.5rem; margin-bottom: 5px; }
+        .food-recipe { font-size: 0.6rem; color: #888; margin-top: 5px; font-family: var(--font-body); display: none; }
+        .food-item:hover .food-recipe { display: block; position: absolute; background: #fff; border: 1px solid #ccc; padding: 5px; border-radius: 5px; z-index: 10; max-width: 120px; }
 
         /* Right Side: Updates & Tamagotchi */
         .right-bottom-column { display: flex; flex-direction: column; gap: 10px; }
@@ -275,7 +309,7 @@
         /* Akito Room */
         .akito-room { flex: 1; background: #b3e5fc; border: 2px solid var(--border-color); height: 110px; position: relative; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; transition: background 0.5s; border-radius: 6px; }
         
-        /* Party Mode Animations */
+        /* Party Mode & Aggressive Dance Animations */
         @keyframes neonFlash {
             0% { background-color: rgba(255, 0, 255, 0.5); box-shadow: inset 0 0 30px #ff00ff; }
             25% { background-color: rgba(0, 255, 255, 0.5); box-shadow: inset 0 0 30px #00ffff; }
@@ -283,13 +317,17 @@
             75% { background-color: rgba(0, 255, 0, 0.5); box-shadow: inset 0 0 30px #00ff00; }
             100% { background-color: rgba(255, 0, 255, 0.5); box-shadow: inset 0 0 30px #ff00ff; }
         }
-        .party-mode { animation: neonFlash 0.5s infinite alternate; }
+        .party-mode { animation: neonFlash 0.3s infinite alternate; }
         
-        @keyframes danceBob {
-            0% { transform: translateY(0) rotate(-10deg) scale(1.1); }
-            100% { transform: translateY(-15px) rotate(10deg) scale(1.1); }
+        /* Aggressive Dance Shake */
+        @keyframes aggressiveDance {
+            0% { transform: translate(0, 0) rotate(-15deg) scale(1.2); }
+            25% { transform: translate(-5px, -10px) rotate(15deg) scale(1.4); }
+            50% { transform: translate(5px, -15px) rotate(-15deg) scale(1.2); }
+            75% { transform: translate(-5px, -5px) rotate(15deg) scale(1.4); }
+            100% { transform: translate(0, 0) rotate(-15deg) scale(1.2); }
         }
-        .dancing { animation: danceBob 0.2s infinite alternate !important; }
+        .dancing { animation: aggressiveDance 0.1s infinite !important; }
 
         .akito-sprite { height: 70px; margin-bottom: 5px; cursor: pointer; animation: bounce 1s infinite alternate; transition: transform 0.2s; }
         .akito-side { width: 80px; display: flex; flex-direction: column; gap: 4px; }
@@ -380,7 +418,7 @@
     <!-- FALLING BG -->
     <div id="dancing-bg" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:1; overflow:hidden;"></div>
 
-    <div class="window-frame">
+    <div class="window-frame" id="main-window">
         <!-- Window Top Bar -->
         <div class="window-bar">
             <div class="window-title">falafelwithfeelings.html</div>
@@ -398,7 +436,7 @@
             <aside class="left-sidebar">
                 <!-- Profile -->
                 <div class="profile-box">
-                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/EMU%20BANNER.jpe" class="profile-pic" alt="Falafel PFP">
+                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU%20BANNER.jpe" class="profile-pic" alt="Falafel PFP">
                     <div class="profile-info">
                         <div class="profile-name">Falafel</div>
                         <div class="profile-mood">Mood:<br>gacha goblin</div>
@@ -475,10 +513,10 @@
                         <span class="blinkies-edit-btn" id="edit-blinkies-btn" onclick="editBlinkies()">+</span>
                     </div>
                     <div class="blinkies-list" id="blinkies-container">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/DANCING%20MIKUUU.png" class="blinkie-img">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png" class="blinkie-img">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/badge%20genshin%21%20%28make%20it%20transparent.jpe" class="blinkie-img">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Screenshot%202026-11-06%20170703.png" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/DANCING%20MIKUUU.png" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/NO%20EMU.png" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/badge%20genshin!%20(make%20it%20transparent.jpe" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Screenshot%202026-11-06%20170703.png" class="blinkie-img">
                     </div>
                 </div>
 
@@ -491,7 +529,7 @@
                         <!-- About Me -->
                         <div class="about-layout">
                             <div class="about-collage">
-                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/EMU%20BANNER.jpe" alt="Emu Banner">
+                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU%20BANNER.jpe" alt="Emu Banner">
                             </div>
                             <div class="about-text">
                                 <p>hi!!! im this website's webmaster! I rlly enjoy learning to code even tho it pmo sometimes. I made this on a macbook air using chrome (2560x1600 px), so it will probably look best on that device. Hopefully it doesn't look to bad on other devices tho.</p>
@@ -505,7 +543,7 @@
                             </div>
                         </div>
 
-                        <!-- MS Paint Window (Working Canvas) -->
+                        <!-- MS Paint Window (Working Canvas & Tools) -->
                         <div class="mspaint-window">
                             <div class="mspaint-titlebar">
                                 <span>untitled - Paint</span>
@@ -516,13 +554,34 @@
                                 </div>
                             </div>
                             <div class="mspaint-menubar">
-                                <span>File</span><span>Edit</span><span>View</span><span>Image</span><span>Colors</span><span>Help</span>
+                                <span>File</span><span>Edit</span><span>View</span><span>Image</span><span>Colors</span><span>Help</span><span>Extras</span>
                             </div>
                             <div class="mspaint-workspace">
                                 <div class="mspaint-toolbar">
-                                    <div class="mspaint-tool active" id="tool-pencil" onclick="setTool('pencil')">✏️</div>
-                                    <div class="mspaint-tool" id="tool-eraser" onclick="setTool('eraser')">🧽</div>
-                                    <div class="mspaint-tool" onclick="clearCanvas()">🗑️</div>
+                                    <!-- Row 1 -->
+                                    <div class="mspaint-tool" title="Freeform Select">✂️</div>
+                                    <div class="mspaint-tool" title="Select">🖼️</div>
+                                    <!-- Row 2 -->
+                                    <div class="mspaint-tool active" id="tool-eraser" onclick="setTool('eraser')" title="Eraser">🧽</div>
+                                    <div class="mspaint-tool" onclick="clearCanvas()" title="Fill">🪣</div>
+                                    <!-- Row 3 -->
+                                    <div class="mspaint-tool" title="Color Picker">💧</div>
+                                    <div class="mspaint-tool" title="Magnifier">🔍</div>
+                                    <!-- Row 4 -->
+                                    <div class="mspaint-tool active" id="tool-pencil" onclick="setTool('pencil')" title="Pencil">✏️</div>
+                                    <div class="mspaint-tool" onclick="setTool('pencil')" title="Brush">🖌️</div>
+                                    <!-- Row 5 -->
+                                    <div class="mspaint-tool" title="Airbrush">💨</div>
+                                    <div class="mspaint-tool" title="Text">🅰️</div>
+                                    <!-- Row 6 -->
+                                    <div class="mspaint-tool" id="tool-line" onclick="setTool('line')" title="Line">📏</div>
+                                    <div class="mspaint-tool" title="Curve">〰️</div>
+                                    <!-- Row 7 -->
+                                    <div class="mspaint-tool" id="tool-rect" onclick="setTool('rect')" title="Rectangle">🔲</div>
+                                    <div class="mspaint-tool" title="Polygon">⬠</div>
+                                    <!-- Row 8 -->
+                                    <div class="mspaint-tool" id="tool-ellipse" onclick="setTool('ellipse')" title="Ellipse">⭕</div>
+                                    <div class="mspaint-tool" title="Rounded Rectangle">🔳</div>
                                 </div>
                                 <div class="mspaint-canvas-container">
                                     <canvas id="paint-canvas" width="600" height="250"></canvas>
@@ -577,8 +636,8 @@
                             
                             <!-- Left Side: Calendar & Food Log -->
                             <div class="calendar-section">
-                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/DANCING%20MIKUUU.png" class="calendar-badge">
-                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png" class="calendar-badge" style="left:-10px; top:40px; transform:rotate(10deg); width:40px;">
+                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/DANCING%20MIKUUU.png" class="calendar-badge">
+                                <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/NO%20EMU.png" class="calendar-badge" style="left:-10px; top:40px; transform:rotate(10deg); width:40px;">
                                 
                                 <div class="calendar-box">
                                     <div class="calendar-header">November 6 2026</div>
@@ -595,16 +654,12 @@
                                 </div>
                                 
                                 <div class="food-log-box">
-                                    <div class="food-log-title">Mini food log (coming soon!)</div>
-                                    <div class="food-items">
-                                        <div class="food-item">
-                                            <span class="food-emoji">🍰</span>
-                                            <span>Strawberry Roll</span>
-                                        </div>
-                                        <div class="food-item">
-                                            <span class="food-emoji">🍣</span>
-                                            <span>Sushi Roll</span>
-                                        </div>
+                                    <div class="food-log-title">
+                                        Mini food log
+                                        <button class="food-add-btn" onclick="openAddFoodModal()" title="Add Food">+</button>
+                                    </div>
+                                    <div class="food-items" id="food-log-container">
+                                        <!-- Dynamically populated -->
                                     </div>
                                 </div>
                             </div>
@@ -634,7 +689,7 @@
                                     </div>
                                     <div class="akito-main">
                                         <div class="akito-room" id="akito-room" onclick="tamaInteract()">
-                                            <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%201.jpe" class="akito-sprite transparent-img" id="tama-sprite" alt="Akito">
+                                            <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKITOES%201.jpe" class="akito-sprite transparent-img" id="tama-sprite" alt="Akito">
                                         </div>
                                         <div class="akito-side">
                                             <div style="font-family:var(--font-pixel); font-size:0.4rem; text-align:center; margin-bottom:2px;">Actions:</div>
@@ -795,9 +850,9 @@
                     <a class="v-tab" id="nav-contact" onclick="switchView('contact')">contact</a>
                 </div>
 
-                <!-- Blade Bottle (Encoded URL) -->
+                <!-- Blade Bottle (FIXED RAW URL) -->
                 <div class="blade-bottle">
-                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Blade%20EEEK.jpe" alt="Blade">
+                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Blade%20EEEK.jpe" alt="Blade">
                 </div>
             </aside>
 
@@ -850,6 +905,23 @@
         </div>
     </div>
 
+    <!-- FOOD MODAL -->
+    <div class="modal-overlay" id="food-modal">
+        <div class="modal-box">
+            <h3>🍰 Add New Food</h3>
+            <label>Food Name</label>
+            <input type="text" id="food-name" placeholder="e.g. Strawberry Roll">
+            <label>Recipe / Description</label>
+            <input type="text" id="food-recipe" placeholder="e.g. Sponge cake, cream, strawberries...">
+            <label>Emoji</label>
+            <input type="text" id="food-emoji" placeholder="🍰" maxlength="2">
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:15px;">
+                <button class="modal-btn cancel" onclick="document.getElementById('food-modal').style.display='none'">Cancel</button>
+                <button class="modal-btn save" onclick="addFood()">Add Food 🍽️</button>
+            </div>
+        </div>
+    </div>
+
     <!-- COMMENT OVERLAY (Strictly Hidden by Default) -->
     <div id="comment-drawer-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
         <div id="comment-drawer" style="background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; width: 90%; max-width: 400px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 4px 4px 0 var(--accent-color); border-radius: 12px;">
@@ -894,8 +966,8 @@
 
         // ================= BACKGROUND DANCERS =================
         const danceOptions = {
-            miku: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/DANCING%20MIKUUU.png',
-            emu: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png'
+            miku: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/DANCING%20MIKUUU.png',
+            emu: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/NO%20EMU.png'
         };
 
         function updateDancingBg() {
@@ -924,19 +996,20 @@
         }
         updateDancingBg();
 
-        // ================= MS PAINT ENGINE =================
+        // ================= MS PAINT ENGINE (EXPANDED) =================
         const canvas = document.getElementById('paint-canvas');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
         let currentTool = 'pencil';
         let currentColor = '#000000';
+        let startX = 0;
+        let startY = 0;
+        let snapshot;
 
-        // Resize canvas to fit container properly
         function resizeCanvas() {
             const container = canvas.parentElement;
             canvas.width = container.clientWidth;
             canvas.height = container.clientHeight;
-            // Fill with white background initially
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -948,22 +1021,55 @@
 
         canvas.addEventListener('mousedown', (e) => {
             isDrawing = true;
-            ctx.beginPath();
             const rect = canvas.getBoundingClientRect();
-            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            
+            if (currentTool === 'rect' || currentTool === 'ellipse' || currentTool === 'line') {
+                snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            }
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
         });
 
         canvas.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
-            document.getElementById('canvas-coords').innerText = `${Math.floor(e.clientX - rect.left)},${Math.floor(e.clientY - rect.top)}`;
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            document.getElementById('canvas-coords').innerText = `${Math.floor(x)},${Math.floor(y)}`;
             
             if (!isDrawing) return;
             
-            ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
-            ctx.lineWidth = currentTool === 'eraser' ? 20 : 3;
-            
-            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-            ctx.stroke();
+            if (currentTool === 'pencil' || currentTool === 'eraser') {
+                ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
+                ctx.lineWidth = currentTool === 'eraser' ? 20 : 3;
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            } else if (currentTool === 'line') {
+                ctx.putImageData(snapshot, 0, 0);
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            } else if (currentTool === 'rect') {
+                ctx.putImageData(snapshot, 0, 0);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = 3;
+                ctx.strokeRect(startX, startY, x - startX, y - startY);
+            } else if (currentTool === 'ellipse') {
+                ctx.putImageData(snapshot, 0, 0);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                const radiusX = Math.abs(x - startX) / 2;
+                const radiusY = Math.abs(y - startY) / 2;
+                const centerX = (startX + x) / 2;
+                const centerY = (startY + y) / 2;
+                ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
         });
 
         canvas.addEventListener('mouseup', () => { isDrawing = false; });
@@ -971,10 +1077,9 @@
 
         function setTool(tool) {
             currentTool = tool;
-            document.getElementById('tool-pencil').classList.remove('active');
-            document.getElementById('tool-eraser').classList.remove('active');
-            if(tool === 'pencil') document.getElementById('tool-pencil').classList.add('active');
-            if(tool === 'eraser') document.getElementById('tool-eraser').classList.add('active');
+            document.querySelectorAll('.mspaint-tool').forEach(t => t.classList.remove('active'));
+            const activeTool = document.getElementById(`tool-${tool}`);
+            if(activeTool) activeTool.classList.add('active');
         }
 
         function setColor(color, element) {
@@ -992,21 +1097,23 @@
         // ================= TAMAGOTCHI (AKITO) =================
         let tama = { coins: 20, mood: 100, belly: 2 };
         let isPartying = false;
+        let isWorking = false;
         let partyTimeout;
         
         const akitoSprites = {
-            happy: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%202.jpe',
-            normal: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%201.jpe',
-            sad: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%203.jpe',
-            angry: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%204.jpe'
+            happy: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKITOES%202.jpe',
+            normal: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKITOES%201.jpe',
+            sad: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKITOES%203.jpe',
+            angry: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKITOES%204.jpe'
         };
 
         const akitoReplies = {
             talk: ["What do you want? I'm busy practicing.", "Don't look at me like that.", "I'm not cute, I'm cool!", "Cheesecake...?", "I'm the best at this!", "Do I have to talk to you?", "Did you need something?"],
             feed: ["Cheesecake... I mean, pancakes! Thanks.", "I guess this is okay.", "Don't think this makes us friends.", "Finally, some good food.", "Can I have more?"],
-            work: ["Ugh, I'm tired. But I earned some coins.", "I'm the best at this!", "Do I have to?", "I'll show you how it's done.", "This is exhausting..."],
+            work: ["I'll show you how it's done.", "Ugh, fine. Watch this.", "I'm gonna work so hard!", "Let me show you my true power."],
             arcade: ["VBS PARTY TIME! 🎉", "I'll beat you at this!", "ARCADE LET'S GOOOO!", "I'm gonna get the high score!", "You're on!"],
-            interrupted: ["HOW DARE YOU INTERRUPT MY DANCE!", "Hey! I wasn't finished!", "Oh, you didn't let me finish my dance...", "Rude! I was in the zone!", "Excuse me?! I was dancing!"]
+            interrupted: ["HOW DARE YOU INTERRUPT MY DANCE!", "Hey! I wasn't finished!", "Oh, you didn't let me finish my dance...", "Rude! I was in the zone!", "Excuse me?! I was dancing!"],
+            apologize: ["S-sorry! I got a little carried away...", "Did I break the screen? My bad.", "Wait, why is everything shaking? Oh, it was me.", "Please don't tell the webmaster I did that.", "I'm just... really passionate about working.", "Did the HTML survive? I hope the CSS is okay."]
         };
 
         function updateTamaUI() {
@@ -1021,10 +1128,8 @@
         function setTamaDialogue(text) { document.getElementById('tama-dialogue').innerHTML = `Akito: ${text}`; }
 
         function tamaInteract() {
-            if (isPartying) {
-                stopParty(true);
-                return;
-            }
+            if (isPartying) { stopParty(true); return; }
+            if (isWorking) return;
             const sprite = document.getElementById('tama-sprite');
             sprite.style.transform = 'scale(1.1) rotate(5deg)';
             setTimeout(() => sprite.style.transform = 'scale(1) rotate(0deg)', 200);
@@ -1064,16 +1169,15 @@
             if (!isPartying) return;
             clearTimeout(partyTimeout);
             isPartying = false;
-            
             const room = document.getElementById('akito-room');
             const sprite = document.getElementById('tama-sprite');
-            
             room.classList.remove('party-mode');
             sprite.classList.remove('dancing');
+            document.getElementById('main-window').style.animation = 'glow 4s infinite alternate'; // Remove shake
             
             if (interrupted) {
                 setTamaDialogue(akitoReplies.interrupted[Math.floor(Math.random() * akitoReplies.interrupted.length)]);
-                tama.mood = Math.max(0, tama.mood - 20); // He gets mad
+                tama.mood = Math.max(0, tama.mood - 20);
             } else {
                 setTamaDialogue("Phew... that was exhausting.");
             }
@@ -1084,22 +1188,59 @@
             isPartying = true;
             const room = document.getElementById('akito-room');
             const sprite = document.getElementById('tama-sprite');
-            
             room.classList.add('party-mode');
             sprite.classList.add('dancing');
-            setTamaDialogue(akitoReplies.arcade[Math.floor(Math.random() * akitoReplies.arcade.length)]);
             
-            // 30 second dance
-            partyTimeout = setTimeout(() => {
-                stopParty(false);
-            }, 30000); 
+            // Shake screen
+            document.getElementById('main-window').style.animation = 'screenShake 0.2s infinite, glow 4s infinite alternate';
+            
+            setTamaDialogue(akitoReplies.arcade[Math.floor(Math.random() * akitoReplies.arcade.length)]);
+            partyTimeout = setTimeout(() => { stopParty(false); }, 30000); 
+        }
+
+        function aggressiveWork() {
+            if (isWorking) return;
+            isWorking = true;
+            
+            const sprite = document.getElementById('tama-sprite');
+            const room = document.getElementById('akito-room');
+            const frame = document.getElementById('main-window');
+            
+            // Move sprite to body for global bouncing
+            const spriteClone = sprite.cloneNode(true);
+            spriteClone.id = 'akito-clone';
+            spriteClone.style.position = 'fixed';
+            spriteClone.style.zIndex = '9999';
+            spriteClone.style.width = '100px';
+            spriteClone.style.height = '100px';
+            // Center start
+            spriteClone.style.left = '50vw';
+            spriteClone.style.top = '50vh';
+            spriteClone.style.pointerEvents = 'none';
+            document.body.appendChild(spriteClone);
+            
+            sprite.style.opacity = '0';
+            frame.style.animation = 'screenShake 0.1s infinite';
+            
+            spriteClone.style.animation = 'spinAndBounce 8s linear forwards';
+            setTamaDialogue("WORK MODE ACTIVATED!!!");
+            
+            setTimeout(() => {
+                isWorking = false;
+                frame.style.animation = 'glow 4s infinite alternate'; // Remove screen shake
+                spriteClone.remove();
+                sprite.style.opacity = '1';
+                
+                setTamaDialogue(akitoReplies.apologize[Math.floor(Math.random() * akitoReplies.apologize.length)]);
+                tama.coins += 15;
+                tama.mood = Math.max(0, tama.mood - 20);
+                updateTamaUI();
+            }, 8000);
         }
 
         function tamaAction(action) {
-            if (isPartying) {
-                stopParty(true);
-                return;
-            }
+            if (isPartying) { stopParty(true); return; }
+            if (isWorking) return;
             
             if (action === 'Talk') { 
                 setTamaDialogue(akitoReplies.talk[Math.floor(Math.random() * akitoReplies.talk.length)]); 
@@ -1114,9 +1255,8 @@
                 updateTamaUI();
             } 
             else if (action === 'Work') {
-                tama.coins += 5; tama.mood = Math.max(0, tama.mood - 15);
                 setTamaDialogue(akitoReplies.work[Math.floor(Math.random() * akitoReplies.work.length)]);
-                updateTamaUI();
+                aggressiveWork();
             }
             else if (action === 'Party') {
                 if (tama.coins < 20) return setTamaDialogue("I need 20 coins for the arcade!");
@@ -1125,6 +1265,46 @@
             }
         }
         updateTamaUI();
+
+        // ================= DYNAMIC FOOD LOG =================
+        let foodLog = [
+            { name: "Strawberry Roll", recipe: "Sponge cake, cream, strawberries.", emoji: "🍰" },
+            { name: "Sushi Roll", recipe: "Rice, seaweed, salmon, avocado.", emoji: "🍣" }
+        ];
+
+        function renderFoodLog() {
+            const container = document.getElementById('food-log-container');
+            if (!container) return;
+            container.innerHTML = foodLog.map(f => `
+                <div class="food-item">
+                    <span class="food-emoji">${f.emoji}</span>
+                    <span>${f.name}</span>
+                    <div class="food-recipe">${f.recipe}</div>
+                </div>
+            `).join('');
+        }
+        renderFoodLog();
+
+        function openAddFoodModal() {
+            document.getElementById('food-modal').style.display = 'flex';
+            document.getElementById('food-name').value = '';
+            document.getElementById('food-recipe').value = '';
+            document.getElementById('food-emoji').value = '';
+        }
+
+        function addFood() {
+            const name = document.getElementById('food-name').value;
+            const recipe = document.getElementById('food-recipe').value;
+            const emoji = document.getElementById('food-emoji').value || '🍽️';
+            
+            if(!name) return alert("Please enter a food name!");
+            
+            foodLog.push({ name, recipe, emoji });
+            document.getElementById('food-modal').style.display = 'none';
+            renderFoodLog();
+            
+            // Ideally, sync to JSONBin here. I'll just keep it local for now to save space.
+        }
 
         // ================= ADMIN TRIGGER & BLINKIES =================
         let clickCount = 0;
