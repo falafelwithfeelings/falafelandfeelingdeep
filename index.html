@@ -39,7 +39,12 @@
         body[data-mood="sunset"] { --panel-bg: #fff3e0; --border-color: #f97316; --accent-color: #ea580c; --text-main: #431407; --text-light: #7c2d12; }
 
         /* ================= BASE & SCROLLBARS ================= */
-        * { box-sizing: border-box; cursor: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/favicon.png') 8 8, auto; font-family: var(--font-body); }
+        * { 
+            box-sizing: border-box; 
+            cursor: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/favicon.png') 8 8, auto; 
+            font-family: var(--font-body); 
+            image-rendering: pixelated;
+        }
         
         body {
             margin: 0; padding: 0; min-height: 100vh;
@@ -56,7 +61,7 @@
             100% { transform: translateX(0) rotate(0deg); opacity: 1; }
         }
 
-        /* Sparkles */
+        /* Sparkles Background */
         .bg-sparkles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
         .sparkle { position: absolute; color: #fff; font-size: 2.5rem; text-shadow: 0 0 15px var(--accent-color); animation: twinkle 1s infinite alternate; }
         @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.5) rotate(0deg); } 100% { opacity: 1; transform: scale(1.3) rotate(45deg); } }
@@ -67,50 +72,42 @@
         /* THE STICKER EFFECT: Removes white backgrounds by outlining the image in white! */
         .sticker-img { 
             filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff);
-            image-rendering: pixelated;
         }
 
         /* Whimsical Animations */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        @keyframes glow { 0%, 100% { box-shadow: 0 0 15px var(--accent-color); } 50% { box-shadow: 0 0 35px var(--accent-color), 0 0 60px var(--border-color); } }
         @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
         @keyframes wiggle { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         
+        /* FIXED DANCING BACKGROUND ANIMATION */
+        @keyframes fallDown { 
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; } 
+            10% { opacity: 1; } 
+            90% { opacity: 1; } 
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } 
+        }
+
+        /* Cute Vector Flourish Border */
+        @keyframes magicalBorder {
+            0% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff; border-color: #fff; }
+            50% { box-shadow: 0 0 20px var(--accent-color), inset 0 0 20px var(--accent-color); border-color: var(--accent-color); }
+            100% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff; border-color: #fff; }
+        }
+        
+        /* Neon Dance Border */
+        @keyframes neonBorder {
+            0% { box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff; border-color: #ff00ff; }
+            25% { box-shadow: 0 0 20px #00ffff, inset 0 0 20px #00ffff; border-color: #00ffff; }
+            50% { box-shadow: 0 0 20px #ffff00, inset 0 0 20px #ffff00; border-color: #ffff00; }
+            75% { box-shadow: 0 0 20px #00ff00, inset 0 0 20px #00ff00; border-color: #00ff00; }
+            100% { box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff; border-color: #ff00ff; }
+        }
+
         /* Buttons */
         button, .v-tab, .web-button, .win-btn, .akito-btn, .read-more, .email-pill-btn { transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         button:hover, .v-tab:hover, .web-button:hover, .win-btn:hover, .akito-btn:hover, .read-more:hover { transform: translateY(-3px) scale(1.05); }
         button:active, .v-tab:active, .web-button:active, .win-btn:active, .akito-btn:active, .read-more:active, .email-pill-btn:active { animation: squish 0.2s ease; }
         @keyframes squish { 0% { transform: scale(1); } 50% { transform: scale(0.85); } 100% { transform: scale(1); } }
-
-        /* Screen Shake */
-        @keyframes screenShake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-
-        @keyframes spinAndBounce {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            10% { transform: translate(-20vw, -20vh) rotate(360deg) scale(1.5); }
-            20% { transform: translate(20vw, -10vh) rotate(720deg) scale(1.2); }
-            30% { transform: translate(-30vw, 20vh) rotate(1080deg) scale(1.6); }
-            40% { transform: translate(30vw, 30vh) rotate(1440deg) scale(1.3); }
-            50% { transform: translate(-10vw, -30vh) rotate(1800deg) scale(1.8); }
-            60% { transform: translate(40vw, -20vh) rotate(2160deg) scale(1.4); }
-            70% { transform: translate(-40vw, 10vh) rotate(2520deg) scale(1.7); }
-            80% { transform: translate(20vw, -40vh) rotate(2880deg) scale(1.2); }
-            90% { transform: translate(0, 0) rotate(3240deg) scale(1.5); }
-            100% { transform: translate(0, 0) rotate(3600deg) scale(1); }
-        }
 
         ::-webkit-scrollbar { width: 16px; height: 16px; }
         ::-webkit-scrollbar-track { background: var(--win-gray); border-left: 1px solid #888; }
@@ -121,24 +118,30 @@
             width: 95vw; max-width: 1150px; height: 95vh;
             background-image: var(--bg-inside); background-size: cover; background-position: center;
             border: 3px solid var(--border-color);
-            box-shadow: 4px 4px 0px var(--accent-color), 0 0 0 2px #fff;
-            display: flex; flex-direction: column; overflow: hidden; position: relative;
-            animation: glow 4s infinite alternate, driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            display: flex; flex-direction: column; 
+            /* OVERFLOW VISIBLE SO BLADE CAN ESCAPE */
+            overflow: visible; 
+            position: relative;
+            animation: driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, magicalBorder 3s infinite alternate;
             z-index: 10;
         }
 
-        .window-bar { background: var(--border-color); height: 24px; display: flex; justify-content: space-between; align-items: center; padding: 0 5px; }
+        .window-frame.neon-mode {
+            animation: driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, neonBorder 0.5s infinite alternate !important;
+        }
+
+        .window-bar { background: var(--border-color); height: 24px; display: flex; justify-content: space-between; align-items: center; padding: 0 5px; border-radius: 12px 12px 0 0; }
         .window-title { font-family: var(--font-pixel); font-size: 0.6rem; color: #fff; margin-left: 5px; }
         .window-controls { display: flex; gap: 2px; }
         .win-btn { background: var(--win-gray); border: 2px outset #fff; width: 18px; height: 18px; display: flex; justify-content: center; align-items: center; font-size: 0.7rem; cursor: pointer; color: #000; font-family: var(--font-pixel); border-radius: 4px; }
         .win-btn.close { background: #ff4d4d; color: #fff; }
 
-        #app-container { display: flex; flex: 1; overflow-y: auto; padding: 15px; gap: 15px; }
+        #app-container { display: flex; flex: 1; overflow-y: auto; overflow-x: hidden; padding: 15px; gap: 15px; border-radius: 0 0 12px 12px; }
 
         /* ================= LEFT SIDEBAR ================= */
         .left-sidebar { width: 200px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
         
-        .profile-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 15px; animation: float 4s ease-in-out infinite; }
+        .profile-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 15px; animation: pulse 3s infinite ease-in-out; }
         .profile-pic { width: 70px; height: 70px; object-fit: cover; border: 2px solid var(--border-color); border-radius: 10px; }
         .profile-name { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin: 0; }
         .profile-mood { font-size: 1.1rem; color: var(--text-light); margin: 5px 0 0 0; line-height: 1; }
@@ -148,8 +151,9 @@
         .winamp-select { width: 100%; font-family: var(--font-retro); font-size: 1rem; background: var(--panel-bg); color: var(--accent-color); border: 2px inset #fff; border-radius: 8px; margin-bottom: 5px; padding: 2px; cursor: pointer; outline: none;}
         .winamp-progress { width: 100%; height: 6px; background: #fff; margin-bottom: 8px; cursor: pointer; border: 1px solid var(--border-color); border-radius: 3px; overflow: hidden;}
         .winamp-bar { height: 100%; background: var(--accent-color); width: 0%; border-radius: 3px; }
-        .winamp-controls { display: flex; gap: 6px; justify-content: space-between; padding: 0 2px; }
+        .winamp-controls { display: flex; gap: 4px; justify-content: space-between; padding: 0 2px; }
         .winamp-btn { background: #fff; border: 2px solid var(--border-color); color: var(--accent-color); font-family: var(--font-pixel); font-size: 0.5rem; cursor: pointer; padding: 5px; border-radius: 50%; width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; box-shadow: 1px 1px 0 var(--border-color);}
+        .winamp-btn.active-loop { background: var(--accent-color); color: #fff; }
 
         .button-wall { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px; }
         .web-button { height: 32px; background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%); border: 2px solid var(--border-color); display: flex; justify-content: center; align-items: center; font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); cursor: pointer; text-transform: uppercase; border-radius: 20px; box-shadow: 0 4px 0 var(--border-color), 0 5px 5px rgba(0,0,0,0.1); }
@@ -246,6 +250,16 @@
         }
         .dancing { animation: aggressiveDance 0.1s infinite !important; }
 
+        /* Neon Flash for Room */
+        @keyframes neonRoomFlash {
+            0% { background-color: rgba(255, 0, 255, 0.5); box-shadow: inset 0 0 30px #ff00ff; }
+            25% { background-color: rgba(0, 255, 255, 0.5); box-shadow: inset 0 0 30px #00ffff; }
+            50% { background-color: rgba(255, 255, 0, 0.5); box-shadow: inset 0 0 30px #ffff00; }
+            75% { background-color: rgba(0, 255, 0, 0.5); box-shadow: inset 0 0 30px #00ff00; }
+            100% { background-color: rgba(255, 0, 255, 0.5); box-shadow: inset 0 0 30px #ff00ff; }
+        }
+        .party-mode { animation: neonRoomFlash 0.5s infinite alternate; }
+
         .akito-sprite { height: 70px; margin-bottom: 5px; cursor: pointer; animation: bounce 1s infinite alternate; transition: transform 0.2s; }
         .akito-side { width: 80px; display: flex; flex-direction: column; gap: 4px; }
         .akito-btn { background: linear-gradient(to bottom, #ffffff, #f0f0f0); border: 2px solid var(--border-color); border-radius: 10px; font-family: var(--font-pixel); font-size: 0.4rem; padding: 4px; cursor: pointer; text-align: center; color: var(--accent-color); box-shadow: 0 3px 0 var(--border-color); }
@@ -254,13 +268,14 @@
         /* ================= RIGHT SIDEBAR ================= */
         .right-sidebar { width: 130px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; position: relative; }
         
-        .vertical-tabs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .vertical-tabs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; z-index: 20; }
         .v-tab { background: var(--panel-bg); border: 2px solid var(--border-color); border-left: none; padding: 8px 10px; font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); cursor: pointer; box-shadow: 3px 3px 0 var(--accent-color), inset 0 0 5px var(--border-color); text-transform: lowercase; border-radius: 0 15px 15px 0; transition: all 0.2s;}
         .v-tab.active { background: var(--accent-color); color: #fff; transform: translateX(3px); box-shadow: 3px 3px 0 #000; animation: pulse 2s infinite; }
 
-        .blade-bottle { width: 100%; height: 450px; position: sticky; bottom: 0; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; pointer-events: none; margin-top: auto; }
-        .blade-bottle img { width: 120%; height: 100%; object-fit: cover; object-position: bottom; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.4)); transition: transform 0.3s; }
-        .blade-bottle:hover img { transform: scale(1.05); }
+        /* HUGE BLADE (OUT OF GRID) */
+        .blade-bottle { position: absolute; bottom: -50px; right: -100px; width: 280px; height: 700px; z-index: 100; pointer-events: none; }
+        .blade-bottle img { width: 100%; height: 100%; object-fit: contain; object-position: bottom right; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.4)); transition: transform 0.3s; }
+        .blade-bottle:hover img { transform: scale(1.05) rotate(-5deg); }
 
         /* ================= MODALS & OVERLAYS ================= */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; }
@@ -377,6 +392,7 @@
                         <button class="winamp-btn" onclick="skipAudioTrack(-1)">⏮</button>
                         <button class="winamp-btn" id="audio-play-pause-btn" onclick="toggleAudioPlayback()">▶</button>
                         <button class="winamp-btn" onclick="skipAudioTrack(1)">⏭</button>
+                        <button class="winamp-btn" id="loop-btn" onclick="toggleLoop()">🔁</button>
                     </div>
                 </div>
 
@@ -576,8 +592,8 @@
                                         <span>Coins: <span id="tama-coins">20</span></span>
                                     </div>
                                     <div class="akito-main">
-                                        <div class="akito-room" id="akito-room" onclick="tamaInteract()">
-                                            <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/AKITOES%201.jpe" class="akito-sprite sticker-img" id="tama-sprite" alt="Akito">
+                                        <div class="akito-room" id="akito-room" onclick="cycleAkito()">
+                                            <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%201.png" class="akito-sprite sticker-img" id="tama-sprite" alt="Akito">
                                         </div>
                                         <div class="akito-side">
                                             <div style="font-family:var(--font-pixel); font-size:0.4rem; text-align:center; margin-bottom:2px;">Actions:</div>
@@ -727,7 +743,8 @@
                     <a class="v-tab" id="nav-contact" onclick="switchView('contact')">contact</a>
                 </div>
                 <div class="blade-bottle">
-                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Blade%20EEEK.jpe" alt="Blade">
+                    <!-- BLADE ESCAPING THE FRAME -->
+                    <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/BLADE.png" alt="Blade">
                 </div>
             </aside>
         </div>
@@ -789,7 +806,7 @@
         </div>
     </div>
 
-    <!-- COMMENT OVERLAY (With Replies) -->
+    <!-- COMMENT OVERLAY -->
     <div id="comment-drawer-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
         <div id="comment-drawer" style="background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; width: 90%; max-width: 400px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 4px 4px 0 var(--accent-color); border-radius: 12px;">
             <div class="drawer-header" style="border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px; display: flex; justify-content: space-between;">
@@ -855,7 +872,8 @@
                 img.style.position = 'absolute'; img.style.top = '-100px';
                 img.style.width = (Math.random() * 40 + 30) + 'px';
                 img.style.left = (Math.random() * 90) + 'vw';
-                img.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+                // FIXED ANIMATION: fallDown instead of float!
+                img.style.animation = `fallDown ${Math.random() * 10 + 10}s linear infinite`;
                 img.style.animationDelay = (Math.random() * 10) + 's';
                 img.onerror = () => { img.style.display = 'none'; };
                 container.appendChild(img);
@@ -936,13 +954,6 @@
                 const centerY = (startY + y) / 2;
                 ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
                 ctx.stroke();
-            } else if (currentTool === 'airbrush') {
-                ctx.fillStyle = currentColor;
-                for(let i=0; i<5; i++){
-                    let angle = Math.random() * Math.PI * 2;
-                    let radius = Math.random() * 15;
-                    ctx.fillRect(x + Math.cos(angle)*radius, y + Math.sin(angle)*radius, 1, 1);
-                }
             }
         });
 
@@ -1021,18 +1032,23 @@
             return ((r << 16) | (g << 8) | b).toString(16);
         }
 
-        // ================= TAMAGOTCHI (AKITO) =================
+        // ================= TAMAGOTCHI (AKITO 7 CYCLE) =================
         let tama = { coins: 20, mood: 100, belly: 2 };
         let isPartying = false;
         let isWorking = false;
         let partyTimeout;
-        
-        const akitoSprites = {
-            happy: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/AKITOES%202.jpe',
-            normal: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/AKITOES%201.jpe',
-            sad: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/AKITOES%203.jpe',
-            angry: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/AKITOES%204.jpe'
-        };
+        let currentAkitoIndex = 0;
+
+        // 7 Akito Sprites
+        const akitoSprites = [
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%201.png',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%202.png',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%203.png',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%204.png',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%205.png',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%206.png',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%207.png'
+        ];
 
         const akitoReplies = {
             talk: ["What do you want? I'm busy practicing.", "Don't look at me like that.", "I'm not cute, I'm cool!", "Cheesecake...?", "I'm the best at this!", "Do I have to talk to you?", "Did you need something?"],
@@ -1043,54 +1059,16 @@
             apologize: ["S-sorry! I got a little carried away...", "Did I break the screen? My bad.", "Wait, why is everything shaking? Oh, it was me.", "Please don't tell the webmaster I did that.", "I'm just... really passionate about working.", "Did the HTML survive? I hope the CSS is okay."]
         };
 
+        function cycleAkito() {
+            currentAkitoIndex = (currentAkitoIndex + 1) % akitoSprites.length;
+            document.getElementById('tama-sprite').src = akitoSprites[currentAkitoIndex];
+        }
+
         function updateTamaUI() {
             document.getElementById('tama-coins').innerText = tama.coins;
-            const sprite = document.getElementById('tama-sprite');
-            if (tama.mood >= 80) { sprite.src = akitoSprites.happy; }
-            else if (tama.mood >= 50) { sprite.src = akitoSprites.normal; }
-            else if (tama.mood >= 20) { sprite.src = akitoSprites.sad; }
-            else { sprite.src = akitoSprites.angry; }
         }
 
         function setTamaDialogue(text) { document.getElementById('tama-dialogue').innerHTML = `Akito: ${text}`; }
-
-        function tamaInteract() {
-            if (isPartying) { stopParty(true); return; }
-            if (isWorking) return;
-            const sprite = document.getElementById('tama-sprite');
-            sprite.style.transform = 'scale(1.1) rotate(5deg)';
-            setTimeout(() => sprite.style.transform = 'scale(1) rotate(0deg)', 200);
-            const replies = ["H-hey! Don't poke me!", "Stop that!", "What is wrong with you?"];
-            setTamaDialogue(replies[Math.floor(Math.random() * replies.length)]);
-        }
-
-        function spawnPancake() {
-            const room = document.getElementById('akito-room');
-            const pancake = document.createElement('div');
-            pancake.innerText = '🥞';
-            pancake.style.position = 'absolute';
-            pancake.style.fontSize = '2rem';
-            pancake.style.left = '80%';
-            pancake.style.top = '20%';
-            pancake.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            pancake.style.zIndex = '10';
-            room.appendChild(pancake);
-
-            setTimeout(() => {
-                pancake.style.left = '50%';
-                pancake.style.top = '60%';
-                pancake.style.opacity = '0';
-                pancake.style.transform = 'scale(0.5)';
-            }, 50);
-
-            setTimeout(() => pancake.remove(), 900);
-            
-            const sprite = document.getElementById('tama-sprite');
-            setTimeout(() => {
-                sprite.style.transform = 'scale(1.2)';
-                setTimeout(() => sprite.style.transform = 'scale(1)', 300);
-            }, 800);
-        }
 
         function stopParty(interrupted = false) {
             if (!isPartying) return;
@@ -1100,7 +1078,7 @@
             const sprite = document.getElementById('tama-sprite');
             room.classList.remove('party-mode');
             sprite.classList.remove('dancing');
-            document.getElementById('main-window').style.animation = 'glow 4s infinite alternate, driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards'; 
+            document.getElementById('main-window').classList.remove('neon-mode'); 
             
             if (interrupted) {
                 setTamaDialogue(akitoReplies.interrupted[Math.floor(Math.random() * akitoReplies.interrupted.length)]);
@@ -1118,10 +1096,10 @@
             room.classList.add('party-mode');
             sprite.classList.add('dancing');
             
-            document.getElementById('main-window').style.animation = 'screenShake 0.2s infinite, glow 4s infinite alternate';
+            document.getElementById('main-window').classList.add('neon-mode');
             
             setTamaDialogue(akitoReplies.arcade[Math.floor(Math.random() * akitoReplies.arcade.length)]);
-            partyTimeout = setTimeout(() => { stopParty(false); }, 30000); 
+            partyTimeout = setTimeout(() => { stopParty(false); }, 20000); 
         }
 
         function aggressiveWork() {
@@ -1140,35 +1118,41 @@
             spriteClone.style.left = '50vw';
             spriteClone.style.top = '50vh';
             spriteClone.style.pointerEvents = 'none';
+            spriteClone.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
             document.body.appendChild(spriteClone);
             
             sprite.style.opacity = '0';
-            frame.style.animation = 'screenShake 0.1s infinite';
-            
-            spriteClone.style.animation = 'spinAndBounce 8s linear forwards';
             setTamaDialogue("WORK MODE ACTIVATED!!!");
             
-            setTimeout(() => {
-                isWorking = false;
-                frame.style.animation = 'glow 4s infinite alternate, driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards'; 
-                spriteClone.remove();
-                sprite.style.opacity = '1';
-                
-                setTamaDialogue(akitoReplies.apologize[Math.floor(Math.random() * akitoReplies.apologize.length)]);
-                tama.coins += 15;
-                tama.mood = Math.max(0, tama.mood - 20);
-                updateTamaUI();
-            }, 8000);
+            let bounces = 0;
+            const interval = setInterval(() => {
+                bounces++;
+                const randomX = Math.random() * 80 + 10;
+                const randomY = Math.random() * 80 + 10;
+                const rotation = Math.random() * 720 - 360;
+                spriteClone.style.left = `${randomX}vw`;
+                spriteClone.style.top = `${randomY}vh`;
+                spriteClone.style.transform = `rotate(${rotation}deg) scale(1.5)`;
+                if(bounces > 20) { // 20 bounces * 400ms = 8 seconds
+                    clearInterval(interval);
+                    spriteClone.remove();
+                    sprite.style.opacity = '1';
+                    isWorking = false;
+                    setTamaDialogue(akitoReplies.apologize[Math.floor(Math.random() * akitoReplies.apologize.length)]);
+                    tama.coins += 15;
+                    tama.mood = Math.max(0, tama.mood - 20);
+                    updateTamaUI();
+                }
+            }, 400);
         }
 
         function tamaAction(action) {
+            cycleAkito(); // Cycle every time you do an action!
+            
             if (isPartying) { stopParty(true); return; }
             if (isWorking) return;
             
-            const sprite = document.getElementById('tama-sprite');
-
             if (action === 'Talk') { 
-                sprite.src = akitoSprites.normal;
                 setTamaDialogue(akitoReplies.talk[Math.floor(Math.random() * akitoReplies.talk.length)]); 
                 tama.mood = Math.min(100, tama.mood + 10); 
                 updateTamaUI();
@@ -1176,20 +1160,16 @@
             else if (action === 'Feed') {
                 if (tama.coins < 5) return setTamaDialogue("I don't have enough coins for pancakes...");
                 tama.coins -= 5; tama.belly += 1; tama.mood = Math.min(100, tama.mood + 20);
-                sprite.src = akitoSprites.happy;
                 setTamaDialogue(akitoReplies.feed[Math.floor(Math.random() * akitoReplies.feed.length)]);
-                spawnPancake();
                 updateTamaUI();
             } 
             else if (action === 'Work') {
-                sprite.src = akitoSprites.angry;
                 setTamaDialogue(akitoReplies.work[Math.floor(Math.random() * akitoReplies.work.length)]);
                 aggressiveWork();
             }
             else if (action === 'Arcade') {
                 if (tama.coins < 20) return setTamaDialogue("I need 20 coins for the arcade!");
                 tama.coins -= 20; tama.mood = 100;
-                sprite.src = akitoSprites.happy;
                 startParty();
             }
         }
@@ -1283,6 +1263,7 @@
         // ================= YOUTUBE PLAYER =================
         let audioPlayer;
         let isPlaying = false;
+        let isLooping = false;
         let progressInterval;
         const playlist = ["LIKE A DINO", "IT'S OK NOT TO BE OKAY", "GOOD LUCK TODAY", "A PIECE OF CAKE", "I'M SO EXCITED", "It Is What It Is", "A Silver Lining", "SO SÜß", "YOU MADE MY DAY", "MARRIAGE PROPOSAL", "OVER THE MOON", "WADDLE WADDLE"];
         let currentTrack = 0;
@@ -1301,6 +1282,10 @@
                 isPlaying = false;
                 if(btn) btn.innerText = "▶";
                 clearInterval(progressInterval);
+            } else if (event.data === YT.PlayerState.ENDED) {
+                if (!isLooping) {
+                    skipAudioTrack(1);
+                }
             }
         }
 
@@ -1317,6 +1302,18 @@
             else audioPlayer.previousVideo();
             currentTrack = (currentTrack + dir + playlist.length) % playlist.length;
             document.getElementById('track-selector').value = currentTrack;
+        }
+
+        function toggleLoop() {
+            isLooping = !isLooping;
+            const btn = document.getElementById('loop-btn');
+            if(isLooping) {
+                btn.classList.add('active-loop');
+                if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(true);
+            } else {
+                btn.classList.remove('active-loop');
+                if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(false);
+            }
         }
 
         function changeTrack(index) {
