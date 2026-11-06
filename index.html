@@ -14,7 +14,6 @@
     <style>
         /* ================= THEME VARIABLES ================= */
         :root {
-            /* Using the new background from the screenshot */
             --bg-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe');
             --panel-bg: #ffffff;
             --border-color: #ffb6c1;
@@ -51,10 +50,16 @@
             position: relative;
         }
 
-        /* Decorated Outside Background */
+        /* Window Drift Animation */
+        @keyframes driftIn {
+            0% { transform: translateX(150vw) rotate(5deg); opacity: 0; }
+            100% { transform: translateX(0) rotate(0deg); opacity: 1; }
+        }
+
+        /* Distinct Background Decor */
         .bg-sparkles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
-        .sparkle { position: absolute; color: #fff; font-size: 2rem; text-shadow: 0 0 10px var(--accent-color); animation: twinkle 2s infinite alternate; }
-        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2) rotate(15deg); } }
+        .sparkle { position: absolute; color: #fff; font-size: 2.5rem; text-shadow: 0 0 15px var(--accent-color); animation: twinkle 1.5s infinite alternate; }
+        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.5) rotate(0deg); } 100% { opacity: 1; transform: scale(1.3) rotate(45deg); } }
 
         a { color: var(--accent-color); text-decoration: none; }
         a:hover { text-decoration: underline; }
@@ -67,10 +72,10 @@
         }
 
         /* Whimsical Animations */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        @keyframes glow { 0%, 100% { box-shadow: 0 0 10px var(--accent-color); } 50% { box-shadow: 0 0 30px var(--accent-color), 0 0 50px var(--border-color); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 15px var(--accent-color); } 50% { box-shadow: 0 0 35px var(--accent-color), 0 0 60px var(--border-color); } }
         @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
-        @keyframes squish { 0% { transform: scale(1); } 50% { transform: scale(0.9); } 100% { transform: scale(1); } }
+        @keyframes squish { 0% { transform: scale(1); } 50% { transform: scale(0.85); } 100% { transform: scale(1); } }
         @keyframes screenGlow { 0%, 100% { text-shadow: 0 0 2px var(--accent-color); } 50% { text-shadow: 0 0 10px var(--accent-color); } }
 
         /* Apply squish animation globally to buttons */
@@ -93,7 +98,8 @@
             border: 3px solid var(--border-color);
             box-shadow: 4px 4px 0px var(--accent-color), 0 0 0 2px #fff;
             display: flex; flex-direction: column; overflow: hidden; position: relative;
-            animation: glow 4s infinite alternate; z-index: 10;
+            animation: glow 4s infinite alternate, driftIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            z-index: 10;
         }
 
         /* Top Window Bar */
@@ -121,7 +127,7 @@
             border-radius: 15px; animation: float 4s ease-in-out infinite;
         }
         
-        /* Meme PFP using the EMU BANNER */
+        /* Exact encoded Profile Pic */
         .profile-pic { width: 70px; height: 70px; object-fit: cover; border: 2px solid var(--border-color); border-radius: 10px; }
         .profile-name { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin: 0; }
         .profile-mood { font-size: 1.1rem; color: var(--text-light); margin: 5px 0 0 0; line-height: 1; }
@@ -135,7 +141,10 @@
             padding: 10px; width: 100%; 
         }
         .winamp-title { background: #fff; color: var(--accent-color); font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px; display: flex; justify-content: space-between; border-bottom: 2px solid #ffb6c1; margin-bottom: 5px; border-radius: 6px; }
-        .winamp-screen { background: #fff0f5; color: var(--accent-color); font-family: var(--font-pixel); padding: 8px 4px; text-align: center; margin-bottom: 5px; border: 2px inset #fff; font-size: 0.5rem; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: 8px; animation: screenGlow 2s infinite alternate; }
+        
+        /* Track Selector */
+        .winamp-select { width: 100%; font-family: var(--font-retro); font-size: 1rem; background: #fff0f5; color: var(--accent-color); border: 2px inset #fff; border-radius: 8px; margin-bottom: 5px; padding: 2px; cursor: pointer; outline: none;}
+        
         .winamp-progress { width: 100%; height: 6px; background: #fff; margin-bottom: 8px; cursor: pointer; border: 1px solid #ffb6c1; border-radius: 3px; overflow: hidden;}
         .winamp-bar { height: 100%; background: var(--accent-color); width: 0%; border-radius: 3px; }
         .winamp-controls { display: flex; gap: 6px; justify-content: space-between; padding: 0 2px; }
@@ -151,11 +160,11 @@
             display: flex; justify-content: center; align-items: center; 
             font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); 
             cursor: pointer; text-transform: uppercase; 
-            border-radius: 20px;
+            border-radius: 20px; 
             box-shadow: 0 4px 0 var(--border-color), 0 5px 5px rgba(0,0,0,0.1);
             position: relative; top: 0;
         }
-        .web-button:hover { background: #fff; color: var(--accent-color); filter: brightness(1.1); }
+        .web-button:hover { background: #fff; color: var(--accent-color); filter: brightness(1.1); transform: translateY(-2px); }
         .web-button:active { top: 4px; box-shadow: 0 0 0 var(--border-color); }
 
         /* Dance Toggle */
@@ -181,7 +190,6 @@
         .blinkies-edit-btn { cursor: pointer; display: none; background: #fff; color: var(--accent-color); border-radius: 50%; width: 16px; height: 16px; justify-content: center; align-items: center; font-size: 0.7rem; }
         .blinkies-list { display: flex; gap: 5px; overflow-x: auto; align-items: center;}
         
-        /* Using exact images */
         .blinkie-img { height: 31px; object-fit: cover; }
 
         /* Main Content Box (Scalloped) */
@@ -220,7 +228,7 @@
         .mspaint-tool.active { border-style: inset; background: #aaa; }
         .mspaint-canvas-container { flex: 1; background: #808080; padding: 2px; border: 2px inset #fff; display: flex; }
         
-        /* THE ACTUAL CANVAS */
+        /* ACTUAL CANVAS */
         #paint-canvas { background: #fff; width: 100%; height: 100%; cursor: crosshair; border: 1px solid #000; }
         
         .mspaint-bottom-area { display: flex; flex-direction: column; border-top: 1px solid #fff; }
@@ -293,12 +301,12 @@
         /* ================= RIGHT SIDEBAR ================= */
         .right-sidebar { width: 130px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; position: relative; }
         
-        .vertical-tabs { display: flex; flex-direction: column; gap: 5px; margin-top: 30px; }
+        .vertical-tabs { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
         .v-tab { background: var(--panel-bg); border: 2px solid var(--border-color); border-left: none; padding: 8px 10px; font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); cursor: pointer; box-shadow: 2px 2px 0 var(--accent-color); text-transform: lowercase; border-radius: 0 10px 10px 0; }
         .v-tab:hover { background: var(--border-color); color: #fff; transform: translateX(3px); }
         .v-tab.active { background: var(--accent-color); color: #fff; }
 
-        .blade-bottle { width: 100%; height: 500px; position: sticky; top: 20px; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; pointer-events: none; }
+        .blade-bottle { width: 100%; height: 450px; position: sticky; top: 20px; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; pointer-events: none; margin-top: auto; }
         .blade-bottle img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .blade-bottle:hover img { transform: scale(1.05); }
 
@@ -397,14 +405,27 @@
                     </div>
                 </div>
 
-                <!-- Winamp Player -->
+                <!-- Winamp Player with Track Selector -->
                 <div class="winamp-player">
                     <div class="winamp-title">
                         <span>WINAMP</span>
                         <span>X</span>
                     </div>
-                    <div class="winamp-screen">
-                        <div id="widget-song-title">LIKE A DINO | #1</div>
+                    <div class="winamp-screen" style="padding:4px;">
+                        <select class="winamp-select" id="track-selector" onchange="changeTrack(this.value)">
+                            <option value="0">LIKE A DINO | #1</option>
+                            <option value="1">IT'S OK NOT TO BE OKAY | #2</option>
+                            <option value="2">GOOD LUCK TODAY | #3</option>
+                            <option value="3">A PIECE OF CAKE | #4</option>
+                            <option value="4">I'M SO EXCITED | #5</option>
+                            <option value="5">It Is What It Is | #6</option>
+                            <option value="6">A Silver Lining | #7</option>
+                            <option value="7">SO SÜß | #8</option>
+                            <option value="8">YOU MADE MY DAY | #9</option>
+                            <option value="9">MARRIAGE PROPOSAL | #10</option>
+                            <option value="10">OVER THE MOON | #11</option>
+                            <option value="11">WADDLE WADDLE | #12</option>
+                        </select>
                     </div>
                     <div class="winamp-progress" onclick="seekMusic(event)">
                         <div class="winamp-bar" id="music-progress-bar"></div>
@@ -428,7 +449,7 @@
                     <div class="web-button" onclick="changeMood('sunset')">Sunset</div>
                 </div>
 
-                <!-- Dance Toggle (Cleverly placed) -->
+                <!-- Dance Toggle -->
                 <div class="dance-toggle-box">
                     <label>✨ Dancing Companions ✨</label>
                     <select id="dance-toggle" onchange="updateDancingBg()">
@@ -456,7 +477,7 @@
                     <div class="blinkies-list" id="blinkies-container">
                         <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/DANCING%20MIKUUU.png" class="blinkie-img">
                         <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png" class="blinkie-img">
-                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/badge%20genshin!%20(make%20it%20transparent.jpe" class="blinkie-img">
+                        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/badge%20genshin%21%20%28make%20it%20transparent.jpe" class="blinkie-img">
                         <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Screenshot%202026-11-06%20170703.png" class="blinkie-img">
                     </div>
                 </div>
@@ -484,7 +505,7 @@
                             </div>
                         </div>
 
-                        <!-- MS Paint Window (Fully Functional) -->
+                        <!-- MS Paint Window (Working Canvas) -->
                         <div class="mspaint-window">
                             <div class="mspaint-titlebar">
                                 <span>untitled - Paint</span>
@@ -504,7 +525,6 @@
                                     <div class="mspaint-tool" onclick="clearCanvas()">🗑️</div>
                                 </div>
                                 <div class="mspaint-canvas-container">
-                                    <!-- THE ACTUAL WORKING CANVAS -->
                                     <canvas id="paint-canvas" width="600" height="250"></canvas>
                                 </div>
                             </div>
@@ -557,7 +577,6 @@
                             
                             <!-- Left Side: Calendar & Food Log -->
                             <div class="calendar-section">
-                                <!-- NEW BADGE IMAGES -->
                                 <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/DANCING%20MIKUUU.png" class="calendar-badge">
                                 <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/NO%20EMU.png" class="calendar-badge" style="left:-10px; top:40px; transform:rotate(10deg); width:40px;">
                                 
@@ -615,7 +634,6 @@
                                     </div>
                                     <div class="akito-main">
                                         <div class="akito-room" id="akito-room" onclick="tamaInteract()">
-                                            <!-- Using exact image name -->
                                             <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/AKITOES%201.jpe" class="akito-sprite transparent-img" id="tama-sprite" alt="Akito">
                                         </div>
                                         <div class="akito-side">
@@ -777,9 +795,8 @@
                     <a class="v-tab" id="nav-contact" onclick="switchView('contact')">contact</a>
                 </div>
 
-                <!-- Blade Bottle -->
+                <!-- Blade Bottle (Encoded URL) -->
                 <div class="blade-bottle">
-                    <!-- Using exact image name -->
                     <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/EMU/Blade%20EEEK.jpe" alt="Blade">
                 </div>
             </aside>
@@ -860,7 +877,7 @@
         sparkleContainer.className = 'bg-sparkles';
         document.body.appendChild(sparkleContainer);
         const sparkleChars = ['✨', '🌟', '⋆', '°', '✩'];
-        for(let i=0; i<20; i++) {
+        for(let i=0; i<25; i++) {
             const s = document.createElement('div');
             s.className = 'sparkle';
             s.innerText = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
@@ -923,7 +940,7 @@
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
-        setTimeout(resizeCanvas, 100); // Wait for layout
+        setTimeout(resizeCanvas, 100); 
 
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
@@ -964,7 +981,7 @@
             currentColor = color;
             document.querySelectorAll('.color-box').forEach(b => b.classList.remove('active'));
             element.classList.add('active');
-            if(currentTool === 'eraser') setTool('pencil'); // Auto switch to pencil if picking color
+            if(currentTool === 'eraser') setTool('pencil'); 
         }
 
         function clearCanvas() {
@@ -1146,10 +1163,8 @@
         }
 
         function editBlinkies() {
-            const currentBlinkies = document.getElementById('blinkies-container').innerHTML;
             const newUrl = prompt("Enter a new image URL for your Blinkies (or leave blank to cancel):");
             if (newUrl && newUrl.trim() !== "") {
-                // Replace the first image as a test, or append
                 document.getElementById('blinkies-container').innerHTML += `<img src="${newUrl}" class="blinkie-img">`;
             }
         }
@@ -1198,7 +1213,14 @@
             if (dir > 0) audioPlayer.nextVideo();
             else audioPlayer.previousVideo();
             currentTrack = (currentTrack + dir + playlist.length) % playlist.length;
-            document.getElementById('widget-song-title').innerText = playlist[currentTrack] + " | #" + (currentTrack+1);
+            document.getElementById('track-selector').value = currentTrack;
+        }
+
+        function changeTrack(index) {
+            currentTrack = parseInt(index);
+            if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
+                audioPlayer.playVideoAt(currentTrack);
+            }
         }
 
         function startProgressTracker() {
@@ -1287,7 +1309,6 @@
             html += '</div>';
             container.innerHTML = html;
 
-            // Render latest updates on home page
             const homeUpdates = document.getElementById('home-updates-container');
             if(homeUpdates && posts.length > 0) {
                 homeUpdates.innerHTML = posts.slice(0, 3).map(p => `
