@@ -14,8 +14,8 @@
     <style>
         /* ================= THEME VARIABLES ================= */
         :root {
-            --bg-outside: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe');
-            --bg-inside: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe');
+            --bg-outside: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe');
+            --bg-inside: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe');
             --panel-bg: #ffffff;
             --border-color: #ffb6c1;
             --accent-color: #ff69b4;
@@ -251,7 +251,7 @@
         .akito-stats { display: flex; justify-content: space-between; font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); margin-bottom: 5px; }
         .akito-main { display: flex; gap: 5px; }
         
-        .akito-room { flex: 1; background: #b3e5fc; border: 2px solid var(--border-color); height: 110px; position: relative; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; transition: background 0.5s; border-radius: 6px; background-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/Otori%20Emu%E2%80%99s%20Bedroom.jpe'); background-size: cover; background-position: center; }
+        .akito-room { flex: 1; background: #b3e5fc; border: 2px solid var(--border-color); height: 110px; position: relative; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; transition: background 0.5s; border-radius: 6px; background-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Otori%20Emu%E2%80%99s%20Bedroom.jpe'); background-size: cover; background-position: center; }
         
         @keyframes aggressiveDance {
             0% { transform: translate(0, 0) rotate(-15deg) scale(1.2); }
@@ -370,8 +370,8 @@
             <!-- LEFT SIDEBAR -->
             <aside class="left-sidebar">
                 <div class="profile-box">
-                  
-                    <img src="https://github.com/falafelwithfeelings/falafelandfeelingdeep/blob/main/me" class="profile-pic" alt="PFP">
+                    <!-- MEME PFP PLACEHOLDER -->
+                    <img src="https://i.imgflip.com/7q5q2e.jpg" class="profile-pic" alt="PFP">
                     <div class="profile-info">
                         <div class="profile-name">Falafel</div>
                         <div class="profile-mood">Mood:<br>gacha goblin</div>
@@ -951,8 +951,8 @@
         }
 
         function resetBgs() {
-            document.documentElement.style.setProperty('--bg-inside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe')`);
-            document.documentElement.style.setProperty('--bg-outside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/refs/heads/main/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe')`);
+            document.documentElement.style.setProperty('--bg-inside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe')`);
+            document.documentElement.style.setProperty('--bg-outside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe')`);
         }
 
         // ================= BACKGROUND SPARKLES =================
@@ -986,18 +986,24 @@
             const toggle = document.getElementById('dance-toggle').value;
             const container = document.getElementById('dancing-bg');
             container.innerHTML = '';
+            
             if (toggle === 'none') return;
 
             let itemsToSpawn = [];
-            if (toggle === 'both') itemsToSpawn = [danceOptions.miku, danceOptions.emu];
-            else if (toggle === 'miku') itemsToSpawn = [danceOptions.miku];
-            else if (toggle === 'emu') itemsToSpawn = [danceOptions.emu];
+            if (toggle === 'both') {
+                itemsToSpawn = [danceOptions.miku, danceOptions.emu];
+            } else if (toggle === 'miku') {
+                itemsToSpawn = [danceOptions.miku];
+            } else if (toggle === 'emu') {
+                itemsToSpawn = [danceOptions.emu];
+            }
 
             for(let i=0; i<15; i++) {
                 const img = document.createElement('img');
                 img.className = 'dance-item sticker-img';
                 img.src = itemsToSpawn[Math.floor(Math.random() * itemsToSpawn.length)];
-                img.style.position = 'absolute'; img.style.top = '-100px';
+                img.style.position = 'absolute'; 
+                img.style.top = '-100px';
                 img.style.width = (Math.random() * 40 + 30) + 'px';
                 img.style.left = (Math.random() * 90) + 'vw';
                 img.style.animation = `fallDown ${Math.random() * 10 + 10}s linear infinite`;
@@ -1658,7 +1664,9 @@
                 return `
                 <div style="border-bottom:1px solid #ccc; padding:5px 0;">
                     <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#888; margin-bottom:3px;">
-                        <span style="font-weight:bold; color:var(--accent-color);">${c.alias}</span>
+                        <span style="font-weight:bold; color:var(--accent-color);">${c.alias} 
+                            ${c.adminLiked ? '<span class="falafel-liked-badge" style="font-size:0.6rem; color:var(--accent-color); margin-left:5px;">🩷 the falafel liked it!</span>' : ''}
+                        </span>
                         <span>${new Date(c.timestamp).toLocaleDateString()}</span>
                     </div>
                     <div style="font-size:1.1rem; margin-bottom: 5px;" id="comment-text-${c.id}">${c.text}</div>
@@ -1687,7 +1695,7 @@
             const realIndex = posts.indexOf(actualPosts[currentPostIndexForComments]);
 
             if(!posts[realIndex].comments) posts[realIndex].comments = [];
-            posts[realIndex].comments.push({ id: Date.now().toString(), alias: visitorAlias, text: text, timestamp: new Date().toISOString(), replies: [], hearts: 0 });
+            posts[realIndex].comments.push({ id: Date.now().toString(), alias: visitorAlias, text: text, timestamp: new Date().toISOString(), replies: [], hearts: 0, adminLiked: false });
             
             await saveBinData({ posts: posts });
             document.getElementById('comment-text-input').value = '';
@@ -1695,6 +1703,7 @@
         }
 
         async function heartComment(postIndex, commentId) {
+            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
             const heartedKey = `hearted_${commentId}`;
             const isHearted = localStorage.getItem(heartedKey) === 'true';
             const data = await getBinData();
@@ -1704,12 +1713,16 @@
             const comment = posts[realIndex].comments.find(c => c.id === commentId);
             
             if(comment) {
-                if(isHearted) {
-                    comment.hearts = Math.max(0, (comment.hearts || 1) - 1);
-                    localStorage.setItem(heartedKey, 'false');
+                if (isAdmin) {
+                    comment.adminLiked = !comment.adminLiked;
                 } else {
-                    comment.hearts = (comment.hearts || 0) + 1;
-                    localStorage.setItem(heartedKey, 'true');
+                    if(isHearted) {
+                        comment.hearts = Math.max(0, (comment.hearts || 1) - 1);
+                        localStorage.setItem(heartedKey, 'false');
+                    } else {
+                        comment.hearts = (comment.hearts || 0) + 1;
+                        localStorage.setItem(heartedKey, 'true');
+                    }
                 }
                 await saveBinData({ posts: posts });
                 openCommentDrawer(postIndex);
