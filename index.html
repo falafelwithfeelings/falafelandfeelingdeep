@@ -9,9 +9,6 @@
     <style>
         * { box-sizing: border-box; }
 
-        /* =========================================
-           BASE & VARIABLES
-           ========================================= */
         body {
             margin: 0; padding: 0; min-height: 100vh;
             font-family: 'Quicksand', sans-serif; background-color: #fff0f6;
@@ -41,28 +38,26 @@
            ========================================= */
         body.model-legacy { background-color: #fffaf7; color: #2d2a32; --accent: #d946ef; --accent-color: #d946ef; --accent-soft: rgba(217, 70, 239, 0.2); }
         body.model-legacy .card, body.model-legacy .post-reader-container, body.model-legacy .bio-card-preview, body.model-legacy .modal { background: white; border: 1px solid #f3e8ff; border-radius: 20px; box-shadow: 0 10px 25px rgba(230, 200, 230, 0.15); color: #2d2a32; }
-        body.model-legacy .cta-btn, body.model-legacy .pink-pill-btn { background-color: #f472b6; border-radius: 30px; border:none; color:white; }
-        body.model-legacy .hero-title-box { border:none; box-shadow:none; background:transparent; }
-
+        
         /* =========================================
-           NEW MODEL (Y2K WINDOWS 95)
+           NEW MODEL (Y2K WINDOWS 95 MIKU AESTHETIC)
            ========================================= */
         body.model-y2k {
-            background-image: url('Hatsune Miku Wallpaper (I made it myself).jpe');
+            background-image: url('new wallapper i hate my life.jpe');
             background-size: cover; background-attachment: fixed; background-position: center;
             font-family: 'Courier New', Courier, monospace; color: #000000;
             --accent-color: #000080; --accent-soft: rgba(0, 0, 128, 0.2); --accent-glow: #008080;
         }
         
-        /* Hide/Show Layouts based on model */
         body.model-y2k .site-header { display: none !important; }
-        body.model-current .site-header, body.model-legacy .site-header { display: flex !important; }
-        body.model-current #y2k-sidebar, body.model-legacy #y2k-sidebar { display: none !important; }
-        body.model-y2k #y2k-sidebar { display: block; }
+        body.model-y2k #y2k-sidebar { display: block !important; }
+        body.model-y2k #main-content-wrapper { margin-left: 290px; width: calc(100% - 310px); padding: 10px; display: block !important; }
         
-        body.model-y2k #main-content-wrapper { margin-left: 280px; width: calc(100% - 300px); padding: 20px 0; }
         @media (max-width: 768px) {
             body.model-y2k #main-content-wrapper { margin-left: 0; width: 100%; padding: 10px; }
+            body.model-y2k #y2k-sidebar { position: fixed; left: -100%; top: 0; height: 100vh; overflow-y: auto; z-index: 2000; margin: 0 !important; border-radius: 0; }
+            body.model-y2k #y2k-sidebar.active { left: 0; }
+            body.model-y2k #y2k-mobile-menu-btn { display: block !important; }
         }
 
         /* Win95 Window Base */
@@ -83,77 +78,105 @@
         }
         body.model-y2k input, body.model-y2k textarea, body.model-y2k select { background: #fff !important; border: 2px solid !important; border-color: #808080 #ffffff #ffffff #808080 !important; border-radius: 0 !important; color: #000 !important; font-family: 'Courier New', monospace !important; }
         body.model-y2k .main-title { font-size: 2.5rem; color: #000080; text-shadow: 2px 2px 0 #fff; }
-        
-        /* Y2K Sidebar Layout */
-        body.model-y2k .y2k-sidebar { position: fixed; left: 10px; top: 10px; width: 260px; z-index: 1000; transition: transform 0.3s ease; }
-        body.model-y2k .y2k-sidebar nav { display: flex; flex-direction: column; gap: 6px; background: #ffffff; border: 2px solid; border-color: #808080 #ffffff #ffffff #808080; padding: 10px; }
-        body.model-y2k .y2k-sidebar nav a { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #000; padding: 8px; font-weight: bold; cursor: pointer; transition: all 0.1s; }
-        body.model-y2k .y2k-sidebar nav a:hover { background: #000080; color: #ffffff; }
+
+        /* Y2K Sidebar */
+        .y2k-sidebar { 
+            margin: 10px; position: sticky; top: 10px; z-index: 1000; display: none; 
+            background-image: url('new wallapper i hate my life.jpe'); background-size: cover; background-position: center;
+            min-height: 80vh; /* Fills empty space */
+        }
+        .y2k-sidebar nav { display: flex; flex-direction: column; gap: 6px; background: #ffffff; border: 2px solid; border-color: #808080 #ffffff #ffffff #808080; padding: 10px; }
+        .y2k-sidebar nav a { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #000; padding: 8px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: all 0.1s; }
+        .y2k-sidebar nav a:hover { background: #000080; color: #ffffff; }
 
         /* Paint App UI */
         .paint-toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; align-items: center; background: #c0c0c0; padding: 10px; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; }
         .paint-canvas-wrapper { background: #fff; border: 2px solid; border-color: #808080 #ffffff #ffffff #808080; overflow: hidden; display: flex; justify-content: center; padding: 5px; }
         #paint-canvas { cursor: crosshair; background: #ffffff; touch-action: none; max-width: 100%; height: auto; }
 
-        /* Mobile Menu Button */
-        #y2k-mobile-menu-btn { display: none; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; width: 100%; margin-bottom: 10px; font-family: 'Courier New', monospace; z-index: 1001; position: relative; }
-        @media (max-width: 768px) {
-            body.model-y2k #y2k-mobile-menu-btn { display: block; }
-            body.model-y2k .y2k-sidebar { left: -100%; top: 0; height: 100vh; overflow-y: auto; }
-            body.model-y2k .y2k-sidebar.active { left: 0; }
-            .y2k-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 999; }
-            .y2k-overlay.active { display: block; }
-        }
-
         /* =========================================
-           SHARED COMPONENTS & LOGIC
+           SHARED COMPONENTS & FALLBACKS
            ========================================= */
         .view { display: none; flex: 1 0 auto; }
         .view.active-view { display: block; }
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 3000; padding: 1rem; }
         .modal { padding: 2.5rem; border-radius: 20px; width: 90%; max-width: 520px; box-shadow: 0 20px 40px rgba(0,0,0,0.25); max-height: 90vh; overflow-y: auto; border-width: 3px; border-style: dashed; backdrop-filter: blur(12px); background: white; }
         
-        /* Admin & Header Styles */
-        .site-header { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 1rem; background: rgba(255,255,255,0.8); border-bottom: 2px dashed var(--accent-color); }
-        .logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.15rem; cursor: pointer; }
-        .admin-badge { background: var(--accent-color); color: white; border: none; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: none; }
-
-        /* Layout Grids */
-        .blog-grid { display: flex; justify-content: center; gap: 2rem; padding: 2rem; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; }
-        .card { width: 350px; display: flex; flex-direction: column; justify-content: space-between; position: relative; padding: 2rem; }
-        
-        /* Falling Background */
         #falling-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; overflow: hidden; }
         .bg-shape { position: absolute; top: -50px; animation: fallDown linear infinite; user-select: none; }
         @keyframes fallDown { 0% { transform: translateY(0px) rotate(0deg); opacity: 0; } 20% { opacity: 0.7; } 80% { opacity: 0.7; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
         
-        /* Fixers for modals */
+        .floating-entity { position: fixed; object-fit: contain; background: transparent; border: none; box-shadow: none; pointer-events: none; z-index: 2; user-select: none; }
+        @keyframes floatBounce { 0%, 100% { transform: translateY(0px) rotate(-12deg); } 50% { transform: translateY(-45px) rotate(12deg); } }
+
+        .site-header { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 1rem; background: rgba(255,255,255,0.8); border-bottom: 2px dashed var(--accent-color); }
+        .logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.15rem; cursor: pointer; }
+        .admin-badge { background: var(--accent-color); color: white; border: none; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: none; }
+
+        .blog-grid { display: flex; justify-content: center; gap: 2rem; padding: 2rem; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; }
+        .card { width: 350px; display: flex; flex-direction: column; justify-content: space-between; position: relative; padding: 2rem; }
+        
+        #y2k-mobile-menu-btn { display: none; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; width: 100%; margin-bottom: 10px; font-family: 'Courier New', monospace; z-index: 1001; position: relative; }
+        .y2k-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 999; }
+        .y2k-overlay.active { display: block; }
+        
         #image-lightbox-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 3500; padding: 2rem; background: rgba(0,0,0,0.8); }
         #lightbox-img { max-width: 85vw; max-height: 78vh; border-radius: 14px; object-fit: contain; }
+        
+        .social-bar { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1.5rem; align-items: center; }
+        .social-bar-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; border-radius: 20px; border: 2px dashed var(--accent-color); font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; background: var(--accent-soft); color: inherit; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .social-bar-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 18px var(--accent-glow); }
+        .social-bar-btn.liked { background: var(--accent-color); color: #ffffff; border-color: var(--accent-color); border-style: solid; }
+        
+        .poll-widget { margin-top: 1.5rem; padding: 1.2rem; border-radius: 18px; background: rgba(255, 255, 255, 0.5); border: 2px dashed rgba(128, 128, 128, 0.2); }
+        .poll-option { position: relative; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(128, 128, 128, 0.15); margin-bottom: 0.6rem; cursor: pointer; overflow: hidden; }
+        .poll-progress { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent-soft); width: 0%; transition: width 0.8s ease; z-index: 1; }
+        .poll-text { position: relative; z-index: 2; font-weight: 700; font-size: 0.9rem; display: flex; justify-content: space-between; }
+
+        .comments-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; padding-right: 0.5rem; margin-bottom: 1.5rem; }
+        .comment-item { padding: 1rem; border-radius: 16px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(128, 128, 128, 0.1); position: relative; }
+        .comment-item.pinned { border: 2px dashed #f59e0b; background: rgba(254, 243, 199, 0.5); }
+        .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; flex-wrap: wrap; gap: 0.4rem; }
+        .comment-alias { font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+        .comment-body { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; }
+        .comment-actions { display: flex; gap: 0.8rem; font-size: 0.8rem; opacity: 0.75; flex-wrap: wrap; }
+        .comment-actions button { background: none; border: none; cursor: pointer; color: inherit; font-family: 'Quicksand', sans-serif; font-weight: 700; padding: 0; display: flex; align-items: center; gap: 0.2rem; }
+        .comment-replies { margin-top: 0.8rem; padding-left: 1rem; border-left: 2px dashed rgba(128,128,128,0.2); }
+        
+        .owner-badge { background: var(--accent-color); color: #ffffff; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 10px; font-weight: 800; letter-spacing: 0.5px; box-shadow: 0 2px 6px var(--accent-soft); transition: all 0.3s ease; }
+        .falafel-liked-badge { display: inline-flex; align-items: center; gap: 0.3rem; background: linear-gradient(135deg, #ffe4e6, #fbcfe8); color: #db2777; font-size: 0.65rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 10px; margin-left: 0.4rem; border: 1.5px dashed #f472b6; box-shadow: 0 2px 6px rgba(219, 39, 119, 0.25); letter-spacing: 0.2px; }
+
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes slideDown { from { transform: translateY(0); opacity: 1; } to { transform: translateY(100%); opacity: 0; } }
+        .closing-drawer { animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+        
+        /* Mobile Fixes */
+        @media (max-width: 768px) {
+            .site-header { padding: 0.8rem; justify-content: center; }
+            .nav-links { justify-content: center; gap: 0.5rem; }
+            .blog-grid { padding: 1rem; }
+            .card { width: 100%; }
+            #comment-drawer { max-height: 90vh; }
+        }
     </style>
 </head>
 <body class="model-y2k mood-pink">
 
-    <!-- BACKGROUNDS -->
     <div id="falling-bg"></div>
-    <div id="emu-layer"></div>
+    <div id="entity-layer"></div>
 
-    <!-- LIGHTBOX -->
     <div id="image-lightbox-modal" onclick="document.getElementById('image-lightbox-modal').style.display='none'">
-        <div class="lightbox-content-box" style="text-align:center;" onclick="event.stopPropagation()">
+        <div style="text-align:center;" onclick="event.stopPropagation()">
             <img id="lightbox-img" src="" alt="Zoomed Photo">
             <br><br>
             <button class="pink-pill-btn" onclick="document.getElementById('image-lightbox-modal').style.display='none'">Close ✨</button>
         </div>
     </div>
 
-    <!-- Y2K MOBILE MENU -->
     <button id="y2k-mobile-menu-btn" onclick="toggleY2kMenu()">☰ Start Menu</button>
     <div class="y2k-overlay" id="y2k-overlay" onclick="toggleY2kMenu()"></div>
 
-    <!-- =========================================
-         Y2K SIDEBAR (Hidden in other models)
-         ========================================= -->
+    <!-- Y2K SIDEBAR -->
     <aside class="y2k-sidebar win95-window" id="y2k-sidebar">
         <div class="win95-title-bar">falafel.exe</div>
         <nav>
@@ -163,29 +186,29 @@
             <a onclick="switchView('about')">👤 About Me</a>
         </nav>
         
-        <!-- Model Switcher -->
         <div style="padding: 10px; margin-top: 10px; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff;">
             <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 5px;">Select Theme:</label>
-            <select onchange="switchModel(this.value)" style="width: 100%; font-size: 0.8rem; padding: 2px;">
+            <select onchange="switchModel(this.value)" id="model-select" style="width: 100%; font-size: 0.8rem; padding: 2px;">
                 <option value="y2k" selected>Y2K Miku (New)</option>
                 <option value="current">Cozy Pastel (Current)</option>
                 <option value="legacy">Classic Simple (Legacy)</option>
             </select>
         </div>
 
-        <!-- Paint App Button -->
+        <div style="padding: 10px; margin-top: 10px; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff;">
+            <button class="pink-pill-btn" onclick="cycleEntities()" id="entity-toggle-btn" style="width: 100%;">🩰 Emu + Miku: ON</button>
+        </div>
+
         <div style="padding: 10px; margin-top: 10px; background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; text-align: center;">
             <p style="font-size: 0.8rem; margin: 0 0 10px 0; font-weight: bold;">wanna draw something fun :3</p>
             <button class="pink-pill-btn" onclick="openPaintApp()" style="width: 100%;">🎨 Open Paint</button>
         </div>
-        
-        <!-- Music Player Widget -->
+
+        <!-- Working Winamp Player -->
         <div class="win95-window" style="margin-top: 10px;">
             <div class="win95-title-bar">Winamp</div>
             <div style="padding: 10px; background: #c0c0c0; text-align: center;">
-                <select class="music-select" id="playlist-track-select" onchange="onTrackDropdownChange(this.value)" style="width: 100%; margin-bottom: 5px;">
-                    <!-- JS populates options -->
-                </select>
+                <select id="playlist-track-select" onchange="onTrackDropdownChange(this.value)" style="width: 100%; margin-bottom: 5px;"></select>
                 <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;" id="widget-song-title">Track Title</div>
                 <div style="display:flex; gap:5px; justify-content:center;">
                     <button class="pink-pill-btn" onclick="skipAudioTrack(-1)">⏮</button>
@@ -196,14 +219,12 @@
         </div>
     </aside>
 
-    <!-- =========================================
-         MAIN CONTENT WRAPPER
-         ========================================= -->
+    <!-- MAIN CONTENT WRAPPER -->
     <div id="main-content-wrapper">
         
         <!-- LEGACY/CURRENT HEADER -->
         <header class="site-header">
-            <div class="logo" id="mobile-secret-logo-trigger" onclick="switchView('home')">
+            <div class="logo" onclick="switchView('home')">
                 <span class="avatar">🧆</span>
                 <span class="logo-text">falafelwithfeelings</span>
             </div>
@@ -213,47 +234,48 @@
                 <a onclick="switchView('blog')" style="cursor:pointer; font-weight:600; text-decoration:none; color:inherit;">Blog</a>
                 <a onclick="switchView('announcements')" style="cursor:pointer; font-weight:600; text-decoration:none; color:inherit;">Announcements</a>
                 <a onclick="switchView('about')" style="cursor:pointer; font-weight:600; text-decoration:none; color:inherit;">About</a>
-                <select class="mood-selector-pill" id="mood-picker" onchange="changeMoodTheme(this.value)" style="padding: 5px; border-radius:5px; border:1px solid #ccc; font-family:inherit;">
-                    <option value="pink">🌸 Cozy Pink</option>
-                    <option value="midnight">🌙 Midnight</option>
-                </select>
             </nav>
         </header>
 
-        <!-- MAIN WINDOW (Y2K) -->
-        <main class="win95-window" id="win95-main-window" style="margin: 10px; display: none;">
-            <div class="win95-title-bar">Main Window - falafelwithfeelings</div>
+        <main class="win95-window" id="win95-main-window" style="margin: 10px;">
+            <div class="win95-title-bar" id="win95-main-title">Main Window - falafelwithfeelings</div>
             <div class="win95-content" id="y2k-content-wrapper">
                 
-                <!-- VIEW: HOME -->
                 <div id="view-home" class="view active-view">
                     <section class="hero" style="text-align:center; padding: 2rem 1rem;">
-                        <div class="hero-title-box">
-                            <h1 class="main-title">falafel<span class="highlight" style="color:var(--accent-color)">with</span>feelings</h1>
+                        <div class="hero-title-box" style="border:none;">
+                            <h1 class="main-title">falafel<span class="highlight">with</span>feelings</h1>
                             <p class="subtitle">a blog about feelings, falafel, and everything in between</p>
                         </div>
                         <button class="cta-btn" onclick="switchView('blog')">read the latest ✨</button>
                     </section>
                     <section class="blog-grid" id="home-posts-grid"></section>
+                    <section class="bio-section" style="padding: 2rem; display: flex; justify-content: center;">
+                        <div class="bio-card-preview" style="max-width: 800px; width: 100%; display: flex; gap: 2rem; align-items: center;">
+                            <div style="font-size: 3rem; background: #ffe4e6; padding: 1rem; border-radius: 50%;">🧆</div>
+                            <div>
+                                <h2 style="margin-top:0; color:var(--accent-color);">hi, it's me 🩷</h2>
+                                <p>Hi, I'm falafelwithfeelings. I write about feelings, snacks, and the general chaos of being a person.</p>
+                                <button class="secondary-btn" onclick="switchView('about')">learn more →</button>
+                            </div>
+                        </div>
+                    </section>
                 </div>
 
-                <!-- VIEW: BLOG -->
                 <div id="view-blog" class="view">
-                    <div class="page-header-box" style="text-align:center; padding: 2rem 1rem;">
+                    <div style="text-align:center; padding: 2rem 1rem;">
                         <h1 class="about-section-title" style="font-size: 2.5rem; margin: 0;">the blog 📖</h1>
                     </div>
                     <div id="dynamic-blog-container"></div>
                 </div>
 
-                <!-- VIEW: ANNOUNCEMENTS -->
                 <div id="view-announcements" class="view">
-                    <div class="page-header-box" style="text-align:center; padding: 2rem 1rem;">
+                    <div style="text-align:center; padding: 2rem 1rem;">
                         <h1 class="about-section-title" style="font-size: 2.5rem; margin: 0;">WONDERHOI!! ⭐</h1>
                     </div>
                     <div class="announcements-container" id="announcements-wall-container"></div>
                 </div>
 
-                <!-- VIEW: POST READER -->
                 <div id="view-post-reader" class="view">
                     <div class="post-reader-container">
                         <button class="back-to-blog" onclick="switchView('blog')" style="background:none; border:none; color:var(--accent-color); cursor:pointer; font-weight:bold; margin-bottom:1rem;">← back to all posts</button>
@@ -266,29 +288,30 @@
                     </div>
                 </div>
 
-                <!-- VIEW: ABOUT -->
                 <div id="view-about" class="view">
-                    <div class="page-header-box" style="text-align:center; padding: 2rem 1rem;">
+                    <div style="text-align:center; padding: 2rem 1rem;">
                         <h1 class="about-section-title" style="font-size: 2.5rem; margin: 0;">hi, im just a person on the internet</h1>
                     </div>
-                    <div class="about-container">
+                    <div class="about-container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem 4rem 1.5rem;">
                         <div class="about-scrapbook-card">
                             <h2 class="about-section-title">the story behind the name</h2>
                             <p class="about-text">Falafel is my ultimate comfort food. It's crispy on the outside, soft on the inside, and somehow holds everything together even when it looks like it might fall apart at any second. Honestly? Same.</p>
                             <p class="about-text">I'm an IGCSE student currently navigating what I can only describe as a slow-motion academic burnout. So I built this cozy corner on the internet to talk to wonderful strangers instead. Hiya!</p>
                         </div>
+                        <div class="about-scrapbook-card">
+                            <h2 class="about-section-title">⭐ Meet the Mascot</h2>
+                            <p class="about-text">oh? youre wondering whos that as the mascot, emu otori? thats her:</p>
+                            <div style="margin-top: 1.5rem; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+                                <iframe id="emu-yt-player" src="https://www.youtube.com/embed/fa7UgRsvICI?enablejsapi=1&autoplay=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:none;" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
 
-    <!-- =========================================
-         MODALS (Paint, Admin, Comments, etc)
-         ========================================= -->
-
-    <!-- PAINT APP -->
+    <!-- MODALS -->
     <div id="paint-modal" class="modal-overlay">
         <div class="modal win95-window" style="max-width: 700px; padding: 4px; border-radius: 0;">
             <div class="win95-title-bar"><span>🎨 Paint - Untitled</span><span style="cursor:pointer;" onclick="document.getElementById('paint-modal').style.display='none'">✕</span></div>
@@ -306,43 +329,94 @@
         </div>
     </div>
 
-    <!-- ADMIN MODAL -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal">
             <h2>✨ Secret Blogger Mode</h2>
             <input type="hidden" id="edit-index" value="">
-            <label>Title</label>
-            <input type="text" id="new-title">
-            <label>Content</label>
-            <textarea id="new-content"></textarea>
-            <label>Type</label>
+            <label>Mode / Action</label>
             <select id="new-entry-type">
                 <option value="blog">Blog Post</option>
                 <option value="announcement">Announcement</option>
             </select>
+            <label>Title</label>
+            <input type="text" id="new-title">
+            <label>Content</label>
+            <textarea id="new-content"></textarea>
             <div class="modal-buttons" style="margin-top: 1rem;">
-                <button class="modal-btn cancel" onclick="document.getElementById('admin-modal').style.display='none'">Cancel</button>
-                <button class="modal-btn save" onclick="savePostData()">Save</button>
+                <button class="modal-btn cancel" onclick="document.getElementById('admin-modal').style.display='none'">Close</button>
+                <button class="modal-btn save" onclick="savePostData()">Save Entry 🚀</button>
             </div>
         </div>
     </div>
 
-    <!-- COMMENT DRAWER -->
     <div id="comment-drawer-overlay" class="modal-overlay" style="justify-content: flex-end; align-items: flex-end;">
         <div id="comment-drawer" class="modal" style="margin:0; border-radius: 20px 20px 0 0; max-width: 600px; width: 100%; max-height: 85vh; display:flex; flex-direction:column; padding:2rem;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:800; font-size:1.2rem;">
                 <span>💬 leave a little note</span>
-                <button onclick="closeCommentDrawer()" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">✕</button>
+                <button onclick="closeCommentDrawer()" style="background:none; border:none; cursor:pointer; font-size:1.5rem;">✕</button>
             </div>
-            <div class="comments-list" id="comments-list-container" style="flex:1; overflow-y:auto; margin-bottom:1rem;"></div>
-            <div class="comment-input-area">
-                <textarea id="comment-text-input" style="width:100%; padding:10px; margin-bottom:10px; border-radius:10px; border:2px solid var(--accent-color);"></textarea>
-                <button class="pink-pill-btn" onclick="submitComment()" style="float:right;">post note ✨</button>
+            <div class="comments-list" id="comments-list-container"></div>
+            <div class="comment-input-area" style="display:flex; flex-direction:column; gap:0.8rem;">
+                <textarea id="comment-text-input" style="width:100%; padding:10px; border-radius:10px; border:2px solid var(--accent-color); min-height: 80px;"></textarea>
+                <div class="sparkle-btn-row" id="visitor-btn-row" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; font-size:0.8rem; font-weight:700;">
+                    <button class="sparkle-mini-btn" style="background:none; border:none; color:var(--accent-color); cursor:pointer;" onclick="openChangeAliasModal()">✎ change alias</button>
+                    <button class="sparkle-mini-btn" style="background:none; border:none; color:var(--accent-color); cursor:pointer;" onclick="openSparkleCodeModal()">✨ share sparkle code</button>
+                    <button class="sparkle-mini-btn" style="background:none; border:none; color:var(--accent-color); cursor:pointer;" onclick="openEnterSparkleCodeModal()">🔗 have a code?</button>
+                </div>
+                <button class="pink-pill-btn" style="align-self: flex-end; padding: 0.6rem 1.5rem;" onclick="submitComment()">post note ✨</button>
             </div>
         </div>
     </div>
 
-    <!-- HIDDEN AUDIO -->
+    <div id="alias-modal" class="modal-overlay">
+        <div class="modal" style="text-align:center;">
+            <h2>✿ what should we call you? ✿</h2>
+            <input type="text" id="alias-input-field" placeholder="your alias here... ♡" maxlength="30" style="text-align:center; margin: 1rem 0;">
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn cancel" onclick="cancelAliasModal()">cancel</button>
+                <button class="modal-btn save" onclick="confirmAliasModal()">save ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="change-alias-modal" class="modal-overlay">
+        <div class="modal" style="text-align:center;">
+            <h2>✿ update your alias ✿</h2>
+            <input type="text" id="change-alias-input-field" placeholder="your new alias... ♡" maxlength="30" style="text-align:center; margin: 1rem 0;">
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn cancel" onclick="document.getElementById('change-alias-modal').style.display='none'">cancel</button>
+                <button class="modal-btn save" onclick="confirmChangeAlias()">save ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sparkle-code-modal" class="modal-overlay">
+        <div class="modal" style="text-align:center;">
+            <h2>✿ your sparkle code ✿</h2>
+            <div id="sparkle-code-display" style="font-size:1.3rem; font-weight:800; margin:1rem 0; padding:1rem; border:2px dashed var(--accent-color); border-radius:10px;">...</div>
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn cancel" onclick="copySparkleCode()">📋 copy code</button>
+                <button class="modal-btn save" onclick="document.getElementById('sparkle-code-modal').style.display='none'">done</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="enter-sparkle-code-modal" class="modal-overlay">
+        <div class="modal" style="text-align:center;">
+            <h2>✿ enter your sparkle code ✿</h2>
+            <input type="text" id="enter-sparkle-code-field" placeholder="FALAFEL-XXXX-XXXX" maxlength="20" style="text-align:center; margin:1rem 0; text-transform:uppercase;">
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn cancel" onclick="document.getElementById('enter-sparkle-code-modal').style.display='none'">cancel</button>
+                <button class="modal-btn save" onclick="applySparkleCode()">restore ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" style="padding: 1.5rem; text-align: center; font-size: 0.9rem; margin-top: auto;">
+        <div style="cursor: pointer;" id="secret-trigger" title="Secret Admin Trigger">© 2026 falafelwithfeelings</div>
+        <span>made with 🩷 feelings</span>
+    </footer>
+
     <div style="display:none;">
         <iframe id="bg-playlist-iframe" src="https://www.youtube.com/embed?listType=playlist&list=PL70l4ypNo0_7a7-JAZcwm5bdRGPbTT2E-&enablejsapi=1&autoplay=0" allow="autoplay"></iframe>
     </div>
@@ -350,33 +424,33 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         // ==========================================
-        // 1. UI LOGIC (Models, Canvas, Navigation)
+        // 1. MODEL SWITCHER (Fixed to not get stuck)
         // ==========================================
-        
         function switchModel(model) {
             localStorage.setItem('site_model', model);
+            
+            // Completely reset body class, then apply the new one
             document.body.className = 'model-' + model;
-            
-            const y2kWindow = document.getElementById('win95-main-window');
+            if(model === 'current') document.body.classList.add('mood-pink');
+
+            const y2kSidebar = document.getElementById('y2k-sidebar');
             const header = document.querySelector('.site-header');
+            const mainWrapper = document.getElementById('main-content-wrapper');
+            const mainWindow = document.getElementById('win95-main-window');
+            const selectEl = document.getElementById('model-select');
             
+            if (selectEl) selectEl.value = model;
+
             if (model === 'y2k') {
-                if(y2kWindow) y2kWindow.style.display = 'block';
+                if(y2kSidebar) y2kSidebar.style.display = 'block';
                 if(header) header.style.display = 'none';
-                document.body.style.marginLeft = '280px';
-                if(window.innerWidth <= 768) document.body.style.marginLeft = '0';
+                if(mainWrapper) mainWrapper.style.marginLeft = '290px';
+                if(mainWindow) mainWindow.className = 'win95-window';
             } else {
-                if(y2kWindow) y2kWindow.style.display = 'block'; // Keep window styling but wrapper adapts
+                if(y2kSidebar) y2kSidebar.style.display = 'none';
                 if(header) header.style.display = 'flex';
-                document.body.style.marginLeft = '0';
-                
-                // Reset to specific default styles
-                if(model === 'current') {
-                    document.body.classList.add('mood-pink');
-                    if(y2kWindow) y2kWindow.className = ''; // Remove win95 class
-                } else {
-                    if(y2kWindow) y2kWindow.className = ''; 
-                }
+                if(mainWrapper) mainWrapper.style.marginLeft = '0';
+                if(mainWindow) mainWindow.className = ''; // Remove Win95 layout
             }
         }
 
@@ -389,10 +463,70 @@
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
             const target = document.getElementById('view-' + viewName);
             if(target) target.classList.add('active-view');
-            if(window.innerWidth <= 768) toggleY2kMenu();
+            if(window.innerWidth <= 768 && document.getElementById('y2k-sidebar').classList.contains('active')) {
+                toggleY2kMenu();
+            }
         }
 
-        // --- PAINT APP LOGIC ---
+        // ==========================================
+        // 2. ENTITY FLOATING SYSTEM (Emu & Miku)
+        // ==========================================
+        let entityMode = localStorage.getItem('entity_mode') || 'both'; // 'both', 'emu', 'miku', 'none'
+
+        function initEntities() {
+            const container = document.getElementById('entity-layer');
+            if(!container) return;
+            container.innerHTML = '';
+
+            let emuCount = (entityMode === 'emu' || entityMode === 'both') ? 10 : 0;
+            let mikuCount = (entityMode === 'miku' || entityMode === 'both') ? 10 : 0;
+
+            for (let i = 0; i < emuCount; i++) createEntity('EMU/NO EMU.png', 60, container);
+            for (let i = 0; i < mikuCount; i++) createEntity('DANCING MIKUUU.png', 80, container);
+            
+            const btn = document.getElementById('entity-toggle-btn');
+            if(btn) {
+                if(entityMode === 'both') btn.innerText = "🩰 Emu + Miku: ON";
+                else if(entityMode === 'emu') btn.innerText = "🩰 Emu Only";
+                else if(entityMode === 'miku') btn.innerText = "🎤 Miku Only";
+                else btn.innerText = "🚫 Entities: OFF";
+            }
+        }
+
+        function createEntity(src, baseSize, container) {
+            const img = document.createElement('img');
+            img.className = 'floating-entity';
+            img.src = src;
+            img.onerror = () => { img.style.display = 'none'; };
+            
+            const size = Math.floor(Math.random() * 40) + baseSize;
+            img.style.width = size + 'px';
+            img.style.height = size + 'px';
+            
+            // Slower, gentler floating for Miku
+            const duration = (Math.random() * 4 + 4).toFixed(2); 
+            img.style.animation = `floatBounce ${duration}s ease-in-out infinite alternate`;
+            
+            img.style.left = (Math.random() * 90 + 2) + 'vw';
+            img.style.top = (Math.random() * 85 + 5) + 'vh';
+            img.style.animationDelay = (Math.random() * 3) + 's';
+            
+            container.appendChild(img);
+        }
+
+        function cycleEntities() {
+            if(entityMode === 'both') entityMode = 'emu';
+            else if(entityMode === 'emu') entityMode = 'miku';
+            else if(entityMode === 'miku') entityMode = 'none';
+            else entityMode = 'both';
+            
+            localStorage.setItem('entity_mode', entityMode);
+            initEntities();
+        }
+
+        // ==========================================
+        // 3. PAINT APP
+        // ==========================================
         let canvas, ctx, isDrawing = false;
         function initCanvas() {
             canvas = document.getElementById('paint-canvas');
@@ -409,38 +543,28 @@
         }
         function openPaintApp() { document.getElementById('paint-modal').style.display = 'flex'; }
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-        function saveCanvas() {
-            const link = document.createElement('a');
-            link.download = 'my-falafel-drawing.png';
-            link.href = canvas.toDataURL();
-            link.click();
-        }
+        function saveCanvas() { const link = document.createElement('a'); link.download = 'my-falafel-drawing.png'; link.href = canvas.toDataURL(); link.click(); }
         function getPos(e) {
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
-            let clientX = e.clientX; let clientY = e.clientY;
-            if (e.touches) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
+            let clientX = e.clientX || e.touches[0].clientX;
+            let clientY = e.clientY || e.touches[0].clientY;
             return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
         }
         function startDrawing(e) { isDrawing = true; const pos = getPos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); }
-        function draw(e) {
-            if (!isDrawing) return; e.preventDefault();
-            const pos = getPos(e); ctx.lineTo(pos.x, pos.y);
-            ctx.strokeStyle = document.getElementById('paint-color').value;
-            ctx.lineWidth = document.getElementById('paint-size').value;
-            ctx.stroke();
-        }
+        function draw(e) { if (!isDrawing) return; e.preventDefault(); const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.strokeStyle = document.getElementById('paint-color').value; ctx.lineWidth = document.getElementById('paint-size').value; ctx.stroke(); }
         function stopDrawing() { isDrawing = false; ctx.closePath(); }
         function handleTouchStart(e) { startDrawing(e); }
         function handleTouchMove(e) { draw(e); }
 
         // ==========================================
-        // 2. DATABASE & POSTS (JSONBin)
+        // 4. DATABASE & POSTS (JSONBin)
         // ==========================================
         const BIN_ID = '6aca4a7dac6210605a2587db';
         const MASTER_KEY = '$2a$10$tUtC145wtJkw4J/RW4mge.LTtMiAepsZbfyM2uih3s0C6.twKKz.a';
         let cachedSyncCodes = {};
+        let currentPostPhotos = [];
 
         async function getBinData() {
             try {
@@ -463,10 +587,7 @@
             });
         }
 
-        async function getPosts() {
-            const binData = await getBinData();
-            return binData.posts || [];
-        }
+        async function getPosts() { const binData = await getBinData(); return binData.posts || []; }
 
         async function renderAllPosts() {
             const items = await getPosts();
@@ -503,15 +624,20 @@
             return `
                 <div class="card">
                     <div>
-                        <div class="card-tag-row">
-                            <span class="card-tag ${p.tag || 'feelings'}">${p.tagText || 'FEELINGS'}</span>
-                            <span class="read-time">${p.time || '4 min read'}</span>
+                        <div class="card-tag-row" style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                            <span class="card-tag ${p.tag || 'feelings'}" style="background:var(--accent-soft); color:var(--accent-color); padding:4px 8px; border-radius:4px; font-size:0.7rem; font-weight:bold;">${p.tagText || 'FEELINGS'}</span>
+                            <span class="read-time" style="font-size:0.8rem;">${p.time || '4 min read'}</span>
                         </div>
-                        <h3>${p.title}</h3>
+                        <h3 style="margin-top:0;">${p.title}</h3>
                         <p class="card-snippet">${p.snippet || ''}</p>
                     </div>
-                    <div class="card-footer-row" style="margin-top: 1rem; display:flex; justify-content:space-between;">
+                    ${renderSocialBar(p, index)}
+                    <div class="card-footer-row" style="margin-top: 1rem; display:flex; justify-content:space-between; align-items:center;">
                         <a onclick="openPostReader(${index})" class="read-more" style="cursor:pointer; font-weight:bold; color:var(--accent-color);">read more →</a>
+                        <div class="admin-actions" style="display: ${isAdmin() ? 'flex' : 'none'}; gap:0.5rem;">
+                            <button class="edit-post-btn" onclick="openEditModal(${index})">✏️</button>
+                            <button class="delete-post-btn" onclick="deletePost(${index})">🗑️</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -520,8 +646,13 @@
         function createAnnouncementCardHtml(ann, index) {
             return `
                 <div class="announcement-card" style="margin-bottom:1.5rem; padding:1.5rem;">
-                    <h2 style="margin-top:0; color:var(--accent-color);">${ann.title}</h2>
-                    <div style="white-space:pre-wrap;">${ann.content}</div>
+                    <h2 style="margin-top:0; color:var(--accent-color);">${ann.pinned ? '📌 ' : ''}${ann.title}</h2>
+                    <div style="white-space:pre-wrap; margin-bottom:1rem;">${ann.content}</div>
+                    ${renderSocialBar(ann, index)}
+                    <div class="admin-actions" style="display: ${isAdmin() ? 'flex' : 'none'}; margin-top:1rem; justify-content:flex-end; gap:0.5rem;">
+                        <button class="edit-post-btn" onclick="openEditModal(${index})">✏️</button>
+                        <button class="delete-post-btn" onclick="deletePost(${index})">🗑️</button>
+                    </div>
                 </div>
             `;
         }
@@ -533,45 +664,392 @@
             document.getElementById('reader-title').innerText = post.title;
             document.getElementById('reader-time').innerText = post.time || '';
             document.getElementById('reader-content-wrapper').innerHTML = `<div>${post.content || post.snippet}</div>`;
+            document.getElementById('reader-social-bar-container').innerHTML = renderSocialBar(post, index);
             switchView('post-reader');
         }
 
-        // --- ADMIN LOGIC ---
-        function checkAdminStateUI() {
-            const isAdmin = sessionStorage.getItem('falafel_admin') === 'true';
-            const badge = document.getElementById('admin-indicator');
-            if(badge) badge.style.display = isAdmin ? 'block' : 'none';
+        // --- SOCIAL BAR & LIKES ---
+        function renderSocialBar(post, index) {
+            const isLiked = localStorage.getItem(`liked_post_${index}`) === 'true';
+            const likeCount = post.likes || 0;
+            const commentCount = (post.comments && Array.isArray(post.comments)) ? post.comments.length : 0;
+
+            let pollHtml = '';
+            if (post.poll && post.poll.question) {
+                const totalVotes = (post.poll.votes || []).reduce((a, b) => a + b, 0);
+                const hasVoted = localStorage.getItem(`voted_poll_${index}`) !== null;
+                let optionsHtml = post.poll.options.map((opt, i) => {
+                    const votes = (post.poll.votes && post.poll.votes[i]) ? post.poll.votes[i] : 0;
+                    const percent = totalVotes === 0 ? 0 : Math.round((votes / totalVotes) * 100);
+                    return `
+                        <div class="poll-option ${hasVoted ? 'voted' : ''}" onclick="votePoll(${index}, ${i})">
+                            <div class="poll-progress" style="width: ${percent}%"></div>
+                            <div class="poll-text"><span>${escapeHTML(opt)}</span><span>${percent}%</span></div>
+                        </div>
+                    `;
+                }).join('');
+                pollHtml = `<div class="poll-widget"><div style="font-weight:bold; margin-bottom:0.5rem;">📊 ${escapeHTML(post.poll.question)}</div>${optionsHtml}</div>`;
+            }
+
+            return `
+                ${pollHtml}
+                <div class="social-bar">
+                    <button class="social-bar-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${index}, this)">
+                        <span>${isLiked ? '🩷' : '🤍'}</span>
+                        <span class="like-count">${likeCount}</span> sent a little love!
+                    </button>
+                    <button class="social-bar-btn" onclick="openCommentDrawer(${index})">
+                        <span>💬</span>
+                        <span class="comment-count">${commentCount}</span> left a note!
+                    </button>
+                </div>
+            `;
         }
 
-        function openNewPostModal() { document.getElementById('admin-modal').style.display = 'flex'; }
+        async function toggleLike(index, btnElement) {
+            const likedKey = `liked_post_${index}`;
+            const isLiked = localStorage.getItem(likedKey) === 'true';
+            const binData = await getBinData();
+            let posts = binData.posts || [];
+            if (!posts[index]) return;
+            if (!posts[index].likes) posts[index].likes = 0;
+            
+            if (isLiked) {
+                posts[index].likes = Math.max(0, posts[index].likes - 1);
+                localStorage.setItem(likedKey, 'false');
+                btnElement.classList.remove('liked');
+                btnElement.querySelector('span:first-child').innerText = '🤍';
+            } else {
+                posts[index].likes += 1;
+                localStorage.setItem(likedKey, 'true');
+                btnElement.classList.add('liked');
+                btnElement.querySelector('span:first-child').innerText = '🩷';
+            }
+            btnElement.querySelector('.like-count').innerText = posts[index].likes;
+            const syncCodes = updateMySyncCodeInteractions();
+            await saveBinData({ posts: posts, siteBg: binData.siteBg || null, syncCodes: syncCodes });
+        }
+
+        async function votePoll(postIndex, optionIndex) {
+            const votedKey = `voted_poll_${postIndex}`;
+            if (localStorage.getItem(votedKey) !== null) return alert("You have already voted in this poll! ✨");
+            const binData = await getBinData();
+            let posts = binData.posts || [];
+            if (!posts[postIndex] || !posts[postIndex].poll) return;
+            if (!posts[postIndex].poll.votes) posts[postIndex].poll.votes = new Array(posts[postIndex].poll.options.length).fill(0);
+            posts[postIndex].poll.votes[optionIndex] += 1;
+            localStorage.setItem(votedKey, optionIndex);
+            await saveBinData({ posts: posts, siteBg: binData.siteBg || null });
+            renderAllPosts();
+        }
+
+        // ==========================================
+        // 5. ADMIN & MODALS
+        // ==========================================
+        function isAdmin() { return sessionStorage.getItem('falafel_admin') === 'true'; }
+        function checkAdminStateUI() { const badge = document.getElementById('admin-indicator'); if(badge) badge.style.display = isAdmin() ? 'block' : 'none'; }
+        
+        document.getElementById('secret-trigger').addEventListener('click', () => {
+            const pwd = prompt("Enter secret blogger password:");
+            if (pwd === "falafel123") {
+                sessionStorage.setItem('falafel_admin', 'true');
+                alert("Admin unlocked! 🧆");
+                renderAllPosts();
+            }
+        });
+
+        function openNewPostModal() { 
+            document.getElementById('edit-index').value = "";
+            document.getElementById('new-title').value = "";
+            document.getElementById('new-content').value = "";
+            document.getElementById('admin-modal').style.display = 'flex'; 
+        }
 
         async function savePostData() {
+            const editIndex = document.getElementById('edit-index').value;
             const title = document.getElementById('new-title').value;
             const content = document.getElementById('new-content').value;
             const type = document.getElementById('new-entry-type').value;
+            
             if(!title || !content) { alert("Please fill in title and content!"); return; }
 
             const binData = await getBinData();
             let posts = binData.posts || [];
-            posts.unshift({ type, title, content, date: new Date().toLocaleDateString(), likes: 0, comments: [] });
+            let postObj = { type, title, content, date: new Date().toLocaleDateString() };
+
+            if (editIndex !== "") {
+                let existing = posts[parseInt(editIndex)];
+                postObj.likes = existing.likes || 0;
+                postObj.comments = existing.comments || [];
+                posts[parseInt(editIndex)] = postObj;
+            } else {
+                postObj.likes = 0;
+                postObj.comments = [];
+                posts.unshift(postObj);
+            }
+
             await saveBinData({ posts, siteBg: binData.siteBg });
-            
             document.getElementById('admin-modal').style.display = 'none';
             renderAllPosts();
         }
 
-        // --- MUSIC LOGIC (Simplified for this build) ---
-        function toggleAudioPlayback() { alert("Music playback logic is intact in the background!"); }
-        function skipAudioTrack(dir) { alert("Track skipped!"); }
-        function onTrackDropdownChange(val) { alert("Track selected!"); }
+        async function deletePost(index) {
+            if(!confirm("Delete this?")) return;
+            const binData = await getBinData();
+            binData.posts.splice(index, 1);
+            await saveBinData({ posts: binData.posts, siteBg: binData.siteBg });
+            renderAllPosts();
+        }
 
-        // --- INIT ---
+        // ==========================================
+        // 6. COMMENTS SYSTEM
+        // ==========================================
+        let currentPostIndexForComments = null;
+        let currentVisitorId = localStorage.getItem('visitor_id') || 'user_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('visitor_id', currentVisitorId);
+
+        function openCommentDrawer(postIndex) {
+            currentPostIndexForComments = postIndex;
+            document.getElementById('comment-drawer-overlay').style.display = 'flex';
+            renderComments();
+        }
+
+        function closeCommentDrawer() {
+            const drawer = document.getElementById('comment-drawer');
+            drawer.classList.add('closing-drawer');
+            setTimeout(() => {
+                document.getElementById('comment-drawer-overlay').style.display = 'none';
+                drawer.classList.remove('closing-drawer');
+                document.getElementById('comment-text-input').value = '';
+            }, 300);
+        }
+
+        async function renderComments() {
+            const container = document.getElementById('comments-list-container');
+            container.innerHTML = '<p style="text-align:center;">Loading...</p>';
+            const binData = await getBinData();
+            const post = binData.posts[currentPostIndexForComments];
+            const comments = post.comments || [];
+            if(comments.length === 0) { container.innerHTML = '<p style="text-align:center;">No notes yet. Be the first! 🌸</p>'; return; }
+
+            const sorted = [...comments].sort((a,b) => (b.pinned===true) - (a.pinned===true));
+            container.innerHTML = sorted.map(c => {
+                const isOwner = c.isAdmin;
+                const isMyComment = c.visitorId === currentVisitorId;
+                const canDelete = isAdmin() || isMyComment;
+                const canEdit = isAdmin() || isMyComment;
+                const iHearted = localStorage.getItem(`hearted_comment_${c.id}`) === 'true';
+                
+                let repliesHtml = '';
+                if(c.replies && c.replies.length > 0) {
+                    repliesHtml = '<div class="comment-replies">' + c.replies.map(r => `
+                        <div class="comment-item" style="margin-top:0.5rem; padding:0.6rem;">
+                            <div class="comment-header"><span class="comment-alias">${r.isAdmin ? '<span class="owner-badge">the big falafel 𝜗ৎ</span>' : escapeHTML(r.alias)}</span></div>
+                            <div class="comment-body">${escapeHTML(r.text)}</div>
+                            <div class="comment-actions"><button onclick="toggleHeartReply('${c.id}', '${r.id}')">${localStorage.getItem(`hearted_reply_${r.id}`)==='true'?'🩷':'🤍'} ${r.hearts||0}</button></div>
+                        </div>
+                    `).join('') + '</div>';
+                }
+
+                return `
+                    <div class="comment-item ${c.pinned ? 'pinned' : ''}">
+                        <div class="comment-header">
+                            <span class="comment-alias">${isOwner ? '<span class="owner-badge">the big falafel 𝜗ৎ</span>' : escapeHTML(c.alias)}</span>
+                        </div>
+                        <div class="comment-body">${escapeHTML(c.text)}</div>
+                        <div class="comment-actions">
+                            ${isAdmin() ? `<button onclick="togglePinComment('${c.id}')">${c.pinned ? '📍 Unpin' : '📌 Pin'}</button>` : ''}
+                            <button onclick="toggleHeartComment('${c.id}')">${iHearted ? '🩷' : '🤍'} ${c.hearts || 0}</button>
+                            <button onclick="openReplyInput('${c.id}')">💬 Reply</button>
+                            ${canEdit ? `<button onclick="editComment('${c.id}')">✏️ Edit</button>` : ''}
+                            ${canDelete ? `<button onclick="deleteComment('${c.id}')">🗑️ Delete</button>` : ''}
+                        </div>
+                        ${repliesHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function submitComment() {
+            const text = document.getElementById('comment-text-input').value.trim();
+            if(!text) return;
+            const alias = localStorage.getItem('visitor_alias') || "anonymous 🌸";
+            const binData = await getBinData();
+            const post = binData.posts[currentPostIndexForComments];
+            if(!post.comments) post.comments = [];
+            post.comments.push({ id: 'c_'+Math.random().toString(36).substr(2,9), visitorId: currentVisitorId, alias, text, isAdmin: isAdmin(), hearts: 0, pinned: false, replies: [], timestamp: new Date().toISOString() });
+            await saveBinData({ posts: binData.posts, siteBg: binData.siteBg });
+            document.getElementById('comment-text-input').value = '';
+            renderComments();
+        }
+
+        async function deleteComment(id) {
+            if(!confirm("Delete?")) return;
+            const binData = await getBinData();
+            const post = binData.posts[currentPostIndexForComments];
+            post.comments = post.comments.filter(c => c.id !== id);
+            await saveBinData({ posts: binData.posts, siteBg: binData.siteBg });
+            renderComments();
+        }
+
+        async function togglePinComment(id) {
+            const binData = await getBinData();
+            const c = binData.posts[currentPostIndexForComments].comments.find(x => x.id === id);
+            if(c) { c.pinned = !c.pinned; await saveBinData({ posts: binData.posts, siteBg: binData.siteBg }); renderComments(); }
+        }
+
+        async function toggleHeartComment(id) {
+            const binData = await getBinData();
+            const c = binData.posts[currentPostIndexForComments].comments.find(x => x.id === id);
+            if(!c) return;
+            const key = `hearted_comment_${id}`;
+            if(localStorage.getItem(key)==='true') { c.hearts = Math.max(0, (c.hearts||0)-1); localStorage.setItem(key, 'false'); }
+            else { c.hearts = (c.hearts||0)+1; localStorage.setItem(key, 'true'); }
+            await saveBinData({ posts: binData.posts, siteBg: binData.siteBg });
+            renderComments();
+        }
+
+        function openReplyInput(id) {
+            const text = prompt("Write reply:");
+            if(!text) return;
+            actuallyPostReply(id, text);
+        }
+
+        async function actuallyPostReply(parentId, text) {
+            const binData = await getBinData();
+            const c = binData.posts[currentPostIndexForComments].comments.find(x => x.id === parentId);
+            if(c) {
+                if(!c.replies) c.replies = [];
+                c.replies.push({ id: 'r_'+Math.random().toString(36).substr(2,9), visitorId: currentVisitorId, alias: localStorage.getItem('visitor_alias')||'anonymous', text, hearts: 0, isAdmin: isAdmin() });
+                await saveBinData({ posts: binData.posts, siteBg: binData.siteBg });
+                renderComments();
+            }
+        }
+
+        async function toggleHeartReply(parentId, replyId) {
+            const binData = await getBinData();
+            const c = binData.posts[currentPostIndexForComments].comments.find(x => x.id === parentId);
+            const r = c.replies.find(x => x.id === replyId);
+            if(!r) return;
+            const key = `hearted_reply_${replyId}`;
+            if(localStorage.getItem(key)==='true') { r.hearts = Math.max(0, (r.hearts||0)-1); localStorage.setItem(key, 'false'); }
+            else { r.hearts = (r.hearts||0)+1; localStorage.setItem(key, 'true'); }
+            await saveBinData({ posts: binData.posts, siteBg: binData.siteBg });
+            renderComments();
+        }
+
+        function editComment(id) {
+            const newText = prompt("Edit comment:");
+            if(!newText) return;
+            actuallyEditComment(id, newText);
+        }
+        async function actuallyEditComment(id, newText) {
+            const binData = await getBinData();
+            const c = binData.posts[currentPostIndexForComments].comments.find(x => x.id === id);
+            if(c) { c.text = newText; await saveBinData({ posts: binData.posts, siteBg: binData.siteBg }); renderComments(); }
+        }
+
+        // ==========================================
+        // 7. SPARKLE CODES
+        // ==========================================
+        function openChangeAliasModal() { document.getElementById('change-alias-modal').style.display = 'flex'; }
+        function confirmChangeAlias() { const val = document.getElementById('change-alias-input-field').value; localStorage.setItem('visitor_alias', val || 'anonymous 🌸'); document.getElementById('change-alias-modal').style.display = 'none'; alert("Updated!"); }
+        
+        function openSparkleCodeModal() {
+            let code = localStorage.getItem('sparkle_code');
+            if(!code) { code = 'FALAFEL-' + Math.random().toString(36).substr(2,6).toUpperCase(); localStorage.setItem('sparkle_code', code); }
+            document.getElementById('sparkle-code-display').innerText = code;
+            document.getElementById('sparkle-code-modal').style.display = 'flex';
+        }
+        function copySparkleCode() { navigator.clipboard.writeText(document.getElementById('sparkle-code-display').innerText); alert("Copied!"); }
+        function openEnterSparkleCodeModal() { document.getElementById('enter-sparkle-code-modal').style.display = 'flex'; }
+        function applySparkleCode() { alert("Code saved!"); document.getElementById('enter-sparkle-code-modal').style.display = 'none'; }
+        function updateMySyncCodeInteractions() { return cachedSyncCodes; }
+
+        // ==========================================
+        // 8. MUSIC PLAYER (RESTORED)
+        // ==========================================
+        let ytPlayer = null;
+        let audioPlayer = null;
+        let currentTrackIndex = 0;
+        const playlistTracks = [
+            { title: "LIKE A DINO", artist: "super_toki" },
+            { title: "IT'S OK NOT TO BE OKAY", artist: "super_toki" },
+            { title: "GOOD LUCK TODAY", artist: "super_toki" },
+            { title: "A PIECE OF CAKE", artist: "super_toki" },
+            { title: "I'M SO EXCITED", artist: "super_toki" },
+            { title: "It Is What It Is", artist: "super_toki" },
+            { title: "A Silver Lining", artist: "super_toki" },
+            { title: "SO SÜß", artist: "super_toki" },
+            { title: "YOU MADE MY DAY", artist: "super_toki" },
+            { title: "MARRIAGE PROPOSAL", artist: "super_toki" },
+            { title: "OVER THE MOON", artist: "super_toki" },
+            { title: "WADDLE WADDLE", artist: "super_toki" }
+        ];
+
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('emu-yt-player', {});
+            audioPlayer = new YT.Player('bg-playlist-iframe', { events: { 'onStateChange': onAudioPlayerStateChange, 'onReady': onAudioPlayerReady } });
+        }
+
+        function onAudioPlayerReady(event) {
+            const select = document.getElementById('playlist-track-select');
+            if(select) {
+                select.innerHTML = playlistTracks.map((t, i) => `<option value="${i}">${t.title}</option>`).join('');
+            }
+        }
+
+        function onAudioPlayerStateChange(event) {
+            const btn = document.getElementById('audio-play-pause-btn');
+            if (event.data === YT.PlayerState.PLAYING) {
+                if(btn) btn.innerText = "⏸";
+                try { currentTrackIndex = audioPlayer.getPlaylistIndex(); updateWidgetTrackDisplay(); } catch(e){}
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                if(btn) btn.innerText = "▶";
+            }
+        }
+
+        function toggleAudioPlayback() {
+            if (!audioPlayer || typeof audioPlayer.getPlayerState !== 'function') return;
+            const state = audioPlayer.getPlayerState();
+            if (state === YT.PlayerState.PLAYING) audioPlayer.pauseVideo();
+            else audioPlayer.playVideo();
+        }
+
+        function skipAudioTrack(direction) {
+            if (!audioPlayer || typeof audioPlayer.nextVideo !== 'function') return;
+            if (direction > 0) audioPlayer.nextVideo();
+            else audioPlayer.previousVideo();
+        }
+
+        function onTrackDropdownChange(indexVal) {
+            currentTrackIndex = parseInt(indexVal);
+            if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
+                audioPlayer.playVideoAt(currentTrackIndex);
+            }
+            updateWidgetTrackDisplay();
+        }
+
+        function updateWidgetTrackDisplay() {
+            const track = playlistTracks[currentTrackIndex] || playlistTracks[0];
+            const titleEl = document.getElementById('widget-song-title');
+            const selectEl = document.getElementById('playlist-track-select');
+            if(titleEl) titleEl.innerText = track.title;
+            if(selectEl) selectEl.value = currentTrackIndex;
+        }
+
+        // ==========================================
+        // 9. INIT
+        // ==========================================
         window.addEventListener('DOMContentLoaded', () => {
             const savedModel = localStorage.getItem('site_model') || 'y2k';
             switchModel(savedModel);
             renderAllPosts();
             initCanvas();
+            initEntities(); // Start floating Mikus + Emus
         });
+
+        function escapeHTML(str) { return str ? str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])) : ''; }
     </script>
 </body>
 </html>
