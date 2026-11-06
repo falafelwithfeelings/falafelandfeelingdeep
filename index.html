@@ -43,7 +43,7 @@
            NEW MODEL (Y2K WINDOWS 95 MIKU AESTHETIC)
            ========================================= */
         body.model-y2k {
-            background-image: url('new wallapper i hate my life.jpe');
+            background-image: url('new wallapper i hate my life.jpe') !important;
             background-size: cover; background-attachment: fixed; background-position: center;
             font-family: 'Courier New', Courier, monospace; color: #000000;
             --accent-color: #000080; --accent-soft: rgba(0, 0, 128, 0.2); --accent-glow: #008080;
@@ -63,7 +63,14 @@
         /* Win95 Window Base */
         .win95-window { background: #c0c0c0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); margin-bottom: 1.5rem; }
         .win95-title-bar { background: linear-gradient(90deg, #000080, #1084d0); color: white; font-weight: bold; padding: 4px 8px; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .win95-title-bar::after { content: '✕'; background: #c0c0c0; color: black; padding: 0 4px; border: 1px solid; border-color: #ffffff #808080 #808080 #ffffff; font-size: 0.7rem; }
+       .win95-close-btn {
+    background: #c0c0c0; color: black; padding: 0 4px; border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff; font-size: 0.7rem;
+    font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.win95-close-btn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+}
         .win95-content { background: #ffffff; border: 2px solid; border-color: #808080 #ffffff #ffffff #808080; padding: 15px; min-height: 80vh; }
 
         /* Y2K Overrides */
@@ -238,7 +245,10 @@
         </header>
 
         <main class="win95-window" id="win95-main-window" style="margin: 10px;">
-            <div class="win95-title-bar" id="win95-main-title">Main Window - falafelwithfeelings</div>
+          <div class="win95-title-bar" id="win95-main-title">
+    <span>Main Window - falafelwithfeelings</span>
+    <button class="win95-close-btn" onclick="toggleWindowFrame()">✕</button>
+</div>
             <div class="win95-content" id="y2k-content-wrapper">
                 
                 <div id="view-home" class="view active-view">
@@ -1050,6 +1060,41 @@
         });
 
         function escapeHTML(str) { return str ? str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])) : ''; }
+           // Toggles the Windows 95 frame on and off
+        let isWindowMaximized = false;
+        function toggleWindowFrame() {
+            const mainWindow = document.getElementById('win95-main-window');
+            const mainWrapper = document.getElementById('main-content-wrapper');
+            const titleBar = document.getElementById('win95-main-title');
+            const contentArea = document.querySelector('.win95-content');
+
+            if (!isWindowMaximized) {
+                // Maximize (Hide borders)
+                mainWindow.style.border = 'none';
+                mainWindow.style.padding = '0';
+                mainWindow.style.boxShadow = 'none';
+                mainWindow.style.margin = '0';
+                mainWindow.style.backgroundColor = 'transparent';
+                contentArea.style.border = 'none';
+                contentArea.style.backgroundColor = 'transparent';
+                titleBar.style.display = 'none'; 
+                mainWrapper.style.padding = '20px';
+                isWindowMaximized = true;
+            } else {
+                // Restore Windows 95 style
+                mainWindow.style.border = '';
+                mainWindow.style.padding = '4px';
+                mainWindow.style.boxShadow = '2px 2px 5px rgba(0,0,0,0.5)';
+                mainWindow.style.margin = '10px';
+                mainWindow.style.backgroundColor = '#c0c0c0';
+                contentArea.style.border = '';
+                contentArea.style.backgroundColor = '#ffffff';
+                titleBar.style.display = 'flex'; 
+                mainWrapper.style.padding = '10px';
+                isWindowMaximized = false;
+            }
+        }
+    
     </script>
 </body>
 </html>
