@@ -436,7 +436,7 @@
         // ==========================================
         // 1. MODEL SWITCHER (Fixed to not get stuck)
         // ==========================================
-        function switchModel(model) {
+               function switchModel(model) {
             localStorage.setItem('site_model', model);
             
             // Completely reset body class, then apply the new one
@@ -447,9 +447,12 @@
             const header = document.querySelector('.site-header');
             const mainWrapper = document.getElementById('main-content-wrapper');
             const mainWindow = document.getElementById('win95-main-window');
-            const selectEl = document.getElementById('model-select');
             
-            if (selectEl) selectEl.value = model;
+            // Sync the dropdowns
+            const oldSelect = document.getElementById('model-select');
+            if (oldSelect) oldSelect.value = model;
+            const globalSelect = document.getElementById('global-model-select');
+            if (globalSelect) globalSelect.value = model;
 
             if (model === 'y2k') {
                 if(y2kSidebar) y2kSidebar.style.display = 'block';
@@ -1096,5 +1099,14 @@
         }
     
     </script>
+    <!-- GLOBAL THEME SWITCHER (Always visible) -->
+    <div id="global-theme-switcher" style="position: fixed; bottom: 20px; left: 20px; z-index: 99999; background: white; padding: 10px; border: 2px solid black; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); font-family: 'Quicksand', sans-serif;">
+        <label style="font-weight: bold; font-size: 12px; display: block; margin-bottom: 5px; color: black;">Switch Theme:</label>
+        <select onchange="switchModel(this.value)" id="global-model-select" style="padding: 5px; font-size: 14px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer;">
+            <option value="y2k">Y2K Miku</option>
+            <option value="current">Cozy Pastel</option>
+            <option value="legacy">Classic</option>
+        </select>
+    </div>
 </body>
 </html>
