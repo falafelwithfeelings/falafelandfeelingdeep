@@ -283,8 +283,8 @@
 
         /* ================= WINDOW FRAME ================= */
         .window-frame {
-            width: min(68vw, 1120px);
-            max-width: 1120px;
+            width: min(86vw, 1440px);
+            max-width: 1440px;
             height: 95vh;
             background-image: var(--bg-inside);
             background-size: cover;
@@ -716,11 +716,11 @@
         .announcement-title { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin-top: 0; }
         .announcement-body { font-size: 1.1rem; }
 
-        @media (max-width: 1280px) and (min-width: 1025px) {
-            .window-frame { width: min(74vw, 1020px); left: 49%; }
+        @media (max-width: 1280px) and (min-width: 761px) {
+            .window-frame { width: min(86vw, 1180px); left: 50%; }
             .desktop-blade { width: clamp(330px, 30vw, 460px); right:-8vw; }
         }
-        @media (max-width: 1024px) {
+        @media (max-width: 760px) {
             body { overflow: hidden; }
             .window-frame { width: 96vw; height: 96vh; left: 50%; top: 50%; transform: translate(-50%,-50%); }
             .left-sidebar, .right-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; }
@@ -738,7 +738,19 @@
             .mspaint-palette { grid-template-columns: repeat(7,1fr); }
             .food-log-box { margin-left:0; }
         }
-    </style>
+
+.miku-dangling{width:clamp(145px,16vw,245px);height:59vh;left:-.8vw;opacity:.98;z-index:25}
+@media(max-width:1024px){.miku-dangling{width:clamp(135px,21vw,205px);height:48vh;left:-26px}}
+@media(max-width:640px){.miku-dangling{width:142px;height:39vh;left:-39px;opacity:.98}}
+.sparkle-dock{position:fixed;z-index:120;right:clamp(150px,25vw,340px);bottom:18px;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.sparkle-dock button{border:2px solid #fff;border-radius:12px;padding:8px 11px;background:linear-gradient(135deg,#ff74bf,#9d78ef);color:#fff;box-shadow:3px 4px 0 rgba(92,48,114,.45);font-family:var(--font-pixel);font-size:.46rem;cursor:pointer}
+.sparkle-dock small{background:rgba(255,255,255,.94);border:1px dashed #e5a6d1;color:#a3448a;border-radius:9px;padding:3px 7px;font-size:.95rem}
+.sparkle-account-box{max-width:470px}.sparkle-account-box input{width:100%;padding:8px;border:2px inset #fff;border-radius:6px;margin:4px 0 8px}
+.sparkle-code-display{overflow-wrap:anywhere;padding:10px;background:#fff8fd;border:2px dashed #d98bc2;border-radius:9px;font-family:var(--font-pixel);font-size:.53rem;color:#9e397d;line-height:1.8}
+.sparkle-account-status{min-height:1.2em;margin:7px 0;color:#a13f83}.sparkle-account-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sparkle-inventory-list{display:flex;flex-wrap:wrap;gap:6px}.sparkle-inventory-chip{padding:5px 8px;background:#fff;border:1px dashed #d89bc8;border-radius:8px;font-size:.9rem;color:#894a80}
+@media(max-width:760px){.sparkle-dock{right:10px;bottom:10px}.sparkle-dock button{font-size:.4rem}}
+    </style>    </style>
     <link rel="stylesheet" href="calendar.css">
 </head>
 <body data-mood="pink">
@@ -1246,6 +1258,7 @@
     <div class="desktop-blade" aria-hidden="true">
         <img id="desktop-blade-image" src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/BLADE" alt="" loading="eager">
     </div>
+<div class="sparkle-dock" id="sparkle-dock"><button type="button" onclick="openSparkleAccount()">✨ My Sparkle Code</button><small id="sparkle-dock-balance">0 Miku Gems · sign in to save</small></div>
 
     <div class="desktop-page-ornament" aria-hidden="true"></div>
 
@@ -1256,7 +1269,18 @@
         <span class="miku-sparkle miku-sparkle-one">✧</span><span class="miku-sparkle miku-sparkle-two">✦</span>
     </div>
 
-    <!-- ADMIN BADGE -->
+
+<div class="modal-overlay" id="sparkle-account-modal" role="dialog" aria-modal="true" aria-labelledby="sparkle-account-heading">
+ <div class="modal-box sparkle-account-box">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h3 id="sparkle-account-heading">✨ Your Sparkle Account</h3><button type="button" class="modal-btn cancel" onclick="closeSparkleAccount()">✕</button></div>
+  <p>One private code keeps your Miku Gems, inventory and comment name together on every device. Treat it like a password: anyone with it can access your collection.</p>
+  <div id="sparkle-account-summary" hidden><p>Signed in as <strong id="sparkle-account-alias"></strong></p><div class="sparkle-code-display" id="sparkle-current-code"></div><div class="sparkle-account-grid"><button type="button" class="modal-btn save" onclick="copySparkleCode()">Copy my code</button><button type="button" class="modal-btn cancel" onclick="logoutSparkleAccount()">Log out here</button></div><p><strong id="sparkle-account-gems">0 Miku Gems</strong></p><p>Your inventory</p><div class="sparkle-inventory-list" id="sparkle-inventory-list"></div></div>
+  <div id="sparkle-create-panel"><label for="sparkle-new-alias">Display name</label><input id="sparkle-new-alias" maxlength="32" autocomplete="nickname" placeholder="What should we call you?"><button type="button" class="modal-btn save" style="width:100%" onclick="createSparkleAccount()">Generate my Sparkle Code ✨</button></div>
+  <hr style="border:0;border-top:1px dashed var(--border-color);margin:14px 0"><label for="sparkle-code-input">Already have a Sparkle Code?</label><input id="sparkle-code-input" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="FALAFEL-XXXX-XXXX-XXXX-XXXX-XXXX"><button type="button" class="modal-btn cancel" style="width:100%" onclick="applySparkleCode()">Log in with my code</button>
+  <p class="sparkle-account-status" id="sparkle-account-status" aria-live="polite"></p><p style="font-size:.9rem;color:#8d6b86">No email is required. Save your code somewhere private; there is no password reset for a lost code.</p>
+ </div>
+</div>
+    <!-- ADMIN BADGE -->    <!-- ADMIN BADGE -->
     <div id="admin-indicator" class="admin-badge" onclick="openNewPostModal('blog')">+ NEW POST</div>
 
     <!-- ADMIN MODAL -->
@@ -1416,8 +1440,8 @@
             </div>
             
             <div style="display:flex; gap:5px; margin-bottom:10px;">
-                <button class="modal-btn save" style="flex:1; font-size:0.4rem;" onclick="generateSparkleCode()">✨ Share Sparkle Code</button>
-                <button class="modal-btn cancel" style="flex:1; font-size:0.4rem;" onclick="applySparkleCode()">🔗 Enter Code</button>
+                <button class="modal-btn save" style="flex:1; font-size:0.4rem;" onclick="generateSparkleCode()">✨ My Sparkle Code</button>
+                <button class="modal-btn cancel" style="flex:1; font-size:0.4rem;" onclick="openSparkleAccount('login')">🔗 Log in</button>
             </div>
 
             <div class="comments-list" id="comments-list-container" style="flex: 1; overflow-y: auto;"></div>
@@ -2862,6 +2886,7 @@
             const data = await getBinData();
             const post = (Array.isArray(data.posts) ? data.posts : []).filter(p => p && p.type !== 'announcement')[index];
             if (!post) return;
+            currentReaderPostKey=String(post.id||('legacy-'+(post.date||'')+'-'+(post.title||'post'))).slice(0,120);
 
             document.getElementById('reader-title').textContent = post.title || 'Untitled';
             document.getElementById('reader-time').textContent = post.date || '';
@@ -2882,6 +2907,17 @@
                     <button class="modal-btn save" onclick="openCommentDrawer(${index})">💬 Comments (${(Array.isArray(post.comments) ? post.comments.length : 0)})</button>
                 </div>
             `;
+
+            const rewardPanel=document.createElement('div');rewardPanel.style.cssText='margin-top:20px;padding:13px;border:2px dashed var(--border-color);border-radius:12px;background:rgba(255,246,252,.92);';
+            const rewardTitle=document.createElement('strong');rewardTitle.textContent='📚 Finished reading?';rewardTitle.style.color='var(--accent-color)';
+            const rewardCopy=document.createElement('p');rewardCopy.textContent='Collect 5 Miku Gems for this post. Each post rewards your account once.';
+            const rewardButton=document.createElement('button');rewardButton.type='button';rewardButton.className='modal-btn save';rewardButton.id='reader-reward-button';
+            const alreadyRewarded=!!(sparkleAccount&&Array.isArray(sparkleAccount.claimedPosts)&&sparkleAccount.claimedPosts.includes(currentReaderPostKey));
+            rewardButton.textContent=alreadyRewarded?'✓ Already collected':'Finish reading · +5 Miku Gems';rewardButton.disabled=alreadyRewarded;rewardButton.addEventListener('click',claimPostReward);
+            const rewardStatus=document.createElement('span');rewardStatus.id='reader-reward-status';rewardStatus.style.cssText='display:block;margin-top:6px;color:var(--text-light)';
+            rewardStatus.textContent=alreadyRewarded?'You already collected this reward.':(sparkleAccount?'Your reward is ready when you finish.':'Log in with your Sparkle Code to collect it.');
+            rewardPanel.append(rewardTitle,rewardCopy,rewardButton,rewardStatus);document.getElementById('reader-social-bar-container').prepend(rewardPanel);
+
             switchView('post-reader');
         }
 
@@ -2948,7 +2984,7 @@
                     repliesHtml += '</div>';
                 }
 
-                const canEdit = isAdmin || c.alias === visitorAlias;
+                const canEdit = isAdmin || (sparkleAccount && c.sparkleUserId ? c.sparkleUserId === sparkleAccount.id : (!c.sparkleUserId && c.alias === visitorAlias));
                 const canDelete = isAdmin;
                 const hearted = localStorage.getItem(`hearted_${c.id}`) === 'true';
                 const safeCommentId = escapeHTML(JSON.stringify(String(c.id || '')));
@@ -2997,6 +3033,7 @@
             posts[realIndex].comments.push({
                 id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(),
                 alias: visitorAlias,
+                sparkleUserId: sparkleAccount?.id || null,
                 text,
                 timestamp: new Date().toISOString(),
                 replies: [],
@@ -3088,39 +3125,35 @@
             openCommentDrawer(index);
         }
 
-        // ================= SPARKLE CODES =================
-        async function generateSparkleCode() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let code = 'FALAFEL-';
-            for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            code += '-';
-            for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
 
-            const data = await getBinData();
-            const syncCodes = { ...(data.syncCodes || cachedSyncCodes || {}) };
-            syncCodes[code] = { alias: visitorAlias, timestamp: new Date().toISOString() };
-            const savedRemotely = await saveBinData({ posts: data.posts || [], syncCodes });
-            const message = savedRemotely
-                ? 'Save your Sparkle Code! Enter it on another device to restore your alias.'
-                : 'Your Sparkle Code is saved in this browser cache. Copy it somewhere safe:';
-            prompt(message, code);
+        // ================= SPARKLE ACCOUNTS =================
+        let sparkleAccount=null,currentReaderPostKey='';
+        const SPARKLE_STORAGE_KEY='falafel_sparkle_code_v2';
+        function currentSparkleCode(){try{return localStorage.getItem(SPARKLE_STORAGE_KEY)||'';}catch(_){return '';}}
+        async function sparkleRequest(path,method='GET',body=null,code=currentSparkleCode()){
+          if(!sharedApiIsConfigured())throw new Error('The shared account server is not configured.');
+          const headers={};if(body!==null)headers['Content-Type']='application/json';if(code)headers['X-Sparkle-Code']=code;
+          const response=await fetch(sharedApiUrl(path),{method,headers,cache:'no-store',body:body===null?undefined:JSON.stringify(body)});
+          const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'Sparkle account request failed.');return data;
         }
-
-        async function applySparkleCode() {
-            const code = prompt('Enter your Sparkle Code:');
-            if (!code) return;
-
-            const data = await getBinData();
-            const entry = (data.syncCodes || {})[code.trim().toUpperCase()];
-            if (entry && entry.alias) {
-                visitorAlias = entry.alias;
-                localStorage.setItem('visitor_alias', visitorAlias);
-                alert(`✨ Welcome back, ${visitorAlias}! Your identity has been restored.`);
-            } else {
-                alert('Hmm, that code does not exist in the available saved data. Double-check the spelling!');
-            }
+        function setSparkleStatus(message,error=false){const el=document.getElementById('sparkle-account-status');if(el){el.textContent=message||'';el.style.color=error?'#b43b61':'#a13f83';}}
+        function updateSparkleUI(){
+          const dock=document.getElementById('sparkle-dock-balance'),summary=document.getElementById('sparkle-account-summary'),create=document.getElementById('sparkle-create-panel');
+          if(dock)dock.textContent=sparkleAccount?(Number(sparkleAccount.gems)||0)+' Miku Gems ✧':'0 Miku Gems · sign in to save';
+          if(summary)summary.hidden=!sparkleAccount;if(create)create.hidden=!!sparkleAccount;
+          const alias=document.getElementById('sparkle-account-alias'),code=document.getElementById('sparkle-current-code'),gems=document.getElementById('sparkle-account-gems');
+          if(alias)alias.textContent=sparkleAccount?.alias||'';if(code)code.textContent=currentSparkleCode();if(gems)gems.textContent=(Number(sparkleAccount?.gems)||0)+' Miku Gems';
+          const list=document.getElementById('sparkle-inventory-list');if(list){list.replaceChildren();const ids=Array.isArray(sparkleAccount?.inventory)?sparkleAccount.inventory:[];if(!ids.length){const chip=document.createElement('span');chip.className='sparkle-inventory-chip';chip.textContent='Your collection is waiting ✿';list.appendChild(chip);}else ids.forEach(id=>{const item=shopItemsCache.find(v=>v.id===id);const chip=document.createElement('span');chip.className='sparkle-inventory-chip';chip.textContent=item?item.name:'Shop item';list.appendChild(chip);});}
         }
-
+        function openSparkleAccount(mode='account'){const modal=document.getElementById('sparkle-account-modal');if(!modal)return;modal.style.display='flex';updateSparkleUI();if(mode==='login')document.getElementById('sparkle-code-input')?.focus();else if(!sparkleAccount)document.getElementById('sparkle-new-alias')?.focus();setSparkleStatus(sparkleAccount?'Your account is synced to this browser.':'Create a code, or enter the one you already have.');}
+        function closeSparkleAccount(){const el=document.getElementById('sparkle-account-modal');if(el)el.style.display='none';}
+        function generateSparkleCode(){openSparkleAccount('create');}
+        async function createSparkleAccount(){const alias=(document.getElementById('sparkle-new-alias')?.value||visitorAlias||'Anonymous').trim().slice(0,32)||'Anonymous';setSparkleStatus('Making your little account…');try{const data=await sparkleRequest('/account/create','POST',{alias},'');localStorage.setItem(SPARKLE_STORAGE_KEY,data.code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||alias;localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();setSparkleStatus('Account created! Copy your code and keep it somewhere safe. ✨');}catch(error){setSparkleStatus(error.message||'Could not create your account.',true);}}
+        async function applySparkleCode(){const code=(document.getElementById('sparkle-code-input')?.value||'').trim().toUpperCase();if(!code){setSparkleStatus('Paste your Sparkle Code first.',true);return;}setSparkleStatus('Finding your saved collection…');try{const data=await sparkleRequest('/account/login','POST',{code},'');localStorage.setItem(SPARKLE_STORAGE_KEY,code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||'Anonymous';localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();setSparkleStatus('Welcome back, '+visitorAlias+'! Your Gems and inventory are here. ✧');if(currentPostIndexForComments!==null&&document.getElementById('comment-drawer-overlay')?.style.display==='flex')openCommentDrawer(currentPostIndexForComments);}catch(error){setSparkleStatus(error.message||'That code did not work.',true);}}
+        async function loadSparkleAccount(){const code=currentSparkleCode();if(!code){updateSparkleUI();return;}try{const data=await sparkleRequest('/account/me','GET',null,code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||visitorAlias||'Anonymous';localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));}catch(error){try{sparkleAccount=JSON.parse(localStorage.getItem('falafel_sparkle_user_cache')||'null');}catch(_){sparkleAccount=null;}console.warn('Sparkle account refresh failed:',error);}updateSparkleUI();}
+        async function copySparkleCode(){const code=currentSparkleCode();if(!code)return;try{await navigator.clipboard.writeText(code);setSparkleStatus('Copied! Keep it private.');}catch(_){window.prompt('Copy your private Sparkle Code:',code);}}
+        function logoutSparkleAccount(){try{localStorage.removeItem(SPARKLE_STORAGE_KEY);localStorage.removeItem('falafel_sparkle_user_cache');}catch(_){}sparkleAccount=null;updateSparkleUI();setSparkleStatus('Logged out here. Your saved account remains on the server.');}
+        async function claimPostReward(){const status=document.getElementById('reader-reward-status');if(!sparkleAccount){if(status)status.textContent='Sign in with your Sparkle Code to collect your reward.';openSparkleAccount('login');return;}if(!currentReaderPostKey)return;const button=document.getElementById('reader-reward-button');if(button)button.disabled=true;if(status)status.textContent='Checking your reading reward…';try{const data=await sparkleRequest('/account/reward','POST',{postId:currentReaderPostKey});sparkleAccount=data.user;localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();if(status)status.textContent=data.awarded?'You earned 5 Miku Gems! ✨':'You already collected this post’s 5 Miku Gems.';if(button)button.textContent=data.awarded?'✓ 5 Miku Gems collected':'✓ Already collected';}catch(error){if(status)status.textContent=error.message||'The reward could not be collected.';if(button)button.disabled=false;}}
         async function toggleLike(index, btn) {
             const data = await getBinData();
             const posts = Array.isArray(data.posts) ? data.posts : [];
@@ -3346,6 +3379,7 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             checkAdminStateUI();
+            await loadSparkleAccount();
             updateTamaUI();
             const bladeImage = document.getElementById('desktop-blade-image');
             if (bladeImage) setImageFallback(bladeImage, [REPO_RAW+'BLADE', REPO_RAW+'BLADE.png', REPO_RAW+'BLADE.PNG', REPO_RAW+'BLADE.jpg', REPO_RAW+'BLADE.webp'], '✦');
