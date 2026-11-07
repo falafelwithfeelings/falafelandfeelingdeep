@@ -48,7 +48,6 @@
         
         body {
             margin: 0; padding: 0; min-height: 100vh;
-            background-color:#fff;
             background-image: var(--bg-outside);
             background-size: cover; background-position: center; background-attachment: fixed;
             color: var(--text-main);
@@ -287,11 +286,9 @@
             width: min(68vw, 1120px);
             max-width: 1120px;
             height: 95vh;
-            background-color:rgba(255,255,255,.94);
-            background-image:linear-gradient(rgba(255,255,255,.76),rgba(255,255,255,.76)),var(--bg-inside);
-            background-size:cover;
-            background-position:center;
-            background-repeat:no-repeat;
+            background-image: var(--bg-inside);
+            background-size: cover;
+            background-position: center;
             border: 3px solid var(--border-color);
             display: flex;
             flex-direction: column;
@@ -591,24 +588,80 @@
         .modal-btn.save { background: var(--accent-color); color: #fff; }
         .modal-btn.cancel { background: #ccc; }
 
-        /* Miku: full-height left-side hanging cameo, intentionally Blade-sized. */
-        /* Miku hangs from the top-left, visible without covering the navigation. */
-        .miku-dangling { position:fixed; top:0; left:-2vw; right:auto; bottom:auto; width:clamp(260px,28vw,455px); height:94vh; z-index:25; pointer-events:none; display:flex; justify-content:flex-start; align-items:flex-start; filter:drop-shadow(2px 8px 9px rgba(35,20,55,.34)); animation:mikuSway 5.2s ease-in-out infinite; transform-origin:42% 0; }
-        .miku-dangling img { display:block; width:100%; height:calc(100% - 58px); object-fit:contain; object-position:left top; image-rendering:auto; }
-        body.exit-prompt-open .miku-dangling { z-index:9998; filter:blur(5px) drop-shadow(2px 8px 9px rgba(35,20,55,.2)); opacity:.48; }
-        body.exit-screen-open .miku-dangling { opacity:0; }
-        .miku-rope { position:absolute; top:0; left:43%; width:4px; height:76px; background:repeating-linear-gradient(to bottom,#765344 0 7px,#d9b9a4 7px 12px); border-radius:4px; box-shadow:1px 0 2px #fff; }
-        .miku-knot { position:absolute; top:68px; left:calc(43% - 5px); width:14px; height:14px; border:3px solid #a98270; border-radius:50%; background:#f4d8c9; box-shadow:0 1px 3px #765344; }
-        .miku-sparkle { position:absolute; color:#fff; text-shadow:0 0 7px #ff62bd,0 0 13px #b8eaff; font-size:1.7rem; }
-        .miku-sparkle-one { left:72%; top:36%; animation:ornamentBob 2s ease-in-out infinite alternate; }
-        .miku-sparkle-two { left:22%; top:62%; animation:ornamentBob 2.6s ease-in-out infinite alternate-reverse; }
-        .miku-fallback { display:none; position:absolute; top:90px; left:18%; padding:8px 12px; border:2px dashed #ff8fc4; border-radius:12px; background:#fff1f8; color:#a43c79; font-family:var(--font-pixel); font-size:.65rem; box-shadow:3px 3px 0 #d78cb9; }
-        .miku-dangling.image-missing .miku-fallback { display:block; }
-        @keyframes mikuSway { 0%,100% { transform:rotate(-2deg); } 50% { transform:rotate(2deg); } }
-        @media (max-width:1024px) { .miku-dangling { left:-34px; width:clamp(230px,31vw,320px); height:60vh; } .miku-dangling img { height:calc(100% - 48px); } .miku-rope { height:60px; } .miku-knot { top:53px; } }
-        @media (max-width:640px) { .miku-dangling { left:-58px; width:210px; height:43vh; opacity:.96; } }
+        /* Miku's original artwork includes the hanging cord; do not draw a second one. */
+        .miku-dangling {
+            position: fixed;
+            top: 0;
+            left: -1.5vw;
+            right: auto;
+            bottom: auto;
+            width: clamp(245px, 27vw, 425px);
+            height: 88vh;
+            z-index: 25;
+            pointer-events: none;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            filter: drop-shadow(2px 8px 9px rgba(35,20,55,.34));
+            animation: mikuSway 5.2s ease-in-out infinite;
+            transform-origin: 42% 0;
+        }
+        .miku-dangling img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: left top;
+            image-rendering: auto;
+        }
+        body.exit-prompt-open .miku-dangling {
+            z-index: 9998;
+            filter: blur(5px) drop-shadow(2px 8px 9px rgba(35,20,55,.2));
+            opacity: .48;
+        }
+        body.exit-screen-open .miku-dangling { opacity: 0; }
+        .miku-sparkle { position: absolute; color: #fff; text-shadow: 0 0 7px #ff62bd,0 0 13px #b8eaff; font-size: 1.7rem; }
+        .miku-sparkle-one { left: 72%; top: 36%; animation: ornamentBob 2s ease-in-out infinite alternate; }
+        .miku-sparkle-two { left: 22%; top: 62%; animation: ornamentBob 2.6s ease-in-out infinite alternate-reverse; }
+        .miku-fallback { display: none; position: absolute; top: 90px; left: 18%; padding: 8px 12px; border: 2px dashed #ff8fc4; border-radius: 12px; background: #fff1f8; color: #a43c79; font-family: var(--font-pixel); font-size: .65rem; box-shadow: 3px 3px 0 #d78cb9; }
+        .miku-dangling.image-missing .miku-fallback { display: block; }
+        @keyframes mikuSway { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+        @media (max-width: 1024px) { .miku-dangling { left: -28px; width: clamp(210px, 26vw, 315px); height: 58vh; } }
+        @media (max-width: 640px) { .miku-dangling { left: -42px; width: 190px; height: 42vh; opacity: .96; } }
 
-        /* Blog scrapbook: paper layers, postage marks, tiny decorative flourishes. */
+        /* Akito is easier to see without the thick four-layer sticker halo. */
+        .akito-room { height: 145px; }
+        .akito-sprite { height: 98px; margin-bottom: 4px; }
+        .akito-sprite.sticker-img { filter: drop-shadow(0 1px 2px rgba(30,20,30,.28)); }
+        @media (max-width: 640px) {
+            .akito-room { height: 128px; }
+            .akito-sprite { height: 88px; }
+        }
+
+        /* Shared community shop */
+        .shop-intro { margin: 0 0 14px; color: var(--text-light); }
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: 14px; align-items: stretch; }
+        .shop-card { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 10px; background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 12px; box-shadow: 3px 4px 0 var(--accent-color); transition: transform .2s ease, box-shadow .2s ease; }
+        .shop-card:hover { transform: translateY(-3px) rotate(-.25deg); box-shadow: 5px 6px 0 var(--accent-color); }
+        .shop-card-image-wrap { height: 165px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: rgba(255,255,255,.52); border: 1px dashed var(--border-color); border-radius: 8px; }
+        .shop-card-image { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .shop-card-placeholder { color: var(--text-light); font-size: 1rem; text-align: center; padding: 10px; }
+        .shop-card h3 { margin: 10px 0 5px; font-family: var(--font-pixel); font-size: .58rem; line-height: 1.65; color: var(--accent-color); overflow-wrap: anywhere; }
+        .shop-card-description { flex: 1; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.15; margin: 3px 0 8px; }
+        .shop-card-meta { display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap; margin-top:auto; }
+        .shop-category { display:inline-block; padding:3px 7px; border-radius:30px; background:rgba(244,180,217,.28); border:1px dashed var(--border-color); color:var(--accent-color); font-family:var(--font-pixel); font-size:.36rem; }
+        .shop-price { color:var(--accent-color); font-family:var(--font-pixel); font-size:.5rem; }
+        .shop-admin-panel { margin: 0 0 17px; padding: 12px; background: rgba(255,248,252,.94); color: #573b54; border: 2px dashed var(--border-color); border-radius: 12px; box-shadow: 3px 3px 0 rgba(220,120,180,.3); }
+        .shop-admin-panel[hidden] { display:none !important; }
+        .shop-admin-panel h3 { margin: 0 0 8px; font-family: var(--font-pixel); font-size: .55rem; color: var(--accent-color); }
+        .shop-admin-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        .shop-admin-panel label { display:block; margin:5px 0 3px; color:#8d4f7c; font-size:1rem; }
+        .shop-admin-panel input,.shop-admin-panel textarea,.shop-admin-panel select { width:100%; box-sizing:border-box; padding:7px; border:2px inset #fff; border-radius:6px; background:#fff; color:#3b2b39; }
+        .shop-admin-actions,.shop-card-admin-actions { display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
+        .shop-card-admin-actions button { font-size:.42rem; padding:4px 7px; }
+        .shop-status { font-size:.95rem; color:#8d4f7c; margin:7px 0 0; }
+        @media(max-width:640px) { .shop-admin-grid { grid-template-columns:1fr; } .shop-card-image-wrap { height:140px; } }
+/* Blog scrapbook: paper layers, postage marks, tiny decorative flourishes. */
         .blog-grid { display:flex; flex-direction:column; gap:16px; padding:5px 3px 14px; }
         .blog-card { position:relative; isolation:isolate; overflow:hidden; border:2px solid var(--border-color); padding:16px 17px 14px; background:linear-gradient(135deg,var(--panel-bg) 0%,rgba(255,255,255,.92) 58%,rgba(255,232,246,.75) 100%); box-shadow:4px 4px 0 var(--accent-color), 8px 8px 0 rgba(183,143,225,.13); transition:transform .22s ease,box-shadow .22s ease; border-radius:16px 10px 17px 9px; }
         .blog-card::before { content:'✿'; position:absolute; z-index:-1; right:12px; top:7px; color:var(--border-color); font-size:1.55rem; opacity:.7; transform:rotate(12deg); }
@@ -667,33 +720,22 @@
             .window-frame { width: min(74vw, 1020px); left: 49%; }
             .desktop-blade { width: clamp(330px, 30vw, 460px); right:-8vw; }
         }
-        @media (max-width:1024px) {
-            body { overflow:hidden; }
-            .window-frame { width:96vw; height:96vh; left:50%; top:50%; transform:translate(-50%,-50%); }
-            /* Keep navigation as a true right-hand vertical rail on tablets and laptops. */
-            #app-container { display:flex; flex-direction:row; align-items:stretch; gap:9px; padding:9px; }
-            .left-sidebar { width:clamp(125px,19vw,190px); flex:0 0 clamp(125px,19vw,190px); flex-direction:column; }
-            .right-sidebar { width:92px; flex:0 0 92px; display:flex; flex-direction:column; }
-            .vertical-tabs { display:flex; flex-direction:column; flex-wrap:nowrap; gap:7px; margin-top:8px; }
-            .v-tab { border-radius:0 12px 12px 0; border-left:0; padding:8px 6px; text-align:center; }
-            .main-content-box { min-width:0; }
-            .desktop-blade { display:none; }
-            .bottom-grid { grid-template-columns:1fr; }
-            .pixel-vector-flourish { opacity:.55; }
+        @media (max-width: 1024px) {
+            body { overflow: hidden; }
+            .window-frame { width: 96vw; height: 96vh; left: 50%; top: 50%; transform: translate(-50%,-50%); }
+            .left-sidebar, .right-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .vertical-tabs { flex-direction: row; flex-wrap: wrap; }
+            .v-tab { border-radius: 10px; border-left: 2px solid var(--border-color); }
+            .desktop-blade { display: none; }
+            .bottom-grid { grid-template-columns: 1fr; }
+            .pixel-vector-flourish { opacity: .55; }
         }
-        @media (max-width:640px) {
-            .window-frame { width:100vw; height:100dvh; border-radius:0; }
-            #app-container { padding:6px; gap:6px; }
-            .left-sidebar { width:94px; flex:0 0 94px; }
-            .right-sidebar { width:70px; flex:0 0 70px; }
-            .vertical-tabs { gap:5px; }
-            .v-tab { font-size:.38rem; padding:7px 3px; overflow-wrap:anywhere; }
-            .profile-box { flex-direction:column; text-align:center; }
-            .profile-pic { width:54px; height:54px; flex-basis:54px; }
-            .main-content-box { padding:8px; }
-            .mspaint-toolbar { width:70px; flex-basis:70px; }
-            .mspaint-workspace { height:240px; }
-            .mspaint-palette { grid-template-columns:repeat(7,1fr); }
+        @media (max-width: 640px) {
+            .window-frame { width: 100vw; height: 100dvh; border-radius:0; }
+            #app-container { padding: 8px; gap: 8px; }
+            .mspaint-toolbar { width: 70px; flex-basis: 70px; }
+            .mspaint-workspace { height: 240px; }
+            .mspaint-palette { grid-template-columns: repeat(7,1fr); }
             .food-log-box { margin-left:0; }
         }
     </style>
@@ -1140,7 +1182,50 @@
                         <button class="modal-btn cancel" onclick="resetBgs()">Reset to Default</button>
                     </div>
                 </div>
-            </main>
+            
+                    <!-- SHOP VIEW -->
+                    <div id="view-shop" class="view-section">
+                        <h2 style="font-family:var(--font-pixel);font-size:.8rem;color:var(--accent-color);margin-top:0;">The Little Shop ✿</h2>
+                        <p class="shop-intro">Tiny hats, cosmetics and trinkets for the Falafelverse. Browse the little collection!</p>
+                        <div class="shop-admin-panel" id="shop-admin-panel" hidden>
+                            <h3>✦ WEBMASTER SHOP MANAGER</h3>
+                            <input type="hidden" id="shop-item-id" value="">
+                            <div class="shop-admin-grid">
+                                <div>
+                                    <label for="shop-item-name">Item name</label>
+                                    <input id="shop-item-name" maxlength="80" placeholder="e.g. Strawberry beret">
+                                </div>
+                                <div>
+                                    <label for="shop-item-image">Picture URL</label>
+                                    <input id="shop-item-image" type="url" placeholder="https://…">
+                                </div>
+                                <div>
+                                    <label for="shop-item-price">Price / currency</label>
+                                    <input id="shop-item-price" maxlength="50" placeholder="e.g. MVR 25 or 40 coins">
+                                </div>
+                                <div>
+                                    <label for="shop-item-category">Category</label>
+                                    <select id="shop-item-category">
+                                        <option value="Hats">Hats</option>
+                                        <option value="Cosmetics">Cosmetics</option>
+                                        <option value="Accessories">Accessories</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <label for="shop-item-description">Description</label>
+                            <textarea id="shop-item-description" rows="3" maxlength="600" placeholder="Describe the item…"></textarea>
+                            <div class="shop-admin-actions">
+                                <button type="button" class="modal-btn save" id="shop-save-button" onclick="saveShopItem()">Save item ✧</button>
+                                <button type="button" class="modal-btn cancel" onclick="clearShopForm()">Clear form</button>
+                            </div>
+                            <p class="shop-status" id="shop-admin-status" aria-live="polite">Only the webmaster can add or edit listings.</p>
+                        </div>
+                        <div id="shop-status" class="shop-status" aria-live="polite">Loading the shop…</div>
+                        <div id="shop-grid" class="shop-grid"></div>
+                        <p style="font-size:.95rem;color:var(--text-light);margin-top:14px;">Catalogue only: prices are displayed for reference. Checkout and payments are not processed on this page.</p>
+                    </div>
+</main>
 
             <!-- RIGHT SIDEBAR -->
             <aside class="right-sidebar">
@@ -1151,6 +1236,7 @@
                     <a class="v-tab" id="nav-about" onclick="switchView('about')">about</a>
                     <a class="v-tab" id="nav-contact" onclick="switchView('contact')">contact</a>
                     <a class="v-tab" id="nav-settings" onclick="switchView('settings')">settings ⚙️</a>
+                    <a class="v-tab" id="nav-shop" onclick="switchView('shop')">shop ✿</a>
                 </div>
                 <!-- Desktop Blade art now lives outside this program window. -->
             </aside>
@@ -1165,7 +1251,6 @@
 
     <!-- Miku hangs from the TOP-LEFT edge, Blade-sized and click-through. -->
     <div class="miku-dangling" id="miku-dangling" aria-hidden="true">
-        <span class="miku-rope"></span><span class="miku-knot"></span>
         <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/MIKU%20DANGLING" alt="" loading="eager" onerror="this.closest('.miku-dangling').classList.add('image-missing')">
         <span class="miku-fallback">MIKU IS TRYING TO LOAD… ✧</span>
         <span class="miku-sparkle miku-sparkle-one">✧</span><span class="miku-sparkle miku-sparkle-two">✦</span>
@@ -1944,6 +2029,18 @@
                 lastAkitoCoinSecret = now;
                 tama.coins += 3;
                 setTamaDialogue('HEY! That is my coin stash. ...Fine, take 3.');
+            } else if (kind === 'miku') {
+                tama.coins += 8;
+                tama.mood = Math.min(100, tama.mood + 5);
+                setTamaDialogue('MIKU MIKU BEAM?! Okay, that was actually impressive. +8 coins!');
+            } else if (kind === 'emu') {
+                tama.coins += 7;
+                tama.mood = 100;
+                setTamaDialogue('WONDERHOY!! Emu energy detected. +7 coins!');
+            } else if (kind === 'konami') {
+                tama.coins += 20;
+                tama.mood = 100;
+                setTamaDialogue('THE SECRET INPUT?! You unlocked the backstage bonus. +20 coins!');
             }
             updateTamaUI();
         }
@@ -1973,8 +2070,29 @@
             } else if (akitoSecretBuffer.endsWith('blade')) {
                 akitoSecretBuffer = '';
                 triggerAkitoSecret('blade');
+            } else if (akitoSecretBuffer.endsWith('mikumikubeam')) {
+                akitoSecretBuffer = '';
+                triggerAkitoSecret('miku');
+            } else if (akitoSecretBuffer.endsWith('otori')) {
+                akitoSecretBuffer = '';
+                triggerAkitoSecret('emu');
             }
         });
+
+        // Classic Konami-code surprise. It ignores keystrokes inside form fields.
+        (() => {
+            const sequence = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+            let progress = 0;
+            window.addEventListener('keydown', (event) => {
+                const target = event.target;
+                if (target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
+                progress = event.key === sequence[progress] ? progress + 1 : (event.key === sequence[0] ? 1 : 0);
+                if (progress === sequence.length) {
+                    progress = 0;
+                    triggerAkitoSecret('konami');
+                }
+            });
+        })();
 
         function akitoBurst(text = null) {
             const room = document.getElementById('akito-room');
@@ -2669,6 +2787,7 @@
             if(navEl) navEl.classList.add('active');
             if (viewName === 'blog') renderAllPosts();
             if (viewName === 'announcements') renderAnnouncements();
+            if (viewName === 'shop') loadShopItems();
         }
 
         async function renderAllPosts() {
@@ -3040,6 +3159,191 @@
             }
         }
 
+
+        // ================= COMMUNITY SHOP =================
+        let shopItemsCache = [];
+
+        function shopAdminActive() {
+            return typeof isSiteAdmin === 'function' && isSiteAdmin();
+        }
+
+        function setShopStatus(message, adminMessage = false) {
+            const node = document.getElementById(adminMessage ? 'shop-admin-status' : 'shop-status');
+            if (node) node.textContent = message;
+        }
+
+        function clearShopForm() {
+            ['shop-item-id','shop-item-name','shop-item-image','shop-item-price','shop-item-description'].forEach(id => {
+                const node = document.getElementById(id);
+                if (node) node.value = '';
+            });
+            const category = document.getElementById('shop-item-category');
+            if (category) category.value = 'Hats';
+            setShopStatus('Ready for a new listing.', true);
+        }
+
+        function renderShopItems() {
+            const grid = document.getElementById('shop-grid');
+            const adminPanel = document.getElementById('shop-admin-panel');
+            const status = document.getElementById('shop-status');
+            if (!grid) return;
+            const admin = shopAdminActive();
+            if (adminPanel) adminPanel.hidden = !admin;
+            grid.replaceChildren();
+
+            if (!shopItemsCache.length) {
+                if (status) status.textContent = admin
+                    ? 'The shelves are empty! Add the first little item above.'
+                    : 'The shop is still being stocked. Come back soon! ✿';
+                return;
+            }
+            if (status) status.textContent = shopItemsCache.length + ' little item' + (shopItemsCache.length === 1 ? '' : 's') + ' on the shelf ✧';
+
+            shopItemsCache.forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'shop-card';
+
+                const imageWrap = document.createElement('div');
+                imageWrap.className = 'shop-card-image-wrap';
+                if (item.imageUrl && validHttpUrl(item.imageUrl)) {
+                    const image = document.createElement('img');
+                    image.className = 'shop-card-image';
+                    image.src = item.imageUrl;
+                    image.alt = item.name ? item.name + ' product picture' : 'Shop item picture';
+                    image.loading = 'lazy';
+                    image.onerror = () => {
+                        image.remove();
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'shop-card-placeholder';
+                        placeholder.textContent = 'Picture could not load ✧';
+                        imageWrap.appendChild(placeholder);
+                    };
+                    imageWrap.appendChild(image);
+                } else {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'shop-card-placeholder';
+                    placeholder.textContent = '✿ no picture yet ✿';
+                    imageWrap.appendChild(placeholder);
+                }
+
+                const title = document.createElement('h3');
+                title.textContent = item.name || 'Untitled item';
+                const description = document.createElement('p');
+                description.className = 'shop-card-description';
+                description.textContent = item.description || 'A little mystery item.';
+                const meta = document.createElement('div');
+                meta.className = 'shop-card-meta';
+                const category = document.createElement('span');
+                category.className = 'shop-category';
+                category.textContent = item.category || 'Other';
+                const price = document.createElement('span');
+                price.className = 'shop-price';
+                price.textContent = item.price || 'Price TBA';
+                meta.append(category, price);
+                card.append(imageWrap, title, description, meta);
+
+                if (admin) {
+                    const actions = document.createElement('div');
+                    actions.className = 'shop-card-admin-actions';
+                    const edit = document.createElement('button');
+                    edit.type = 'button';
+                    edit.className = 'modal-btn cancel';
+                    edit.textContent = 'Edit';
+                    edit.addEventListener('click', () => editShopItem(item.id));
+                    const remove = document.createElement('button');
+                    remove.type = 'button';
+                    remove.className = 'modal-btn cancel';
+                    remove.textContent = 'Remove';
+                    remove.addEventListener('click', () => deleteShopItem(item.id));
+                    actions.append(edit, remove);
+                    card.appendChild(actions);
+                }
+                grid.appendChild(card);
+            });
+        }
+
+        async function loadShopItems() {
+            const status = document.getElementById('shop-status');
+            if (!status) return;
+            status.textContent = 'Loading the little shelves…';
+            try {
+                if (!sharedApiIsConfigured()) throw new Error('The shared Worker is not configured.');
+                const response = await fetch(sharedApiUrl('/shop'), { method: 'GET', cache: 'no-store' });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Shop could not load.');
+                shopItemsCache = Array.isArray(data.items) ? data.items : [];
+                renderShopItems();
+            } catch (error) {
+                status.textContent = error.message || 'The shop could not connect to its shared storage.';
+                console.warn('Falafelverse shop:', error);
+            }
+        }
+
+        function editShopItem(id) {
+            if (!shopAdminActive()) return;
+            const item = shopItemsCache.find(entry => entry.id === id);
+            if (!item) return;
+            document.getElementById('shop-item-id').value = item.id;
+            document.getElementById('shop-item-name').value = item.name || '';
+            document.getElementById('shop-item-image').value = item.imageUrl || '';
+            document.getElementById('shop-item-price').value = item.price || '';
+            document.getElementById('shop-item-description').value = item.description || '';
+            document.getElementById('shop-item-category').value = ['Hats','Cosmetics','Accessories','Other'].includes(item.category) ? item.category : 'Other';
+            setShopStatus('Editing "' + item.name + '". Save when ready.', true);
+            document.getElementById('shop-item-name').focus();
+        }
+
+        async function saveShopItem() {
+            if (!shopAdminActive()) return alert('Only the signed-in webmaster can edit the shop.');
+            const id = document.getElementById('shop-item-id').value.trim();
+            const name = document.getElementById('shop-item-name').value.trim();
+            const imageUrl = document.getElementById('shop-item-image').value.trim();
+            const price = document.getElementById('shop-item-price').value.trim();
+            const description = document.getElementById('shop-item-description').value.trim();
+            const category = document.getElementById('shop-item-category').value;
+            if (!name) return alert('Give the item a name first!');
+            if (!validHttpUrl(imageUrl)) return alert('Please paste a full http:// or https:// picture URL.');
+            if (!price) return alert('Add a price (or write "Price TBA").');
+            const button = document.getElementById('shop-save-button');
+            button.disabled = true;
+            try {
+                const response = await fetch(sharedApiUrl('/shop'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Password': sharedAdminPassword },
+                    body: JSON.stringify({ id, name, imageUrl, price, description, category })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'The item could not be saved.');
+                shopItemsCache = Array.isArray(result.items) ? result.items : shopItemsCache;
+                clearShopForm();
+                renderShopItems();
+                setShopStatus('Item saved for everyone to see! ✨', true);
+            } catch (error) {
+                setShopStatus(error.message || 'Could not save this item.', true);
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function deleteShopItem(id) {
+            if (!shopAdminActive()) return;
+            if (!confirm('Remove this item from the shop?')) return;
+            try {
+                const response = await fetch(sharedApiUrl('/shop/' + encodeURIComponent(id)), {
+                    method: 'DELETE',
+                    headers: { 'X-Admin-Password': sharedAdminPassword }
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'The item could not be removed.');
+                shopItemsCache = Array.isArray(result.items) ? result.items : shopItemsCache.filter(item => item.id !== id);
+                renderShopItems();
+                setShopStatus('Item removed from the shared shop.', true);
+            } catch (error) {
+                setShopStatus(error.message || 'Could not remove the item.', true);
+            }
+        }
+
+
         window.addEventListener('DOMContentLoaded', async () => {
             checkAdminStateUI();
             updateTamaUI();
@@ -3047,6 +3351,7 @@
             if (bladeImage) setImageFallback(bladeImage, [REPO_RAW+'BLADE', REPO_RAW+'BLADE.png', REPO_RAW+'BLADE.PNG', REPO_RAW+'BLADE.jpg', REPO_RAW+'BLADE.webp'], '✦');
             await loadSharedSiteConfig();
             renderAllPosts();
+            loadShopItems();
             // Workers KV is globally distributed; periodic refresh lets open tabs pick up shared edits.
             clearInterval(configRefreshTimer);
             configRefreshTimer = setInterval(() => loadSharedSiteConfig(true), 60000);

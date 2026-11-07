@@ -9,3 +9,6 @@ Deploy: replace the falafelverseapi Worker source with worker.js; keep SITE_CONF
 Visitors can add shared community events by double-clicking a date or using the add button. Authenticated webmaster events are labelled ADMIN; only the admin can delete. Month/year calculate from local date, with automatic rollover and 30-second refresh.
 
 KV is eventually consistent, so cross-region updates can take time. The legacy JSONBin blog posts/comments/likes/Sparkle Codes have NOT yet been migrated by this calendar update; do not assume those sync. Rotate any JSONBin master key that was previously exposed.
+
+
+Shop routes: GET /shop (public), POST /shop (admin only; add/update), DELETE /shop/:id (admin only). Items include imageUrl, description, category and price. This is a catalogue, not a payment system.
