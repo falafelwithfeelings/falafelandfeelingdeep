@@ -10,7 +10,677 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* ================= THEME VARIABLES ================= */
+        :root {
+            --bg-outside: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe');
+            --bg-inside: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe');
+            --panel-bg: #ffffff;
+            --border-color: #ffb6c1;
+            --accent-color: #ff69b4;
+            --text-main: #333333;
+            --text-light: #666666;
+            --win-gray: #c0c0c0;
+            --win-blue: #0a246a;
+            --font-pixel: 'Press Start 2P', cursive;
+            --font-body: 'VT323', monospace;
+        }
+
+        /* 8 Preset Moods */
+        body[data-mood="pink"] { --panel-bg: #fff0f6; --border-color: #f472b6; --accent-color: #db2777; --text-main: #4a1525; --text-light: #831843; }
+        body[data-mood="midnight"] { --panel-bg: #1e1b2e; --border-color: #a855f7; --accent-color: #c084fc; --text-main: #f3e8ff; --text-light: #d8b4fe; }
+        body[data-mood="matcha"] { --panel-bg: #f4fbf5; --border-color: #65a30d; --accent-color: #4d7c0f; --text-main: #1e3322; --text-light: #365314; }
+        body[data-mood="lemonade"] { --panel-bg: #fffef7; --border-color: #ca8a04; --accent-color: #a16207; --text-main: #382e0a; --text-light: #713f12; }
+        body[data-mood="strawberry"] { --panel-bg: #ffebf0; --border-color: #e11d48; --accent-color: #be123c; --text-main: #500e21; --text-light: #881337; }
+        body[data-mood="cyber"] { --panel-bg: #141426; --border-color: #38bdf8; --accent-color: #0ea5e9; --text-main: #f0fdf4; --text-light: #7dd3fc; }
+        body[data-mood="lavender"] { --panel-bg: #f8f0ff; --border-color: #8b5cf6; --accent-color: #7c3aed; --text-main: #3b0764; --text-light: #581c87; }
+        body[data-mood="sunset"] { --panel-bg: #fff3e0; --border-color: #f97316; --accent-color: #ea580c; --text-main: #431407; --text-light: #7c2d12; }
+
+        /* ================= BASE & SCROLLBARS ================= */
+        * { 
+            box-sizing: border-box; 
+            cursor: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/favicon.png') 8 8, auto; 
+            font-family: var(--font-body); 
+            font-size: 1.2rem;
+            image-rendering: pixelated;
+        }
+        
+        body {
+            margin: 0; padding: 0; min-height: 100vh;
+            background-image: var(--bg-outside);
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: var(--text-main);
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            position: relative;
+        }
+
+        input, textarea, select { font-family: var(--font-body); font-size: 1.1rem; }
+
+        /* The desktop backdrop is intentionally clean; ornament lives on the window frame. */
+
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        
+        .sticker-img { 
+            filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff);
+        }
+
+        /* Whimsical Animations */
+        @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
+        @keyframes wiggle { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+        
+        /* Falling Dancers */
+        @keyframes fallDown { 
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; } 
+            10% { opacity: 1; } 
+            90% { opacity: 1; } 
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } 
+        }
+
+        /* Flowing Rainbow Vector Flourish */
+        @keyframes rainbowBorder {
+            0% { box-shadow: 0 0 10px #ffb6c1, 0 0 20px #ffb6c1; border-color: #ffb6c1; }
+            25% { box-shadow: 0 0 10px #b3e5fc, 0 0 20px #b3e5fc; border-color: #b3e5fc; }
+            50% { box-shadow: 0 0 10px #fef08a, 0 0 20px #fef08a; border-color: #fef08a; }
+            75% { box-shadow: 0 0 10px #d8b4fe, 0 0 20px #d8b4fe; border-color: #d8b4fe; }
+            100% { box-shadow: 0 0 10px #ffb6c1, 0 0 20px #ffb6c1; border-color: #ffb6c1; }
+        }
+
+        /* Neon Dance Border */
+        @keyframes neonBorder {
+            0% { box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff; border-color: #ff00ff; }
+            25% { box-shadow: 0 0 20px #00ffff, inset 0 0 20px #00ffff; border-color: #00ffff; }
+            50% { box-shadow: 0 0 20px #ffff00, inset 0 0 20px #ffff00; border-color: #ffff00; }
+            75% { box-shadow: 0 0 20px #00ff00, inset 0 0 20px #00ff00; border-color: #00ff00; }
+            100% { box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff; border-color: #ff00ff; }
+        }
+
+        /* Full-perimeter animated vector ornament, with pixel motes resolving into flourishes. */
+        .window-frame { isolation: isolate; }
+        .pixel-vector-flourish {
+            position: absolute;
+            inset: -2px;
+            z-index: 55;
+            pointer-events: none;
+            overflow: visible;
+        }
+        .pixel-vector-flourish svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        .pixel-vector-flourish .vector-path {
+            fill: none;
+            stroke: url(#falafelVectorGradient);
+            stroke-width: 3.4;
+            stroke-linecap: round;
+            stroke-dasharray: 24 13 5 13;
+            opacity: .92;
+            animation: vectorSweep 13s linear infinite;
+        }
+        .pixel-vector-flourish .vector-curl {
+            fill: none;
+            stroke: var(--accent-color);
+            stroke-width: 2.6;
+            stroke-linecap: round;
+            stroke-dasharray: 7 7;
+            opacity: .82;
+            animation: vectorSweep 9s linear infinite reverse;
+        }
+        .pixel-vector-flourish .vector-thread {
+            fill: none;
+            stroke: url(#falafelVectorGradient);
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            opacity: .78;
+            stroke-dasharray: 3 6;
+            animation: vectorSweep 17s linear infinite;
+        }
+        .pixel-vector-flourish .vector-dot { fill: #fff; stroke: var(--accent-color); stroke-width: 1.5; }
+        @keyframes vectorSweep { to { stroke-dashoffset: -420; } }
+        .pixel-mote {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            box-shadow: 6px 0 var(--accent-color), 0 6px var(--border-color), 6px 6px #b3e5fc;
+            image-rendering: pixelated;
+            opacity: 0;
+        }
+        .pixel-mote.top { top: 2px; left: 2%; animation: pixelToVectorTop 8s linear infinite; }
+        .pixel-mote.bottom { bottom: 2px; right: 2%; animation: pixelToVectorBottom 9s linear infinite; animation-delay: -3s; }
+        .pixel-mote.side { top: 12%; left: 2px; animation: pixelToVectorSide 7s linear infinite; animation-delay: -1.5s; }
+        @keyframes pixelToVectorTop {
+            0% { left: 2%; transform: scale(1); opacity: 0; }
+            8% { opacity: 1; }
+            88% { left: 94%; transform: scale(.6); opacity: .9; }
+            100% { left: 97%; transform: scale(.15); opacity: 0; }
+        }
+        @keyframes pixelToVectorBottom {
+            0% { right: 2%; transform: scale(1); opacity: 0; }
+            8% { opacity: 1; }
+            88% { right: 94%; transform: scale(.6); opacity: .9; }
+            100% { right: 97%; transform: scale(.15); opacity: 0; }
+        }
+        @keyframes pixelToVectorSide {
+            0% { top: 12%; transform: scale(1); opacity: 0; }
+            8% { opacity: 1; }
+            88% { top: 88%; transform: scale(.6); opacity: .9; }
+            100% { top: 94%; transform: scale(.15); opacity: 0; }
+        }
+        .desktop-page-ornament {
+            position: fixed;
+            inset: 7px;
+            z-index: 2;
+            pointer-events: none;
+            border: 2px solid rgba(255,255,255,.75);
+            outline: 1px dashed rgba(255,220,246,.85);
+            outline-offset: -7px;
+            box-shadow: inset 0 0 0 5px rgba(196,112,255,.11), 0 0 16px rgba(255,255,255,.28);
+        }
+        .desktop-page-ornament::before,
+        .desktop-page-ornament::after {
+            content: '❀';
+            position: absolute;
+            color: #fff;
+            font-size: 25px;
+            line-height: 1;
+            text-shadow: 0 0 8px var(--accent-color);
+            animation: ornamentBob 3s ease-in-out infinite alternate;
+        }
+        .desktop-page-ornament::before { top: 8px; left: 12px; }
+        .desktop-page-ornament::after { right: 12px; bottom: 8px; animation-delay: -1.3s; }
+        @keyframes ornamentBob { from { transform: rotate(-12deg) scale(.85); } to { transform: rotate(12deg) scale(1.15); } }
+
+        /* Blade's two confirmation prompts and the pretend desktop taskbar. */
+        .blade-prompt-card {
+            width: min(440px, 92vw);
+            text-align: center;
+            padding: 18px;
+            border: 3px dashed var(--border-color);
+            border-radius: 14px;
+            background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(255,240,246,.9));
+            box-shadow: 5px 5px 0 var(--accent-color), 0 0 24px rgba(0,0,0,.2);
+        }
+        .blade-chibi {
+            display: block;
+            width: auto;
+            max-width: 180px;
+            max-height: 170px;
+            object-fit: contain;
+            margin: 0 auto 8px;
+            filter: drop-shadow(2px 3px 4px rgba(0,0,0,.35));
+        }
+        .blade-quote {
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1.35rem;
+            line-height: 1.05;
+            text-shadow: 1px 2px 2px #000, -1px -1px 2px #000;
+            margin: 8px auto 16px;
+            max-width: 34em;
+        }
+        .blade-modal-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; }
+        #desktop-taskbar {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 10001;
+            padding: 4px;
+            background: rgba(192,192,192,.95);
+            border: 2px outset #fff;
+            border-radius: 6px;
+            box-shadow: 2px 2px 0 #333;
+        }
+        #desktop-taskbar button {
+            padding: 8px 12px;
+            background: var(--win-gray);
+            color: #000;
+            border: 2px outset #fff;
+            border-radius: 5px;
+            font-family: var(--font-pixel);
+            font-size: .48rem;
+        }
+        #exit-screen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10002;
+            background-image: radial-gradient(circle at center, rgba(255,255,255,.82), rgba(255,255,255,.25)), var(--bg-outside);
+            background-size: cover;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #exit-screen .exit-card {
+            width: min(460px, 94vw);
+            padding: 20px;
+            border: 3px dashed var(--border-color);
+            border-radius: 14px;
+            background: var(--panel-bg);
+            box-shadow: 5px 5px 0 var(--accent-color);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pixel-vector-flourish *, .pixel-vector-flourish { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+        }
+
+        /* Buttons */
+        button, .v-tab, .web-button, .win-btn, .akito-btn, .read-more, .email-pill-btn { transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        button:hover, .web-button:hover, .win-btn:hover, .akito-btn:hover, .read-more:hover { transform: translateY(-3px) scale(1.05); }
+        button:active, .v-tab:active, .web-button:active, .win-btn:active, .akito-btn:active, .read-more:active, .email-pill-btn:active { animation: squish 0.2s ease; }
+        @keyframes squish { 0% { transform: scale(1); } 50% { transform: scale(0.85); } 100% { transform: scale(1); } }
+
+        ::-webkit-scrollbar { width: 16px; height: 16px; }
+        ::-webkit-scrollbar-track { background: var(--win-gray); border-left: 1px solid #888; }
+        ::-webkit-scrollbar-thumb { background: #e0e0e0; border: 1px solid #fff; border-right-color: #888; border-bottom-color: #888; }
+
+        /* ================= WINDOW FRAME ================= */
+        .window-frame {
+            width: min(68vw, 1120px);
+            max-width: 1120px;
+            height: 95vh;
+            background-image: var(--bg-inside);
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: rainbowBorder 4s infinite alternate;
+            z-index: 10;
+            transition: opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1), width .25s ease, height .25s ease;
+            box-shadow: 0 0 0 2px rgba(255,255,255,.8), 0 0 26px rgba(180,95,255,.28);
+        }
+
+        .window-frame.maximized {
+            position: fixed;
+            width: 100vw !important;
+            max-width: none !important;
+            height: 100vh !important;
+            top: 0 !important;
+            left: 0 !important;
+            transform: none !important;
+            border-radius: 0;
+            border: 0;
+        }
+        .window-frame.is-minimized {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(120vh) scale(.92) !important;
+        }
+        .window-frame.maximized.is-minimized {
+            transform: translateY(120vh) scale(.92) !important;
+        }
+        .window-frame.neon-mode {
+            animation: neonBorder .38s infinite alternate !important;
+        }
+
+        .window-bar {
+            position: relative;
+            z-index: 60;
+            flex: 0 0 26px;
+            background: linear-gradient(90deg, #b45aff, var(--border-color), #b45aff);
+            height: 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5px;
+            border-radius: 10px 10px 0 0;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+        }
+        .window-bar:active { cursor: grabbing; }
+        .window-title { font-family: var(--font-pixel); font-size: .58rem; color: #fff; margin-left: 5px; pointer-events: none; text-shadow: 1px 1px #8145a6; }
+        .window-controls { display: flex; gap: 3px; position: relative; z-index: 70; }
+        .win-btn { position: relative; z-index: 70; background: var(--win-gray); border: 2px outset #fff; width: 20px; min-width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; font-size: .7rem; cursor: pointer; color: #000; font-family: var(--font-pixel); border-radius: 4px; padding: 0; line-height: 1; pointer-events: auto; }
+        .win-btn.close { background: #ff4d4d; color: #fff; border-color: #fff; }
+        .win-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+        #app-container { display: flex; flex: 1; overflow-y: auto; overflow-x: hidden; padding: 15px; gap: 15px; border-radius: 0 0 12px 12px; }
+
+        /* ================= LEFT SIDEBAR ================= */
+        .left-sidebar { width: 200px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+        
+        .profile-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 15px; position:relative; min-height:100px; }
+        .profile-pic { width: 76px; height: 76px; flex:0 0 76px; object-fit: cover; object-position:center; background:#ffe9f5; border: 2px solid var(--border-color); border-radius: 12px; display:block; }
+        .profile-name { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin: 0; overflow-wrap:anywhere; }
+        .profile-mood { font-size: 1.2rem; color: var(--text-light); margin: 5px 0 0 0; line-height: 1.05; white-space:pre-line; }
+        .admin-inline-edit { display:none; margin-top:6px; padding:3px 7px; border:1px dashed var(--accent-color); border-radius:8px; color:var(--accent-color); background:#fff; font-family:var(--font-pixel); font-size:.36rem; cursor:pointer; }
+        .about-collage { position:relative; }
+        .about-admin-edit { position:absolute; top:7px; right:7px; z-index:3; display:none; background:rgba(255,255,255,.94); color:#9b37aa; border:2px solid #dba7ef; border-radius:8px; padding:5px 8px; font-family:var(--font-pixel); font-size:.42rem; box-shadow:2px 2px 0 rgba(129,65,160,.3); }
+
+        /* Winamp Player - STILL */
+        .winamp-player { background: linear-gradient(135deg, var(--panel-bg), var(--border-color)); border: 2px solid #fff; border-radius: 15px; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.8), inset -2px -2px 5px rgba(0,0,0,0.1), 2px 2px 0 var(--accent-color); padding: 10px; width: 100%; }
+        .winamp-title { background: #fff; color: var(--accent-color); font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px; display: flex; justify-content: space-between; border-bottom: 2px solid var(--border-color); margin-bottom: 5px; border-radius: 6px; }
+        .winamp-select { width: 100%; font-family: var(--font-pixel); font-size: 0.5rem; background: var(--panel-bg); color: var(--accent-color); border: 2px inset #fff; border-radius: 8px; margin-bottom: 5px; padding: 4px; cursor: pointer; outline: none;}
+        .winamp-progress { width: 100%; height: 6px; background: #fff; margin-bottom: 8px; cursor: pointer; border: 1px solid var(--border-color); border-radius: 3px; overflow: hidden;}
+        .winamp-bar { height: 100%; background: var(--accent-color); width: 0%; border-radius: 3px; }
+        .winamp-controls { display: flex; gap: 4px; justify-content: space-between; padding: 0 2px; }
+        .winamp-btn { background: #fff; border: 2px solid var(--border-color); color: var(--accent-color); font-family: var(--font-pixel); font-size: 0.5rem; cursor: pointer; padding: 5px; border-radius: 50%; width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; box-shadow: 1px 1px 0 var(--border-color);}
+        .winamp-btn.active-loop { background: var(--accent-color); color: #fff; }
+
+        .button-wall { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px; }
+        .web-button { height: 32px; background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%); border: 2px solid var(--border-color); display: flex; justify-content: center; align-items: center; font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); cursor: pointer; text-transform: uppercase; border-radius: 20px; box-shadow: 0 4px 0 var(--border-color), 0 5px 5px rgba(0,0,0,0.1); }
+
+        .dance-toggle-box { background: var(--panel-bg); border: 2px solid var(--border-color); padding: 8px; border-radius: 12px; margin-top: 5px; text-align: center; box-shadow: 2px 2px 0 var(--accent-color); }
+        .dance-toggle-box label { font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); display: block; margin-bottom: 5px; }
+        .dance-toggle-box select { width: 100%; padding: 4px; font-family: var(--font-pixel); font-size: 0.4rem; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; background: #fff; }
+
+        /* ================= CENTER COLUMN ================= */
+        .center-column { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+        .top-banner { text-align: center; padding: 10px 0; cursor: pointer; font-family: var(--font-pixel); font-size: 1.5rem; color: var(--accent-color); text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; animation: wiggle 3s ease-in-out infinite; }
+
+        /* Blinkies Marquee */
+        .blinkies-container { background: var(--panel-bg); border: 2px dotted var(--border-color); padding: 5px 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 10px; overflow: hidden; }
+        .blinkies-title { background: var(--accent-color); color: #fff; font-family: var(--font-pixel); padding: 4px 8px; font-size: 0.6rem; white-space: nowrap; border-radius: 6px; z-index: 2; display: flex; align-items: center; gap: 5px;}
+        .blinkies-marquee-wrapper { flex: 1; overflow: hidden; white-space: nowrap; }
+        .blinkies-list { display: inline-flex; gap: 5px; align-items: center; animation: scrollLeft 15s linear infinite; }
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .blinkie-img { height: 31px; max-width: 120px; object-fit: contain; image-rendering: auto; }
+        .blinkies-admin-panel { background: rgba(255,250,255,.96); border: 2px dashed var(--border-color); border-radius: 10px; padding: 8px; box-shadow: 2px 2px 0 var(--accent-color); }
+        .blinkies-admin-heading { font-family: var(--font-pixel); font-size: .42rem; color: var(--accent-color); margin-bottom: 7px; text-align: center; }
+        .blinkies-admin-add { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+        .blinkies-admin-add input { min-width:130px; flex:1; padding:5px 7px; border:2px inset #fff; border-radius:5px; }
+        .blinkies-admin-add button { font-size:.42rem; }
+        .blinkies-admin-list { display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+        .blinkie-admin-entry { display:flex; align-items:center; gap:5px; padding:4px 6px; background:#fff; border:1px solid #efb7db; border-radius:7px; max-width:100%; }
+        .blinkie-admin-entry img { width:58px; height:24px; object-fit:contain; }
+        .blinkie-admin-entry span { font-size:.78rem; color:#885a83; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .blinkie-admin-entry button { font-size:.72rem; padding:1px 5px; }
+
+        .main-content-box { background: var(--panel-bg); border: 3px dotted var(--border-color); padding: 15px; box-shadow: 4px 4px 0 var(--accent-color); position: relative; flex: 1; overflow-y: auto; border-radius: 12px; }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .about-layout { display: flex; gap: 15px; margin-bottom: 15px; }
+        .about-collage { flex: 1.2; border: 2px solid var(--border-color); overflow: hidden; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 8px; transition: transform 0.3s; }
+        .about-collage:hover { transform: scale(1.02); }
+        .about-collage img { width: 100%; height: 100%; object-fit: cover; }
+        .about-text { flex: 1; font-size: 1.3rem; line-height: 1.1; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+        .about-text p { margin-top: 0; }
+        .about-list { list-style: none; padding: 0; margin: 0; }
+        .about-list li { margin-bottom: 4px; }
+        .about-list li::before { content: '💿'; font-size: 1rem; margin-right: 5px; }
+
+        /* MS Paint Window */
+        .mspaint-window { background: var(--win-gray); border: 2px outset #fff; display: flex; flex-direction: column; width: 100%; margin-bottom: 15px; border-radius: 8px; overflow: hidden; box-shadow: 3px 3px 0 rgba(0,0,0,.18); }
+        .mspaint-titlebar { background: var(--win-blue); color: white; padding: 3px 6px; font-family: var(--font-pixel); font-size: .52rem; display: flex; justify-content: space-between; align-items: center; }
+        .mspaint-titlebar .win-btn { width: 14px; min-width: 14px; height: 14px; font-size: .5rem; }
+        .mspaint-menubar { background: var(--win-gray); display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-bottom: 1px solid #888; }
+        .paint-action-btn { background: #e8e8e8; color: #111; border: 1px outset #fff; border-radius: 3px; padding: 2px 7px; font-family: var(--font-body); font-size: .94rem; line-height: 1; cursor: pointer; }
+        .paint-action-btn:active { border-style: inset; }
+        .mspaint-workspace { display: flex; min-height: 250px; height: 280px; padding: 3px; gap: 3px; }
+        .mspaint-toolbar { width: 82px; flex: 0 0 82px; background: var(--win-gray); display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; padding: 3px; border: 2px inset #fff; align-content: start; }
+        .mspaint-tool { background: var(--win-gray); border: 2px outset #fff; min-width: 0; height: 27px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: .72rem; color: #000; border-radius: 2px; padding: 0; }
+        .mspaint-tool.active { border-style: inset; background: #a0a0a0; box-shadow: inset 0 0 0 1px #777; }
+        .mspaint-canvas-container { flex: 1; min-width: 0; min-height: 0; background: #808080; padding: 2px; border: 2px inset #fff; display: flex; overflow: auto; }
+        #paint-canvas { display: block; flex: none; background: #fff; width: 100%; height: 100%; cursor: crosshair; border: 1px solid #000; touch-action: none; image-rendering: pixelated; transform-origin: top left; }
+        .mspaint-bottom-area { display: flex; flex-direction: column; border-top: 1px solid #fff; }
+        .mspaint-palette { background: var(--win-gray); padding: 3px; display: grid; grid-template-columns: repeat(14, 1fr); gap: 2px; border-bottom: 1px solid #888; }
+        .color-box { width: 100%; height: 15px; border: 1px solid #888; cursor: pointer; padding: 0; }
+        .color-box.active { border: 2px solid #000; outline: 1px solid #fff; }
+        .mspaint-statusbar { background: var(--win-gray); padding: 3px 5px; font-family: var(--font-pixel); font-size: .4rem; border-top: 1px solid #fff; display: flex; justify-content: space-between; gap: 8px; }
+        .mspaint-statusbar span { font-size: inherit; }
+
+        .latest-update-bar { background: var(--win-gray); border: 2px outset #fff; padding: 4px 10px; font-family: var(--font-pixel); font-size: 0.5rem; display: flex; justify-content: space-between; color: #000; border-radius: 5px; }
+        
+        .bottom-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 15px; margin-top: 10px; }
+        
+        .calendar-box { background: #fff0f5; border: 2px solid #ffb6c1; padding: 5px; box-shadow: 2px 2px 0 #ff69b4; margin-left: 20px; position: relative; border-radius: 8px; }
+        .calendar-badge { position: absolute; left: -25px; top: -10px; width: 50px; z-index: 10; transform: rotate(-15deg); filter: drop-shadow(2px 2px 0 #fff); transition: transform 0.2s; }
+        .calendar-badge:hover { transform: rotate(-5deg) scale(1.1); }
+        .calendar-header { background: #ffb6c1; color: white; text-align: center; font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px; margin-bottom: 5px; border-radius: 4px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; text-align: center; font-size: 1rem; color: #333; font-family: var(--font-pixel); }
+        .cal-day-header { font-size: 0.45rem; color: #ff69b4; margin-bottom: 2px; }
+        .cal-day { padding: 2px; border: 1px solid transparent; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
+        .cal-day:hover { background: #ffe4e1; border: 1px solid #ffb6c1; transform: scale(1.1); }
+        
+        .food-log-box {
+            margin-top: 17px;
+            text-align: center;
+            margin-left: 14px;
+            padding: 10px 8px 12px;
+            border: 2px dashed #f3a1d3;
+            border-radius: 16px 16px 22px 22px;
+            background: repeating-linear-gradient(135deg, rgba(255,255,255,.78) 0 8px, rgba(255,230,244,.78) 8px 16px);
+            box-shadow: 3px 4px 0 rgba(213,91,169,.35), inset 0 0 0 3px rgba(255,255,255,.65);
+            position: relative;
+        }
+        .food-log-box::before { content: '♡'; position: absolute; top: -13px; left: 12px; font-size: 1.35rem; color: #ed74bd; background: #fff5fb; border: 1px solid #f5b4dc; border-radius: 50%; width: 27px; height: 27px; line-height: 25px; transform: rotate(-12deg); }
+        .food-log-title { font-family: var(--font-pixel); color: #d94caa; font-size: .5rem; margin: 2px 0 3px; display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .food-log-subtitle { color: #aa68a3; font-size: .9rem; margin: 0; }
+        .food-add-btn { background: linear-gradient(135deg,#ff8fc9,#bb7aff); color: #fff; border: 2px solid #fff; border-radius: 50%; min-width: 25px; min-height: 25px; font-size: 1.1rem; cursor: pointer; display: none; justify-content: center; align-items: center; box-shadow: 0 2px 0 #c35da8; }
+        .food-items { display: flex; flex-wrap: wrap; gap: 11px; justify-content: center; margin-top: 10px; }
+        .food-item { width: 88px; min-height: 116px; border: 2px solid #f4afd6; background: linear-gradient(160deg,#fff 0%,#fff6fc 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; font-size: .86rem; color: #d94caa; text-align: center; box-shadow: 2px 3px 0 #d99ac4; font-family: var(--font-pixel); border-radius: 14px 14px 8px 8px; transition: transform .22s, box-shadow .22s; padding: 7px 5px 6px; position: relative; }
+        .food-item::before { content: '✿'; position: absolute; top: -10px; right: -7px; color: #c28bea; background: #fff; border: 1px solid #e5c7f7; border-radius: 50%; width: 20px; height: 20px; line-height: 19px; font-size: .75rem; }
+        .food-item:hover { transform: translateY(-5px) rotate(2deg); box-shadow: 3px 7px 0 #d99ac4; }
+        .food-item .food-emoji { font-size: 2.35rem; margin: 3px 0 4px; filter: drop-shadow(1px 2px 0 rgba(233,153,206,.42)); }
+        .food-name-label { font-family: var(--font-pixel); font-size: .39rem; line-height: 1.5; color: #cf4c9a; }
+        .food-recipe { font-size: .88rem; color: #8b6683; margin-top: 5px; font-family: var(--font-body); line-height: 1; display: block; }
+        .food-admin-remove { margin-top: 6px; padding: 2px 5px; border: 1px solid #e6a0cb; background: #fff; color: #bd4b96; border-radius: 8px; font-size: .72rem; cursor: pointer; }
+
+
+        .food-item { width:112px; min-height:132px; padding:7px; }
+        .food-card-open { width:100%; min-height:112px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; padding:5px; border:0; background:transparent; color:inherit; cursor:pointer; }
+        .food-card-open:focus-visible { outline:2px dashed var(--accent-color); outline-offset:2px; }
+        .food-open-hint { font-family:var(--font-pixel); font-size:.32rem; color:#a65e9a; margin-top:4px; }
+        .food-recipe-reader { width:min(520px,94vw); max-height:86vh; overflow:auto; background:linear-gradient(145deg,#fffaff,#fff0f8); border:4px double #e7a7d1; border-radius:22px; padding:20px; text-align:center; box-shadow:7px 7px 0 #bd78b2,0 0 35px rgba(112,52,113,.25); }
+        .food-reader-sticker { font-size:4rem; filter:drop-shadow(2px 3px 0 #f4c0df); }
+        .food-reader-title { color:#c64d9b; font-family:var(--font-pixel); font-size:.9rem; line-height:1.6; }
+        .food-reader-copy { background:#fff; color:#714a6b; border:2px dashed #e8b1d7; padding:16px; border-radius:12px; text-align:left; font-size:1.25rem; line-height:1.2; white-space:pre-wrap; }
+        .site-settings-fields { display:grid; grid-template-columns:1fr; gap:5px; }
+        .site-settings-fields label { font-family:var(--font-pixel); color:var(--accent-color); font-size:.45rem; margin-top:5px; }
+        .site-settings-fields input,.site-settings-fields textarea { width:100%; padding:7px; border:2px inset #fff; border-radius:6px; font-family:var(--font-body); font-size:1.15rem; }
+        .site-config-status { font-size:.95rem; line-height:1.1; background:#fff7fc; border:1px dashed #dca4d4; color:#75416c; padding:8px; border-radius:8px; }
+        .webmaster-copy p { margin-top:0; }
+        @media (max-width: 1024px) {
+            .window-frame { width:96vw; }
+            .desktop-blade { display:none; }
+        }
+
+        .right-bottom-column { display: flex; flex-direction: column; gap: 10px; }
+        .updates-box { background: var(--panel-bg); border: 2px solid #ccc; box-shadow: 2px 2px 0 #aaa; border-radius: 8px; overflow: hidden;}
+        .updates-header { background: var(--win-gray); border-bottom: 2px outset #fff; font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px; color: #000; display: flex; justify-content: space-between; }
+        .update-content { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 5px; height: 80px; overflow-y: auto; font-size: 1.2rem; line-height: 1.1; }
+        
+        /* Akito Tamagotchi */
+        .akito-box { background: var(--panel-bg); border: 2px solid #ccc; padding: 5px; box-shadow: 2px 2px 0 #aaa; border-radius: 8px; }
+        .akito-header { display: flex; justify-content: space-between; font-family: var(--font-pixel); font-size: 0.4rem; color: #87cefa; margin-bottom: 4px; }
+        .akito-stats { display: flex; justify-content: space-between; font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); margin-bottom: 5px; }
+        .akito-main { display: flex; gap: 5px; }
+        
+        .akito-room { flex: 1; background: #b3e5fc; border: 2px solid var(--border-color); height: 110px; position: relative; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; transition: background .5s; border-radius: 6px; background-image: url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Otori%20Emu%E2%80%99s%20Bedroom.jpe'); background-size: cover; background-position: center; }
+        .akito-room::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg,transparent 25%,rgba(255,255,255,.28) 48%,transparent 62%); transform: translateX(-120%); }
+        .akito-room.party-mode::after { animation: roomShine .55s linear infinite; }
+        @keyframes roomShine { to { transform: translateX(120%); } }
+        .akito-chaos-hud { display: none; margin-top: 6px; padding: 5px; background: #fff6ff; border: 1px dashed #d888ee; border-radius: 8px; box-shadow: 2px 2px 0 rgba(181,108,211,.35); }
+        .akito-chaos-top { display:flex; justify-content:space-between; gap:5px; font-family:var(--font-pixel); font-size:.38rem; color:#9c52ca; }
+        .akito-chaos-track { height:7px; background:#eadcf5; border:1px solid #c99bde; border-radius:8px; overflow:hidden; margin:4px 0; }
+        #akito-chaos-progress { height:100%; width:0; background:linear-gradient(90deg,#ff79c6,#a77aff,#6edbf2); transition:width .1s linear; }
+        .akito-skip-btn { width:100%; border:2px solid #fff; border-radius:8px; background:linear-gradient(90deg,#ff74b9,#9d73ed); color:#fff; font-family:var(--font-pixel); font-size:.42rem; padding:5px; cursor:pointer; box-shadow:0 2px 0 #9752c9; }
+        .akito-burst { position:absolute; z-index:8; pointer-events:none; font-family:var(--font-pixel); font-size:.65rem; font-weight:bold; text-shadow:1px 1px #fff; animation:akitoBurst .9s ease-out forwards; }
+        @keyframes akitoBurst { 0% { transform:translate(0,0) scale(.4) rotate(-20deg); opacity:0; } 15% { opacity:1; } 100% { transform:translate(var(--burst-x),var(--burst-y)) scale(1.3) rotate(25deg); opacity:0; } }
+        body.akito-chaos-mode #main-window { animation: neonBorder .32s infinite alternate, tinyWindowShake .18s linear infinite !important; }
+        @keyframes tinyWindowShake { 0%,100% { translate:0 0; } 25% { translate:1px -1px; } 50% { translate:-1px 1px; } 75% { translate:1px 1px; } }
+        
+        @keyframes aggressiveDance {
+            0% { transform: translate(0, 0) rotate(-15deg) scale(1.2); }
+            25% { transform: translate(-5px, -10px) rotate(15deg) scale(1.4); }
+            50% { transform: translate(5px, -15px) rotate(-15deg) scale(1.2); }
+            75% { transform: translate(-5px, -5px) rotate(15deg) scale(1.4); }
+            100% { transform: translate(0, 0) rotate(-15deg) scale(1.2); }
+        }
+        .dancing { animation: aggressiveDance 0.1s infinite !important; }
+
+        /* Neon Flash for Room */
+        @keyframes neonRoomFlash {
+            0% { background-color: rgba(255, 0, 255, 0.5); box-shadow: inset 0 0 30px #ff00ff; }
+            25% { background-color: rgba(0, 255, 255, 0.5); box-shadow: inset 0 0 30px #00ffff; }
+            50% { background-color: rgba(255, 255, 0, 0.5); box-shadow: inset 0 0 30px #ffff00; }
+            75% { background-color: rgba(0, 255, 0, 0.5); box-shadow: inset 0 0 30px #00ff00; }
+            100% { background-color: rgba(255, 0, 255, 0.5); box-shadow: inset 0 0 30px #ff00ff; }
+        }
+        .party-mode { animation: neonRoomFlash 0.5s infinite alternate; }
+
+        .akito-sprite { height: 70px; margin-bottom: 5px; cursor: pointer; animation: bounce 1s infinite alternate; transition: transform 0.2s; }
+        .akito-side { width: 80px; display: flex; flex-direction: column; gap: 4px; }
+        .akito-btn { background: linear-gradient(to bottom, #ffffff, #f0f0f0); border: 2px solid var(--border-color); border-radius: 10px; font-family: var(--font-pixel); font-size: 0.4rem; padding: 4px; cursor: pointer; text-align: center; color: var(--accent-color); box-shadow: 0 3px 0 var(--border-color); }
+        .akito-dialogue { background: #f9f9f9; border: 1px solid #ccc; height: 45px; font-size: 1rem; padding: 2px; overflow-y: auto; margin-top: 5px; font-family: monospace; line-height: 1; color: #000; border-radius: 4px; }
+        @keyframes akitoSecretPop { 0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,255,255,0); } 40% { transform: scale(1.08); box-shadow: 0 0 18px var(--accent-color); } 100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,255,255,0); } }
+        .akito-room.secret-found { animation: akitoSecretPop .65s ease-out; border-color: var(--accent-color); }
+        
+        /* ================= RIGHT SIDEBAR ================= */
+        .right-sidebar { width: 130px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; position: relative; }
+        
+        .vertical-tabs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; z-index: 20; }
+        .v-tab { background: var(--panel-bg); border: 2px solid var(--border-color); border-left: none; padding: 8px 10px; font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); cursor: pointer; box-shadow: 3px 3px 0 var(--accent-color), inset 0 0 5px var(--border-color); text-transform: lowercase; border-radius: 0 15px 15px 0; transition: all 0.2s;}
+        .v-tab.active { background: var(--accent-color); color: #fff; transform: translateX(3px); box-shadow: 3px 3px 0 #000; }
+        .v-tab:hover { background: var(--border-color); color: #fff; transform: translateX(5px) rotate(2deg); }
+
+        /* Blade's full artwork belongs to the desktop, outside the program window. */
+        .desktop-blade {
+            position: fixed;
+            right: -8vw;
+            bottom: -1vh;
+            width: clamp(360px, 30vw, 500px);
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            z-index: 11;
+            pointer-events: none;
+            animation: bladeFloat 5.5s ease-in-out infinite;
+            transform-origin: 72% 90%;
+        }
+        .desktop-blade img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: right bottom;
+            filter: drop-shadow(0 9px 18px rgba(20,10,40,.48));
+        }
+        @keyframes bladeFloat { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1deg); } }
+
+        /* ================= MODALS & OVERLAYS ================= */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 15px; width: 90%; max-width: 400px; box-shadow: 4px 4px 0 var(--accent-color); max-height: 85vh; overflow-y: auto; border-radius: 12px; }
+        .modal-box h3 { font-family: var(--font-pixel); color: var(--accent-color); margin-top: 0; font-size: 0.8rem; }
+        
+        .admin-badge { display: none; background: #fef3c7; color: #d97706; font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px 8px; cursor: pointer; position: fixed; top: 30px; right: 30px; z-index: 9999; border: 2px outset #fff; box-shadow: 2px 2px 0 #000; border-radius: 6px; }
+
+        .modal-box input, .modal-box textarea, .modal-box select { width: 100%; padding: 5px; margin: 5px 0 10px 0; border: 2px inset #fff; font-family: var(--font-retro); font-size: 1.1rem; background: #fff; color: #000; border-radius: 6px; }
+        .modal-btn { padding: 6px 12px; border: 2px solid var(--border-color); font-family: var(--font-pixel); font-size: 0.5rem; cursor: pointer; background: var(--win-gray); color: #000; border-radius: 8px; box-shadow: 2px 2px 0 var(--accent-color); }
+        .modal-btn.save { background: var(--accent-color); color: #fff; }
+        .modal-btn.cancel { background: #ccc; }
+
+        /* Miku: full-height left-side hanging cameo, intentionally Blade-sized. */
+        .miku-dangling { position:fixed; top:0; left:-7vw; right:auto; bottom:0; width:clamp(300px,32vw,510px); height:100vh; z-index:10001; pointer-events:none; display:flex; justify-content:flex-start; align-items:flex-start; filter:drop-shadow(2px 8px 9px rgba(35,20,55,.34)); animation:mikuSway 5.2s ease-in-out infinite; transform-origin:42% 0; }
+        .miku-dangling img { display:block; width:100%; height:calc(100% - 58px); object-fit:contain; object-position:left top; image-rendering:auto; }
+        .miku-rope { position:absolute; top:0; left:43%; width:4px; height:76px; background:repeating-linear-gradient(to bottom,#765344 0 7px,#d9b9a4 7px 12px); border-radius:4px; box-shadow:1px 0 2px #fff; }
+        .miku-knot { position:absolute; top:68px; left:calc(43% - 5px); width:14px; height:14px; border:3px solid #a98270; border-radius:50%; background:#f4d8c9; box-shadow:0 1px 3px #765344; }
+        .miku-sparkle { position:absolute; color:#fff; text-shadow:0 0 7px #ff62bd,0 0 13px #b8eaff; font-size:1.7rem; }
+        .miku-sparkle-one { left:72%; top:36%; animation:ornamentBob 2s ease-in-out infinite alternate; }
+        .miku-sparkle-two { left:22%; top:62%; animation:ornamentBob 2.6s ease-in-out infinite alternate-reverse; }
+        .miku-fallback { display:none; position:absolute; top:90px; left:18%; padding:8px 12px; border:2px dashed #ff8fc4; border-radius:12px; background:#fff1f8; color:#a43c79; font-family:var(--font-pixel); font-size:.65rem; box-shadow:3px 3px 0 #d78cb9; }
+        .miku-dangling.image-missing .miku-fallback { display:block; }
+        @keyframes mikuSway { 0%,100% { transform:rotate(-2deg); } 50% { transform:rotate(2deg); } }
+        @media (max-width:1024px) { .miku-dangling { left:-58px; width:clamp(230px,38vw,340px); height:62vh; opacity:1; z-index:10001; } .miku-dangling img { height:calc(100% - 48px); } .miku-rope { height:60px; } .miku-knot { top:53px; } }
+        @media (max-width:640px) { .miku-dangling { left:-74px; width:245px; height:48vh; opacity:.96; } }
+
+        /* Blog scrapbook: paper layers, postage marks, tiny decorative flourishes. */
+        .blog-grid { display:flex; flex-direction:column; gap:16px; padding:5px 3px 14px; }
+        .blog-card { position:relative; isolation:isolate; overflow:hidden; border:2px solid var(--border-color); padding:16px 17px 14px; background:linear-gradient(135deg,var(--panel-bg) 0%,rgba(255,255,255,.92) 58%,rgba(255,232,246,.75) 100%); box-shadow:4px 4px 0 var(--accent-color), 8px 8px 0 rgba(183,143,225,.13); transition:transform .22s ease,box-shadow .22s ease; border-radius:16px 10px 17px 9px; }
+        .blog-card::before { content:'✿'; position:absolute; z-index:-1; right:12px; top:7px; color:var(--border-color); font-size:1.55rem; opacity:.7; transform:rotate(12deg); }
+        .blog-card::after { content:'FALAFEL POSTCARD'; position:absolute; right:12px; bottom:7px; color:var(--text-light); opacity:.48; font-family:var(--font-pixel); font-size:.32rem; letter-spacing:.05em; }
+        .blog-card:hover { transform:translate(-2px,-3px) rotate(-.25deg); box-shadow:6px 7px 0 var(--accent-color),10px 11px 0 rgba(183,143,225,.15); }
+        .blog-card h3 { margin:3px 30px 8px 0; font-family:var(--font-pixel); color:var(--accent-color); font-size:.72rem; line-height:1.65; text-shadow:1px 1px 0 rgba(255,255,255,.8); }
+        .blog-card img { display:block; max-width:min(100%,420px); max-height:220px; object-fit:cover; border:3px solid #fff; outline:1px dashed var(--border-color); border-radius:5px 12px 5px 12px; margin:5px auto 12px 0; box-shadow:2px 3px 0 rgba(0,0,0,.12); }
+        .blog-card p { line-height:1.2; }
+        .blog-card .modal-btn { border-radius:999px; box-shadow:2px 3px 0 rgba(0,0,0,.12); }
+        .read-more { display:inline-block; font-family:var(--font-pixel); font-size:.5rem; cursor:pointer; color:var(--accent-color); padding:6px 9px; border:1px dashed var(--border-color); background:rgba(255,255,255,.65); border-radius:999px; }
+        .read-more:hover { background:var(--border-color); color:#fff; transform:rotate(-2deg); }
+        #reader-content-wrapper { line-height:1.35; overflow-wrap:anywhere; }
+        #reader-content-wrapper img { max-width:100%; height:auto; }
+        @media (prefers-reduced-motion:reduce) { .miku-dangling { animation:none; } .blog-card,.blog-card:hover { transition:none; transform:none; } }
+
+
+        .blog-card { border: 2px solid var(--border-color); padding: 10px; background: var(--panel-bg); box-shadow: 2px 2px 0 var(--accent-color); transition: transform 0.2s; border-radius: 10px; }
+        .blog-card:hover { transform: translateY(-3px); }
+        .blog-card h3 { margin: 0 0 5px 0; font-family: var(--font-pixel); color: var(--accent-color); font-size: 0.7rem; }
+        .blog-card img { max-width: 100%; max-height: 150px; object-fit: cover; border: 2px solid #ccc; border-radius: 6px; }
+        .read-more { font-family: var(--font-pixel); font-size: 0.5rem; cursor: pointer; color: var(--accent-color); padding: 4px; border-radius: 4px; }
+        .read-more:hover { background: var(--border-color); color: #fff; }
+
+        .contact-envelope-box { border-radius: 15px; padding: 20px; margin: 15px 0; background: var(--panel-bg); border: 3px dashed var(--border-color); position: relative; box-shadow: 2px 2px 0 var(--accent-color); }
+        .contact-envelope-box h2 { font-family: var(--font-pixel); color: var(--accent-color); font-size: 0.8rem; margin-top: 0; }
+        .warning-badge { background: var(--accent-color); color: #ffffff; font-family: var(--font-pixel); font-size: 0.4rem; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-bottom: 10px; }
+        .email-pill-btn { display: inline-block; color: white; padding: 10px 20px; font-family: var(--font-pixel); font-size: 0.5rem; border-radius: 30px; text-decoration: none; margin: 10px 0; background-color: var(--accent-color); box-shadow: 0 4px 14px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .email-pill-btn:hover { transform: translateY(-2px); text-decoration: none; }
+        .contact-main-subtext { font-family: var(--font-pixel); font-size: 0.6rem; margin-bottom: 5px; color: var(--accent-color); }
+        .contact-secondary-subtext { font-size: 1rem; }
+
+        .page-header-box { text-align: center; margin-bottom: 20px; }
+        .about-container { display: flex; flex-direction: column; gap: 15px; }
+        .about-scrapbook-card { border: 2px dashed var(--border-color); padding: 15px; background: var(--panel-bg); border-radius: 10px; }
+        .about-heading-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .about-profile-sticker { font-size: 2rem; }
+        .about-section-title { font-family: var(--font-pixel); font-size: 0.8rem; color: var(--accent-color); margin: 0; }
+        .about-text { font-size: 1.1rem; line-height: 1.4; }
+        .lore-timeline { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
+        .lore-item { background: var(--panel-bg); border-left: 4px solid var(--accent-color); padding: 10px; font-size: 1.1rem; display: flex; gap: 10px; align-items: center; border-radius: 0 8px 8px 0; }
+        .lore-icon { font-size: 1.5rem; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+        .tag-pill { background: var(--border-color); color: var(--text-main); font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px 8px; border-radius: 10px; }
+        .video-container-box { border: 2px solid var(--border-color); padding: 10px; margin-top: 10px; border-radius: 8px; }
+        .video-frame-wrapper { position: relative; padding-bottom: 56.25%; height: 0; }
+        .video-frame-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 6px; }
+        
+        .announcements-container { display: flex; flex-direction: column; gap: 15px; }
+        .announcement-card { border: 2px solid var(--border-color); padding: 15px; background: var(--panel-bg); position: relative; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 10px; }
+        .announcement-card.pinned { border: 2px solid #f59e0b; background: #fffbeb; }
+        .pin-badge { position: absolute; top: -10px; right: 10px; background: #f59e0b; color: white; font-family: var(--font-pixel); font-size: 0.4rem; padding: 2px 6px; border-radius: 5px; }
+        .announcement-title { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin-top: 0; }
+        .announcement-body { font-size: 1.1rem; }
+
+        @media (max-width: 1280px) and (min-width: 1025px) {
+            .window-frame { width: min(74vw, 1020px); left: 49%; }
+            .desktop-blade { width: clamp(330px, 30vw, 460px); right:-8vw; }
+        }
+        @media (max-width: 1024px) {
+            body { overflow: hidden; }
+            .window-frame { width: 96vw; height: 96vh; left: 50%; top: 50%; transform: translate(-50%,-50%); }
+            .left-sidebar, .right-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .vertical-tabs { flex-direction: row; flex-wrap: wrap; }
+            .v-tab { border-radius: 10px; border-left: 2px solid var(--border-color); }
+            .desktop-blade { display: none; }
+            .bottom-grid { grid-template-columns: 1fr; }
+            .pixel-vector-flourish { opacity: .55; }
+        }
+        @media (max-width: 640px) {
+            .window-frame { width: 100vw; height: 100dvh; border-radius:0; }
+            #app-container { padding: 8px; gap: 8px; }
+            .mspaint-toolbar { width: 70px; flex-basis: 70px; }
+            .mspaint-workspace { height: 240px; }
+            .mspaint-palette { grid-template-columns: repeat(7,1fr); }
+            .food-log-box { margin-left:0; }
+        }
+    </style>
+    <link rel="stylesheet" href="calendar.css">
 </head>
 <body data-mood="pink">
 
@@ -245,17 +915,14 @@
                                 <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/DANCING%20MIKUUU.png" class="calendar-badge">
                                 <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/NO%20EMU.png" class="calendar-badge" style="left:-10px; top:40px; transform:rotate(10deg); width:40px;">
                                 
-                                                                <div class="calendar-box" id="calendar-app">
+                                <div class="calendar-box" id="calendar-app">
                                     <div class="calendar-toolbar">
                                         <button type="button" class="calendar-nav" id="calendar-prev" aria-label="Previous month">‹</button>
                                         <div class="calendar-header" id="calendar-month-label" aria-live="polite">Loading calendar…</div>
                                         <button type="button" class="calendar-nav" id="calendar-next" aria-label="Next month">›</button>
                                     </div>
-                                    <div class="calendar-live-grid" id="calendar-grid" aria-label="Monthly calendar"></div>
-                                    <div class="calendar-footer">
-                                        <button type="button" class="calendar-today" id="calendar-today">today</button>
-                                        <span>double-click a date to add an event ✧</span>
-                                    </div>
+                                    <div class="calendar-grid" id="calendar-grid" aria-label="Monthly calendar"></div>
+                                    <div class="calendar-footer"><button type="button" class="calendar-today" id="calendar-today">today</button><span>double-click a date to add an event ✧</span></div>
                                     <div class="calendar-events">
                                         <div class="calendar-events-heading" id="calendar-selected-label">Events</div>
                                         <div id="calendar-event-list" aria-live="polite"><p class="calendar-empty">Loading events…</p></div>
@@ -267,19 +934,15 @@
                                         <button type="button" class="calendar-modal-close" id="calendar-modal-close" aria-label="Close">×</button>
                                         <h3 id="calendar-modal-title">Add a little event ✧</h3>
                                         <p class="calendar-modal-date" id="calendar-modal-date"></p>
-                                        <label for="calendar-event-title">Event name</label>
-                                        <input id="calendar-event-title" maxlength="90" placeholder="movie night, birthday, study session…">
-                                        <label for="calendar-event-time">Time (optional)</label>
-                                        <input id="calendar-event-time" type="time">
-                                        <label for="calendar-event-description">Little details (optional)</label>
-                                        <textarea id="calendar-event-description" maxlength="300" rows="3" placeholder="Add a few details…"></textarea>
+                                        <label for="calendar-event-title">Event name</label><input id="calendar-event-title" maxlength="90" placeholder="movie night, birthday, study session…">
+                                        <label for="calendar-event-time">Time (optional)</label><input id="calendar-event-time" type="time">
+                                        <label for="calendar-event-description">Little details (optional)</label><textarea id="calendar-event-description" maxlength="300" rows="3" placeholder="Add a few details…"></textarea>
                                         <p class="calendar-admin-hint" id="calendar-admin-hint">Community events are shared with everyone.</p>
-                                        <div class="calendar-modal-actions">
-                                            <button type="button" class="calendar-cancel" id="calendar-event-cancel">cancel</button>
-                                            <button type="button" class="calendar-submit" id="calendar-event-submit">save event ♡</button>
-                                        </div>
+                                        <div class="calendar-modal-actions"><button type="button" class="calendar-cancel" id="calendar-event-cancel">cancel</button><button type="button" class="calendar-submit" id="calendar-event-submit">save event ♡</button></div>
                                     </div>
                                 </div>
+                                </div>
+                                
                                 <div class="food-log-box">
                                     <div class="food-log-title">
                                         <span>˚ʚ♡ɞ˚ MINI RECIPE SCRAPBOOK ˚ʚ♡ɞ˚</span>
@@ -334,8 +997,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>                    </div>
 
                     <!-- BLOG VIEW -->
                     <div id="view-blog" class="view-section">
@@ -422,6 +1084,11 @@
                             <h2 style="margin-top: 0; font-size: 1.2rem;">sign up so you never miss a new brain dump ────୨ৎ──── </h2>
                             <p class="about-text" style="margin-bottom: 1.5rem; font-size:1.1rem;">whenever a new blog drops, get it straight to your inbox! 🪼⋆｡𖦹°🫧⋆.ೃ࿔*:･ </p>
                             <script async data-uid="efab41ce33" src="https://falafelwithfeelings.kit.com/efab41ce33/index.js"></script>
+                            <style>
+                                .contact-envelope-box form, .contact-envelope-box .formkit-form { background: transparent !important; border: none !important; box-shadow: none !important; }
+                                .contact-envelope-box input { border: 2px solid var(--border-color) !important; border-radius: 8px !important; padding: 10px !important; font-family: var(--font-body) !important; background: #fff !important; color: #000 !important; margin-bottom: 10px !important;}
+                                .contact-envelope-box button { background: var(--accent-color) !important; color: #fff !important; border-radius: 8px !important; font-family: var(--font-pixel) !important; font-size: 0.6rem !important; padding: 12px !important; box-shadow: 2px 2px 0 var(--border-color) !important; }
+                            </style>
                         </div>
                         <div style="text-align: center; padding: 1.5rem; background: var(--panel-bg); border: 3px dashed var(--border-color); border-radius: 15px;">
                             <div class="contact-main-subtext">that's it. that's the page.</div>
@@ -479,12 +1146,12 @@
 
     <div class="desktop-page-ornament" aria-hidden="true"></div>
 
-    <!-- Miku hangs from the top-right edge of the desktop, never intercepting clicks. -->
-    <div class="miku-dangling" aria-hidden="true">
-        <span class="miku-rope"></span>
-        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/MIKU%20DANGLING" alt="" loading="eager">
-        <span class="miku-sparkle miku-sparkle-one">✧</span>
-        <span class="miku-sparkle miku-sparkle-two">✦</span>
+    <!-- Miku hangs from the TOP-LEFT edge, Blade-sized and click-through. -->
+    <div class="miku-dangling" id="miku-dangling" aria-hidden="true">
+        <span class="miku-rope"></span><span class="miku-knot"></span>
+        <img src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/MIKU%20DANGLING" alt="" loading="eager" onerror="this.closest('.miku-dangling').classList.add('image-missing')">
+        <span class="miku-fallback">MIKU IS TRYING TO LOAD… ✧</span>
+        <span class="miku-sparkle miku-sparkle-one">✧</span><span class="miku-sparkle miku-sparkle-two">✦</span>
     </div>
 
     <!-- ADMIN BADGE -->
@@ -666,6 +1333,1704 @@
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="app.js" defer></script>
+    <script>
+        // ================= USER IDENTIFIER =================
+        let visitorAlias = localStorage.getItem('visitor_alias');
+        if (!visitorAlias) {
+            visitorAlias = prompt("What should we call you? (Leave blank for Anonymous)") || "Anonymous";
+            localStorage.setItem('visitor_alias', visitorAlias);
+        }
+
+        // ================= WINDOW DRAG / MAXIMIZE / MINIMIZE =================
+        const windowFrame = document.getElementById('main-window');
+        const windowBar = document.getElementById('window-bar');
+        const maximizeButton = document.getElementById('maximize-window-btn');
+        let isDragging = false;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+
+        windowBar.addEventListener('pointerdown', (event) => {
+            if (event.target.closest('.win-btn') || windowFrame.classList.contains('maximized')) return;
+            isDragging = true;
+            const rect = windowFrame.getBoundingClientRect();
+            dragOffsetX = event.clientX - rect.left;
+            dragOffsetY = event.clientY - rect.top;
+            // Switch from centre-based placement to absolute pixel placement on first drag.
+            windowFrame.style.left = rect.left + 'px';
+            windowFrame.style.top = rect.top + 'px';
+            windowFrame.style.transform = 'none';
+            try { windowBar.setPointerCapture(event.pointerId); } catch (_) {}
+        });
+        windowBar.addEventListener('pointermove', (event) => {
+            if (!isDragging) return;
+            const maxLeft = Math.max(0, window.innerWidth - Math.min(windowFrame.offsetWidth, window.innerWidth));
+            const maxTop = Math.max(0, window.innerHeight - Math.min(windowFrame.offsetHeight, window.innerHeight));
+            const nextLeft = Math.min(maxLeft, Math.max(0, event.clientX - dragOffsetX));
+            const nextTop = Math.min(maxTop, Math.max(0, event.clientY - dragOffsetY));
+            windowFrame.style.left = nextLeft + 'px';
+            windowFrame.style.top = nextTop + 'px';
+        });
+        const stopDragging = () => { isDragging = false; };
+        windowBar.addEventListener('pointerup', stopDragging);
+        windowBar.addEventListener('pointercancel', stopDragging);
+
+        function toggleMaximize() {
+            const maximized = windowFrame.classList.toggle('maximized');
+            if (maximizeButton) {
+                maximizeButton.setAttribute('aria-pressed', String(maximized));
+                maximizeButton.title = maximized ? 'Restore window' : 'Maximize window';
+                maximizeButton.textContent = maximized ? '❐' : '□';
+            }
+            isDragging = false;
+        }
+
+        function minimizeWindow() {
+            document.getElementById('blade-minimize-modal').style.display = 'flex';
+        }
+        function cancelMinimize() {
+            document.getElementById('blade-minimize-modal').style.display = 'none';
+        }
+        function confirmMinimize() {
+            document.getElementById('blade-minimize-modal').style.display = 'none';
+            windowFrame.classList.add('is-minimized');
+            document.getElementById('desktop-taskbar').style.display = 'block';
+        }
+        function restoreMinimizedWindow() {
+            document.getElementById('desktop-taskbar').style.display = 'none';
+            windowFrame.classList.remove('is-minimized');
+        }
+        function closeWindow() {
+            document.getElementById('blade-modal').style.display = 'flex';
+        }
+        function cancelExit() {
+            document.getElementById('blade-modal').style.display = 'none';
+        }
+        function forceOpenWindow() {
+            document.getElementById('blade-modal').style.display = 'none';
+            document.getElementById('blade-minimize-modal').style.display = 'none';
+            document.getElementById('desktop-taskbar').style.display = 'none';
+            document.getElementById('exit-screen').style.display = 'none';
+            windowFrame.classList.remove('is-minimized');
+        }
+        function finishExit() {
+            document.getElementById('blade-modal').style.display = 'none';
+            document.getElementById('desktop-taskbar').style.display = 'none';
+            windowFrame.classList.add('is-minimized');
+            document.getElementById('exit-screen').style.display = 'flex';
+        }
+        function reopenFromExit() { forceOpenWindow(); }
+
+        // ================= CUSTOM WALLPAPERS =================
+        function uploadBg(type, event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (type === 'inner') {
+                    document.documentElement.style.setProperty('--bg-inside', `url(${e.target.result})`);
+                } else {
+                    document.documentElement.style.setProperty('--bg-outside', `url(${e.target.result})`);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetBgs() {
+            document.documentElement.style.setProperty('--bg-inside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Cute%20Whimsical%20Desktop%20Wallpaper%20Collage.jpe')`);
+            document.documentElement.style.setProperty('--bg-outside', `url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Hatsune%20Miku%20Wallpaper%20(I%20made%20it%20myself).jpe')`);
+        }
+
+        // No background starfield: the animated vector frame is the page decoration.
+
+        // ================= THEME SWITCHER =================
+        function changeMood(mood) {
+            document.body.setAttribute('data-mood', mood);
+            document.getElementById('admin-mood-select').value = mood;
+        }
+
+        // ================= BACKGROUND DANCERS =================
+        const danceOptions = {
+            miku: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/DANCING%20MIKUUU.png',
+            emu: 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/NO%20EMU.png'
+        };
+
+        function updateDancingBg() {
+            const toggleEl = document.getElementById('dance-toggle');
+            const container = document.getElementById('dancing-bg');
+            if (!toggleEl || !container) return;
+
+            const toggle = toggleEl.value;
+            container.replaceChildren();
+            if (toggle === 'none') return;
+
+            const itemsToSpawn = toggle === 'both' ? [danceOptions.miku, danceOptions.emu]
+                : toggle === 'miku' ? [danceOptions.miku]
+                : toggle === 'emu' ? [danceOptions.emu] : [];
+            if (!itemsToSpawn.length) return;
+
+            for (let i = 0; i < 15; i++) {
+                const img = document.createElement('img');
+                const chosen = itemsToSpawn[Math.floor(Math.random() * itemsToSpawn.length)];
+                img.className = 'dance-item sticker-img';
+                img.alt = toggle === 'both' ? 'Miku or Emu dancing' : `${toggle} dancing`;
+                img.decoding = 'async';
+                img.loading = 'eager';
+                img.draggable = false;
+                img.src = chosen;
+                img.style.position = 'absolute';
+                img.style.top = '-110px';
+                img.style.width = `${Math.random() * 40 + 30}px`;
+                img.style.left = `${Math.random() * 94}vw`;
+                img.style.pointerEvents = 'none';
+                const duration = Math.random() * 10 + 10;
+                img.style.animation = `fallDown ${duration}s linear infinite`;
+                img.style.animationDelay = `${-(Math.random() * duration)}s`;
+                img.onerror = () => img.remove();
+                container.appendChild(img);
+            }
+        }
+        updateDancingBg();
+
+        // ================= MS PAINT ENGINE =================
+        const canvas = document.getElementById('paint-canvas');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        let currentTool = 'pencil';
+        let currentColor = '#000000';
+        let isDrawing = false;
+        let startX = 0, startY = 0, lastX = 0, lastY = 0;
+        let paintSnapshot = null;
+        let paintHistory = [];
+        let paintRedo = [];
+        let zoomLevel = 1;
+        let freeSelectPoints = [];
+        let floatingSelection = null;
+        let draggingSelection = false;
+        let selectionDragOffset = { x: 0, y: 0 };
+        let selectionMoveSnapshot = null;
+
+        function paintStatus(message) {
+            const status = document.getElementById('canvas-coords');
+            if (status) status.textContent = message;
+        }
+        function paintPoint(event) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: Math.max(0, Math.min(canvas.width - 1, (event.clientX - rect.left) * canvas.width / rect.width)),
+                y: Math.max(0, Math.min(canvas.height - 1, (event.clientY - rect.top) * canvas.height / rect.height))
+            };
+        }
+        function savePaintHistory() {
+            try {
+                paintHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+                if (paintHistory.length > 25) paintHistory.shift();
+                paintRedo = [];
+            } catch (error) { console.warn('Paint history could not be saved.', error); }
+        }
+        function restorePaintImage(image) {
+            if (image) ctx.putImageData(image, 0, 0);
+        }
+        function initPaintCanvas() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.imageSmoothingEnabled = false;
+            paintHistory = [];
+            paintRedo = [];
+            savePaintHistory();
+            paintStatus('900 × 500 px');
+        }
+        initPaintCanvas();
+
+        function setTool(tool) {
+            const validTools = ['freeSelect','select','eraser','fill','picker','zoom','pencil','brush','airbrush','text','line','curve','rect','polygon','ellipse','roundRect'];
+            if (!validTools.includes(tool)) return;
+            currentTool = tool;
+            document.querySelectorAll('.mspaint-tool').forEach(button => button.classList.toggle('active', button.id === `tool-${tool}`));
+            const cursorMap = { picker: 'crosshair', text: 'text', select: 'crosshair', freeSelect: 'crosshair', zoom: 'zoom-in' };
+            canvas.style.cursor = cursorMap[tool] || 'crosshair';
+            paintStatus(`Tool: ${tool}`);
+        }
+        function setColor(color, element) {
+            currentColor = color;
+            document.querySelectorAll('.color-box').forEach(box => box.classList.remove('active'));
+            if (element) element.classList.add('active');
+            if (currentTool === 'eraser') setTool('pencil');
+            paintStatus(`Color: ${color}`);
+        }
+        function paintRoundedRect(x, y, width, height, radius) {
+            const left = Math.min(x, x + width), top = Math.min(y, y + height);
+            const w = Math.abs(width), h = Math.abs(height), r = Math.min(radius, w / 2, h / 2);
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(left, top, w, h, r);
+            else {
+                ctx.moveTo(left + r, top); ctx.lineTo(left + w - r, top); ctx.quadraticCurveTo(left + w, top, left + w, top + r);
+                ctx.lineTo(left + w, top + h - r); ctx.quadraticCurveTo(left + w, top + h, left + w - r, top + h);
+                ctx.lineTo(left + r, top + h); ctx.quadraticCurveTo(left, top + h, left, top + h - r);
+                ctx.lineTo(left, top + r); ctx.quadraticCurveTo(left, top, left + r, top); ctx.closePath();
+            }
+            ctx.stroke();
+        }
+        function drawPaintShape(tool, x, y) {
+            restorePaintImage(paintSnapshot);
+            ctx.strokeStyle = currentColor;
+            ctx.fillStyle = currentColor;
+            ctx.lineWidth = 3;
+            ctx.setLineDash([]);
+            const w = x - startX, h = y - startY;
+            if (tool === 'line') {
+                ctx.beginPath(); ctx.moveTo(startX, startY); ctx.lineTo(x, y); ctx.stroke();
+            } else if (tool === 'rect') {
+                ctx.strokeRect(startX, startY, w, h);
+            } else if (tool === 'roundRect') {
+                paintRoundedRect(startX, startY, w, h, 18);
+            } else if (tool === 'ellipse') {
+                ctx.beginPath(); ctx.ellipse(startX + w / 2, startY + h / 2, Math.abs(w / 2), Math.abs(h / 2), 0, 0, Math.PI * 2); ctx.stroke();
+            } else if (tool === 'polygon') {
+                const sides = 6, rx = Math.abs(w / 2), ry = Math.abs(h / 2), cx = startX + w / 2, cy = startY + h / 2;
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const angle = -Math.PI / 2 + i * Math.PI * 2 / sides;
+                    const px = cx + Math.cos(angle) * rx, py = cy + Math.sin(angle) * ry;
+                    if (!i) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.closePath(); ctx.stroke();
+            } else if (tool === 'curve') {
+                const midX = (startX + x) / 2;
+                const midY = (startY + y) / 2 - Math.min(80, Math.abs(w + h) * .16);
+                ctx.beginPath(); ctx.moveTo(startX, startY); ctx.quadraticCurveTo(midX, midY, x, y); ctx.stroke();
+            }
+        }
+        function sprayAt(x, y) {
+            ctx.fillStyle = currentColor;
+            for (let i = 0; i < 24; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = Math.random() * 17;
+                const size = Math.random() * 2.4 + .6;
+                ctx.fillRect(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius, size, size);
+            }
+        }
+        function pickColor(x, y) {
+            const pixel = ctx.getImageData(Math.floor(x), Math.floor(y), 1, 1).data;
+            currentColor = '#' + [pixel[0], pixel[1], pixel[2]].map(v => v.toString(16).padStart(2, '0')).join('');
+            document.querySelectorAll('.color-box').forEach(box => box.classList.remove('active'));
+            paintStatus(`Picked ${currentColor}`);
+        }
+        function floodFill(x, y, color) {
+            x = Math.floor(x); y = Math.floor(y);
+            if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return;
+            const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = image.data;
+            const pixelCount = canvas.width * canvas.height;
+            const startIndex = y * canvas.width + x;
+            const startOffset = startIndex * 4;
+            const target = [data[startOffset], data[startOffset + 1], data[startOffset + 2], data[startOffset + 3]];
+            const hex = color.replace('#', '');
+            const replacementColor = [parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16), 255];
+            if (target.every((value, index) => value === replacementColor[index])) return;
+            const matches = index => {
+                const offset = index * 4;
+                return data[offset] === target[0] && data[offset+1] === target[1] && data[offset+2] === target[2] && data[offset+3] === target[3];
+            };
+            const queue = new Int32Array(pixelCount);
+            const visited = new Uint8Array(pixelCount);
+            let head = 0, tail = 0, touched = 0;
+            if (matches(startIndex)) { queue[tail++] = startIndex; visited[startIndex] = 1; }
+            while (head < tail) {
+                const index = queue[head++];
+                const offset = index * 4;
+                data[offset] = replacementColor[0]; data[offset+1] = replacementColor[1];
+                data[offset+2] = replacementColor[2]; data[offset+3] = 255;
+                touched++;
+                const px = index % canvas.width;
+                const neighbours = [];
+                if (px > 0) neighbours.push(index - 1);
+                if (px < canvas.width - 1) neighbours.push(index + 1);
+                if (index >= canvas.width) neighbours.push(index - canvas.width);
+                if (index < pixelCount - canvas.width) neighbours.push(index + canvas.width);
+                for (const next of neighbours) {
+                    if (!visited[next] && matches(next)) { visited[next] = 1; queue[tail++] = next; }
+                }
+            }
+            ctx.putImageData(image, 0, 0);
+            paintStatus(`Filled ${touched.toLocaleString()} px`);
+        }
+        function paintText(x, y) {
+            const value = prompt('Type your text:');
+            if (value === null || !value.trim()) return;
+            const fontSize = Number(prompt('Font size? (default 24)', '24')) || 24;
+            ctx.fillStyle = currentColor;
+            ctx.font = `${Math.max(8, Math.min(120, fontSize))}px VT323, monospace`;
+            ctx.textBaseline = 'top';
+            value.split('\n').forEach((line, index) => ctx.fillText(line, x, y + index * (fontSize + 2)));
+            savePaintHistory();
+        }
+        function pointInPolygon(x, y, points) {
+            let inside = false;
+            for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+                const a = points[i], b = points[j];
+                const crosses = ((a.y > y) !== (b.y > y)) && (x < (b.x - a.x) * (y - a.y) / ((b.y - a.y) || .0001) + a.x);
+                if (crosses) inside = !inside;
+            }
+            return inside;
+        }
+        function commitFloatingSelection() {
+            if (!floatingSelection) return;
+            if (floatingSelection.baseSnapshot) ctx.putImageData(floatingSelection.baseSnapshot, 0, 0);
+            ctx.putImageData(floatingSelection.image, Math.round(floatingSelection.x), Math.round(floatingSelection.y));
+            floatingSelection = null;
+            savePaintHistory();
+        }
+        function finishSelection(points, rectangular) {
+            if (!paintSnapshot) return;
+            const xs = points.map(p => p.x), ys = points.map(p => p.y);
+            const minX = Math.max(0, Math.floor(Math.min(...xs))), minY = Math.max(0, Math.floor(Math.min(...ys)));
+            const maxX = Math.min(canvas.width, Math.ceil(Math.max(...xs))), maxY = Math.min(canvas.height, Math.ceil(Math.max(...ys)));
+            const width = Math.max(1, maxX - minX), height = Math.max(1, maxY - minY);
+            const source = new ImageData(width, height);
+            for (let yy = 0; yy < height; yy++) {
+                for (let xx = 0; xx < width; xx++) {
+                    const inShape = rectangular || pointInPolygon(minX + xx + .5, minY + yy + .5, points);
+                    if (!inShape) continue;
+                    const from = ((minY + yy) * canvas.width + (minX + xx)) * 4;
+                    const to = (yy * width + xx) * 4;
+                    source.data[to] = paintSnapshot.data[from]; source.data[to+1] = paintSnapshot.data[from+1];
+                    source.data[to+2] = paintSnapshot.data[from+2]; source.data[to+3] = paintSnapshot.data[from+3];
+                }
+            }
+            ctx.putImageData(paintSnapshot, 0, 0);
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(minX, minY, width, height);
+            const baseSnapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            floatingSelection = { x: minX, y: minY, width, height, image: source, baseSnapshot };
+            ctx.save(); ctx.setLineDash([5,4]); ctx.strokeStyle = '#444'; ctx.lineWidth = 1;
+            if (rectangular) ctx.strokeRect(minX, minY, width, height);
+            else { ctx.beginPath(); points.forEach((p,i) => i ? ctx.lineTo(p.x,p.y) : ctx.moveTo(p.x,p.y)); ctx.closePath(); ctx.stroke(); }
+            ctx.restore();
+            paintStatus('Selection ready — drag it to move');
+        }
+        function onPaintPointerDown(event) {
+            event.preventDefault();
+            const point = paintPoint(event); startX = lastX = point.x; startY = lastY = point.y;
+            if (currentTool === 'fill') { commitFloatingSelection(); floodFill(point.x, point.y, currentColor); savePaintHistory(); return; }
+            if (currentTool === 'picker') { pickColor(point.x, point.y); return; }
+            if (currentTool === 'zoom') { zoomLevel = zoomLevel === 1 ? 1.5 : zoomLevel === 1.5 ? 2 : 1; canvas.style.transform = 'none'; canvas.style.width = `${100 * zoomLevel}%`; canvas.style.height = `${100 * zoomLevel}%`; paintStatus(`Zoom ${Math.round(zoomLevel*100)}%`); return; }
+            if (currentTool === 'text') { commitFloatingSelection(); paintText(point.x, point.y); return; }
+            if (currentTool === 'select' || currentTool === 'freeSelect') {
+                if (floatingSelection && point.x >= floatingSelection.x && point.x <= floatingSelection.x + floatingSelection.width && point.y >= floatingSelection.y && point.y <= floatingSelection.y + floatingSelection.height) {
+                    draggingSelection = true; selectionDragOffset = { x: point.x - floatingSelection.x, y: point.y - floatingSelection.y };
+                    selectionMoveSnapshot = floatingSelection.baseSnapshot || ctx.getImageData(0,0,canvas.width,canvas.height);
+                    try { canvas.setPointerCapture(event.pointerId); } catch (_) {}
+                    return;
+                }
+                commitFloatingSelection();
+                isDrawing = true; paintSnapshot = ctx.getImageData(0,0,canvas.width,canvas.height); freeSelectPoints = [point];
+                try { canvas.setPointerCapture(event.pointerId); } catch (_) {}
+                return;
+            }
+            commitFloatingSelection();
+            isDrawing = true; paintSnapshot = ctx.getImageData(0,0,canvas.width,canvas.height);
+            ctx.beginPath(); ctx.moveTo(point.x, point.y);
+            if (currentTool === 'pencil' || currentTool === 'brush' || currentTool === 'eraser') {
+                ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
+                ctx.lineWidth = currentTool === 'eraser' ? 22 : currentTool === 'brush' ? 11 : 3;
+                ctx.lineTo(point.x + .01, point.y + .01); ctx.stroke();
+            }
+            if (currentTool === 'airbrush') sprayAt(point.x, point.y);
+            try { canvas.setPointerCapture(event.pointerId); } catch (_) {}
+        }
+        function onPaintPointerMove(event) {
+            const point = paintPoint(event);
+            paintStatus(`${Math.round(point.x)}, ${Math.round(point.y)} px`);
+            if (draggingSelection && floatingSelection && selectionMoveSnapshot) {
+                const nx = Math.max(0, Math.min(canvas.width - floatingSelection.width, point.x - selectionDragOffset.x));
+                const ny = Math.max(0, Math.min(canvas.height - floatingSelection.height, point.y - selectionDragOffset.y));
+                ctx.putImageData(selectionMoveSnapshot, 0, 0);
+                ctx.putImageData(floatingSelection.image, Math.round(nx), Math.round(ny));
+                floatingSelection.x = nx; floatingSelection.y = ny;
+                return;
+            }
+            if (!isDrawing) return;
+            if (currentTool === 'select' || currentTool === 'freeSelect') {
+                restorePaintImage(paintSnapshot);
+                if (currentTool === 'select') {
+                    ctx.save(); ctx.setLineDash([5,4]); ctx.strokeStyle = '#333'; ctx.lineWidth = 1; ctx.strokeRect(startX,startY,point.x-startX,point.y-startY); ctx.restore();
+                } else {
+                    freeSelectPoints.push(point); ctx.save(); ctx.setLineDash([4,3]); ctx.strokeStyle = '#333'; ctx.lineWidth = 1; ctx.beginPath(); freeSelectPoints.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.stroke(); ctx.restore();
+                }
+                return;
+            }
+            if (['line','curve','rect','roundRect','ellipse','polygon'].includes(currentTool)) {
+                drawPaintShape(currentTool, point.x, point.y); return;
+            }
+            if (currentTool === 'pencil' || currentTool === 'brush' || currentTool === 'eraser') {
+                ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
+                ctx.lineWidth = currentTool === 'eraser' ? 22 : currentTool === 'brush' ? 11 : 3;
+                ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(point.x,point.y); ctx.stroke();
+            } else if (currentTool === 'airbrush') sprayAt(point.x, point.y);
+            lastX = point.x; lastY = point.y;
+        }
+        function onPaintPointerUp(event) {
+            if (draggingSelection) {
+                draggingSelection = false;
+                if (floatingSelection) {
+                    const moved = floatingSelection;
+                    const base = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const left = Math.round(moved.x), top = Math.round(moved.y);
+                    for (let yy = 0; yy < moved.height; yy++) {
+                        for (let xx = 0; xx < moved.width; xx++) {
+                            const offset = ((top + yy) * canvas.width + left + xx) * 4;
+                            if (offset >= 0 && offset + 3 < base.data.length) {
+                                base.data[offset] = 255; base.data[offset+1] = 255; base.data[offset+2] = 255; base.data[offset+3] = 255;
+                            }
+                        }
+                    }
+                    moved.baseSnapshot = base;
+                    ctx.putImageData(base, 0, 0);
+                    ctx.putImageData(moved.image, left, top);
+                    ctx.save(); ctx.setLineDash([5,4]); ctx.strokeStyle = '#444'; ctx.lineWidth = 1; ctx.strokeRect(left, top, moved.width, moved.height); ctx.restore();
+                }
+                selectionMoveSnapshot = null; savePaintHistory(); paintStatus('Selection moved'); return;
+            }
+            if (!isDrawing) return;
+            const point = paintPoint(event);
+            if (currentTool === 'select' || currentTool === 'freeSelect') {
+                if (currentTool === 'select') finishSelection([{x:startX,y:startY},{x:point.x,y:point.y}], true);
+                else { freeSelectPoints.push(point); finishSelection(freeSelectPoints, false); }
+            } else if (['line','curve','rect','roundRect','ellipse','polygon'].includes(currentTool)) {
+                drawPaintShape(currentTool, point.x, point.y); savePaintHistory();
+            } else {
+                savePaintHistory();
+            }
+            isDrawing = false; paintSnapshot = null;
+        }
+        canvas.addEventListener('pointerdown', onPaintPointerDown);
+        canvas.addEventListener('pointermove', onPaintPointerMove);
+        canvas.addEventListener('pointerup', onPaintPointerUp);
+        canvas.addEventListener('pointercancel', onPaintPointerUp);
+        canvas.addEventListener('dblclick', (event) => { if (currentTool === 'select' || currentTool === 'freeSelect') { commitFloatingSelection(); savePaintHistory(); } });
+
+        function undoPaint() {
+            if (paintHistory.length <= 1) return;
+            paintRedo.push(paintHistory.pop());
+            restorePaintImage(paintHistory[paintHistory.length - 1]);
+            floatingSelection = null; paintStatus('Undo');
+        }
+        function redoPaint() {
+            if (!paintRedo.length) return;
+            const image = paintRedo.pop(); paintHistory.push(image); restorePaintImage(image);
+            floatingSelection = null; paintStatus('Redo');
+        }
+        function clearPaint() {
+            if (!confirm('Clear the whole canvas?')) return;
+            floatingSelection = null; ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height); savePaintHistory(); paintStatus('Canvas cleared');
+        }
+        function savePaint() {
+            commitFloatingSelection();
+            const link = document.createElement('a'); link.download = 'falafel-painting.png'; link.href = canvas.toDataURL('image/png'); link.click();
+            paintStatus('Saved falafel-painting.png');
+        }
+        window.addEventListener('keydown', (event) => {
+            if (!(event.ctrlKey || event.metaKey)) return;
+            if (event.key.toLowerCase() === 'z') { event.preventDefault(); undoPaint(); }
+            if (event.key.toLowerCase() === 'y') { event.preventDefault(); redoPaint(); }
+        });
+
+        // ================= TAMAGOTCHI (AKITO 7 CYCLE) =================
+        let tama = { coins: 20, mood: 100, belly: 2 };
+        let isPartying = false;
+        let isWorking = false;
+        let partyTimeout = null;
+        let workInterval = null;
+        let chaosHudInterval = null;
+        let activeAkitoMode = null;
+        let akitoModeStarted = 0;
+        let akitoModeDuration = 0;
+        let currentAkitoIndex = 0;
+
+        const akitoSprites = [
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%201',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%202',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%203',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%204',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%205',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%206',
+            'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%207'
+        ];
+
+        const akitoReplies = {
+            talk: ["What do you want? I'm busy practicing.", "Don't look at me like that.", "I'm not cute, I'm cool!", "Cheesecake...?", "I'm the best at this!", "Do I have to talk to you?", "Did you need something?"],
+            feed: ["Cheesecake... I mean, pancakes! Thanks.", "I guess this is okay.", "Don't think this makes us friends.", "Finally, some good food.", "Can I have more?"],
+            work: ["I'll show you how it's done.", "Ugh, fine. Watch this.", "I'm gonna work so hard!", "Let me show you my true power."],
+            arcade: ["VBS PARTY TIME! 🎉", "I'll beat you at this!", "ARCADE LET'S GOOOO!", "I'm gonna get the high score!", "You're on!"],
+            interrupted: ["HOW DARE YOU INTERRUPT MY DANCE!", "Hey! I wasn't finished!", "Oh, you didn't let me finish my dance...", "Rude! I was in the zone!", "Excuse me?! I was dancing!"],
+            apologize: ["S-sorry! I got a little carried away...", "Did I break the screen? My bad.", "Wait, why is everything shaking? Oh, it was me.", "Please don't tell the webmaster I did that.", "I'm just... really passionate about working.", "Did the HTML survive? I hope the CSS is okay."],
+            danceComplete: ["WOO! I'm the best dancer! Did you see that?!", "That was awesome! I should do that more often.", "I think I broke a sweat... worth it!"]
+        };
+
+        function cycleAkito(countAsTap = true) {
+            currentAkitoIndex = (currentAkitoIndex + 1) % akitoSprites.length;
+            const sprite = document.getElementById('tama-sprite');
+            if (sprite) sprite.src = akitoSprites[currentAkitoIndex];
+            if (countAsTap) registerAkitoTap();
+        }
+
+        function updateTamaUI() {
+            const coins = document.getElementById('tama-coins');
+            const mood = document.getElementById('tama-mood');
+            const belly = document.getElementById('tama-belly');
+            if (coins) coins.textContent = tama.coins;
+            if (mood) mood.textContent = tama.mood;
+            if (belly) belly.textContent = tama.belly;
+        }
+
+        function setTamaDialogue(text) {
+            const dialogue = document.getElementById('tama-dialogue');
+            if (dialogue) dialogue.textContent = `Akito: ${text}`;
+        }
+
+        // Secret Akito discoveries: rapid taps, typed passwords, and the coin counter.
+        let akitoTapCount = 0;
+        let akitoTapResetTimer = null;
+        let akitoSecretBuffer = '';
+        let lastAkitoCoinSecret = 0;
+
+        function triggerAkitoSecret(kind) {
+            const room = document.getElementById('akito-room');
+            if (room) {
+                room.classList.remove('secret-found');
+                void room.offsetWidth;
+                room.classList.add('secret-found');
+            }
+
+            if (kind === 'tap') {
+                tama.coins += 7;
+                setTamaDialogue('Seven taps?! You found my backstage stash. Take 7 coins. Nobody saw that.');
+            } else if (kind === 'cake') {
+                tama.coins += 5;
+                tama.mood = Math.min(100, tama.mood + 5);
+                setTamaDialogue('CHEESECAKE?! You remembered. +5 coins. This stays between us.');
+            } else if (kind === 'vbs') {
+                tama.coins += 10;
+                tama.mood = 100;
+                setTamaDialogue('VIVID BAD SQUAD! Now THAT is a password. +10 coins!');
+            } else if (kind === 'blade') {
+                tama.coins += 3;
+                setTamaDialogue('You called Blade? Tch. I was already doing a perfectly good job. +3 coins.');
+            } else if (kind === 'coin') {
+                const now = Date.now();
+                if (now - lastAkitoCoinSecret < 12000) return;
+                lastAkitoCoinSecret = now;
+                tama.coins += 3;
+                setTamaDialogue('HEY! That is my coin stash. ...Fine, take 3.');
+            }
+            updateTamaUI();
+        }
+
+        function registerAkitoTap() {
+            akitoTapCount++;
+            clearTimeout(akitoTapResetTimer);
+            if (akitoTapCount >= 7) {
+                akitoTapCount = 0;
+                triggerAkitoSecret('tap');
+                return;
+            }
+            akitoTapResetTimer = setTimeout(() => { akitoTapCount = 0; }, 2400);
+        }
+
+        window.addEventListener('keydown', (event) => {
+            const target = event.target;
+            if (target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
+            if (event.key.length !== 1 || !/[a-z0-9]/i.test(event.key)) return;
+            akitoSecretBuffer = (akitoSecretBuffer + event.key.toLowerCase()).slice(-24);
+            if (akitoSecretBuffer.endsWith('cheesecake')) {
+                akitoSecretBuffer = '';
+                triggerAkitoSecret('cake');
+            } else if (akitoSecretBuffer.endsWith('vividsquad')) {
+                akitoSecretBuffer = '';
+                triggerAkitoSecret('vbs');
+            } else if (akitoSecretBuffer.endsWith('blade')) {
+                akitoSecretBuffer = '';
+                triggerAkitoSecret('blade');
+            }
+        });
+
+        function akitoBurst(text = null) {
+            const room = document.getElementById('akito-room');
+            if (!room) return;
+            const particle = document.createElement('span');
+            particle.className = 'akito-burst';
+            particle.textContent = text || ['!!','VBS!','GO!','✦','★','100%','WOO!'][Math.floor(Math.random() * 7)];
+            particle.style.left = `${Math.random() * 78 + 4}%`;
+            particle.style.top = `${Math.random() * 52 + 4}%`;
+            particle.style.setProperty('--burst-x', `${Math.random() * 80 - 40}px`);
+            particle.style.setProperty('--burst-y', `${-25 - Math.random() * 60}px`);
+            room.appendChild(particle);
+            setTimeout(() => particle.remove(), 1000);
+        }
+        function showAkitoChaosHud(mode, duration) {
+            activeAkitoMode = mode;
+            akitoModeStarted = Date.now();
+            akitoModeDuration = duration;
+            const hud = document.getElementById('akito-chaos-hud');
+            const title = document.getElementById('akito-chaos-title');
+            if (hud) hud.style.display = 'block';
+            if (title) title.textContent = mode === 'work' ? 'AKITO WORK.EXE' : 'VBS ARCADE OVERDRIVE';
+            clearInterval(chaosHudInterval);
+            chaosHudInterval = setInterval(() => {
+                const elapsed = Date.now() - akitoModeStarted;
+                const progress = Math.min(100, elapsed / akitoModeDuration * 100);
+                const remaining = Math.max(0, (akitoModeDuration - elapsed) / 1000);
+                const bar = document.getElementById('akito-chaos-progress');
+                const count = document.getElementById('akito-chaos-countdown');
+                if (bar) bar.style.width = `${progress}%`;
+                if (count) count.textContent = `${remaining.toFixed(1)}s`;
+            }, 90);
+        }
+        function hideAkitoChaosHud() {
+            clearInterval(chaosHudInterval);
+            chaosHudInterval = null;
+            const hud = document.getElementById('akito-chaos-hud');
+            if (hud) hud.style.display = 'none';
+            const bar = document.getElementById('akito-chaos-progress');
+            if (bar) bar.style.width = '0%';
+            document.body.classList.remove('akito-chaos-mode');
+            document.getElementById('main-window')?.classList.remove('neon-mode');
+        }
+        function finishAkitoMode({ skipped = false, interrupted = false } = {}) {            if (!activeAkitoMode) return;
+            const mode = activeAkitoMode;
+            activeAkitoMode = null;
+            clearTimeout(partyTimeout); partyTimeout = null;
+            clearInterval(workInterval); workInterval = null;
+            isPartying = false; isWorking = false;
+            hideAkitoChaosHud();
+            document.getElementById('akito-room')?.classList.remove('party-mode');
+            document.getElementById('tama-sprite')?.classList.remove('dancing');
+            document.getElementById('tama-sprite')?.style.removeProperty('opacity');
+            document.querySelectorAll('.akito-chaos-clone').forEach(node => node.remove());
+            if (mode === 'work') {
+                tama.coins += skipped ? 5 : 15;
+                tama.mood = Math.max(0, tama.mood - (interrupted ? 10 : 20));
+                if (skipped) setTamaDialogue('Skipping the WORK EXPLOSION?! Fine. You still earned 5 coins.');
+                else if (interrupted) setTamaDialogue(akitoReplies.interrupted[Math.floor(Math.random() * akitoReplies.interrupted.length)]);
+                else setTamaDialogue(akitoReplies.apologize[Math.floor(Math.random() * akitoReplies.apologize.length)]);
+            } else {
+                tama.mood = Math.min(100, tama.mood + (skipped ? 5 : 0));
+                if (skipped) setTamaDialogue('ARCADE SKIPPED! I was just getting to the good part!');
+                else if (interrupted) setTamaDialogue(akitoReplies.interrupted[Math.floor(Math.random() * akitoReplies.interrupted.length)]);
+                else setTamaDialogue(akitoReplies.danceComplete[Math.floor(Math.random() * akitoReplies.danceComplete.length)]);
+            }
+            updateTamaUI();
+        }
+        function stopParty(interrupted = false) {
+            if (activeAkitoMode === 'arcade') finishAkitoMode({ interrupted });
+        }
+        function skipAkitoMode() {
+            if (!activeAkitoMode) return;
+            finishAkitoMode({ skipped: true });
+        }
+        function startParty() {
+            if (activeAkitoMode) return;
+            isPartying = true;
+            const room = document.getElementById('akito-room');
+            const sprite = document.getElementById('tama-sprite');
+            room.classList.add('party-mode');
+            sprite.classList.add('dancing');
+            document.body.classList.add('akito-chaos-mode');
+            document.getElementById('main-window').classList.add('neon-mode');
+            setTamaDialogue(akitoReplies.arcade[Math.floor(Math.random() * akitoReplies.arcade.length)]);
+            showAkitoChaosHud('arcade', 12000);
+            let flashes = 0;
+            const flashTimer = setInterval(() => {
+                akitoBurst(['VBS!','WOO!','♪','100','GO!!'][Math.floor(Math.random() * 5)]);
+                flashes++;
+                if (flashes >= 22 || activeAkitoMode !== 'arcade') clearInterval(flashTimer);
+            }, 280);
+            partyTimeout = setTimeout(() => finishAkitoMode(), 12000);
+        }
+        function aggressiveWork() {
+            if (activeAkitoMode) return;
+            isWorking = true;
+            const sprite = document.getElementById('tama-sprite');
+            const spriteClone = sprite.cloneNode(true);
+            spriteClone.id = 'akito-chaos-clone-main';
+            spriteClone.className = 'akito-chaos-clone sticker-img';
+            spriteClone.style.position = 'fixed';
+            spriteClone.style.zIndex = '9998';
+            spriteClone.style.width = '108px';
+            spriteClone.style.height = '108px';
+            spriteClone.style.left = '48vw';
+            spriteClone.style.top = '42vh';
+            spriteClone.style.pointerEvents = 'none';
+            spriteClone.style.transition = 'left .22s cubic-bezier(.18,.89,.32,1.28), top .22s cubic-bezier(.18,.89,.32,1.28), transform .22s ease';
+            document.body.appendChild(spriteClone);
+            sprite.style.opacity = '0';
+            document.body.classList.add('akito-chaos-mode');
+            document.getElementById('main-window').classList.add('neon-mode');
+            setTamaDialogue('WORK MODE ACTIVATED!!! EVERYONE MOVE!!!');
+            showAkitoChaosHud('work', 7200);
+            let bounces = 0;
+            workInterval = setInterval(() => {
+                if (activeAkitoMode !== 'work') return;
+                bounces++;
+                spriteClone.style.left = `${Math.random() * 84 + 4}vw`;
+                spriteClone.style.top = `${Math.random() * 78 + 5}vh`;
+                spriteClone.style.transform = `rotate(${Math.random() * 900 - 450}deg) scale(${1.15 + Math.random() * .8})`;
+                if (bounces % 2 === 0) akitoBurst(['WORK!','FASTER!','!!!','⚡'][Math.floor(Math.random()*4)]);
+                if (bounces > 28) finishAkitoMode();
+            }, 240);
+            partyTimeout = setTimeout(() => finishAkitoMode(), 7200);
+        }
+
+        function tamaAction(action) {
+            cycleAkito(false); 
+            
+            if (activeAkitoMode) { finishAkitoMode({ interrupted: true }); return; }
+            
+            if (action === 'Talk') { 
+                setTamaDialogue(akitoReplies.talk[Math.floor(Math.random() * akitoReplies.talk.length)]); 
+                tama.mood = Math.min(100, tama.mood + 10); 
+                updateTamaUI();
+            } 
+            else if (action === 'Feed') {
+                if (tama.coins < 5) return setTamaDialogue("I don't have enough coins for pancakes...");
+                tama.coins -= 5; tama.belly += 1; tama.mood = Math.min(100, tama.mood + 20);
+                setTamaDialogue(akitoReplies.feed[Math.floor(Math.random() * akitoReplies.feed.length)]);
+                updateTamaUI();
+            } 
+            else if (action === 'Work') {
+                setTamaDialogue(akitoReplies.work[Math.floor(Math.random() * akitoReplies.work.length)]);
+                aggressiveWork();
+            }
+            else if (action === 'Arcade') {
+                if (tama.coins < 20) return setTamaDialogue("I need 20 coins for the arcade!");
+                tama.coins -= 20; tama.mood = 100;
+                startParty();
+            }
+        }
+        updateTamaUI();
+
+        // ================= SHARED SITE CONFIG =================
+        // Deploy falafelverse-shared-config-worker.js, then paste its URL below.
+        // The administrator password lives only in the Worker secret and in memory while logged in.
+        const SHARED_CONFIG_API = 'https://falafelverseapi.falafelwithfeelings.workers.dev';
+        const REPO_RAW = 'https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/';
+        const defaultBlinkies = [
+            REPO_RAW + 'DANCING%20MIKUUU.png',
+            REPO_RAW + 'NO%20EMU.png',
+            REPO_RAW + 'badge%20genshin!%20(make%20it%20transparent.jpe',
+            REPO_RAW + 'Screenshot%202026-11-06%20170703.png'
+        ];
+        const DEFAULT_SITE_CONFIG = {
+            profileName: 'Falafel',
+            profileMood: 'gacha goblin',
+            profileImageUrl: REPO_RAW + 'me',
+            webmasterParagraphs: [
+                "hi!!! im this website's webmaster! I rlly enjoy learning to code even tho it pmo sometimes. I made this on a macbook air using chrome (2560x1600 px), so it will probably look best on that device. Hopefully it doesn't look to bad on other devices tho.",
+                "I love art, and I'm going to be studying animation at my dream school soon YAYAYAYYYYY (I NEED A WAY TO PAY FOR IT THO HELP) I used to be a trad artist, but now, I seem to be getting more used to digital art. I also love journaling and collecting CD's, and drinking ramune."
+            ],
+            bannerImageUrl: REPO_RAW + 'EMU%20BANNER.jpe',
+            blinkies: defaultBlinkies.slice(),
+            foodLog: [
+                { name: 'Strawberry Roll', recipe: 'Sponge cake, cream, strawberries.', emoji: '🍰' },
+                { name: 'Sushi Roll', recipe: 'Rice, seaweed, salmon, avocado.', emoji: '🍣' }
+            ]
+        };
+        let siteConfig = JSON.parse(JSON.stringify(DEFAULT_SITE_CONFIG));
+        let blinkieItems = siteConfig.blinkies.slice();
+        let foodLog = siteConfig.foodLog.slice();
+        let sharedAdminPassword = '';
+        let adminSessionActive = false;
+        let siteConfigLoadedFromServer = false;
+        let hasPendingSiteChanges = localStorage.getItem('falafel_site_config_pending') === 'true';
+        let configRefreshTimer = null;
+
+        function isSiteAdmin() { return adminSessionActive && !!sharedAdminPassword; }
+        window.falafelIsSiteAdmin = isSiteAdmin;
+        window.falafelGetAdminPassword = () => sharedAdminPassword;
+        function sharedApiIsConfigured() {
+            return /^https:\/\//i.test(SHARED_CONFIG_API) && !SHARED_CONFIG_API.includes('YOUR-WORKER-NAME') && !SHARED_CONFIG_API.includes('YOUR-SUBDOMAIN');
+        }
+        function sharedApiUrl(path) { return SHARED_CONFIG_API.replace(/\/$/, '') + path; }
+        function mergeSiteConfig(candidate) {
+            const source = candidate && typeof candidate === 'object' ? candidate : {};
+            const merged = { ...DEFAULT_SITE_CONFIG, ...source };
+            merged.webmasterParagraphs = Array.isArray(source.webmasterParagraphs) ? source.webmasterParagraphs.slice(0,2).map(String) : DEFAULT_SITE_CONFIG.webmasterParagraphs.slice();
+            while (merged.webmasterParagraphs.length < 2) merged.webmasterParagraphs.push('');
+            merged.blinkies = Array.isArray(source.blinkies) ? source.blinkies.filter(v => typeof v === 'string' && validHttpUrl(v)).slice(0,40) : DEFAULT_SITE_CONFIG.blinkies.slice();
+            merged.foodLog = Array.isArray(source.foodLog) ? source.foodLog.filter(v => v && typeof v === 'object').slice(0,60).map(v => ({ name:String(v.name || 'Mystery treat').slice(0,80), recipe:String(v.recipe || '').slice(0,2000), emoji:String(v.emoji || '🍽️').slice(0,12) })) : DEFAULT_SITE_CONFIG.foodLog.slice();
+            merged.profileName = String(merged.profileName || 'Falafel').slice(0,50);
+            merged.profileMood = String(merged.profileMood || '').slice(0,120);
+            merged.profileImageUrl = validHttpUrl(merged.profileImageUrl) ? merged.profileImageUrl : DEFAULT_SITE_CONFIG.profileImageUrl;
+            merged.bannerImageUrl = validHttpUrl(merged.bannerImageUrl) ? merged.bannerImageUrl : DEFAULT_SITE_CONFIG.bannerImageUrl;
+            return merged;
+        }
+        function validHttpUrl(value) {
+            try { const parsed = new URL(value); return parsed.protocol === 'https:' || parsed.protocol === 'http:'; }
+            catch (_) { return false; }
+        }
+        function readLocalConfigCache() {
+            try {
+                const cached = JSON.parse(localStorage.getItem('falafel_site_config') || 'null');
+                if (cached) return mergeSiteConfig(cached);
+                // Import older per-browser settings as an offline fallback; the shared backend remains canonical.
+                const legacy = { ...DEFAULT_SITE_CONFIG };
+                const oldBlinkies = JSON.parse(localStorage.getItem('falafel_blinkies') || 'null');
+                const oldFood = JSON.parse(localStorage.getItem('falafel_food_log') || 'null');
+                if (Array.isArray(oldBlinkies)) legacy.blinkies = oldBlinkies;
+                if (Array.isArray(oldFood)) legacy.foodLog = oldFood;
+                return mergeSiteConfig(legacy);
+            } catch (_) { return mergeSiteConfig(DEFAULT_SITE_CONFIG); }
+        }
+        function cacheSiteConfig() {
+            try { localStorage.setItem('falafel_site_config', JSON.stringify(siteConfig)); }
+            catch (error) { console.warn('Could not cache the site configuration in this browser.', error); }
+        }
+        function markPendingSiteChanges(pending) {
+            hasPendingSiteChanges = !!pending;
+            try { localStorage.setItem('falafel_site_config_pending', hasPendingSiteChanges ? 'true' : 'false'); } catch (_) {}
+        }
+        function setImageFallback(img, candidates, finalLabel) {
+            if (!img) return;
+            const unique = [...new Set(candidates.filter(Boolean))];
+            let index = 0;
+            img.onerror = () => {
+                index++;
+                if (index < unique.length) img.src = unique[index];
+                else {
+                    img.onerror = null;
+                    const label = encodeURIComponent(finalLabel || '?');
+                    img.src = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><rect width="100%" height="100%" rx="18" fill="#ffe7f4"/><text x="50%" y="56%" text-anchor="middle" font-family="Arial" font-size="72" fill="#c45aa0">${finalLabel || '?'}</text></svg>`)}`;
+                }
+            };
+            img.src = unique[0] || '';
+        }
+        function applySiteConfig() {
+            const profileName = document.getElementById('profile-name-label');
+            const profileMood = document.getElementById('profile-mood-label');
+            const profilePic = document.getElementById('profile-pic-image');
+            const paragraphOne = document.getElementById('webmaster-paragraph-one');
+            const paragraphTwo = document.getElementById('webmaster-paragraph-two');
+            const banner = document.getElementById('webmaster-banner-image');
+            if (profileName) profileName.textContent = siteConfig.profileName;
+            if (profileMood) profileMood.textContent = `Mood: ${siteConfig.profileMood}`;
+            if (profilePic) setImageFallback(profilePic, [siteConfig.profileImageUrl, REPO_RAW+'me', REPO_RAW+'me.png', REPO_RAW+'me.PNG', REPO_RAW+'me.jpg', REPO_RAW+'me.JPG', REPO_RAW+'me.jpeg', REPO_RAW+'me.webp'], 'F');
+            if (paragraphOne) paragraphOne.textContent = siteConfig.webmasterParagraphs[0] || '';
+            if (paragraphTwo) paragraphTwo.textContent = siteConfig.webmasterParagraphs[1] || '';
+            if (banner) setImageFallback(banner, [siteConfig.bannerImageUrl, REPO_RAW+'EMU%20BANNER.jpe', REPO_RAW+'EMU%20BANNER.jpeg', REPO_RAW+'EMU%20BANNER.png', REPO_RAW+'EMU%20BANNER.jpg', REPO_RAW+'EMU%20BANNER.webp'], 'EMU');
+            blinkieItems = siteConfig.blinkies.slice();
+            foodLog = siteConfig.foodLog.slice();
+            renderBlinkies();
+            renderFoodLog();
+        }
+        async function loadSharedSiteConfig(silent = false) {
+            siteConfig = readLocalConfigCache();
+            applySiteConfig();
+            if (!sharedApiIsConfigured()) return false;
+            try {
+                const response = await fetch(sharedApiUrl('/config'), { method:'GET', cache:'no-store' });
+                if (!response.ok) throw new Error(`Shared config read returned ${response.status}`);
+                const config = await response.json();
+                // If this is a fresh Worker with no saved record, preserve older browser-side
+                // blinkies/recipes as the initial seed until the admin's first successful save.
+                if (config._initialized === false || hasPendingSiteChanges) {
+                    siteConfigLoadedFromServer = false;
+                    applySiteConfig();
+                    return false;
+                }
+                siteConfig = mergeSiteConfig(config);
+                siteConfigLoadedFromServer = true;
+                cacheSiteConfig();
+                applySiteConfig();
+                return true;
+            } catch (error) {
+                console.warn('Shared site settings are not reachable; showing this browser cache/defaults.', error);
+                if (!silent) setConfigStatus('Shared settings could not load. Showing cached settings until the connection is restored.');
+                return false;
+            }
+        }
+        async function saveSharedSiteConfig(successMessage = 'Site settings updated!') {
+            siteConfig = mergeSiteConfig({ ...siteConfig, blinkies:blinkieItems, foodLog });
+            cacheSiteConfig();
+            applySiteConfig();
+            if (!sharedApiIsConfigured()) {
+                markPendingSiteChanges(true);
+                alert('Saved in this browser only. To make every visitor see this change, deploy the shared Worker and set SHARED_CONFIG_API in index.html.');
+                return false;
+            }
+            if (!isSiteAdmin()) {
+                markPendingSiteChanges(true);
+                alert('Please unlock admin mode before saving shared site settings.');
+                return false;
+            }
+            try {
+                const response = await fetch(sharedApiUrl('/admin/config'), {
+                    method:'POST',
+                    headers:{ 'Content-Type':'application/json', 'X-Admin-Password':sharedAdminPassword },
+                    body:JSON.stringify(siteConfig)
+                });
+                if (!response.ok) {
+                    if (response.status === 401) { adminSessionActive = false; sharedAdminPassword = ''; checkAdminStateUI(); }
+                    throw new Error(response.status === 401 ? 'Admin password expired or rejected.' : `Save failed (${response.status}).`);
+                }
+                siteConfigLoadedFromServer = true;
+                markPendingSiteChanges(false);
+                setConfigStatus(successMessage);
+                return true;
+            } catch (error) {
+                markPendingSiteChanges(true);
+                console.error(error);
+                alert(`The shared save failed: ${error.message}\nYour changes remain in this browser's cache for now.`);
+                return false;
+            }
+        }
+        function setConfigStatus(message) {
+            const node = document.getElementById('site-config-status');
+            if (node) node.textContent = message;
+        }
+
+        // ================= RECIPE SCRAPBOOK =================
+        function renderFoodLog() {
+            const container = document.getElementById('food-log-container');
+            if (!container) return;
+            const isAdmin = isSiteAdmin();
+            if (!foodLog.length) {
+                container.innerHTML = '<p style="font-size:1rem;color:#a46a98;">The recipe scrapbook is waiting for its first treat. ♡</p>';
+            } else {
+                container.innerHTML = foodLog.map((food, index) => `
+                    <article class="food-item">
+                        <button type="button" class="food-card-open" onclick="openFoodRecipe(${index})" aria-label="Open ${escapeHTML(food.name || 'recipe')}">
+                            <span class="food-emoji">${escapeHTML(food.emoji || '🍽️')}</span>
+                            <span class="food-name-label">${escapeHTML(food.name || 'Mystery treat')}</span>
+                            <span class="food-open-hint">OPEN RECIPE ♡</span>
+                        </button>
+                        ${isAdmin ? `<button type="button" class="food-admin-remove" onclick="removeFood(${index})" title="Remove recipe">✕ remove</button>` : ''}
+                    </article>
+                `).join('');
+            }
+            const addButton = document.getElementById('food-add-btn');
+            if (addButton) addButton.style.display = isAdmin ? 'inline-flex' : 'none';
+        }
+        function openFoodRecipe(index) {
+            const recipe = foodLog[index];
+            if (!recipe) return;
+            document.getElementById('food-reader-emoji').textContent = recipe.emoji || '🍽️';
+            document.getElementById('food-reader-title').textContent = recipe.name || 'Mystery treat';
+            document.getElementById('food-reader-copy').textContent = recipe.recipe || 'A little kitchen mystery...';
+            document.getElementById('food-recipe-reader-modal').style.display = 'flex';
+        }
+        function closeFoodRecipe() { document.getElementById('food-recipe-reader-modal').style.display = 'none'; }
+        function openAddFoodModal() {
+            if (!isSiteAdmin()) { alert('Only the site admin can add recipes to this little scrapbook.'); return; }
+            document.getElementById('food-modal').style.display = 'flex';
+            document.getElementById('food-name').value = '';
+            document.getElementById('food-recipe').value = '';
+            document.getElementById('food-emoji').value = '';
+        }
+        async function addFood() {
+            if (!isSiteAdmin()) { alert('Admin access is required to add a recipe.'); return; }
+            const name = document.getElementById('food-name').value.trim();
+            const recipe = document.getElementById('food-recipe').value.trim();
+            const emoji = document.getElementById('food-emoji').value.trim() || '🍽️';
+            if (!name) { alert('Please enter a food name!'); return; }
+            foodLog.push({ name, recipe, emoji });
+            siteConfig.foodLog = foodLog.slice();
+            document.getElementById('food-modal').style.display = 'none';
+            const saved = await saveSharedSiteConfig('Recipe added to the shared scrapbook!');
+            renderFoodLog();
+            if (saved) alert('Recipe added! Everyone can see it now. 🍰');
+        }
+        async function removeFood(index) {
+            if (!isSiteAdmin()) return;
+            if (!confirm(`Remove ${foodLog[index]?.name || 'this recipe'} from the scrapbook?`)) return;
+            foodLog.splice(index, 1);
+            siteConfig.foodLog = foodLog.slice();
+            await saveSharedSiteConfig('Recipe removed from the shared scrapbook.');
+            renderFoodLog();
+        }
+
+        // ================= ADMIN LOGIN + SITE EDITOR =================
+        let clickCount = 0;
+        let clickTimer = null;
+        document.getElementById('admin-trigger').addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            if (clickCount >= 3) { clickCount = 0; promptAdminLogin(); }
+            else clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+        });
+        async function promptAdminLogin() {
+            if (!sharedApiIsConfigured()) {
+                alert('The shared backend is not connected yet. Deploy falafelverse-shared-config-worker.js, then set SHARED_CONFIG_API near the top of this script.');
+                return;
+            }
+            const pwd = prompt('Enter the site admin password:');
+            if (pwd === null) return;
+            try {
+                const response = await fetch(sharedApiUrl('/admin/login'), {
+                    method:'POST', headers:{ 'X-Admin-Password':pwd }
+                });
+                if (!response.ok) throw new Error('Incorrect password.');
+                sharedAdminPassword = pwd;
+                adminSessionActive = true;
+                alert('Admin unlocked! Shared site editor enabled. 🧆');
+                checkAdminStateUI();
+            } catch (error) { alert(error.message || 'Could not verify admin password.'); }
+        }
+        function checkAdminStateUI() {
+            const isAdmin = isSiteAdmin();
+            const ids = ['admin-indicator','blinkies-admin-panel','food-add-btn','edit-profile-button','edit-webmaster-button'];
+            ids.forEach(id => { const node = document.getElementById(id); if (node) node.style.display = isAdmin ? (id === 'food-add-btn' ? 'inline-flex' : id === 'admin-indicator' ? 'block' : id === 'edit-profile-button' ? 'inline-block' : id === 'edit-webmaster-button' ? 'block' : 'block') : 'none'; });
+            const editUpdatesBtn = document.getElementById('edit-updates-btn');
+            if (editUpdatesBtn) editUpdatesBtn.style.display = isAdmin ? 'inline' : 'none';
+            renderBlinkies();
+            renderFoodLog();
+        }
+        function openSiteSettingsModal() {
+            if (!isSiteAdmin()) { alert('Admin access is required to edit the webmaster corner.'); return; }
+            document.getElementById('site-profile-name').value = siteConfig.profileName;
+            document.getElementById('site-profile-mood').value = siteConfig.profileMood;
+            document.getElementById('site-profile-image').value = siteConfig.profileImageUrl;
+            document.getElementById('site-webmaster-paragraph-one').value = siteConfig.webmasterParagraphs[0] || '';
+            document.getElementById('site-webmaster-paragraph-two').value = siteConfig.webmasterParagraphs[1] || '';
+            document.getElementById('site-banner-image').value = siteConfig.bannerImageUrl;
+            setConfigStatus(siteConfigLoadedFromServer ? 'Connected to shared site settings. Saves appear for visitors after the backend updates.' : 'Using the current cached/default copy. Connect the shared Worker to publish edits for everyone.');
+            document.getElementById('site-settings-modal').style.display = 'flex';
+        }
+        function closeSiteSettingsModal() { document.getElementById('site-settings-modal').style.display = 'none'; }
+        async function saveSiteSettings() {
+            if (!isSiteAdmin()) return;
+            const profileImage = document.getElementById('site-profile-image').value.trim();
+            const bannerImage = document.getElementById('site-banner-image').value.trim();
+            if (!validHttpUrl(profileImage) || !validHttpUrl(bannerImage)) { alert('Please use full http:// or https:// image URLs for the profile picture and banner.'); return; }
+            siteConfig = mergeSiteConfig({
+                ...siteConfig,
+                profileName:document.getElementById('site-profile-name').value.trim() || 'Falafel',
+                profileMood:document.getElementById('site-profile-mood').value.trim(),
+                profileImageUrl:profileImage,
+                webmasterParagraphs:[document.getElementById('site-webmaster-paragraph-one').value,document.getElementById('site-webmaster-paragraph-two').value],
+                bannerImageUrl:bannerImage,
+                blinkies:blinkieItems,
+                foodLog
+            });
+            const saved = await saveSharedSiteConfig('Profile, webmaster text, and Emu banner updated for the site!');
+            applySiteConfig();
+            if (saved) closeSiteSettingsModal();
+        }
+
+        // ================= SHARED BLINKIE MANAGER =================
+        function renderBlinkies() {
+            const marquee = document.getElementById('blinkies-container');
+            const manager = document.getElementById('blinkies-admin-list');
+            if (!marquee) return;
+            marquee.replaceChildren();
+            const loopItems = blinkieItems.length ? blinkieItems.concat(blinkieItems) : [];
+            loopItems.forEach((url, index) => {
+                const image = document.createElement('img');
+                image.className = 'blinkie-img'; image.src = url; image.alt = `Blinkie ${index % Math.max(1, blinkieItems.length) + 1}`;
+                image.loading = 'lazy'; image.onerror = () => { image.style.opacity = '.25'; image.title = 'This image could not load'; };
+                marquee.appendChild(image);
+            });
+            if (!manager) return;
+            manager.replaceChildren();
+            blinkieItems.forEach((url, index) => {
+                const entry = document.createElement('div'); entry.className = 'blinkie-admin-entry';
+                const image = document.createElement('img'); image.src = url; image.alt = `Blinkie ${index + 1}`;
+                const label = document.createElement('span'); label.textContent = url;
+                const edit = document.createElement('button'); edit.type = 'button'; edit.className = 'modal-btn cancel'; edit.textContent = 'Edit'; edit.onclick = () => editBlinkie(index);
+                const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'modal-btn cancel'; remove.textContent = '✕'; remove.title = 'Remove blinkie'; remove.onclick = () => removeBlinkie(index);
+                entry.append(image,label,edit,remove); manager.appendChild(entry);
+            });
+        }
+        async function addBlinkie() {
+            if (!isSiteAdmin()) { alert('Admin access is required to manage blinkies.'); return; }
+            const input = document.getElementById('blinkie-url-admin') || document.getElementById('new-blinkie-url');
+            const url = input ? input.value.trim() : '';
+            if (!url) return;
+            if (!validHttpUrl(url)) { alert('Please paste a complete http:// or https:// image URL.'); return; }
+            blinkieItems.push(url); siteConfig.blinkies = blinkieItems.slice();
+            const saved = await saveSharedSiteConfig('Blinkie added to the shared collection!');
+            renderBlinkies(); if (input) input.value = '';
+            if (saved) alert('Blinkie added! Everyone can see it now. ✨');
+        }
+        async function editBlinkie(index) {
+            if (!isSiteAdmin()) return;
+            const updated = prompt('Edit this blinkie image URL:', blinkieItems[index] || '');
+            if (updated === null) return;
+            if (!validHttpUrl(updated.trim())) { alert('Please enter a valid http:// or https:// image URL.'); return; }
+            blinkieItems[index] = updated.trim(); siteConfig.blinkies = blinkieItems.slice();
+            await saveSharedSiteConfig('Blinkie updated for every visitor.'); renderBlinkies();
+        }
+        async function removeBlinkie(index) {
+            if (!isSiteAdmin()) return;
+            if (!confirm('Remove this blinkie from the shared marquee?')) return;
+            blinkieItems.splice(index,1); siteConfig.blinkies = blinkieItems.slice();
+            await saveSharedSiteConfig('Blinkie removed from the shared collection.'); renderBlinkies();
+        }
+
+        function toggleModalTypeFields() {
+            const type = document.getElementById('new-entry-type').value;
+            document.getElementById('blog-only-fields').style.display = type === 'blog' ? 'block' : 'none';
+            document.getElementById('announcement-only-fields').style.display = type === 'announcement' ? 'block' : 'none';
+        }
+
+        // ================= YOUTUBE PLAYER =================
+        let audioPlayer;
+        let isPlaying = false;
+        let isLooping = false;
+        let progressInterval;
+        const playlist = ["LIKE A DINO", "IT'S OK NOT TO BE OKAY", "GOOD LUCK TODAY", "A PIECE OF CAKE", "I'M SO EXCITED", "It Is What It Is", "A Silver Lining", "SO SÜß", "YOU MADE MY DAY", "MARRIAGE PROPOSAL", "OVER THE MOON", "WADDLE WADDLE"];
+        let currentTrack = 0;
+        
+        function onYouTubeIframeAPIReady() {
+            audioPlayer = new YT.Player('bg-playlist-iframe', { events: { 'onStateChange': onAudioPlayerStateChange } });
+        }
+
+        function onAudioPlayerStateChange(event) {
+            const btn = document.getElementById('audio-play-pause-btn');
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                if(btn) btn.innerText = "⏸";
+                startProgressTracker();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                if(btn) btn.innerText = "▶";
+                clearInterval(progressInterval);
+            } else if (event.data === YT.PlayerState.ENDED) {
+                if (!isLooping) {
+                    skipAudioTrack(1);
+                }
+            }
+        }
+
+        function toggleAudioPlayback() {
+            if (!audioPlayer || typeof audioPlayer.getPlayerState !== 'function') return;
+            const state = audioPlayer.getPlayerState();
+            if (state === YT.PlayerState.PLAYING) audioPlayer.pauseVideo();
+            else audioPlayer.playVideo();
+        }
+
+        function skipAudioTrack(dir) {
+            if (!audioPlayer || typeof audioPlayer.nextVideo !== 'function') return;
+            if (dir > 0) audioPlayer.nextVideo();
+            else audioPlayer.previousVideo();
+            currentTrack = (currentTrack + dir + playlist.length) % playlist.length;
+            document.getElementById('track-selector').value = currentTrack;
+        }
+
+        function toggleLoop() {
+            isLooping = !isLooping;
+            const btn = document.getElementById('loop-btn');
+            if(isLooping) {
+                btn.classList.add('active-loop');
+                if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(true);
+            } else {
+                btn.classList.remove('active-loop');
+                if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(false);
+            }
+        }
+
+        function changeTrack(index) {
+            currentTrack = parseInt(index);
+            if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
+                audioPlayer.playVideoAt(currentTrack);
+            }
+        }
+
+        function startProgressTracker() {
+            clearInterval(progressInterval);
+            progressInterval = setInterval(() => {
+                if (audioPlayer && audioPlayer.getCurrentTime) {
+                    const current = audioPlayer.getCurrentTime();
+                    const duration = audioPlayer.getDuration();
+                    if(duration > 0) {
+                        const percent = (current / duration) * 100;
+                        document.getElementById('music-progress-bar').style.width = percent + '%';
+                    }
+                }
+            }, 1000);
+        }
+
+        function seekMusic(e) {
+            if (!audioPlayer || !audioPlayer.getDuration) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            const duration = audioPlayer.getDuration();
+            audioPlayer.seekTo(percent * duration, true);
+        }
+
+        // ================= JSONBIN BLOG ENGINE & SPARKLE CODES =================
+        const BIN_ID = '6aca4a7dac6210605a2587db';
+        // Never put a JSONBin master key in public HTML. Add a restricted bin-level
+        // access key here only if you accept that visitors can inspect client code.
+        // For stronger protection, route writes through a server-side proxy instead.
+        const JSONBIN_ACCESS_KEY = '';
+        let currentPostIndexForComments = null;
+        let cachedBlogData = { posts: [], syncCodes: {} };
+        let cachedSyncCodes = {};
+
+        try {
+            const savedBlogCache = JSON.parse(localStorage.getItem('falafel_blog_cache') || '{}');
+            cachedBlogData = {
+                posts: Array.isArray(savedBlogCache.posts) ? savedBlogCache.posts : [],
+                syncCodes: savedBlogCache.syncCodes && typeof savedBlogCache.syncCodes === 'object' ? savedBlogCache.syncCodes : {}
+            };
+            cachedSyncCodes = cachedBlogData.syncCodes;
+        } catch (error) {
+            console.warn('The saved blog cache could not be read.', error);
+        }
+
+        function hasJsonBinAccessKey() {
+            return typeof JSONBIN_ACCESS_KEY === 'string' && JSONBIN_ACCESS_KEY.trim().length > 0;
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[char]));
+        }
+
+        async function getBinData() {
+            try {
+                const headers = hasJsonBinAccessKey() ? { 'X-Access-Key': JSONBIN_ACCESS_KEY.trim() } : {};
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers });
+                if (!res.ok) throw new Error(`JSONBin read failed (${res.status})`);
+                const data = await res.json();
+                const record = data.record || {};
+                cachedBlogData = {
+                    posts: Array.isArray(record.posts) ? record.posts : [],
+                    syncCodes: record.syncCodes && typeof record.syncCodes === 'object' ? record.syncCodes : {}
+                };
+                cachedSyncCodes = cachedBlogData.syncCodes;
+                try { localStorage.setItem('falafel_blog_cache', JSON.stringify(cachedBlogData)); } catch (error) {}
+                return { ...cachedBlogData };
+            } catch (err) {
+                return { ...cachedBlogData, syncCodes: cachedSyncCodes };
+            }
+        }
+
+        async function saveBinData(payload = {}) {
+            const existing = await getBinData();
+            const nextData = {
+                ...existing,
+                ...payload,
+                posts: Array.isArray(payload.posts) ? payload.posts : (existing.posts || []),
+                syncCodes: payload.syncCodes || existing.syncCodes || cachedSyncCodes || {}
+            };
+            cachedBlogData = nextData;
+            cachedSyncCodes = nextData.syncCodes;
+            try {
+                localStorage.setItem('falafel_blog_cache', JSON.stringify(nextData));
+            } catch (error) {
+                console.warn('Could not update the local blog cache.', error);
+            }
+
+            if (!hasJsonBinAccessKey()) return false;
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'X-Access-Key': JSONBIN_ACCESS_KEY.trim() },
+                    body: JSON.stringify(nextData)
+                });
+                if (!response.ok) throw new Error(`JSONBin update failed (${response.status})`);
+                return true;
+            } catch (err) {
+                console.error('Could not sync with JSONBin. Your changes remain cached in this browser.', err);
+                return false;
+            }
+        }
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.v-tab').forEach(a => a.classList.remove('active'));
+            const targetView = document.getElementById('view-' + viewName);
+            if(targetView) targetView.classList.add('active');
+            const navEl = document.getElementById('nav-' + viewName);
+            if(navEl) navEl.classList.add('active');
+            if (viewName === 'blog') renderAllPosts();
+            if (viewName === 'announcements') renderAnnouncements();
+        }
+
+        async function renderAllPosts() {
+            const data = await getBinData();
+            const posts = (Array.isArray(data.posts) ? data.posts : []).filter(p => p && p.type !== 'announcement');
+            const container = document.getElementById('dynamic-blog-container');
+            if (!container) return;
+
+            if (posts.length === 0) {
+                container.innerHTML = hasJsonBinAccessKey()
+                    ? '<p style="font-size:1.2rem;">No posts yet. Log in as admin to create one!</p>'
+                    : '<p style="font-size:1.1rem;">The blog is ready, but shared sync is not connected. Existing posts may still appear from this browser\'s saved cache. Add a restricted JSONBin key or a server-side proxy to sync posts and comments for everyone.</p>';
+                return;
+            }
+
+            let html = '<div class="blog-grid">';
+            posts.forEach((p, i) => {
+                const imageUrl = p.images && p.images[0] ? escapeHTML(p.images[0]) : '';
+                const imgHtml = imageUrl ? `<img src="${imageUrl}" alt="Post image" loading="lazy" onerror="this.style.display='none'">` : '';
+                const isLiked = localStorage.getItem(`falafel_liked_${p.id || `${p.date || ''}_${p.title || 'post'}_${i}`}`) === 'true';
+                html += `
+                    <div class="blog-card">
+                        ${imgHtml}
+                        <h3>${escapeHTML(p.title || 'Untitled')}</h3>
+                        <p style="font-size:1.1rem; margin:5px 0;">${escapeHTML(p.snippet || 'Click to read more...')}</p>
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                            <span class="read-more" role="button" tabindex="0" onclick="openPostReader(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPostReader(${i})}">read more →</span>
+                            <span style="font-size:0.8rem; color:#888;">🤍 ${Number(p.likes) || 0} &nbsp; 💬 ${(Array.isArray(p.comments) ? p.comments.length : 0)}</span>
+                        </div>
+                        <div style="display:flex; gap:7px; flex-wrap:wrap; margin-top:8px;">
+                            <button class="modal-btn ${isLiked ? 'save' : 'cancel'}" onclick="toggleLike(${i}, this)">${isLiked ? '🩷 Liked' : '🤍 Like'} · ${Number(p.likes) || 0}</button>
+                            <button class="modal-btn cancel" onclick="openCommentDrawer(${i})">💬 Comments</button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+
+            const homeUpdates = document.getElementById('home-updates-container');
+            if (homeUpdates && posts.length > 0) {
+                homeUpdates.innerHTML = posts.slice(0, 3).map(p => `
+                    <div style="margin-bottom:5px;">
+                        <span style="font-weight:bold; color:var(--accent-color);">${escapeHTML(p.date || 'New')}:</span> ${escapeHTML(p.title || 'Untitled')}
+                    </div>
+                `).join('');
+            }
+        }
+
+        async function renderAnnouncements() {
+            const data = await getBinData();
+            const announcements = (Array.isArray(data.posts) ? data.posts : []).filter(p => p && p.type === 'announcement');
+            const container = document.getElementById('announcements-wall-container');
+            if (!container) return;
+
+            if (announcements.length === 0) {
+                container.innerHTML = '<p style="font-size:1.2rem;">No announcements yet.</p>';
+                return;
+            }
+
+            container.innerHTML = announcements.map(a => `
+                <div class="announcement-card ${a.pinned ? 'pinned' : ''}">
+                    ${a.pinned ? '<div class="pin-badge">📌 PINNED</div>' : ''}
+                    <h3 class="announcement-title">${escapeHTML(a.title || 'Untitled')}</h3>
+                    <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:5px;">${escapeHTML(a.date || '')}</p>
+                    <p class="announcement-body">${a.content || ''}</p>
+                </div>
+            `).join('');
+        }
+
+        async function openPostReader(index) {
+            const data = await getBinData();
+            const post = (Array.isArray(data.posts) ? data.posts : []).filter(p => p && p.type !== 'announcement')[index];
+            if (!post) return;
+
+            document.getElementById('reader-title').textContent = post.title || 'Untitled';
+            document.getElementById('reader-time').textContent = post.date || '';
+            document.getElementById('reader-content-wrapper').innerHTML = `<div>${post.content || ''}</div>`;
+
+            if (Array.isArray(post.images)) {
+                post.images.forEach(img => {
+                    const safeUrl = escapeHTML(img);
+                    document.getElementById('reader-content-wrapper').innerHTML += `<img src="${safeUrl}" alt="Post image" loading="lazy" onerror="this.style.display='none'" style="max-width:100%; border:2px solid var(--border-color); margin-top:10px; border-radius:6px;">`;
+                });
+            }
+
+            const postKey = post.id || `${post.date || ''}_${post.title || 'post'}_${index}`;
+            const isLiked = localStorage.getItem(`falafel_liked_${postKey}`) === 'true';
+            document.getElementById('reader-social-bar-container').innerHTML = `
+                <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+                    <button class="modal-btn ${isLiked ? 'save' : 'cancel'}" onclick="toggleLike(${index}, this)">${isLiked ? '🩷 Liked' : '🤍 Like'} · ${Number(post.likes) || 0}</button>
+                    <button class="modal-btn save" onclick="openCommentDrawer(${index})">💬 Comments (${(Array.isArray(post.comments) ? post.comments.length : 0)})</button>
+                </div>
+            `;
+            switchView('post-reader');
+        }
+
+        function openNewPostModal(type = 'blog') {
+            document.getElementById('admin-modal').style.display = 'flex';
+            document.getElementById('edit-index').value = "";
+            document.getElementById('new-entry-type').value = type;
+            toggleModalTypeFields();
+        }
+
+        async function savePostData() {
+            const type = document.getElementById('new-entry-type').value;
+            const title = document.getElementById('new-title').value.trim();
+            const content = document.getElementById('new-content').value;
+            const imgUrl = document.getElementById('new-photo-url-input').value.trim();
+            const snippet = document.getElementById('new-snippet').value.trim();
+            const pinned = document.getElementById('new-pinned').value === 'true';
+
+            if (!title || !content.trim()) return alert('Title and content required!');
+
+            const newPost = {
+                id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `post_${Date.now()}`,
+                type, title, content, snippet: snippet || content.substring(0, 50),
+                images: imgUrl ? [imgUrl] : [],
+                date: new Date().toLocaleDateString(),
+                likes: 0, comments: []
+            };
+            if (type === 'announcement') newPost.pinned = pinned;
+
+            const data = await getBinData();
+            const posts = Array.isArray(data.posts) ? data.posts : [];
+            posts.unshift(newPost);
+            const synced = await saveBinData({ posts });
+            document.getElementById('admin-modal').style.display = 'none';
+            renderAllPosts();
+            renderAnnouncements();
+            alert(synced ? 'Post saved successfully! 🚀' : 'Post saved in this browser only. Add a restricted JSONBin Access Key or server-side proxy to sync it for everyone.');
+        }
+
+        // Comments (With Heart, Edit, Admin, Replies)
+        async function openCommentDrawer(index) {
+            currentPostIndexForComments = index;
+            document.getElementById('comment-drawer-overlay').style.display = 'flex';
+            const data = await getBinData();
+            const post = (Array.isArray(data.posts) ? data.posts : []).filter(p => p && p.type !== 'announcement')[index];
+            const container = document.getElementById('comments-list-container');
+            if (!post) {
+                container.textContent = 'This post is no longer available.';
+                return;
+            }
+            const comments = Array.isArray(post.comments) ? post.comments : [];
+            const isAdmin = isSiteAdmin();
+
+            container.innerHTML = comments.length > 0 ? comments.map(c => {
+                let repliesHtml = '';
+                if (Array.isArray(c.replies) && c.replies.length > 0) {
+                    repliesHtml = '<div style="margin-left:15px;border-left:2px dashed var(--accent-color);padding-left:10px;margin-top:5px;">';
+                    c.replies.forEach(reply => {
+                        repliesHtml += `
+                            <div style="font-size:.9rem;margin-bottom:5px;background:rgba(255,255,255,.5);padding:5px;border-radius:5px;">
+                                <span style="font-weight:bold;color:var(--accent-color);">${escapeHTML(reply.alias)}:</span> ${escapeHTML(reply.text)}
+                            </div>`;
+                    });
+                    repliesHtml += '</div>';
+                }
+
+                const canEdit = isAdmin || c.alias === visitorAlias;
+                const canDelete = isAdmin;
+                const hearted = localStorage.getItem(`hearted_${c.id}`) === 'true';
+                const safeCommentId = escapeHTML(JSON.stringify(String(c.id || '')));
+                const safeCommentDomId = `comment-text-${encodeURIComponent(String(c.id || ''))}`;
+                const commentDate = c.timestamp && !Number.isNaN(new Date(c.timestamp).getTime()) ? new Date(c.timestamp).toLocaleDateString() : '';
+
+                return `
+                    <div style="border-bottom:1px solid #ccc;padding:5px 0;">
+                        <div style="display:flex;justify-content:space-between;font-size:.8rem;color:#888;margin-bottom:3px;gap:8px;">
+                            <span style="font-weight:bold;color:var(--accent-color);">${escapeHTML(c.alias)}
+                                ${c.adminLiked ? '<span class="falafel-liked-badge" style="font-size:.6rem;color:var(--accent-color);margin-left:5px;">🩷 the falafel liked it!</span>' : ''}
+                            </span>
+                            <span>${commentDate}</span>
+                        </div>
+                        <div style="font-size:1.1rem;margin-bottom:5px;white-space:pre-wrap;" id="${safeCommentDomId}">${escapeHTML(c.text)}</div>
+                        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                            <button class="modal-btn cancel" style="font-size:.5rem;padding:2px 5px;" onclick="heartComment(${index},${safeCommentId})">${hearted ? '🩷' : '🤍'} ${Number(c.hearts) || 0}</button>
+                            <button class="modal-btn cancel" style="font-size:.5rem;padding:2px 5px;" onclick="openReplyInput(${index},${safeCommentId})">Reply</button>
+                            ${canEdit ? `<button class="modal-btn cancel" style="font-size:.5rem;padding:2px 5px;" onclick="editComment(${index},${safeCommentId})">Edit</button>` : ''}
+                            ${canDelete ? `<button class="modal-btn cancel" style="font-size:.5rem;padding:2px 5px;background:#ffcccc;" onclick="deleteComment(${index},${safeCommentId})">Delete</button>` : ''}
+                        </div>
+                        ${repliesHtml}
+                    </div>`;
+            }).join('') : '<p style="text-align:center;color:#888;font-size:1.1rem;">No comments yet!</p>';
+
+            const commentButton = document.querySelector('#reader-social-bar-container button[onclick^="openCommentDrawer"]');
+            if (commentButton) commentButton.textContent = `💬 Comments (${comments.length})`;
+        }
+
+        function closeCommentDrawer() {
+            document.getElementById('comment-drawer-overlay').style.display = 'none';
+        }
+
+        async function submitComment() {
+            const input = document.getElementById('comment-text-input');
+            const text = input.value.trim();
+            if (!text || currentPostIndexForComments === null) return;
+
+            const data = await getBinData();
+            const posts = Array.isArray(data.posts) ? data.posts : [];
+            const actualPosts = posts.filter(p => p && p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[currentPostIndexForComments]);
+            if (realIndex < 0 || !posts[realIndex]) return;
+            if (!Array.isArray(posts[realIndex].comments)) posts[realIndex].comments = [];
+
+            posts[realIndex].comments.push({
+                id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(),
+                alias: visitorAlias,
+                text,
+                timestamp: new Date().toISOString(),
+                replies: [],
+                hearts: 0,
+                adminLiked: false
+            });
+
+            await saveBinData({ posts });
+            input.value = '';
+            renderAllPosts();
+            openCommentDrawer(currentPostIndexForComments);
+        }
+
+        async function heartComment(postIndex, commentId) {
+            const isAdmin = isSiteAdmin();
+            const heartedKey = `hearted_${commentId}`;
+            const isHearted = localStorage.getItem(heartedKey) === 'true';
+            const data = await getBinData();
+            const posts = Array.isArray(data.posts) ? data.posts : [];
+            const actualPosts = posts.filter(p => p && p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[postIndex]);
+            if (realIndex < 0 || !posts[realIndex]) return;
+            if (!Array.isArray(posts[realIndex].comments)) posts[realIndex].comments = [];
+            const comment = posts[realIndex].comments.find(c => String(c.id) === String(commentId));
+            if (!comment) return;
+
+            if (isAdmin) {
+                comment.adminLiked = !comment.adminLiked;
+            } else if (isHearted) {
+                comment.hearts = Math.max(0, (Number(comment.hearts) || 1) - 1);
+                localStorage.setItem(heartedKey, 'false');
+            } else {
+                comment.hearts = (Number(comment.hearts) || 0) + 1;
+                localStorage.setItem(heartedKey, 'true');
+            }
+            await saveBinData({ posts });
+            renderAllPosts();
+            openCommentDrawer(postIndex);
+        }
+
+        async function editComment(postIndex, commentId) {
+            const data = await getBinData();
+            const posts = Array.isArray(data.posts) ? data.posts : [];
+            const actualPosts = posts.filter(p => p && p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[postIndex]);
+            if (realIndex < 0 || !posts[realIndex]) return;
+            const comments = Array.isArray(posts[realIndex].comments) ? posts[realIndex].comments : [];
+            const comment = comments.find(c => String(c.id) === String(commentId));
+            if (!comment) return;
+
+            const newText = prompt('Edit your comment:', comment.text);
+            if (newText !== null && newText.trim()) {
+                comment.text = newText.trim();
+                await saveBinData({ posts });
+                renderAllPosts();
+                openCommentDrawer(postIndex);
+            }
+        }
+
+        async function deleteComment(postIndex, commentId) {
+            const data = await getBinData();
+            const posts = Array.isArray(data.posts) ? data.posts : [];
+            const actualPosts = posts.filter(p => p && p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[postIndex]);
+            if (realIndex < 0 || !posts[realIndex]) return;
+            const comments = Array.isArray(posts[realIndex].comments) ? posts[realIndex].comments : [];
+            posts[realIndex].comments = comments.filter(c => String(c.id) !== String(commentId));
+            await saveBinData({ posts });
+            renderAllPosts();
+            openCommentDrawer(postIndex);
+        }
+
+        async function openReplyInput(index, parentId) {
+            const replyText = prompt('Write your reply:');
+            if (replyText === null || !replyText.trim()) return;
+
+            const data = await getBinData();
+            const posts = Array.isArray(data.posts) ? data.posts : [];
+            const actualPosts = posts.filter(p => p && p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[index]);
+            if (realIndex < 0 || !posts[realIndex]) return;
+            if (!Array.isArray(posts[realIndex].comments)) posts[realIndex].comments = [];
+            const parentComment = posts[realIndex].comments.find(c => String(c.id) === String(parentId));
+            if (!parentComment) return;
+            if (!Array.isArray(parentComment.replies)) parentComment.replies = [];
+            parentComment.replies.push({ alias: visitorAlias, text: replyText.trim(), timestamp: new Date().toISOString() });
+            await saveBinData({ posts });
+            renderAllPosts();
+            openCommentDrawer(index);
+        }
+
+        // ================= SPARKLE CODES =================
+        async function generateSparkleCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = 'FALAFEL-';
+            for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+            code += '-';
+            for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+
+            const data = await getBinData();
+            const syncCodes = { ...(data.syncCodes || cachedSyncCodes || {}) };
+            syncCodes[code] = { alias: visitorAlias, timestamp: new Date().toISOString() };
+            const savedRemotely = await saveBinData({ posts: data.posts || [], syncCodes });
+            const message = savedRemotely
+                ? 'Save your Sparkle Code! Enter it on another device to restore your alias.'
+                : 'Your Sparkle Code is saved in this browser cache. Copy it somewhere safe:';
+            prompt(message, code);
+        }
+
+        async function applySparkleCode() {
+            const code = prompt('Enter your Sparkle Code:');
+            if (!code) return;
+
+            const data = await getBinData();
+            const entry = (data.syncCodes || {})[code.trim().toUpperCase()];
+            if (entry && entry.alias) {
+                visitorAlias = entry.alias;
+                localStorage.setItem('visitor_alias', visitorAlias);
+                alert(`✨ Welcome back, ${visitorAlias}! Your identity has been restored.`);
+            } else {
+                alert('Hmm, that code does not exist in the available saved data. Double-check the spelling!');
+            }
+        }
+
+        async function toggleLike(index, btn) {
+            const data = await getBinData();
+            const posts = Array.isArray(data.posts) ? data.posts : [];
+            const actualPosts = posts.filter(p => p && p.type !== 'announcement');
+            const realIndex = posts.indexOf(actualPosts[index]);
+            if (realIndex < 0 || !posts[realIndex]) return;
+
+            const post = posts[realIndex];
+            const postKey = post.id || `${post.date || ''}_${post.title || 'post'}_${index}`;
+            const likedKey = `falafel_liked_${postKey}`;
+            const alreadyLiked = localStorage.getItem(likedKey) === 'true';
+            post.likes = Math.max(0, Number(post.likes) || 0);
+            if (alreadyLiked) {
+                post.likes = Math.max(0, post.likes - 1);
+                localStorage.setItem(likedKey, 'false');
+            } else {                post.likes += 1;
+                localStorage.setItem(likedKey, 'true');
+            }
+
+            await saveBinData({ posts });
+            if (btn) {
+                const likedNow = !alreadyLiked;
+                btn.textContent = `${likedNow ? '🩷 Liked' : '🤍 Like'} · ${post.likes}`;
+                btn.classList.toggle('save', likedNow);
+                btn.classList.toggle('cancel', !likedNow);
+            }
+            renderAllPosts();
+
+            // Keep the reader open and refresh its counter if the like came from a reader button.
+            const readerButton = document.querySelector('#reader-social-bar-container button[onclick^="toggleLike"]');
+            if (readerButton && btn !== readerButton) {
+                const likedNow = localStorage.getItem(likedKey) === 'true';
+                readerButton.textContent = `${likedNow ? '🩷 Liked' : '🤍 Like'} · ${post.likes}`;
+                readerButton.classList.toggle('save', likedNow);
+                readerButton.classList.toggle('cancel', !likedNow);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            checkAdminStateUI();
+            updateTamaUI();
+            const bladeImage = document.getElementById('desktop-blade-image');
+            if (bladeImage) setImageFallback(bladeImage, [REPO_RAW+'BLADE', REPO_RAW+'BLADE.png', REPO_RAW+'BLADE.PNG', REPO_RAW+'BLADE.jpg', REPO_RAW+'BLADE.webp'], '✦');
+            await loadSharedSiteConfig();
+            renderAllPosts();
+            // Workers KV is globally distributed; periodic refresh lets open tabs pick up shared edits.
+            clearInterval(configRefreshTimer);
+            configRefreshTimer = setInterval(() => loadSharedSiteConfig(true), 60000);
+            document.addEventListener('visibilitychange', () => { if (!document.hidden) loadSharedSiteConfig(true); });
+        });
+    </script>
+    <script src="calendar.js"></script>
 </body>
 </html>
