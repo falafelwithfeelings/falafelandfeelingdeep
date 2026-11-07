@@ -348,10 +348,14 @@
         .win-btn.close { background: #ff4d4d; color: #fff; border-color: #fff; }
         .win-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
-        #app-container { display: flex; flex: 1; overflow-y: auto; overflow-x: hidden; padding: 11px; gap: 10px; border-radius: 0 0 12px 12px; }
+        #app-container { display:flex; flex:1 1 0; min-width:0; min-height:0; align-items:stretch; overflow:hidden; padding:11px; gap:10px; border-radius:0 0 12px 12px; }
+        #app-container > .left-sidebar,
+        #app-container > .center-column,
+        #app-container > .right-sidebar { min-width:0; min-height:0; }
+        #app-container > .center-column { flex:1 1 0%; width:0; }
 
         /* ================= LEFT SIDEBAR ================= */
-        .left-sidebar { width: 190px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+        .left-sidebar { width:190px; flex:0 0 190px; display:flex; flex-direction:column; gap:10px; }
         
         .profile-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 15px; position:relative; min-height:100px; }
         .profile-pic { width: 76px; height: 76px; flex:0 0 76px; object-fit: cover; object-position:center; background:#ffe9f5; border: 2px solid var(--border-color); border-radius: 12px; display:block; }
@@ -379,7 +383,7 @@
         .dance-toggle-box select { width: 100%; padding: 4px; font-family: var(--font-pixel); font-size: 0.4rem; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; background: #fff; }
 
         /* ================= CENTER COLUMN ================= */
-        .center-column { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        .center-column { flex:1 1 0%; display:flex; flex-direction:column; gap:10px; min-width:0; min-height:0; width:0; }
 
         .top-banner { text-align: center; padding: 10px 0; cursor: pointer; font-family: var(--font-pixel); font-size: 1.5rem; color: var(--accent-color); text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; animation: wiggle 3s ease-in-out infinite; }
 
@@ -401,7 +405,8 @@
         .blinkie-admin-entry span { font-size:.78rem; color:#885a83; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
         .blinkie-admin-entry button { font-size:.72rem; padding:1px 5px; }
 
-        .main-content-box { background: var(--panel-bg); border: 3px dotted var(--border-color); padding: 15px; box-shadow: 4px 4px 0 var(--accent-color); position: relative; flex: 1; overflow-y: auto; border-radius: 12px; }
+        .main-content-box { background:var(--panel-bg); border:3px dotted var(--border-color); padding:15px; box-shadow:4px 4px 0 var(--accent-color); position:relative; flex:1 1 0%; min-width:0; min-height:0; width:100%; box-sizing:border-box; overflow-y:auto; overflow-x:hidden; border-radius:12px; }
+        .view-section, .view-section.active { width:100%; min-width:0; box-sizing:border-box; }
         .view-section { display: none; }
         .view-section.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -548,7 +553,9 @@
         .akito-room.secret-found { animation: akitoSecretPop .65s ease-out; border-color: var(--accent-color); }
         
         /* ================= RIGHT SIDEBAR ================= */
-        .right-sidebar { width: 100px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; position: relative; }
+        .right-sidebar { width:100px; flex:0 0 100px; display:flex; flex-direction:column; gap:10px; flex-shrink:0; position:relative; min-width:0; }
+        .vertical-tabs { width:100%; display:flex; flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:8px; margin-top:10px; z-index:20; }
+        .v-tab { display:block; width:100%; box-sizing:border-box; }
         
         .vertical-tabs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; z-index: 20; }
         .v-tab { background: var(--panel-bg); border: 2px solid var(--border-color); border-left: none; padding: 8px 10px; font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); cursor: pointer; box-shadow: 3px 3px 0 var(--accent-color), inset 0 0 5px var(--border-color); text-transform: lowercase; border-radius: 0 15px 15px 0; transition: all 0.2s;}
@@ -724,15 +731,36 @@
             .window-frame { width: min(74vw, 1020px); left: 49%; }
             .desktop-blade { width: clamp(330px, 30vw, 460px); right:-8vw; }
         }
-        @media (max-width: 760px) {
-            body { overflow: hidden; }
-            .window-frame { width: 96vw; height: 96vh; left: 50%; top: 50%; transform: translate(-50%,-50%); }
-            .left-sidebar, .right-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; }
-            .vertical-tabs { flex-direction: row; flex-wrap: wrap; }
-            .v-tab { border-radius: 10px; border-left: 2px solid var(--border-color); }
-            .desktop-blade { display: none; }
-            .bottom-grid { grid-template-columns: 1fr; }
-            .pixel-vector-flourish { opacity: .55; }
+        /* Keep the same three-column layout at laptop/tablet widths: content in the middle,
+           site navigation as a vertical rail on the RIGHT, never a row above the page. */
+        @media (max-width:1024px) {
+            body { overflow:hidden; }
+            .window-frame { width:96vw; height:96vh; left:50%; top:50%; transform:translate(-50%,-50%); }
+            #app-container { display:flex; flex-direction:row; align-items:stretch; gap:9px; padding:9px; min-width:0; min-height:0; }
+            .left-sidebar { width:clamp(125px,19vw,190px); flex:0 0 clamp(125px,19vw,190px); flex-direction:column; }
+            .center-column { flex:1 1 0%; width:0; min-width:0; min-height:0; }
+            .right-sidebar { width:92px; flex:0 0 92px; display:flex; flex-direction:column; }
+            .vertical-tabs { display:flex; flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:7px; margin-top:8px; }
+            .v-tab { width:100%; border-radius:0 12px 12px 0; border-left:0; padding:8px 6px; text-align:center; }
+            .main-content-box { width:100%; min-width:0; min-height:0; }
+            .desktop-blade { display:none; }
+            .bottom-grid { grid-template-columns:1fr; }
+            .pixel-vector-flourish { opacity:.55; }
+        }
+        @media (max-width:640px) {
+            .window-frame { width:100vw; height:100dvh; border-radius:0; }
+            #app-container { padding:6px; gap:6px; }
+            .left-sidebar { width:94px; flex:0 0 94px; }
+            .right-sidebar { width:70px; flex:0 0 70px; }
+            .vertical-tabs { gap:5px; }
+            .v-tab { font-size:.38rem; padding:7px 3px; overflow-wrap:anywhere; }
+            .profile-box { flex-direction:column; text-align:center; }
+            .profile-pic { width:54px; height:54px; flex-basis:54px; }
+            .main-content-box { padding:8px; }
+            .mspaint-toolbar { width:70px; flex-basis:70px; }
+            .mspaint-workspace { height:240px; }
+            .mspaint-palette { grid-template-columns:repeat(7,1fr); }
+            .food-log-box { margin-left:0; }
         }
         @media (max-width: 640px) {
             .window-frame { width: 100vw; height: 100dvh; border-radius:0; }
