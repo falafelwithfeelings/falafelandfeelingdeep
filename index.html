@@ -283,8 +283,8 @@
 
         /* ================= WINDOW FRAME ================= */
         .window-frame {
-            width: min(86vw, 1440px);
-            max-width: 1440px;
+            width: min(68vw, 1120px);
+            max-width: 1120px;
             height: 95vh;
             background-image: var(--bg-inside);
             background-size: cover;
@@ -348,10 +348,10 @@
         .win-btn.close { background: #ff4d4d; color: #fff; border-color: #fff; }
         .win-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
-        #app-container { display: flex; flex: 1; overflow-y: auto; overflow-x: hidden; padding: 15px; gap: 15px; border-radius: 0 0 12px 12px; }
+        #app-container { display: flex; flex: 1; overflow-y: auto; overflow-x: hidden; padding: 11px; gap: 10px; border-radius: 0 0 12px 12px; }
 
         /* ================= LEFT SIDEBAR ================= */
-        .left-sidebar { width: 200px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+        .left-sidebar { width: 190px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
         
         .profile-box { background: var(--panel-bg); border: 3px dashed var(--border-color); padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 15px; position:relative; min-height:100px; }
         .profile-pic { width: 76px; height: 76px; flex:0 0 76px; object-fit: cover; object-position:center; background:#ffe9f5; border: 2px solid var(--border-color); border-radius: 12px; display:block; }
@@ -499,7 +499,11 @@
         
         /* Akito Tamagotchi */
         .akito-box { background: var(--panel-bg); border: 2px solid #ccc; padding: 5px; box-shadow: 2px 2px 0 #aaa; border-radius: 8px; }
-        .akito-header { display: flex; justify-content: space-between; font-family: var(--font-pixel); font-size: 0.4rem; color: #87cefa; margin-bottom: 4px; }
+        .akito-header { display: flex; justify-content: space-between; align-items:center; flex-wrap:wrap; gap:4px; font-family: var(--font-pixel); font-size: 0.4rem; color: #87cefa; margin-bottom: 4px; }
+        .akito-shop-button { margin-left:auto; border:1px solid #fff; border-radius:7px; padding:4px 7px; background:linear-gradient(135deg,#ff9bce,#b88aff); color:#fff; font-family:var(--font-pixel); font-size:.36rem; cursor:pointer; box-shadow:2px 2px 0 rgba(139,75,149,.35); }
+        .akito-shop-button:hover { filter:brightness(1.06); transform:translateY(-2px); }
+        .akito-box.shop-opening { animation:akitoShopNudge .42s ease; }
+        @keyframes akitoShopNudge { 0%,100%{transform:translateX(0) scale(1)} 25%{transform:translateX(-3px) rotate(-1deg) scale(1.015)} 60%{transform:translateX(3px) rotate(1deg) scale(1.015)} }
         .akito-stats { display: flex; justify-content: space-between; font-family: var(--font-pixel); font-size: 0.4rem; color: var(--accent-color); margin-bottom: 5px; }
         .akito-main { display: flex; gap: 5px; }
         
@@ -544,7 +548,7 @@
         .akito-room.secret-found { animation: akitoSecretPop .65s ease-out; border-color: var(--accent-color); }
         
         /* ================= RIGHT SIDEBAR ================= */
-        .right-sidebar { width: 130px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; position: relative; }
+        .right-sidebar { width: 100px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; position: relative; }
         
         .vertical-tabs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; z-index: 20; }
         .v-tab { background: var(--panel-bg); border: 2px solid var(--border-color); border-left: none; padding: 8px 10px; font-family: var(--font-pixel); font-size: 0.5rem; color: var(--accent-color); cursor: pointer; box-shadow: 3px 3px 0 var(--accent-color), inset 0 0 5px var(--border-color); text-transform: lowercase; border-radius: 0 15px 15px 0; transition: all 0.2s;}
@@ -716,8 +720,8 @@
         .announcement-title { font-family: var(--font-pixel); font-size: 0.7rem; color: var(--accent-color); margin-top: 0; }
         .announcement-body { font-size: 1.1rem; }
 
-        @media (max-width: 1280px) and (min-width: 761px) {
-            .window-frame { width: min(86vw, 1180px); left: 50%; }
+        @media (max-width: 1280px) and (min-width: 1025px) {
+            .window-frame { width: min(74vw, 1020px); left: 49%; }
             .desktop-blade { width: clamp(330px, 30vw, 460px); right:-8vw; }
         }
         @media (max-width: 760px) {
@@ -750,7 +754,7 @@
 .sparkle-account-status{min-height:1.2em;margin:7px 0;color:#a13f83}.sparkle-account-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .sparkle-inventory-list{display:flex;flex-wrap:wrap;gap:6px}.sparkle-inventory-chip{padding:5px 8px;background:#fff;border:1px dashed #d89bc8;border-radius:8px;font-size:.9rem;color:#894a80}
 @media(max-width:760px){.sparkle-dock{right:10px;bottom:10px}.sparkle-dock button{font-size:.4rem}}
-    </style>    </style>
+    </style>
     <link rel="stylesheet" href="calendar.css">
 </head>
 <body data-mood="pink">
@@ -1039,6 +1043,7 @@
                                         <span>Name: Akito</span>
                                         <span>Born: 9-2026</span>
                                         <span>⚡ Energy</span>
+                                        <button type="button" class="akito-shop-button" onclick="openAkitoShop()" aria-label="Open Akito's shop">shop ✿</button>
                                     </div>
                                     <div class="akito-stats">
                                         <span>Mood: 💖 <span id="tama-mood">100</span></span>
@@ -1248,7 +1253,6 @@
                     <a class="v-tab" id="nav-about" onclick="switchView('about')">about</a>
                     <a class="v-tab" id="nav-contact" onclick="switchView('contact')">contact</a>
                     <a class="v-tab" id="nav-settings" onclick="switchView('settings')">settings ⚙️</a>
-                    <a class="v-tab" id="nav-shop" onclick="switchView('shop')">shop ✿</a>
                 </div>
                 <!-- Desktop Blade art now lives outside this program window. -->
             </aside>
@@ -2547,6 +2551,8 @@
             if (editUpdatesBtn) editUpdatesBtn.style.display = isAdmin ? 'inline' : 'none';
             renderBlinkies();
             renderFoodLog();
+            // The shop form is rendered separately; refresh it immediately when admin status changes.
+            if (typeof renderShopItems === 'function') renderShopItems();
         }
         function openSiteSettingsModal() {
             if (!isSiteAdmin()) { alert('Admin access is required to edit the webmaster corner.'); return; }
@@ -2812,6 +2818,21 @@
             if (viewName === 'blog') renderAllPosts();
             if (viewName === 'announcements') renderAnnouncements();
             if (viewName === 'shop') loadShopItems();
+        }
+
+        function openAkitoShop() {
+            const dialogue = document.getElementById('tama-dialogue');
+            const box = document.querySelector('.akito-box');
+            if (dialogue) dialogue.textContent = 'Akito: A shop? Finally, somewhere to spend your Miku Gems. Try not to bankrupt yourself.';
+            if (box) {
+                box.classList.remove('shop-opening');
+                void box.offsetWidth;
+                box.classList.add('shop-opening');
+            }
+            window.setTimeout(() => {
+                if (box) box.classList.remove('shop-opening');
+                switchView('shop');
+            }, 420);
         }
 
         async function renderAllPosts() {
