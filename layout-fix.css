@@ -59,13 +59,14 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
-  overflow: hidden !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   align-self: stretch !important;
   height: 100% !important;
   max-height: 100% !important;
   position: relative !important;
-  background: var(--panel-bg, #fff5fb) !important;
-  border-radius: 12px !important;
+  background: transparent !important;
+  border-radius: 0 !important;
 }
 
 #app-container > .right-sidebar {
@@ -88,13 +89,13 @@
 }
 
 .main-content-box {
-  flex: 1 1 auto !important;
-  flex-grow: 1 !important;
-  min-height: 0 !important;
+  flex: 0 0 auto !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  min-height: auto !important;
   height: auto !important;
   width: 100% !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+  overflow: visible !important;
   box-sizing: border-box !important;
   background: var(--panel-bg, #fff5fb) !important;
   background-image: none !important;
