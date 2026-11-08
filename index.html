@@ -791,6 +791,7 @@
 
         @media (max-width: 1280px) and (min-width: 1025px) {
             .window-frame { width: min(74vw, 1020px); left: 49%; }
+            .top-banner { font-size:clamp(.72rem,1.25vw,1.15rem); }
             .desktop-blade { width: clamp(330px, 30vw, 460px); right:-8vw; }
         }
         /* Keep the same three-column layout at laptop/tablet widths: content in the middle,
@@ -811,6 +812,7 @@
         }
         @media (max-width:640px) {
             .window-frame { width:100vw; height:100dvh; border-radius:0; }
+            .top-banner { font-size:.72rem; letter-spacing:0; padding:6px 1px; }
             #app-container { padding:6px; gap:6px; }
             .left-sidebar { width:94px; flex:0 0 94px; }
             .right-sidebar { width:70px; flex:0 0 70px; }
@@ -2087,6 +2089,7 @@
         let partyTimeout = null;
         let workInterval = null;
         let chaosHudInterval = null;
+        let arcadeTauntInterval = null;
         let activeAkitoMode = null;
         let akitoModeStarted = 0;
         let akitoModeDuration = 0;
@@ -2281,6 +2284,8 @@
             clearInterval(workInterval); workInterval = null;
             isPartying = false; isWorking = false;
             hideAkitoChaosHud();
+            clearInterval(arcadeTauntInterval); arcadeTauntInterval = null;
+            document.body.classList.remove('arcade-mode-active');
             document.getElementById('akito-room')?.classList.remove('party-mode');
             document.getElementById('tama-sprite')?.classList.remove('dancing');
             document.getElementById('tama-sprite')?.style.removeProperty('opacity');
@@ -2316,14 +2321,20 @@
             document.body.classList.add('akito-chaos-mode');
             document.getElementById('main-window').classList.add('neon-mode');
             setTamaDialogue(akitoReplies.arcade[Math.floor(Math.random() * akitoReplies.arcade.length)]);
-            showAkitoChaosHud('arcade', 12000);
+            document.body.classList.add('arcade-mode-active');
+            showAkitoChaosHud('arcade', 18000);
             let flashes = 0;
             const flashTimer = setInterval(() => {
-                akitoBurst(['VBS!','WOO!','♪','100','GO!!'][Math.floor(Math.random() * 5)]);
+                akitoBurst(['PERFECT!','VBS!','WOO!','♪','COMBO!','NO MISS!'][Math.floor(Math.random() * 6)]);
                 flashes++;
-                if (flashes >= 22 || activeAkitoMode !== 'arcade') clearInterval(flashTimer);
-            }, 280);
-            partyTimeout = setTimeout(() => finishAkitoMode(), 12000);
+                if (flashes >= 34 || activeAkitoMode !== 'arcade') clearInterval(flashTimer);
+            }, 460);
+            arcadeTauntInterval = setInterval(() => {
+                if (activeAkitoMode !== 'arcade') return;
+                setTamaDialogue(["You call that rhythm? Watch a professional.","I'm carrying this entire arcade. Again.","No misses. Obviously. Keep up.","Please stop staring and admire the footwork.","You can clap. I won't judge. Much."][Math.floor(Math.random()*5)]);
+            }, 3600);
+            akitoBurst('VBS OVERDRIVE!');
+            partyTimeout = setTimeout(() => finishAkitoMode(), 18000);
         }
         function aggressiveWork() {
             if (activeAkitoMode) return;
@@ -2387,6 +2398,25 @@
         }
         updateTamaUI();
 
+        let akitoHungerTicks = 0;
+        setInterval(() => {
+            if (tama.belly > 0) {
+                tama.belly = Math.max(0, tama.belly - 1);
+                if (tama.belly === 0) setTamaDialogue("I'm starving. This is a five-star establishment and nobody has fed me.");
+                updateTamaUI();
+            } else {
+                akitoHungerTicks++;
+                if (akitoHungerTicks % 3 === 0 && !activeAkitoMode) {
+                    setTamaDialogue(["You know I can hear my stomach, right?","Hello? Pancakes? Anybody?","I am one inconvenience away from eating the furniture."][Math.floor(Math.random()*3)]);
+                }
+            }
+        }, 5000);
+        setInterval(() => {
+            tama.mood = Math.max(0, tama.mood - 10);
+            if (tama.mood <= 20 && !activeAkitoMode) setTamaDialogue(["I'm not sulking. I'm expressing artistic disappointment.","My mood is at "+tama.mood+". Fix that.","You have twenty seconds to become interesting again."][Math.floor(Math.random()*3)]);
+            updateTamaUI();
+        }, 20000);
+
         // ================= SHARED SITE CONFIG =================
         // Deploy falafelverse-shared-config-worker.js, then paste its URL below.
         // The administrator password lives only in the Worker secret and in memory while logged in.
@@ -2407,6 +2437,7 @@
                 "I love art, and I'm going to be studying animation at my dream school soon YAYAYAYYYYY (I NEED A WAY TO PAY FOR IT THO HELP) I used to be a trad artist, but now, I seem to be getting more used to digital art. I also love journaling and collecting CD's, and drinking ramune."
             ],
             bannerImageUrl: REPO_RAW + 'EMU%20BANNER.jpe',
+            postGemReward: 5,
             blinkies: defaultBlinkies.slice(),
             foodLog: [
                 { name: 'Strawberry Roll', recipe: 'Sponge cake, cream, strawberries.', emoji: '🍰' },
@@ -2440,6 +2471,7 @@
             merged.profileMood = String(merged.profileMood || '').slice(0,120);
             merged.profileImageUrl = validHttpUrl(merged.profileImageUrl) ? merged.profileImageUrl : DEFAULT_SITE_CONFIG.profileImageUrl;
             merged.bannerImageUrl = validHttpUrl(merged.bannerImageUrl) ? merged.bannerImageUrl : DEFAULT_SITE_CONFIG.bannerImageUrl;
+            merged.postGemReward = Math.max(0,Math.min(1000,Math.floor(Number.isFinite(Number(source.postGemReward))?Number(source.postGemReward):DEFAULT_SITE_CONFIG.postGemReward)));
             return merged;
         }
         function validHttpUrl(value) {
@@ -2672,6 +2704,7 @@
             document.getElementById('site-webmaster-paragraph-one').value = siteConfig.webmasterParagraphs[0] || '';
             document.getElementById('site-webmaster-paragraph-two').value = siteConfig.webmasterParagraphs[1] || '';
             document.getElementById('site-banner-image').value = siteConfig.bannerImageUrl;
+            document.getElementById('site-post-gem-reward').value = String(siteConfig.postGemReward ?? 5);
             setConfigStatus(siteConfigLoadedFromServer ? 'Connected to shared site settings. Saves appear for visitors after the backend updates.' : 'Using the current cached/default copy. Connect the shared Worker to publish edits for everyone.');
             document.getElementById('site-settings-modal').style.display = 'flex';
         }
@@ -2688,6 +2721,7 @@
                 profileImageUrl:profileImage,
                 webmasterParagraphs:[document.getElementById('site-webmaster-paragraph-one').value,document.getElementById('site-webmaster-paragraph-two').value],
                 bannerImageUrl:bannerImage,
+                postGemReward:Math.max(0,Math.min(1000,Math.floor(Number(document.getElementById('site-post-gem-reward').value)||0))),
                 blinkies:blinkieItems,
                 foodLog
             });
@@ -2775,7 +2809,12 @@
                 if(btn) btn.innerText = "▶";
                 clearInterval(progressInterval);
             } else if (event.data === YT.PlayerState.ENDED) {
-                if (!isLooping) {
+                if (isLooping) {
+                    if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
+                        audioPlayer.playVideoAt(currentTrack);
+                        window.setTimeout(() => { if (audioPlayer && isLooping) audioPlayer.playVideo(); }, 180);
+                    }
+                } else {
                     skipAudioTrack(1);
                 }
             }
@@ -2799,11 +2838,12 @@
         function toggleLoop() {
             isLooping = !isLooping;
             const btn = document.getElementById('loop-btn');
+            if(btn) btn.setAttribute('aria-pressed', String(isLooping));
             if(isLooping) {
-                btn.classList.add('active-loop');
+                if(btn) btn.classList.add('active-loop');
                 if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(true);
             } else {
-                btn.classList.remove('active-loop');
+                if(btn) btn.classList.remove('active-loop');
                 if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(false);
             }
         }
@@ -3041,10 +3081,11 @@
 
             const rewardPanel=document.createElement('div');rewardPanel.style.cssText='margin-top:20px;padding:13px;border:2px dashed var(--border-color);border-radius:12px;background:rgba(255,246,252,.92);';
             const rewardTitle=document.createElement('strong');rewardTitle.textContent='📚 Finished reading?';rewardTitle.style.color='var(--accent-color)';
-            const rewardCopy=document.createElement('p');rewardCopy.textContent='Collect 5 Miku Gems for this post. Each post rewards your account once.';
+            const rewardAmount=Math.max(0,Number(siteConfig.postGemReward??5));
+            const rewardCopy=document.createElement('p');rewardCopy.textContent='Collect '+rewardAmount+' Miku Gems for this post. Each post rewards your account once.';
             const rewardButton=document.createElement('button');rewardButton.type='button';rewardButton.className='modal-btn save';rewardButton.id='reader-reward-button';
             const alreadyRewarded=!!(sparkleAccount&&Array.isArray(sparkleAccount.claimedPosts)&&sparkleAccount.claimedPosts.includes(currentReaderPostKey));
-            rewardButton.textContent=alreadyRewarded?'✓ Already collected':'Finish reading · +5 Miku Gems';rewardButton.disabled=alreadyRewarded;rewardButton.addEventListener('click',claimPostReward);
+            rewardButton.textContent=alreadyRewarded?'✓ Already collected':'Finish reading · +'+rewardAmount+' Miku Gems';rewardButton.disabled=alreadyRewarded;rewardButton.addEventListener('click',claimPostReward);
             const rewardStatus=document.createElement('span');rewardStatus.id='reader-reward-status';rewardStatus.style.cssText='display:block;margin-top:6px;color:var(--text-light)';
             rewardStatus.textContent=alreadyRewarded?'You already collected this reward.':(sparkleAccount?'Your reward is ready when you finish.':'Log in with your Sparkle Code to collect it.');
             rewardPanel.append(rewardTitle,rewardCopy,rewardButton,rewardStatus);document.getElementById('reader-social-bar-container').prepend(rewardPanel);
@@ -3272,7 +3313,7 @@
         function setSparkleStatus(message,error=false){const el=document.getElementById('sparkle-account-status');if(el){el.textContent=message||'';el.style.color=error?'#b43b61':'#a13f83';}}
         function updateSparkleUI(){
           const dock=document.getElementById('sparkle-dock-balance'),summary=document.getElementById('sparkle-account-summary'),create=document.getElementById('sparkle-create-panel');
-          if(dock)dock.textContent=sparkleAccount?(Number(sparkleAccount.gems)||0)+' Miku Gems ✧':'0 Miku Gems · sign in to save';
+          if(typeof updateShopBalance==='function') updateShopBalance();if(dock)dock.textContent=sparkleAccount?(Number(sparkleAccount.gems)||0)+' Miku Gems ✧':'0 Miku Gems · sign in to save';
           if(summary)summary.hidden=!sparkleAccount;if(create)create.hidden=!!sparkleAccount;
           const alias=document.getElementById('sparkle-account-alias'),code=document.getElementById('sparkle-current-code'),gems=document.getElementById('sparkle-account-gems');
           if(alias)alias.textContent=sparkleAccount?.alias||'';if(code)code.textContent=currentSparkleCode();if(gems)gems.textContent=(Number(sparkleAccount?.gems)||0)+' Miku Gems';
@@ -3286,7 +3327,7 @@
         async function loadSparkleAccount(){const code=currentSparkleCode();if(!code){updateSparkleUI();return;}try{const data=await sparkleRequest('/account/me','GET',null,code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||visitorAlias||'Anonymous';localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));}catch(error){try{sparkleAccount=JSON.parse(localStorage.getItem('falafel_sparkle_user_cache')||'null');}catch(_){sparkleAccount=null;}console.warn('Sparkle account refresh failed:',error);}updateSparkleUI();}
         async function copySparkleCode(){const code=currentSparkleCode();if(!code)return;try{await navigator.clipboard.writeText(code);setSparkleStatus('Copied! Keep it private.');}catch(_){window.prompt('Copy your private Sparkle Code:',code);}}
         function logoutSparkleAccount(){try{localStorage.removeItem(SPARKLE_STORAGE_KEY);localStorage.removeItem('falafel_sparkle_user_cache');}catch(_){}sparkleAccount=null;updateSparkleUI();setSparkleStatus('Logged out here. Your saved account remains on the server.');}
-        async function claimPostReward(){const status=document.getElementById('reader-reward-status');if(!sparkleAccount){if(status)status.textContent='Sign in with your Sparkle Code to collect your reward.';openSparkleAccount('login');return;}if(!currentReaderPostKey)return;const button=document.getElementById('reader-reward-button');if(button)button.disabled=true;if(status)status.textContent='Checking your reading reward…';try{const data=await sparkleRequest('/account/reward','POST',{postId:currentReaderPostKey});sparkleAccount=data.user;localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();if(status)status.textContent=data.awarded?'You earned 5 Miku Gems! ✨':'You already collected this post’s 5 Miku Gems.';if(button)button.textContent=data.awarded?'✓ 5 Miku Gems collected':'✓ Already collected';}catch(error){if(status)status.textContent=error.message||'The reward could not be collected.';if(button)button.disabled=false;}}
+        async function claimPostReward(){const status=document.getElementById('reader-reward-status');if(!sparkleAccount){if(status)status.textContent='Sign in with your Sparkle Code to collect your reward.';openSparkleAccount('login');return;}if(!currentReaderPostKey)return;const button=document.getElementById('reader-reward-button');if(button)button.disabled=true;if(status)status.textContent='Checking your reading reward…';try{const data=await sparkleRequest('/account/reward','POST',{postId:currentReaderPostKey});sparkleAccount=data.user;localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();if(status)status.textContent=data.awarded?'You earned '+data.amount+' Miku Gems! ✨':'You already collected this post’s reward.';if(button)button.textContent=data.awarded?'✓ '+data.amount+' Miku Gems collected':'✓ Already collected';}catch(error){if(status)status.textContent=error.message||'The reward could not be collected.';if(button)button.disabled=false;}}
         async function toggleLike(index, btn) {
             const data = await getBinData();
             const posts = Array.isArray(data.posts) ? data.posts : [];
@@ -3328,6 +3369,9 @@
 
         // ================= COMMUNITY SHOP =================
         let shopItemsCache = [];
+        let currentShopCategory = 'All';
+        let currentShopPreviewId = '';
+        let shopSlideTimer = null;
 
         function shopAdminActive() {
             return typeof isSiteAdmin === 'function' && isSiteAdmin();
@@ -3344,8 +3388,111 @@
                 if (node) node.value = '';
             });
             const category = document.getElementById('shop-item-category');
+            const placement = document.getElementById('shop-item-placement');
             if (category) category.value = 'Hats';
+            if (placement) placement.value = 'hat';
             setShopStatus('Ready for a new listing.', true);
+        }
+
+        function switchView(viewName) {
+            const previous = document.querySelector('.view-section.active');
+            const targetView = document.getElementById('view-' + viewName);
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active','shop-slide-left','shop-slide-enter-right'));
+            document.querySelectorAll('.v-tab').forEach(a => a.classList.remove('active'));
+            if (targetView) {
+                targetView.classList.add('active');
+                if (viewName === 'home' && previous?.id === 'view-shop') {
+                    targetView.classList.add('shop-slide-enter-right');
+                    window.setTimeout(() => targetView.classList.remove('shop-slide-enter-right'), 520);
+                }
+            }
+            const navEl = document.getElementById('nav-' + viewName);
+            if (navEl) navEl.classList.add('active');
+            if (viewName === 'blog') renderAllPosts();
+            if (viewName === 'announcements') renderAnnouncements();
+            if (viewName === 'shop') { currentShopCategory = 'All'; loadShopItems(); }
+        }
+
+        function openAkitoShop() {
+            const dialogue = document.getElementById('tama-dialogue');
+            const box = document.querySelector('.akito-box');
+            if (dialogue) dialogue.textContent = 'Akito: Finally. Fashion. Please try to have better taste than the last person.';
+            if (box) {
+                box.classList.remove('shop-opening');
+                void box.offsetWidth;
+                box.classList.add('shop-opening');
+            }
+            const current = document.querySelector('.view-section.active');
+            if (!current || current.id === 'view-shop') { switchView('shop'); return; }
+            current.classList.add('shop-slide-left');
+            clearTimeout(shopSlideTimer);
+            shopSlideTimer = window.setTimeout(() => switchView('shop'), 400);
+        }
+
+        function closeAkitoShop() {
+            const dialogue = document.getElementById('tama-dialogue');
+            if (dialogue) dialogue.textContent = 'Akito: Back already? I was just starting to judge your purchases.';
+            switchView('home');
+        }
+
+        function filterShopCategory(category) {
+            currentShopCategory = category;
+            document.querySelectorAll('.shop-category-tabs button').forEach(btn => btn.classList.toggle('active', btn.dataset.category === category));
+            renderShopItems();
+        }
+
+        function updateShopBalance() {
+            const balance = document.getElementById('shop-gem-balance');
+            if (balance) balance.textContent = sparkleAccount ? (Number(sparkleAccount.gems)||0)+' Miku Gems ✧' : 'Sign in for Miku Gems';
+            const purchase = document.getElementById('shop-purchase-button');
+            if (!purchase) return;
+            const item = shopItemsCache.find(entry => entry.id === currentShopPreviewId);
+            if (!item) { purchase.disabled = true; purchase.textContent = 'Choose an item first'; return; }
+            const owned = !!(sparkleAccount && Array.isArray(sparkleAccount.inventory) && sparkleAccount.inventory.includes(item.id));
+            const price = Number.isInteger(Number(item.priceGems)) ? Number(item.priceGems) : null;
+            if (owned) { purchase.disabled = true; purchase.textContent = '✓ Already in your wardrobe'; }
+            else if (!sparkleAccount) { purchase.disabled = false; purchase.textContent = 'Log in to spend Miku Gems'; }
+            else if (price === null) { purchase.disabled = true; purchase.textContent = 'Ask the webmaster to price this'; }
+            else { purchase.disabled = Number(sparkleAccount.gems||0) < price; purchase.textContent = purchase.disabled ? 'Not enough Miku Gems' : 'Buy for '+price+' Miku Gems'; }
+        }
+
+        function previewShopItem(id) {
+            const item = shopItemsCache.find(entry => entry.id === id);
+            if (!item) return;
+            currentShopPreviewId = id;
+            const stage = document.getElementById('shop-preview-stage');
+            const overlay = document.getElementById('shop-item-preview-image');
+            const name = document.getElementById('shop-preview-name');
+            const description = document.getElementById('shop-preview-description');
+            const hint = document.getElementById('shop-preview-hint');
+            const placement = item.placement || (item.category === 'Backgrounds' ? 'background' : 'hat');
+            if (stage) {
+                stage.style.backgroundImage = placement === 'background' || item.category === 'Backgrounds'
+                    ? 'url('+JSON.stringify(item.imageUrl)+')'
+                    : 'url("https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Otori%20Emu%E2%80%99s%20Bedroom.jpe")';
+            }
+            if (overlay) {
+                overlay.className = 'shop-item-preview-image';
+                overlay.removeAttribute('src');
+                if (placement !== 'background' && item.imageUrl && validHttpUrl(item.imageUrl)) {
+                    overlay.src = item.imageUrl;
+                    overlay.alt = item.name || 'Shop item preview';
+                    overlay.classList.add('placement-'+placement);
+                }
+            }
+            if (name) name.textContent = item.name || 'Mystery item';
+            if (description) description.textContent = item.description || 'A very mysterious fashion decision.';
+            if (hint) hint.textContent = placement === 'background' ? 'Room background preview ✧' : 'Preview placement: '+placement+' ✧';
+            const dialogue = document.getElementById('tama-dialogue');
+            const remarks = {
+                Hats:['That hat? Bold. Not necessarily good, but bold.','I suppose my hair can forgive this.','You picked that? I will be contacting my stylist.'],
+                Cosmetics:['I look expensive. Finally, some standards.','Subtle. Unlike your decision-making.','Okay, that actually works. Don’t get smug.'],
+                Accessories:['Is this necessary? ...Obviously, yes.','I could pull this off. You? Jury is out.','Not bad. I said not bad, not amazing.'],
+                Backgrounds:['A new room? I was getting tired of those walls.','This place is almost as stylish as me. Almost.','Do I get a window with a view?']
+            };
+            const lines = remarks[item.category] || ['Interesting choice. I have notes.','I will allow it. This time.'];
+            if (dialogue) dialogue.textContent = 'Akito: '+lines[Math.floor(Math.random()*lines.length)];
+            updateShopBalance();
         }
 
         function renderShopItems() {
@@ -3356,76 +3503,44 @@
             const admin = shopAdminActive();
             if (adminPanel) adminPanel.hidden = !admin;
             grid.replaceChildren();
-
-            if (!shopItemsCache.length) {
-                if (status) status.textContent = admin
-                    ? 'The shelves are empty! Add the first little item above.'
-                    : 'The shop is still being stocked. Come back soon! ✿';
+            const visibleItems = currentShopCategory === 'All' ? shopItemsCache : shopItemsCache.filter(item => item.category === currentShopCategory);
+            if (!visibleItems.length) {
+                if (status) status.textContent = admin ? 'The shelves are empty in this category. Add the first little item above.' : 'No items in this section yet. Akito is being patient. Sort of.';
+                updateShopBalance();
                 return;
             }
-            if (status) status.textContent = shopItemsCache.length + ' little item' + (shopItemsCache.length === 1 ? '' : 's') + ' on the shelf ✧';
-
-            shopItemsCache.forEach(item => {
+            if (status) status.textContent = visibleItems.length+' little item'+(visibleItems.length===1?'':'s')+' on the shelf ✧';
+            visibleItems.forEach(item => {
                 const card = document.createElement('article');
                 card.className = 'shop-card';
-
                 const imageWrap = document.createElement('div');
                 imageWrap.className = 'shop-card-image-wrap';
-                if (item.imageUrl && validHttpUrl(item.imageUrl)) {
-                    const image = document.createElement('img');
-                    image.className = 'shop-card-image';
-                    image.src = item.imageUrl;
-                    image.alt = item.name ? item.name + ' product picture' : 'Shop item picture';
-                    image.loading = 'lazy';
-                    image.onerror = () => {
-                        image.remove();
-                        const placeholder = document.createElement('div');
-                        placeholder.className = 'shop-card-placeholder';
-                        placeholder.textContent = 'Picture could not load ✧';
-                        imageWrap.appendChild(placeholder);
-                    };
-                    imageWrap.appendChild(image);
-                } else {
-                    const placeholder = document.createElement('div');
-                    placeholder.className = 'shop-card-placeholder';
-                    placeholder.textContent = '✿ no picture yet ✿';
-                    imageWrap.appendChild(placeholder);
-                }
-
-                const title = document.createElement('h3');
-                title.textContent = item.name || 'Untitled item';
-                const description = document.createElement('p');
-                description.className = 'shop-card-description';
-                description.textContent = item.description || 'A little mystery item.';
-                const meta = document.createElement('div');
-                meta.className = 'shop-card-meta';
-                const category = document.createElement('span');
-                category.className = 'shop-category';
-                category.textContent = item.category || 'Other';
-                const price = document.createElement('span');
-                price.className = 'shop-price';
-                price.textContent = item.price || 'Price TBA';
-                meta.append(category, price);
-                card.append(imageWrap, title, description, meta);
-
+                const image = document.createElement('img');
+                image.className = 'shop-card-image';
+                image.src = item.imageUrl || '';
+                image.alt = (item.name || 'Shop item')+' preview';
+                image.loading = 'lazy';
+                image.onerror = () => { image.remove(); const fallback=document.createElement('span'); fallback.className='shop-card-placeholder'; fallback.textContent='Picture unavailable ✧'; imageWrap.appendChild(fallback); };
+                imageWrap.appendChild(image);
+                const title = document.createElement('h3'); title.textContent = item.name || 'Untitled item';
+                const description = document.createElement('p'); description.className='shop-card-description'; description.textContent=item.description || 'A little mystery item.';
+                const meta = document.createElement('div'); meta.className='shop-card-meta';
+                const category = document.createElement('span'); category.className='shop-category'; category.textContent=item.category || 'Other';
+                const price = document.createElement('span'); price.className='shop-price'; price.textContent=Number.isInteger(item.priceGems) ? item.priceGems+' Gems' : 'Needs Gem price';
+                meta.append(category,price);
+                const actions = document.createElement('div'); actions.className='shop-card-actions';
+                const preview = document.createElement('button'); preview.type='button'; preview.className='modal-btn save'; preview.textContent='Try it on'; preview.addEventListener('click',()=>previewShopItem(item.id));
+                actions.appendChild(preview);
+                card.append(imageWrap,title,description,meta,actions);
                 if (admin) {
-                    const actions = document.createElement('div');
-                    actions.className = 'shop-card-admin-actions';
-                    const edit = document.createElement('button');
-                    edit.type = 'button';
-                    edit.className = 'modal-btn cancel';
-                    edit.textContent = 'Edit';
-                    edit.addEventListener('click', () => editShopItem(item.id));
-                    const remove = document.createElement('button');
-                    remove.type = 'button';
-                    remove.className = 'modal-btn cancel';
-                    remove.textContent = 'Remove';
-                    remove.addEventListener('click', () => deleteShopItem(item.id));
-                    actions.append(edit, remove);
-                    card.appendChild(actions);
+                    const edit = document.createElement('button'); edit.type='button'; edit.className='modal-btn cancel'; edit.textContent='Edit'; edit.addEventListener('click',()=>editShopItem(item.id));
+                    const remove = document.createElement('button'); remove.type='button'; remove.className='modal-btn cancel'; remove.textContent='Remove'; remove.addEventListener('click',()=>deleteShopItem(item.id));
+                    actions.append(edit,remove);
                 }
                 grid.appendChild(card);
             });
+            if (currentShopPreviewId && shopItemsCache.some(item=>item.id===currentShopPreviewId)) previewShopItem(currentShopPreviewId);
+            updateShopBalance();
         }
 
         async function loadShopItems() {
@@ -3434,11 +3549,12 @@
             status.textContent = 'Loading the little shelves…';
             try {
                 if (!sharedApiIsConfigured()) throw new Error('The shared Worker is not configured.');
-                const response = await fetch(sharedApiUrl('/shop'), { method: 'GET', cache: 'no-store' });
+                const response = await fetch(sharedApiUrl('/shop'), {method:'GET',cache:'no-store'});
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || 'Shop could not load.');
                 shopItemsCache = Array.isArray(data.items) ? data.items : [];
                 renderShopItems();
+                updateSparkleUI();
             } catch (error) {
                 status.textContent = error.message || 'The shop could not connect to its shared storage.';
                 console.warn('Falafelverse shop:', error);
@@ -3452,10 +3568,11 @@
             document.getElementById('shop-item-id').value = item.id;
             document.getElementById('shop-item-name').value = item.name || '';
             document.getElementById('shop-item-image').value = item.imageUrl || '';
-            document.getElementById('shop-item-price').value = item.price || '';
+            document.getElementById('shop-item-price').value = Number.isInteger(item.priceGems) ? item.priceGems : '';
             document.getElementById('shop-item-description').value = item.description || '';
-            document.getElementById('shop-item-category').value = ['Hats','Cosmetics','Accessories','Other'].includes(item.category) ? item.category : 'Other';
-            setShopStatus('Editing "' + item.name + '". Save when ready.', true);
+            document.getElementById('shop-item-category').value = ['Hats','Cosmetics','Accessories','Backgrounds','Other'].includes(item.category) ? item.category : 'Other';
+            document.getElementById('shop-item-placement').value = ['hat','face','neck','body','hand','background'].includes(item.placement) ? item.placement : 'hat';
+            setShopStatus('Editing "'+item.name+'". Save when ready.',true);
             document.getElementById('shop-item-name').focus();
         }
 
@@ -3464,31 +3581,53 @@
             const id = document.getElementById('shop-item-id').value.trim();
             const name = document.getElementById('shop-item-name').value.trim();
             const imageUrl = document.getElementById('shop-item-image').value.trim();
-            const price = document.getElementById('shop-item-price').value.trim();
+            const priceGems = Number(document.getElementById('shop-item-price').value);
             const description = document.getElementById('shop-item-description').value.trim();
             const category = document.getElementById('shop-item-category').value;
+            const placement = document.getElementById('shop-item-placement').value;
             if (!name) return alert('Give the item a name first!');
             if (!validHttpUrl(imageUrl)) return alert('Please paste a full http:// or https:// picture URL.');
-            if (!price) return alert('Add a price (or write "Price TBA").');
+            if (!Number.isInteger(priceGems)||priceGems<0||priceGems>1000000) return alert('Set a whole-number Miku Gem price (0–1,000,000).');
             const button = document.getElementById('shop-save-button');
             button.disabled = true;
             try {
                 const response = await fetch(sharedApiUrl('/shop'), {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-Admin-Password': sharedAdminPassword },
-                    body: JSON.stringify({ id, name, imageUrl, price, description, category })
+                    method:'POST',
+                    headers:{'Content-Type':'application/json','X-Admin-Password':sharedAdminPassword},
+                    body:JSON.stringify({id,name,imageUrl,priceGems,description,category,placement})
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error || 'The item could not be saved.');
                 shopItemsCache = Array.isArray(result.items) ? result.items : shopItemsCache;
                 clearShopForm();
                 renderShopItems();
-                setShopStatus('Item saved for everyone to see! ✨', true);
+                setShopStatus('Item saved for everyone to see! ✨',true);
             } catch (error) {
-                setShopStatus(error.message || 'Could not save this item.', true);
-            } finally {
-                button.disabled = false;
-            }
+                setShopStatus(error.message || 'Could not save this item.',true);
+            } finally { button.disabled = false; }
+        }
+
+        async function buyShopItem() {
+            const item = shopItemsCache.find(entry => entry.id === currentShopPreviewId);
+            if (!item) return;
+            if (!sparkleAccount) { openSparkleAccount('login'); setShopStatus('Log in with your Sparkle Code to spend Miku Gems.'); return; }
+            if (Array.isArray(sparkleAccount.inventory) && sparkleAccount.inventory.includes(item.id)) { updateShopBalance(); return; }
+            const button = document.getElementById('shop-purchase-button');
+            if (button) { button.disabled = true; button.textContent = 'Processing your Gems…'; }
+            try {
+                const data = await sparkleRequest('/shop/purchase','POST',{itemId:item.id,requestId:crypto.randomUUID()});
+                sparkleAccount = data.user;
+                localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));
+                updateSparkleUI();
+                updateShopBalance();
+                if (data.purchased) {
+                    setShopStatus('You got '+item.name+'! Akito is already judging the outfit.');
+                    const dialogue = document.getElementById('tama-dialogue');
+                    if (dialogue) dialogue.textContent = 'Akito: Hmph. Good purchase. Don’t make me say it twice.';
+                } else if (data.alreadyOwned) setShopStatus('You already own this item.');
+            } catch (error) {
+                setShopStatus(error.message || 'The Gem purchase could not be completed.');
+            } finally { updateShopBalance(); }
         }
 
         async function deleteShopItem(id) {
@@ -3496,19 +3635,16 @@
             if (!confirm('Remove this item from the shop?')) return;
             try {
                 const response = await fetch(sharedApiUrl('/shop/' + encodeURIComponent(id)), {
-                    method: 'DELETE',
-                    headers: { 'X-Admin-Password': sharedAdminPassword }
+                    method:'DELETE', headers:{'X-Admin-Password':sharedAdminPassword}
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error || 'The item could not be removed.');
-                shopItemsCache = Array.isArray(result.items) ? result.items : shopItemsCache.filter(item => item.id !== id);
+                shopItemsCache = Array.isArray(result.items) ? result.items : shopItemsCache.filter(item=>item.id!==id);
+                if (currentShopPreviewId === id) { currentShopPreviewId=''; updateShopBalance(); }
                 renderShopItems();
-                setShopStatus('Item removed from the shared shop.', true);
-            } catch (error) {
-                setShopStatus(error.message || 'Could not remove the item.', true);
-            }
+                setShopStatus('Item removed from the shared shop.',true);
+            } catch (error) { setShopStatus(error.message || 'Could not remove the item.',true); }
         }
-
 
         window.addEventListener('DOMContentLoaded', async () => {
             checkAdminStateUI();
