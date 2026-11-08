@@ -3558,6 +3558,11 @@
 
         async function saveBinData(payload = {}) {
             const existing = await getBinData();
+            // Do not publish an incomplete cache over the legacy record if its import failed.
+            if (blogLoadError && (!Array.isArray(existing.posts) || existing.posts.length === 0)) {
+                console.warn('Shared blog save paused to protect posts that have not been imported yet.');
+                return false;
+            }
             const nextData = {
                 ...existing,
                 ...payload,
