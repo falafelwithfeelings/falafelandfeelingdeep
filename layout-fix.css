@@ -3,8 +3,11 @@
 .window-frame {
   display: flex !important;
   flex-direction: column !important;
-  height: 95vh !important;
-  max-height: 95vh !important;
+  height: 95vh;
+  min-height: min(420px, 72vh);
+  max-height: 96vh !important;
+  min-width: min(420px, 96vw) !important;
+  max-width: 96vw !important;
   overflow: hidden !important;
 }
 
@@ -14,10 +17,17 @@
 
 .pixel-vector-flourish {
   position: absolute !important;
+  inset: -2px !important;
   pointer-events: none !important;
-  flex: 0 0 0 !important;
-  height: 0 !important;
-  width: 0 !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  width: auto !important;
+  z-index: 55 !important;
+}
+.pixel-vector-flourish svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 #app-container {
@@ -27,8 +37,8 @@
   align-items: stretch !important;
   flex: 1 1 auto !important;
   min-height: 0 !important;
-  height: calc(95vh - 26px) !important;
-  max-height: calc(95vh - 26px) !important;
+  height: auto !important;
+  max-height: none !important;
   padding: 10px !important;
   gap: 10px !important;
   box-sizing: border-box !important;
@@ -143,4 +153,100 @@
 .v-tab:hover {
   filter: brightness(1.08) !important;
   color: #fff !important;
+}
+
+
+/* Windows Media Player chrome follows the selected Falafelverse mood. */
+.wmp-window {
+  background: var(--panel-bg) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: inset -2px -2px 0 color-mix(in srgb,var(--border-color) 48%,#555), inset 2px 2px 0 #fff !important;
+  transition: background .25s,border-color .25s,box-shadow .25s;
+}
+.wmp-titlebar {
+  background: linear-gradient(90deg,color-mix(in srgb,var(--accent-color) 72%,#18152a),var(--accent-color) 58%,color-mix(in srgb,var(--accent-color) 72%,#18152a)) !important;
+}
+.wmp-title-controls span {
+  color: var(--text-main) !important;
+  background: linear-gradient(#fff,var(--panel-bg)) !important;
+  border-color: var(--border-color) !important;
+}
+.wmp-menubar {
+  color: var(--text-main) !important;
+  background: linear-gradient(color-mix(in srgb,var(--panel-bg) 70%,#fff),var(--panel-bg)) !important;
+  border-color: var(--border-color) !important;
+}
+.wmp-screen { border-color: var(--border-color) !important; }
+.wmp-statusbar {
+  color: var(--text-main) !important;
+  background: linear-gradient(var(--panel-bg),color-mix(in srgb,var(--panel-bg) 76%,var(--border-color))) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* More vector threads, ornaments and animated stars on the existing SVG. */
+.pixel-vector-flourish .vector-ornament {
+  fill:none; stroke:var(--accent-color); stroke-width:2.4;
+  stroke-linecap:round; stroke-dasharray:5 8; opacity:.9;
+  animation:vectorSweep 11s linear infinite reverse;
+}
+.pixel-vector-flourish .vector-orbit {
+  fill:none; stroke:url(#falafelVectorGradient); stroke-width:2;
+  stroke-linecap:round; stroke-dasharray:2 8; opacity:.9;
+  animation:vectorSweep 7s linear infinite;
+}
+.pixel-vector-flourish .vector-star-cluster {
+  fill:#fff; stroke:var(--accent-color); stroke-width:1.4;
+  filter:drop-shadow(0 0 4px var(--accent-color));
+  transform-origin:center; animation:vectorTwinkle 3.2s ease-in-out infinite alternate;
+}
+@keyframes vectorTwinkle {
+  from { opacity:.45; transform:scale(.86); }
+  to { opacity:1; transform:scale(1.12); }
+}
+
+/* Header detail editor rows. */
+.site-header-fields-editor { display:flex; flex-direction:column; gap:7px; margin:7px 0 10px; }
+.webmaster-field-editor-row {
+  display:grid; grid-template-columns:54px minmax(115px,.8fr) minmax(150px,1.4fr) 38px;
+  gap:6px; align-items:center; padding:6px;
+  border:1px dashed var(--border-color); border-radius:9px;
+  background:color-mix(in srgb,var(--panel-bg) 88%,#fff);
+}
+.webmaster-field-editor-row input {
+  width:100%; min-width:0; margin:0; padding:7px 6px;
+  border:1px solid var(--border-color); border-radius:6px;
+  background:#fff; color:#38243a;
+}
+.webmaster-field-remove { min-width:32px; padding:6px !important; }
+.webmaster-editor-help { margin:2px 0 8px; color:var(--text-light); font-size:.95rem; line-height:1.15; }
+.about-favorite-emoji { display:inline-block; min-width:1.5em; }
+.sparkle-sync-status {
+  margin:4px 0 8px; padding:6px 9px; border:1px dashed var(--border-color);
+  border-radius:8px; color:var(--text-light); background:var(--panel-bg); font-size:.95rem;
+}
+
+/* Bottom-right resize grip. */
+.window-resize-handle {
+  position:absolute; right:2px; bottom:2px; z-index:80;
+  width:25px; height:25px; display:grid;
+  grid-template-columns:repeat(3,3px); grid-template-rows:repeat(3,3px);
+  gap:3px; align-content:end; justify-content:end; padding:4px;
+  border:1px solid rgba(255,255,255,.9); border-radius:7px 0 0 0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),color-mix(in srgb,var(--accent-color) 36%,transparent));
+  box-shadow:-1px -1px 0 rgba(0,0,0,.15);
+  cursor:nwse-resize !important; touch-action:none;
+}
+.window-resize-handle span {
+  width:3px; height:3px; border-radius:1px; background:var(--accent-color);
+  box-shadow:0 0 3px #fff; pointer-events:none;
+}
+.window-resize-handle span:nth-child(1) { grid-column:3; grid-row:1; }
+.window-resize-handle span:nth-child(2) { grid-column:3; grid-row:2; }
+.window-resize-handle span:nth-child(3) { grid-column:3; grid-row:3; }
+.window-frame.maximized .window-resize-handle { display:none; }
+
+@media (max-width:700px) {
+  .webmaster-field-editor-row { grid-template-columns:42px minmax(0,1fr) 34px; }
+  .webmaster-field-editor-row [data-webmaster-field="value"] { grid-column:2 / 3; }
+  .webmaster-field-editor-row .webmaster-field-remove { grid-column:3; grid-row:1 / span 2; }
 }

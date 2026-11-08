@@ -880,6 +880,9 @@
                 <path class="vector-thread" d="M20 215 C48 205 48 245 20 255 M20 645 C48 635 48 675 20 685 M1180 215 C1152 205 1152 245 1180 255 M1180 645 C1152 635 1152 675 1180 685 M250 20 C240 48 280 48 290 20 M910 20 C900 48 940 48 950 20 M250 880 C240 852 280 852 290 880 M910 880 C900 852 940 852 950 880" />
                 <path class="vector-curl" d="M185 20 C195 40 215 40 225 20 M975 20 C985 40 1005 40 1015 20 M185 880 C195 860 215 860 225 880 M975 880 C985 860 1005 860 1015 880" />
                 <circle class="vector-dot" cx="52" cy="52" r="4"/><circle class="vector-dot" cx="1148" cy="52" r="4"/><circle class="vector-dot" cx="52" cy="848" r="4"/><circle class="vector-dot" cx="1148" cy="848" r="4"/>
+                <path class="vector-ornament" d="M310 20 C330 2 350 2 370 20 C350 38 330 38 310 20 M830 20 C850 2 870 2 890 20 C870 38 850 38 830 20 M310 880 C330 862 350 862 370 880 C350 898 330 898 310 880 M830 880 C850 862 870 862 890 880 C870 898 850 898 830 880"/>
+                <path class="vector-orbit" d="M22 330 C65 300 65 390 22 360 M1178 540 C1135 510 1135 600 1178 570 M470 20 C500 62 540 62 570 20 M630 880 C660 838 700 838 730 880"/>
+                <g class="vector-star-cluster"><path d="M0 -9 L2.4 -2.4 L9 0 L2.4 2.4 L0 9 L-2.4 2.4 L-9 0 L-2.4 -2.4 Z" transform="translate(190 52)"/><path d="M0 -9 L2.4 -2.4 L9 0 L2.4 2.4 L0 9 L-2.4 2.4 L-9 0 L-2.4 -2.4 Z" transform="translate(1010 848) scale(.8)"/><path d="M0 -9 L2.4 -2.4 L9 0 L2.4 2.4 L0 9 L-2.4 2.4 L-9 0 L-2.4 -2.4 Z" transform="translate(600 22) scale(.55)"/></g>
             </svg>
             <span class="pixel-mote top"></span>
             <span class="pixel-mote bottom"></span>
@@ -986,12 +989,7 @@
                             <div class="about-text webmaster-copy" id="webmaster-copy">
                                 <p id="webmaster-paragraph-one">hi!!! im this website's webmaster! I rlly enjoy learning to code even tho it pmo sometimes. I made this on a macbook air using chrome (2560x1600 px), so it will probably look best on that device. Hopefully it doesn't look to bad on other devices tho.</p>
                                 <p id="webmaster-paragraph-two">I love art, and I'm going to be studying animation at my dream school soon YAYAYAYYYYY (I NEED A WAY TO PAY FOR IT THO HELP) I used to be a trad artist, but now, I seem to be getting more used to digital art. I also love journaling and collecting CD's, and drinking ramune.</p>
-                                <ul class="about-list">
-                                    <li>my favorite food: falafel (duh!) and crispy fries</li>
-                                    <li>my favorite drink: ramune</li>
-                                    <li>my favorite games: Genshin Impact, Honkai Star Rail, Project Sekai</li>
-                                    <li>my favorite characters: Emu Otori, Akito Shinonome, Blade</li>
-                                </ul>
+                                <ul class="about-list" id="webmaster-favorites-list"></ul>
                             </div>
                         </div>
 
@@ -1364,6 +1362,8 @@
                 <!-- Desktop Blade art now lives outside this program window. -->
             </aside>
         </div>
+    
+        <div class="window-resize-handle" id="window-resize-handle" role="separator" aria-orientation="vertical" tabindex="0" title="Drag to resize the Falafelverse window" aria-label="Resize the Falafelverse window"><span></span><span></span><span></span></div>
     </div>
 
     <div class="desktop-blade" aria-hidden="true">
@@ -1385,7 +1385,7 @@
  <div class="modal-box sparkle-account-box">
   <div style="display:flex;justify-content:space-between;align-items:center"><h3 id="sparkle-account-heading">✨ Your Sparkle Account</h3><button type="button" class="modal-btn cancel" onclick="closeSparkleAccount()">✕</button></div>
   <p>One private code keeps your Miku Gems, inventory and comment name together on every device. Treat it like a password: anyone with it can access your collection.</p>
-  <div id="sparkle-account-summary" hidden><p>Signed in as <strong id="sparkle-account-alias"></strong></p><div class="sparkle-code-display" id="sparkle-current-code"></div><div class="sparkle-account-grid"><button type="button" class="modal-btn save" onclick="copySparkleCode()">Copy my code</button><button type="button" class="modal-btn cancel" onclick="logoutSparkleAccount()">Log out here</button></div><p><strong id="sparkle-account-gems">0 Miku Gems</strong></p><p>Your inventory</p><div class="sparkle-inventory-list" id="sparkle-inventory-list"></div></div>
+  <div id="sparkle-account-summary" hidden><p>Signed in as <strong id="sparkle-account-alias"></strong></p><p id="sparkle-sync-status" class="sparkle-sync-status" aria-live="polite"></p><div class="sparkle-code-display" id="sparkle-current-code"></div><div class="sparkle-account-grid"><button type="button" class="modal-btn save" onclick="copySparkleCode()">Copy my code</button><button type="button" class="modal-btn cancel" onclick="logoutSparkleAccount()">Log out here</button></div><p><strong id="sparkle-account-gems">0 Miku Gems</strong></p><p>Your inventory</p><div class="sparkle-inventory-list" id="sparkle-inventory-list"></div></div>
   <div id="sparkle-create-panel"><label for="sparkle-new-alias">Display name</label><input id="sparkle-new-alias" maxlength="32" autocomplete="nickname" placeholder="What should we call you?"><button type="button" class="modal-btn save" style="width:100%" onclick="createSparkleAccount()">Generate my Sparkle Code ✨</button></div>
   <hr style="border:0;border-top:1px dashed var(--border-color);margin:14px 0"><label for="sparkle-code-input">Already have a Sparkle Code?</label><input id="sparkle-code-input" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="FALAFEL-XXXX-XXXX-XXXX-XXXX-XXXX"><button type="button" class="modal-btn cancel" style="width:100%" onclick="applySparkleCode()">Log in with my code</button>
   <p class="sparkle-account-status" id="sparkle-account-status" aria-live="polite"></p><p style="font-size:.9rem;color:#8d6b86">No email is required. Save your code somewhere private; there is no password reset for a lost code.</p>
@@ -1497,6 +1497,10 @@
                 <textarea id="site-webmaster-paragraph-one" rows="4" maxlength="1200"></textarea>
                 <label for="site-webmaster-paragraph-two">WEBMASTER TEXT — PARAGRAPH 2</label>
                 <textarea id="site-webmaster-paragraph-two" rows="4" maxlength="1200"></textarea>
+                <label>HEADER DETAILS — SHOWN BESIDE EMU</label>
+                <p class="webmaster-editor-help">Add, rename, or remove any header fact. These appear beside the Emu banner for every visitor.</p>
+                <div id="site-header-fields-editor" class="site-header-fields-editor"></div>
+                <button type="button" class="modal-btn cancel" onclick="addWebmasterField()">＋ ADD A HEADER DETAIL</button>
                 <label for="site-banner-image">EMU BANNER IMAGE URL</label>
                 <input id="site-banner-image" type="url" placeholder="https://...">
             </div>
@@ -1616,7 +1620,72 @@
         windowBar.addEventListener('pointerup', stopDragging);
         windowBar.addEventListener('pointercancel', stopDragging);
 
-        function toggleMaximize() {
+        const windowResizeHandle = document.getElementById('window-resize-handle');
+        let resizePointer = null;
+        function clampWindowSize(width,height) {
+            const maxWidth = Math.max(320, window.innerWidth - 16);
+            const maxHeight = Math.max(320, window.innerHeight - 16);
+            const minWidth = Math.min(420, maxWidth);
+            const minHeight = Math.min(420, maxHeight);
+            return {
+                width: Math.round(Math.max(minWidth, Math.min(maxWidth, width))),
+                height: Math.round(Math.max(minHeight, Math.min(maxHeight, height)))
+            };
+        }
+        function applyWindowSize(width,height) {
+            const size = clampWindowSize(width,height);
+            windowFrame.style.width = size.width + 'px';
+            windowFrame.style.height = size.height + 'px';
+            return size;
+        }
+        if (windowResizeHandle) {
+            windowResizeHandle.addEventListener('pointerdown', event => {
+                if (windowFrame.classList.contains('maximized') || windowFrame.classList.contains('is-minimized')) return;
+                event.preventDefault();
+                const rect = windowFrame.getBoundingClientRect();
+                resizePointer = { id:event.pointerId, x:event.clientX, y:event.clientY, width:rect.width, height:rect.height };
+                try { windowResizeHandle.setPointerCapture(event.pointerId); } catch (_) {}
+            });
+            windowResizeHandle.addEventListener('pointermove', event => {
+                if (!resizePointer || event.pointerId !== resizePointer.id) return;
+                applyWindowSize(resizePointer.width + event.clientX - resizePointer.x, resizePointer.height + event.clientY - resizePointer.y);
+            });
+            const finishResize = event => {
+                if (!resizePointer || (event && event.pointerId !== resizePointer.id)) return;
+                resizePointer = null;
+                try {
+                    const size = clampWindowSize(windowFrame.getBoundingClientRect().width,windowFrame.getBoundingClientRect().height);
+                    localStorage.setItem('falafel_inner_window_size',JSON.stringify(size));
+                } catch (_) {}
+            };
+            windowResizeHandle.addEventListener('pointerup',finishResize);
+            windowResizeHandle.addEventListener('pointercancel',finishResize);
+            windowResizeHandle.addEventListener('keydown',event => {
+                const delta = event.shiftKey ? 40 : 12;
+                let width = windowFrame.getBoundingClientRect().width, height = windowFrame.getBoundingClientRect().height;
+                if (event.key === 'ArrowLeft') width -= delta;
+                else if (event.key === 'ArrowRight') width += delta;
+                else if (event.key === 'ArrowUp') height -= delta;
+                else if (event.key === 'ArrowDown') height += delta;
+                else return;
+                event.preventDefault();
+                const size = applyWindowSize(width,height);
+                try { localStorage.setItem('falafel_inner_window_size',JSON.stringify(size)); } catch (_) {}
+            });
+        }
+        try {
+            const savedWindowSize = JSON.parse(localStorage.getItem('falafel_inner_window_size') || 'null');
+            if (savedWindowSize && Number.isFinite(savedWindowSize.width) && Number.isFinite(savedWindowSize.height)) applyWindowSize(savedWindowSize.width,savedWindowSize.height);
+        } catch (_) {}
+        window.addEventListener('resize', () => {
+            if (windowFrame.classList.contains('maximized')) return;
+            const rect = windowFrame.getBoundingClientRect();
+            const size = clampWindowSize(rect.width,rect.height);
+            windowFrame.style.width = size.width + 'px';
+            windowFrame.style.height = size.height + 'px';
+        });
+
+                function toggleMaximize() {
             const maximized = windowFrame.classList.toggle('maximized');
             if (maximizeButton) {
                 maximizeButton.setAttribute('aria-pressed', String(maximized));
@@ -2436,6 +2505,12 @@
                 "hi!!! im this website's webmaster! I rlly enjoy learning to code even tho it pmo sometimes. I made this on a macbook air using chrome (2560x1600 px), so it will probably look best on that device. Hopefully it doesn't look to bad on other devices tho.",
                 "I love art, and I'm going to be studying animation at my dream school soon YAYAYAYYYYY (I NEED A WAY TO PAY FOR IT THO HELP) I used to be a trad artist, but now, I seem to be getting more used to digital art. I also love journaling and collecting CD's, and drinking ramune."
             ],
+            webmasterFields: [
+                { emoji:'🍟', label:'my favorite food', value:'falafel (duh!) and crispy fries' },
+                { emoji:'🫧', label:'my favorite drink', value:'ramune' },
+                { emoji:'🎮', label:'my favorite games', value:'Genshin Impact, Honkai Star Rail, Project Sekai' },
+                { emoji:'⭐', label:'my favorite characters', value:'Emu Otori, Akito Shinonome, Blade' }
+            ],
             bannerImageUrl: REPO_RAW + 'EMU%20BANNER.jpe',
             postGemReward: 5,
             blinkies: defaultBlinkies.slice(),
@@ -2465,6 +2540,13 @@
             const merged = { ...DEFAULT_SITE_CONFIG, ...source };
             merged.webmasterParagraphs = Array.isArray(source.webmasterParagraphs) ? source.webmasterParagraphs.slice(0,2).map(String) : DEFAULT_SITE_CONFIG.webmasterParagraphs.slice();
             while (merged.webmasterParagraphs.length < 2) merged.webmasterParagraphs.push('');
+            merged.webmasterFields = Array.isArray(source.webmasterFields)
+                ? source.webmasterFields.filter(v => v && typeof v === 'object').slice(0,24).map(v => ({
+                    emoji:String(v.emoji || '✿').slice(0,8),
+                    label:String(v.label || 'favorite thing').trim().slice(0,48),
+                    value:String(v.value || '').trim().slice(0,240)
+                })).filter(v => v.label && v.value)
+                : DEFAULT_SITE_CONFIG.webmasterFields.map(v => ({...v}));
             merged.blinkies = Array.isArray(source.blinkies) ? source.blinkies.filter(v => typeof v === 'string' && validHttpUrl(v)).slice(0,40) : DEFAULT_SITE_CONFIG.blinkies.slice();
             merged.foodLog = Array.isArray(source.foodLog) ? source.foodLog.filter(v => v && typeof v === 'object').slice(0,60).map(v => ({ name:String(v.name || 'Mystery treat').slice(0,80), recipe:String(v.recipe || '').slice(0,2000), emoji:String(v.emoji || '🍽️').slice(0,12) })) : DEFAULT_SITE_CONFIG.foodLog.slice();
             merged.profileName = String(merged.profileName || 'Falafel').slice(0,50);
@@ -2526,6 +2608,22 @@
             if (profilePic) setImageFallback(profilePic, [siteConfig.profileImageUrl, REPO_RAW+'me', REPO_RAW+'me.png', REPO_RAW+'me.PNG', REPO_RAW+'me.jpg', REPO_RAW+'me.JPG', REPO_RAW+'me.jpeg', REPO_RAW+'me.webp'], 'F');
             if (paragraphOne) paragraphOne.textContent = siteConfig.webmasterParagraphs[0] || '';
             if (paragraphTwo) paragraphTwo.textContent = siteConfig.webmasterParagraphs[1] || '';
+            const favoritesList = document.getElementById('webmaster-favorites-list');
+            if (favoritesList) {
+                favoritesList.replaceChildren();
+                (siteConfig.webmasterFields || []).forEach(field => {
+                    const item = document.createElement('li');
+                    const emoji = document.createElement('span');
+                    emoji.className = 'about-favorite-emoji';
+                    emoji.textContent = field.emoji ? field.emoji + ' ' : '';
+                    const label = document.createElement('strong');
+                    label.textContent = field.label + ': ';
+                    const value = document.createElement('span');
+                    value.textContent = field.value;
+                    item.append(emoji, label, value);
+                    favoritesList.appendChild(item);
+                });
+            }
             if (banner) setImageFallback(banner, [siteConfig.bannerImageUrl, REPO_RAW+'EMU%20BANNER.jpe', REPO_RAW+'EMU%20BANNER.jpeg', REPO_RAW+'EMU%20BANNER.png', REPO_RAW+'EMU%20BANNER.jpg', REPO_RAW+'EMU%20BANNER.webp'], 'EMU');
             blinkieItems = siteConfig.blinkies.slice();
             foodLog = siteConfig.foodLog.slice();
@@ -2696,6 +2794,60 @@
             // The shop form is rendered separately; refresh it immediately when admin status changes.
             if (typeof renderShopItems === 'function') renderShopItems();
         }
+        function createWebmasterFieldEditorRow(field = {}) {
+            const row = document.createElement('div');
+            row.className = 'webmaster-field-editor-row';
+            const makeInput = (key, placeholder, value, maxLength) => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.dataset.webmasterField = key;
+                input.placeholder = placeholder;
+                input.value = String(value || '');
+                input.maxLength = maxLength;
+                input.setAttribute('aria-label', placeholder);
+                return input;
+            };
+            row.append(
+                makeInput('emoji', '✿', field.emoji || '✿', 8),
+                makeInput('label', 'Label (e.g. favourite drink)', field.label || '', 48),
+                makeInput('value', 'Your answer / detail', field.value || '', 240)
+            );
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'modal-btn cancel webmaster-field-remove';
+            remove.textContent = '×';
+            remove.title = 'Remove this header detail';
+            remove.setAttribute('aria-label', 'Remove this header detail');
+            remove.addEventListener('click', () => row.remove());
+            row.appendChild(remove);
+            return row;
+        }
+        function renderWebmasterFieldEditor() {
+            const host = document.getElementById('site-header-fields-editor');
+            if (!host) return;
+            host.replaceChildren();
+            (siteConfig.webmasterFields || []).forEach(field => host.appendChild(createWebmasterFieldEditorRow(field)));
+        }
+        function addWebmasterField() {
+            const host = document.getElementById('site-header-fields-editor');
+            if (!host) return;
+            if (host.children.length >= 24) {
+                setConfigStatus('The header can contain up to 24 custom details.');
+                return;
+            }
+            host.appendChild(createWebmasterFieldEditorRow({emoji:'✿',label:'new detail',value:''}));
+            host.lastElementChild.querySelector('[data-webmaster-field="label"]').focus();
+        }
+        function readWebmasterFieldsFromEditor() {
+            const host = document.getElementById('site-header-fields-editor');
+            if (!host) return siteConfig.webmasterFields || [];
+            return Array.from(host.querySelectorAll('.webmaster-field-editor-row')).map(row => ({
+                emoji:row.querySelector('[data-webmaster-field="emoji"]').value.trim() || '✿',
+                label:row.querySelector('[data-webmaster-field="label"]').value.trim(),
+                value:row.querySelector('[data-webmaster-field="value"]').value.trim()
+            })).filter(field => field.label && field.value).slice(0,24);
+        }
+
         function openSiteSettingsModal() {
             if (!isSiteAdmin()) { alert('Admin access is required to edit the webmaster corner.'); return; }
             document.getElementById('site-profile-name').value = siteConfig.profileName;
@@ -2704,6 +2856,7 @@
             document.getElementById('site-webmaster-paragraph-one').value = siteConfig.webmasterParagraphs[0] || '';
             document.getElementById('site-webmaster-paragraph-two').value = siteConfig.webmasterParagraphs[1] || '';
             document.getElementById('site-banner-image').value = siteConfig.bannerImageUrl;
+            renderWebmasterFieldEditor();
             document.getElementById('site-post-gem-reward').value = String(siteConfig.postGemReward ?? 5);
             setConfigStatus(siteConfigLoadedFromServer ? 'Connected to shared site settings. Saves appear for visitors after the backend updates.' : 'Using the current cached/default copy. Connect the shared Worker to publish edits for everyone.');
             document.getElementById('site-settings-modal').style.display = 'flex';
@@ -2720,6 +2873,7 @@
                 profileMood:document.getElementById('site-profile-mood').value.trim(),
                 profileImageUrl:profileImage,
                 webmasterParagraphs:[document.getElementById('site-webmaster-paragraph-one').value,document.getElementById('site-webmaster-paragraph-two').value],
+                webmasterFields:readWebmasterFieldsFromEditor(),
                 bannerImageUrl:bannerImage,
                 postGemReward:Math.max(0,Math.min(1000,Math.floor(Number(document.getElementById('site-post-gem-reward').value)||0))),
                 blinkies:blinkieItems,
@@ -3339,33 +3493,180 @@
 
 
         // ================= SPARKLE ACCOUNTS =================
-        let sparkleAccount=null,currentReaderPostKey='';
+        let sparkleAccount=null,currentReaderPostKey='',sparkleAccountOnline=false;
         const SPARKLE_STORAGE_KEY='falafel_sparkle_code_v2';
-        function currentSparkleCode(){try{return localStorage.getItem(SPARKLE_STORAGE_KEY)||'';}catch(_){return '';}}
+        const LEGACY_SPARKLE_KEYS=['falafel_sparkle_code_v1','falafel_sparkle_code','sparkle_code'];
+        const SPARKLE_CODE_PATTERN=/^FALAFEL-(?:[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}-){4}[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/;
+        function normalizeSparkleCode(raw){
+            const compact=String(raw||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+            if(compact.startsWith('FALAFEL')&&compact.length===27){
+                const body=compact.slice(7);
+                if(/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{20}$/.test(body))return 'FALAFEL-'+body.match(/.{4}/g).join('-');
+            }
+            return String(raw||'').toUpperCase().replace(/\s+/g,'').trim();
+        }
+        function currentSparkleCode(){
+            try{
+                let code=localStorage.getItem(SPARKLE_STORAGE_KEY)||'';
+                if(!code){
+                    for(const key of LEGACY_SPARKLE_KEYS){
+                        const legacy=localStorage.getItem(key);
+                        if(legacy){code=legacy;break;}
+                    }
+                }
+                code=normalizeSparkleCode(code);
+                if(code)localStorage.setItem(SPARKLE_STORAGE_KEY,code);
+                return code;
+            }catch(_){return '';}
+        }
+        function cacheSparkleUser(){
+            try{if(sparkleAccount)localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));}catch(_){}
+        }
         async function sparkleRequest(path,method='GET',body=null,code=currentSparkleCode()){
-          if(!sharedApiIsConfigured())throw new Error('The shared account server is not configured.');
-          const headers={};if(body!==null)headers['Content-Type']='application/json';if(code)headers['X-Sparkle-Code']=code;
-          const response=await fetch(sharedApiUrl(path),{method,headers,cache:'no-store',body:body===null?undefined:JSON.stringify(body)});
-          const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'Sparkle account request failed.');return data;
+            if(!sharedApiIsConfigured())throw new Error('The shared account server is not configured.');
+            const headers={'Accept':'application/json'};
+            if(body!==null)headers['Content-Type']='application/json';
+            if(code)headers['X-Sparkle-Code']=normalizeSparkleCode(code);
+            let response;
+            try{
+                response=await fetch(sharedApiUrl(path),{method,headers,cache:'no-store',body:body===null?undefined:JSON.stringify(body)});
+            }catch(error){error.isNetworkError=true;throw error;}
+            const data=await response.json().catch(()=>({}));
+            if(!response.ok){
+                const error=new Error(data.error||('Sparkle account request failed ('+response.status+').'));
+                error.status=response.status;
+                throw error;
+            }
+            return data;
         }
-        function setSparkleStatus(message,error=false){const el=document.getElementById('sparkle-account-status');if(el){el.textContent=message||'';el.style.color=error?'#b43b61':'#a13f83';}}
+        function setSparkleStatus(message,error=false){
+            const el=document.getElementById('sparkle-account-status');
+            if(el){el.textContent=message||'';el.style.color=error?'#b43b61':'#a13f83';}
+        }
         function updateSparkleUI(){
-          const dock=document.getElementById('sparkle-dock-balance'),summary=document.getElementById('sparkle-account-summary'),create=document.getElementById('sparkle-create-panel');
-          if(typeof updateShopBalance==='function') updateShopBalance();if(dock)dock.textContent=sparkleAccount?(Number(sparkleAccount.gems)||0)+' Miku Gems ✧':'0 Miku Gems · sign in to save';
-          if(summary)summary.hidden=!sparkleAccount;if(create)create.hidden=!!sparkleAccount;
-          const alias=document.getElementById('sparkle-account-alias'),code=document.getElementById('sparkle-current-code'),gems=document.getElementById('sparkle-account-gems');
-          if(alias)alias.textContent=sparkleAccount?.alias||'';if(code)code.textContent=currentSparkleCode();if(gems)gems.textContent=(Number(sparkleAccount?.gems)||0)+' Miku Gems';
-          const list=document.getElementById('sparkle-inventory-list');if(list){list.replaceChildren();const ids=Array.isArray(sparkleAccount?.inventory)?sparkleAccount.inventory:[];if(!ids.length){const chip=document.createElement('span');chip.className='sparkle-inventory-chip';chip.textContent='Your collection is waiting ✿';list.appendChild(chip);}else ids.forEach(id=>{const item=shopItemsCache.find(v=>v.id===id);const chip=document.createElement('span');chip.className='sparkle-inventory-chip';chip.textContent=item?item.name:'Shop item';list.appendChild(chip);});}
+            const dock=document.getElementById('sparkle-dock-balance'),summary=document.getElementById('sparkle-account-summary'),create=document.getElementById('sparkle-create-panel');
+            if(typeof updateShopBalance==='function')updateShopBalance();
+            if(dock)dock.textContent=sparkleAccount
+                ?(Number(sparkleAccount.gems)||0)+' Miku Gems ✧'+(sparkleAccountOnline?'':' · offline copy')
+                :'0 Miku Gems · sign in to save';
+            if(summary)summary.hidden=!sparkleAccount;
+            if(create)create.hidden=!!sparkleAccount;
+            const alias=document.getElementById('sparkle-account-alias'),code=document.getElementById('sparkle-current-code'),gems=document.getElementById('sparkle-account-gems');
+            if(alias)alias.textContent=sparkleAccount?.alias||'';
+            if(code)code.textContent=currentSparkleCode();
+            if(gems)gems.textContent=(Number(sparkleAccount?.gems)||0)+' Miku Gems';
+            const sync=document.getElementById('sparkle-sync-status');
+            if(sync)sync.textContent=sparkleAccount?(sparkleAccountOnline?'✧ Synced with the server':'⚠ Offline copy — Gems and purchases will not sync until reconnected'):'';
+            const list=document.getElementById('sparkle-inventory-list');
+            if(list){
+                list.replaceChildren();
+                const ids=Array.isArray(sparkleAccount?.inventory)?sparkleAccount.inventory:[];
+                if(!ids.length){
+                    const chip=document.createElement('span');chip.className='sparkle-inventory-chip';chip.textContent='Your collection is waiting ✿';list.appendChild(chip);
+                }else ids.forEach(id=>{
+                    const item=shopItemsCache.find(v=>v.id===id);
+                    const chip=document.createElement('span');chip.className='sparkle-inventory-chip';chip.textContent=item?item.name:'Shop item';list.appendChild(chip);
+                });
+            }
         }
-        function openSparkleAccount(mode='account'){const modal=document.getElementById('sparkle-account-modal');if(!modal)return;modal.style.display='flex';updateSparkleUI();if(mode==='login')document.getElementById('sparkle-code-input')?.focus();else if(!sparkleAccount)document.getElementById('sparkle-new-alias')?.focus();setSparkleStatus(sparkleAccount?'Your account is synced to this browser.':'Create a code, or enter the one you already have.');}
+        function openSparkleAccount(mode='account'){
+            const modal=document.getElementById('sparkle-account-modal');if(!modal)return;
+            modal.style.display='flex';updateSparkleUI();
+            if(mode==='login')document.getElementById('sparkle-code-input')?.focus();
+            else if(!sparkleAccount)document.getElementById('sparkle-new-alias')?.focus();
+            setSparkleStatus(sparkleAccount?(sparkleAccountOnline?'Your account is synced to this browser.':'Showing an offline copy. Reconnect before collecting or spending Gems.'):'Create a code, or enter the one you already have.');
+        }
         function closeSparkleAccount(){const el=document.getElementById('sparkle-account-modal');if(el)el.style.display='none';}
         function generateSparkleCode(){openSparkleAccount('create');}
-        async function createSparkleAccount(){const alias=(document.getElementById('sparkle-new-alias')?.value||visitorAlias||'Anonymous').trim().slice(0,32)||'Anonymous';setSparkleStatus('Making your little account…');try{const data=await sparkleRequest('/account/create','POST',{alias},'');localStorage.setItem(SPARKLE_STORAGE_KEY,data.code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||alias;localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();setSparkleStatus('Account created! Copy your code and keep it somewhere safe. ✨');}catch(error){setSparkleStatus(error.message||'Could not create your account.',true);}}
-        async function applySparkleCode(){const code=(document.getElementById('sparkle-code-input')?.value||'').trim().toUpperCase();if(!code){setSparkleStatus('Paste your Sparkle Code first.',true);return;}setSparkleStatus('Finding your saved collection…');try{const data=await sparkleRequest('/account/login','POST',{code},'');localStorage.setItem(SPARKLE_STORAGE_KEY,code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||'Anonymous';localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();setSparkleStatus('Welcome back, '+visitorAlias+'! Your Gems and inventory are here. ✧');if(currentPostIndexForComments!==null&&document.getElementById('comment-drawer-overlay')?.style.display==='flex')openCommentDrawer(currentPostIndexForComments);}catch(error){setSparkleStatus(error.message||'That code did not work.',true);}}
-        async function loadSparkleAccount(){const code=currentSparkleCode();if(!code){updateSparkleUI();return;}try{const data=await sparkleRequest('/account/me','GET',null,code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||visitorAlias||'Anonymous';localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));}catch(error){try{sparkleAccount=JSON.parse(localStorage.getItem('falafel_sparkle_user_cache')||'null');}catch(_){sparkleAccount=null;}console.warn('Sparkle account refresh failed:',error);}updateSparkleUI();}
-        async function copySparkleCode(){const code=currentSparkleCode();if(!code)return;try{await navigator.clipboard.writeText(code);setSparkleStatus('Copied! Keep it private.');}catch(_){window.prompt('Copy your private Sparkle Code:',code);}}
-        function logoutSparkleAccount(){try{localStorage.removeItem(SPARKLE_STORAGE_KEY);localStorage.removeItem('falafel_sparkle_user_cache');}catch(_){}sparkleAccount=null;updateSparkleUI();setSparkleStatus('Logged out here. Your saved account remains on the server.');}
-        async function claimPostReward(){const status=document.getElementById('reader-reward-status');if(!sparkleAccount){if(status)status.textContent='Sign in with your Sparkle Code to collect your reward.';openSparkleAccount('login');return;}if(!currentReaderPostKey)return;const button=document.getElementById('reader-reward-button');if(button)button.disabled=true;if(status)status.textContent='Checking your reading reward…';try{const data=await sparkleRequest('/account/reward','POST',{postId:currentReaderPostKey});sparkleAccount=data.user;localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();if(status)status.textContent=data.awarded?'You earned '+data.amount+' Miku Gems! ✨':'You already collected this post’s reward.';if(button){button.dataset.rewardClaimed='true';button.disabled=true;button.textContent=data.awarded?'✓ '+data.amount+' Miku Gems collected':'✓ Already collected';}}catch(error){if(status)status.textContent=error.message||'The reward could not be collected.';if(button)button.disabled=false;}}
+        function setSparkleAccount(code,user){
+            if(!user||typeof user!=='object')throw new Error('The server returned an incomplete account. Please try again.');
+            if(code)localStorage.setItem(SPARKLE_STORAGE_KEY,normalizeSparkleCode(code));
+            sparkleAccount=user;sparkleAccountOnline=true;
+            visitorAlias=sparkleAccount.alias||visitorAlias||'Anonymous';
+            try{localStorage.setItem('visitor_alias',visitorAlias);cacheSparkleUser();}catch(_){}
+            updateSparkleUI();
+        }
+        async function createSparkleAccount(){
+            const alias=(document.getElementById('sparkle-new-alias')?.value||visitorAlias||'Anonymous').trim().slice(0,32)||'Anonymous';
+            setSparkleStatus('Making your little account…');
+            try{
+                const data=await sparkleRequest('/account/create','POST',{alias},'');
+                if(!data.code||!data.user)throw new Error('The server did not return your new Sparkle Code.');
+                setSparkleAccount(data.code,data.user);
+                setSparkleStatus('Account created! Copy your code and keep it somewhere safe. ✨');
+            }catch(error){setSparkleStatus(error.message||'Could not create your account.',true);}
+        }
+        async function applySparkleCode(){
+            const code=normalizeSparkleCode(document.getElementById('sparkle-code-input')?.value||'');
+            if(!code){setSparkleStatus('Paste your Sparkle Code first.',true);return;}
+            if(!SPARKLE_CODE_PATTERN.test(code)){setSparkleStatus('That code format looks incomplete. Check the five groups of four characters.',true);return;}
+            setSparkleStatus('Finding your saved collection…');
+            try{
+                const data=await sparkleRequest('/account/login','POST',{code},'');
+                if(!data.user)throw new Error('The server did not return an account. Please try again.');
+                const input=document.getElementById('sparkle-code-input');if(input)input.value=code;
+                setSparkleAccount(code,data.user);
+                setSparkleStatus('Welcome back, '+visitorAlias+'! Your Gems and inventory are here. ✧');
+                if(typeof currentPostIndexForComments!=='undefined'&&currentPostIndexForComments!==null&&document.getElementById('comment-drawer-overlay')?.style.display==='flex')openCommentDrawer(currentPostIndexForComments);
+            }catch(error){setSparkleStatus(error.message||'That code did not work.',true);}
+        }
+        async function loadSparkleAccount(){
+            const code=currentSparkleCode();
+            if(!code){sparkleAccount=null;sparkleAccountOnline=false;updateSparkleUI();return;}
+            try{
+                const data=await sparkleRequest('/account/me','GET',null,code);
+                if(!data.user)throw new Error('The server returned an incomplete account.');
+                sparkleAccount=data.user;sparkleAccountOnline=true;
+                visitorAlias=sparkleAccount.alias||visitorAlias||'Anonymous';
+                localStorage.setItem('visitor_alias',visitorAlias);cacheSparkleUser();
+            }catch(error){
+                sparkleAccountOnline=false;
+                if([400,401,404].includes(error.status)){
+                    sparkleAccount=null;
+                    try{localStorage.removeItem('falafel_sparkle_user_cache');}catch(_){}
+                    console.warn('Saved Sparkle Code was rejected by the server:',error);
+                }else{
+                    try{sparkleAccount=JSON.parse(localStorage.getItem('falafel_sparkle_user_cache')||'null');}catch(_){sparkleAccount=null;}
+                    if(sparkleAccount)setSparkleStatus('The server is unavailable. Showing a cached copy; actions will not change your saved account.',true);
+                    console.warn('Sparkle account refresh failed:',error);
+                }
+            }
+            updateSparkleUI();
+        }
+        async function copySparkleCode(){
+            const code=currentSparkleCode();if(!code)return;
+            try{await navigator.clipboard.writeText(code);setSparkleStatus('Copied! Keep it private.');}
+            catch(_){window.prompt('Copy your private Sparkle Code:',code);}
+        }
+        function logoutSparkleAccount(){
+            try{
+                localStorage.removeItem(SPARKLE_STORAGE_KEY);
+                LEGACY_SPARKLE_KEYS.forEach(key=>localStorage.removeItem(key));
+                localStorage.removeItem('falafel_sparkle_user_cache');
+            }catch(_){}
+            sparkleAccount=null;sparkleAccountOnline=false;updateSparkleUI();
+            setSparkleStatus('Logged out here. Your saved account remains on the server.');
+        }
+        async function claimPostReward(){
+            const status=document.getElementById('reader-reward-status');
+            if(!sparkleAccount){if(status)status.textContent='Sign in with your Sparkle Code to collect your reward.';openSparkleAccount('login');return;}
+            if(!sparkleAccountOnline){if(status)status.textContent='Reconnect to the account server before claiming Gems.';openSparkleAccount('account');return;}
+            if(!currentReaderPostKey)return;
+            const button=document.getElementById('reader-reward-button');
+            if(button)button.disabled=true;
+            if(status)status.textContent='Checking your reading reward…';
+            try{
+                const data=await sparkleRequest('/account/reward','POST',{postId:currentReaderPostKey});
+                if(!data.user)throw new Error('The server did not return your updated account.');
+                sparkleAccount=data.user;sparkleAccountOnline=true;cacheSparkleUser();updateSparkleUI();
+                if(status)status.textContent=data.awarded?'You earned '+data.amount+' Miku Gems! ✨':'You already collected this post’s reward.';
+                if(button){button.dataset.rewardClaimed='true';button.disabled=true;button.textContent=data.awarded?'✓ '+data.amount+' Miku Gems collected':'✓ Already collected';}
+            }catch(error){
+                if(status)status.textContent=error.message||'The reward could not be collected.';
+                if(button)button.disabled=false;
+            }
+        }
+
         async function toggleLike(index, btn) {
             const data = await getBinData();
             const posts = Array.isArray(data.posts) ? data.posts : [];
@@ -3650,13 +3951,15 @@
             const item = shopItemsCache.find(entry => entry.id === currentShopPreviewId);
             if (!item) return;
             if (!sparkleAccount) { openSparkleAccount('login'); setShopStatus('Log in with your Sparkle Code to spend Miku Gems.'); return; }
+            if (!sparkleAccountOnline) { openSparkleAccount('account'); setShopStatus('Reconnect to sync your Sparkle Account before spending Gems.'); return; }
             if (Array.isArray(sparkleAccount.inventory) && sparkleAccount.inventory.includes(item.id)) { updateShopBalance(); return; }
             const button = document.getElementById('shop-purchase-button');
             if (button) { button.disabled = true; button.textContent = 'Processing your Gems…'; }
             try {
                 const data = await sparkleRequest('/shop/purchase','POST',{itemId:item.id,requestId:crypto.randomUUID()});
                 sparkleAccount = data.user;
-                localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));
+                sparkleAccountOnline = true;
+                cacheSparkleUser();
                 updateSparkleUI();
                 updateShopBalance();
                 if (data.purchased) {
