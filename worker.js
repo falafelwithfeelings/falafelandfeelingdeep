@@ -61,7 +61,7 @@ function safeUser(a){
 }
 async function readSparkleUser(r,e){
  const identity=await sparkleIdentity(r.headers.get('X-Sparkle-Code'));
- const stored=await e.SITE_CONFIG.get(identity.key,'json');
+ const stored=await e.SITE_CONFIG.get(identity.key,'json',{cacheTtl:30});
  if(!stored||typeof stored!=='object'||Array.isArray(stored))return null;
  return {identity,account:normalizeAccountRecord(stored,identity.id)};
 }
@@ -104,10 +104,10 @@ export default{async fetch(r,e){let u=new URL(r.url),p=u.pathname.replace(/\/+$/
  }catch(x){return out({error:x.message||'Could not complete this Gem purchase.'},400,e);}
 }
 let shopMatch=p.match(/^\/shop\/([a-f0-9-]{20,50})$/i);if(shopMatch&&r.method==='DELETE'){if(!isAdmin(r,e))return out({error:'Only the webmaster can remove shop items.'},401,e);try{let items=await e.SITE_CONFIG.get(SHOP_KEY,'json');items=Array.isArray(items)?items:[];let next=items.filter(item=>item.id!==shopMatch[1]);if(next.length===items.length)return out({error:'Shop item not found.'},404,e);await e.SITE_CONFIG.put(SHOP_KEY,JSON.stringify(next),{metadata:{updatedAt:new Date().toISOString()}});return out({ok:true,items:next},200,e)}catch{return out({error:'Could not remove shop item.'},500,e)}}
-if(r.method==='POST'&&p==='/account/create'){try{const x=await read(r,2000),alias=txt(x.alias,32,'Anonymous').trim()||'Anonymous';for(let i=0;i<4;i++){const code=makeSparkleCode(),identity=await sparkleIdentity(code);if(await e.SITE_CONFIG.get(identity.key))continue;const account={id:identity.id,alias,gems:0,inventory:[],claimedPosts:[],createdAt:new Date().toISOString()};await e.SITE_CONFIG.put(identity.key,JSON.stringify(account));return out({ok:true,code,user:safeUser(account)},201,e)}throw Error('Could not generate a unique code.')}catch(x){return out({error:x.message||'Could not create account.'},400,e)}}
+if(r.method==='POST'&&p==='/account/create'){try{const x=await read(r,2000),alias=txt(x.alias,32,'Anonymous').trim()||'Anonymous';const code=makeSparkleCode(),identity=await sparkleIdentity(code);const account={id:identity.id,alias,gems:0,inventory:[],claimedPosts:[],createdAt:new Date().toISOString()};await e.SITE_CONFIG.put(identity.key,JSON.stringify(account));return out({ok:true,code,user:safeUser(account)},201,e)}catch(x){return out({error:x.message||'Could not create account.'},400,e)}}
 if(r.method==='POST'&&p==='/account/login'){
  try{
-  const x=await read(r,2000),identity=await sparkleIdentity(x.code),stored=await e.SITE_CONFIG.get(identity.key,'json');
+  const x=await read(r,2000),identity=await sparkleIdentity(x.code),stored=await e.SITE_CONFIG.get(identity.key,'json',{cacheTtl:30});
   if(!stored)return out({error:'Sparkle Code not found.'},404,e);
   const account=normalizeAccountRecord(stored,identity.id);
   await e.SITE_CONFIG.put(identity.key,JSON.stringify(account));
