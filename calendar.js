@@ -3,96 +3,84 @@
 
 /* === FALAFELVERSE LAYOUT ENFORCER === */
 (() => {
-  function enforceLayout() {
-    const frame = document.getElementById('main-window') || document.querySelector('.window-frame');
-    const app = document.getElementById('app-container');
-    const left = document.querySelector('#app-container > .left-sidebar');
-    const center = document.querySelector('#app-container > .center-column');
-    const right = document.querySelector('#app-container > .right-sidebar');
+  function enforce() {
+    var frame = document.getElementById('main-window') || document.querySelector('.window-frame');
+    var app = document.getElementById('app-container');
+    var left = document.querySelector('#app-container > .left-sidebar');
+    var center = document.querySelector('#app-container > .center-column');
+    var right = document.querySelector('#app-container > .right-sidebar');
     if (!app || !left || !center || !right) return;
 
     app.appendChild(left);
     app.appendChild(center);
     app.appendChild(right);
 
-    [left, center, right].forEach((el) => {
-      el.style.position = 'relative';
-      el.style.left = 'auto';
-      el.style.right = 'auto';
-      el.style.top = 'auto';
-      el.style.bottom = 'auto';
-      el.style.inset = 'auto';
-    });
-
     if (frame) {
-      frame.style.display = 'flex';
-      frame.style.flexDirection = 'column';
+      frame.style.setProperty('display', 'flex', 'important');
+      frame.style.setProperty('flex-direction', 'column', 'important');
+      frame.style.setProperty('height', '95vh', 'important');
+      frame.style.setProperty('max-height', '95vh', 'important');
+      frame.style.setProperty('overflow', 'hidden', 'important');
     }
 
-    Object.assign(app.style, {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      alignItems: 'stretch',
-      flex: '1 1 0',
-      minHeight: '0',
-      height: '100%',
-      overflow: 'hidden',
-      padding: '10px',
-      gap: '10px',
-      boxSizing: 'border-box'
-    });
+    var h = 'calc(95vh - 26px)';
+    app.style.setProperty('display', 'flex', 'important');
+    app.style.setProperty('flex-direction', 'row', 'important');
+    app.style.setProperty('flex-wrap', 'nowrap', 'important');
+    app.style.setProperty('align-items', 'stretch', 'important');
+    app.style.setProperty('height', h, 'important');
+    app.style.setProperty('max-height', h, 'important');
+    app.style.setProperty('min-height', '0', 'important');
+    app.style.setProperty('overflow', 'hidden', 'important');
+    app.style.setProperty('padding', '10px', 'important');
+    app.style.setProperty('gap', '10px', 'important');
+    app.style.setProperty('box-sizing', 'border-box', 'important');
 
-    Object.assign(left.style, {
-      flex: '0 0 180px',
-      width: '180px',
-      alignSelf: 'stretch',
-      order: '1'
-    });
+    left.style.setProperty('flex', '0 0 180px', 'important');
+    left.style.setProperty('width', '180px', 'important');
+    left.style.setProperty('order', '1', 'important');
+    left.style.setProperty('height', '100%', 'important');
+    left.style.setProperty('align-self', 'stretch', 'important');
 
-    Object.assign(center.style, {
-      flex: '1 1 0%',
-      minWidth: '0',
-      minHeight: '0',
-      display: 'flex',
-      flexDirection: 'column',
-      alignSelf: 'stretch',
-      overflow: 'hidden',
-      order: '2'
-    });
+    var bg = getComputedStyle(document.documentElement).getPropertyValue('--panel-bg').trim() || '#fff5fb';
+    center.style.setProperty('flex', '1 1 0%', 'important');
+    center.style.setProperty('min-width', '0', 'important');
+    center.style.setProperty('min-height', '0', 'important');
+    center.style.setProperty('order', '2', 'important');
+    center.style.setProperty('display', 'flex', 'important');
+    center.style.setProperty('flex-direction', 'column', 'important');
+    center.style.setProperty('height', '100%', 'important');
+    center.style.setProperty('align-self', 'stretch', 'important');
+    center.style.setProperty('overflow', 'hidden', 'important');
+    center.style.setProperty('background', bg, 'important');
+    center.style.setProperty('border-radius', '12px', 'important');
 
-    Object.assign(right.style, {
-      flex: '0 0 108px',
-      width: '108px',
-      alignSelf: 'stretch',
-      order: '3'
-    });
+    right.style.setProperty('flex', '0 0 110px', 'important');
+    right.style.setProperty('width', '110px', 'important');
+    right.style.setProperty('order', '3', 'important');
+    right.style.setProperty('height', '100%', 'important');
+    right.style.setProperty('align-self', 'stretch', 'important');
 
-    const box = center.querySelector('.main-content-box');
+    var box = center.querySelector('.main-content-box');
     if (box) {
-      Object.assign(box.style, {
-        flex: '1 1 auto',
-        minHeight: '0',
-        height: '100%',
-        width: '100%',
-        overflowY: 'auto',
-        backgroundImage: 'none'
-      });
-      const bg = getComputedStyle(document.documentElement).getPropertyValue('--panel-bg').trim();
-      box.style.backgroundColor = bg || '#fff5fb';
+      box.style.setProperty('flex', '1 1 auto', 'important');
+      box.style.setProperty('flex-grow', '1', 'important');
+      box.style.setProperty('min-height', '0', 'important');
+      box.style.setProperty('width', '100%', 'important');
+      box.style.setProperty('overflow-y', 'auto', 'important');
+      box.style.setProperty('background', bg, 'important');
+      box.style.setProperty('background-image', 'none', 'important');
     }
   }
 
   function run() {
-    enforceLayout();
-    setTimeout(enforceLayout, 150);
-    setTimeout(enforceLayout, 500);
+    enforce();
+    setTimeout(enforce, 100);
+    setTimeout(enforce, 400);
+    setTimeout(enforce, 1000);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run, { once: true });
-  } else {
-    run();
-  }
-  window.addEventListener('resize', enforceLayout);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
+  else run();
+  window.addEventListener('resize', enforce);
 })();
