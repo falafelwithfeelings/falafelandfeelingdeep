@@ -3600,9 +3600,7 @@
                 container.innerHTML = blogLoadError
                     ? `<p style="font-size:1.1rem;">The shared blog couldn't load: ${escapeHTML(blogLoadError)}. Your old posts have not been deleted.</p>`
                     : '<p style="font-size:1.2rem;">No posts yet. Log in as admin to create one!</p>';
-                return;
-            }
-
+            } else {
             let html = '<div class="blog-grid">';
             posts.forEach((p, i) => {
                 const imageUrl = p.images && p.images[0] ? escapeHTML(p.images[0]) : '';
@@ -3626,6 +3624,7 @@
             });
             html += '</div>';
             container.innerHTML = html;
+            }
 
             const homeUpdates = document.getElementById('home-updates-container');
             const allEntries = Array.isArray(data.posts) ? data.posts : [];
