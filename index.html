@@ -384,9 +384,9 @@
         .dance-toggle-box select { width: 100%; padding: 4px; font-family: var(--font-pixel); font-size: 0.4rem; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; background: #fff; }
 
         /* ================= CENTER COLUMN ================= */
-        .center-column { flex:1 1 0%; display:flex; flex-direction:column; gap:10px; min-width:0; min-height:0; width:0; }
+        .center-column { flex:1 1 0%; display:flex; flex-direction:column; gap:10px; min-width:0; min-height:0; width:0; overflow-y:auto; overflow-x:hidden; scrollbar-gutter:stable; }
 
-        .top-banner { text-align: center; padding: 10px 0; cursor: pointer; font-family: var(--font-pixel); font-size: 1.5rem; color: var(--accent-color); text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; animation: wiggle 3s ease-in-out infinite; }
+        .top-banner { width:100%; max-width:100%; box-sizing:border-box; text-align:center; padding:8px 3px; cursor:pointer; font-family:var(--font-pixel); font-size:clamp(.72rem,1.35vw,1.45rem); color:var(--accent-color); text-shadow:2px 2px 0 #fff,-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff; letter-spacing:clamp(.2px,.1vw,1.2px); line-height:1.3; margin-bottom:3px; animation:wiggle 3s ease-in-out infinite; white-space:normal; overflow-wrap:anywhere; }
 
         /* Blinkies Marquee */
         .blinkies-container { background: var(--panel-bg); border: 2px dotted var(--border-color); padding: 5px 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 10px; overflow: hidden; }
@@ -406,7 +406,7 @@
         .blinkie-admin-entry span { font-size:.78rem; color:#885a83; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
         .blinkie-admin-entry button { font-size:.72rem; padding:1px 5px; }
 
-        .main-content-box { background:var(--panel-bg); border:3px dotted var(--border-color); padding:15px; box-shadow:4px 4px 0 var(--accent-color); position:relative; flex:1 1 0%; min-width:0; min-height:0; width:100%; box-sizing:border-box; overflow-y:auto; overflow-x:hidden; border-radius:12px; }
+        .main-content-box { background:var(--panel-bg); border:3px dotted var(--border-color); padding:15px; box-shadow:4px 4px 0 var(--accent-color); position:relative; flex:0 0 auto; min-width:0; width:100%; height:auto; box-sizing:border-box; overflow:visible; border-radius:12px; }
         .view-section, .view-section.active { width:100%; min-width:0; box-sizing:border-box; }
         .view-section { display: none; }
         .view-section.active { display: block; animation: fadeIn 0.3s; }
@@ -552,6 +552,13 @@
         .akito-dialogue { background: #f9f9f9; border: 1px solid #ccc; height: 45px; font-size: 1rem; padding: 2px; overflow-y: auto; margin-top: 5px; font-family: monospace; line-height: 1; color: #000; border-radius: 4px; }
         @keyframes akitoSecretPop { 0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,255,255,0); } 40% { transform: scale(1.08); box-shadow: 0 0 18px var(--accent-color); } 100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,255,255,0); } }
         .akito-room.secret-found { animation: akitoSecretPop .65s ease-out; border-color: var(--accent-color); }
+        .arcade-mode-active .akito-room { animation: arcadeStageDrift 2.6s ease-in-out infinite alternate; border-color:#ffc5ee; box-shadow:0 0 0 2px rgba(255,255,255,.8),0 0 18px rgba(184,109,255,.65),inset 0 0 24px rgba(101,220,255,.35); }
+        .arcade-mode-active .akito-box { box-shadow:0 0 0 2px #fff,0 0 20px rgba(255,111,203,.55),4px 5px 0 #a36ad4; }
+        .arcade-mode-active .akito-dialogue { border-color:#be7ce7; background:linear-gradient(90deg,#fff2fc,#eefaff); }
+        .arcade-mode-active .akito-chaos-hud { display:block; animation:arcadeHudPop .35s cubic-bezier(.2,1.4,.4,1); }
+        .arcade-mode-active .akito-sprite.dancing { animation:aggressiveDance .32s ease-in-out infinite !important; }
+        @keyframes arcadeStageDrift { from{background-position:42% 50%;filter:saturate(1)} to{background-position:58% 50%;filter:saturate(1.35)} }
+        @keyframes arcadeHudPop { from{transform:translateY(8px) scale(.96);opacity:0} to{transform:translateY(0) scale(1);opacity:1} }
         
         /* ================= RIGHT SIDEBAR ================= */
         .right-sidebar { width:100px; flex:0 0 100px; display:flex; flex-direction:column; gap:10px; flex-shrink:0; position:relative; min-width:0; }
@@ -672,6 +679,50 @@
         .shop-admin-actions,.shop-card-admin-actions { display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
         .shop-card-admin-actions button { font-size:.42rem; padding:4px 7px; }
         .shop-status { font-size:.95rem; color:#8d4f7c; margin:7px 0 0; }
+        /* Akito's slide-in wardrobe shop */
+        .shop-screen { width:100%; min-width:0; }
+        .shop-screen-head { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:10px; }
+        .shop-screen-head h2 { margin:0; color:var(--accent-color); font-family:var(--font-pixel); font-size:.78rem; line-height:1.6; }
+        .shop-back-button { border:2px outset #fff; border-radius:7px; padding:7px 10px; background:linear-gradient(#fff,#e5e5e5); color:#874c87; font-family:var(--font-pixel); font-size:.42rem; cursor:pointer; }
+        .shop-gem-pill { padding:6px 9px; background:#fff8fd; color:#a33b86; border:1px dashed #d88bc1; border-radius:10px; font-family:var(--font-pixel); font-size:.42rem; }
+        .shop-layout { display:grid; grid-template-columns:minmax(0,1.12fr) minmax(230px,.88fr); gap:14px; align-items:start; }
+        .shop-browse-pane,.shop-preview-pane { min-width:0; padding:10px; background:rgba(255,255,255,.72); border:2px solid var(--border-color); border-radius:12px; box-shadow:3px 4px 0 rgba(190,105,170,.25); }
+        .shop-category-tabs { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 12px; }
+        .shop-category-tabs button { border:1px solid var(--border-color); border-radius:20px; padding:6px 9px; background:#fff; color:var(--accent-color); font-family:var(--font-pixel); font-size:.38rem; cursor:pointer; }
+        .shop-category-tabs button.active { color:#fff; background:var(--accent-color); box-shadow:2px 2px 0 var(--border-color); }
+        .shop-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:10px; align-items:stretch; }
+        .shop-card { min-width:0; padding:8px; background:#fff; border:2px solid #e8acd2; border-radius:11px; box-shadow:2px 3px 0 rgba(201,121,184,.5); }
+        .shop-card-image-wrap { height:110px; display:flex; justify-content:center; align-items:center; background:#fff7fc; border:1px dashed #dca4ce; border-radius:7px; overflow:hidden; }
+        .shop-card-image { max-width:100%; max-height:100%; object-fit:contain; }
+        .shop-card h3 { margin:8px 0 4px; color:#a43f83; font-family:var(--font-pixel); font-size:.46rem; line-height:1.55; overflow-wrap:anywhere; }
+        .shop-card-description { min-height:2.2em; margin:3px 0 7px; font-size:.92rem; line-height:1.15; color:#714b69; overflow-wrap:anywhere; }
+        .shop-card-meta { display:flex; justify-content:space-between; align-items:center; gap:5px; flex-wrap:wrap; margin-bottom:7px; }
+        .shop-price { color:#a43f83; font-family:var(--font-pixel); font-size:.42rem; }
+        .shop-category { color:#a43f83; font-family:var(--font-pixel); font-size:.34rem; }
+        .shop-card-actions { display:flex; gap:5px; flex-wrap:wrap; }
+        .shop-card-actions button { flex:1; min-width:0; font-size:.37rem; padding:5px 6px; }
+        .shop-preview-pane h3 { margin:0 0 8px; color:var(--accent-color); font-family:var(--font-pixel); font-size:.52rem; }
+        .shop-akito-stage { position:relative; display:flex; justify-content:center; align-items:flex-end; min-height:270px; overflow:hidden; border:2px solid #fff; outline:1px solid #dba1d1; border-radius:10px; background-image:url('https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/Otori%20Emu%E2%80%99s%20Bedroom.jpe'); background-size:cover; background-position:center; }
+        .shop-akito-preview-sprite { position:relative; z-index:2; display:block; max-height:235px; max-width:72%; object-fit:contain; filter:drop-shadow(0 2px 3px rgba(30,20,30,.3)); }
+        .shop-item-preview-image { position:absolute; z-index:4; display:none; max-width:58%; max-height:48%; object-fit:contain; pointer-events:none; filter:drop-shadow(0 2px 2px rgba(0,0,0,.25)); }
+        .shop-item-preview-image.placement-hat { display:block; top:2%; left:50%; width:58%; transform:translateX(-50%); }
+        .shop-item-preview-image.placement-face { display:block; top:27%; left:50%; width:44%; transform:translateX(-50%); }
+        .shop-item-preview-image.placement-neck { display:block; top:48%; left:50%; width:39%; transform:translateX(-50%); }
+        .shop-item-preview-image.placement-body { display:block; top:48%; left:50%; width:57%; transform:translateX(-50%); }
+        .shop-item-preview-image.placement-hand { display:block; top:50%; right:7%; width:32%; }
+        .shop-preview-name { margin:9px 0 3px; color:#a43f83; font-family:var(--font-pixel); font-size:.48rem; line-height:1.6; }
+        .shop-preview-description { min-height:2em; margin:3px 0 8px; color:#754b6c; font-size:.95rem; }
+        .shop-purchase-button { width:100%; border:2px solid #fff; border-radius:9px; padding:9px; background:linear-gradient(135deg,#ff7dbf,#a57bf0); color:#fff; font-family:var(--font-pixel); font-size:.46rem; cursor:pointer; box-shadow:0 3px 0 #9a5ab6; }
+        .shop-purchase-button:disabled { cursor:not-allowed; opacity:.55; filter:grayscale(.25); }
+        .shop-preview-hint { color:#93658b; font-size:.85rem; text-align:center; }
+        .shop-admin-panel { margin:0 0 12px; }
+        .shop-screen .shop-status { margin:7px 0; }
+        .shop-slide-left { display:block !important; animation:shopPageLeaveLeft .4s ease-in forwards !important; }
+        #view-shop.active { animation:shopPageEnterRight .48s cubic-bezier(.2,.75,.25,1) both; }
+        .shop-slide-enter-right { animation:shopPageEnterRight .48s cubic-bezier(.2,.75,.25,1) both !important; }
+        @keyframes shopPageLeaveLeft { to { transform:translateX(-105%); opacity:0; } }
+        @keyframes shopPageEnterRight { from { transform:translateX(105%); opacity:.35; } to { transform:translateX(0); opacity:1; } }
+        @media(max-width:760px) { .shop-layout { grid-template-columns:1fr; } .shop-preview-pane { order:-1; } .shop-akito-stage { min-height:220px; } .shop-grid { grid-template-columns:repeat(auto-fit,minmax(125px,1fr)); } }
         @media(max-width:640px) { .shop-admin-grid { grid-template-columns:1fr; } .shop-card-image-wrap { height:140px; } }
 /* Blog scrapbook: paper layers, postage marks, tiny decorative flourishes. */
         .blog-grid { display:flex; flex-direction:column; gap:16px; padding:5px 3px 14px; }
@@ -717,9 +768,19 @@
         .lore-icon { font-size: 1.5rem; }
         .tags-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
         .tag-pill { background: var(--border-color); color: var(--text-main); font-family: var(--font-pixel); font-size: 0.5rem; padding: 4px 8px; border-radius: 10px; }
-        .video-container-box { border: 2px solid var(--border-color); padding: 10px; margin-top: 10px; border-radius: 8px; }
-        .video-frame-wrapper { position: relative; padding-bottom: 56.25%; height: 0; }
-        .video-frame-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 6px; }
+        .video-container-box { border:2px solid #b8b8b8; padding:0; margin-top:12px; border-radius:7px; background:#dedede; box-shadow:3px 4px 0 rgba(0,0,0,.22); overflow:hidden; }
+        .wmp-window { background:#d7d7d7; border:2px solid #f7f7f7; box-shadow:inset -2px -2px 0 #8c8c8c,inset 2px 2px 0 #fff; padding:5px; }
+        .wmp-titlebar { display:flex; align-items:center; justify-content:space-between; gap:8px; background:linear-gradient(90deg,#174a91,#3d83ce 58%,#174a91); color:#fff; padding:6px 8px; font-family:Tahoma,Arial,sans-serif; font-size:.78rem; font-weight:bold; text-shadow:1px 1px #15345d; }
+        .wmp-title-left { display:flex; align-items:center; gap:7px; min-width:0; }
+        .wmp-logo { display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; color:#fff; background:radial-gradient(circle at 35% 30%,#fff 0 12%,#78d4ff 14% 35%,#1667c1 38% 70%,#063b83 72%); border:1px solid #d8ecff; font-size:.65rem; }
+        .wmp-title-controls { display:flex; gap:3px; }
+        .wmp-title-controls span { display:grid; place-items:center; width:17px; height:15px; color:#17385e; background:linear-gradient(#fff,#c8d7e9); border:1px solid #edf5ff; border-radius:2px; font-size:.65rem; text-shadow:none; }
+        .wmp-menubar { display:flex; flex-wrap:wrap; gap:15px; padding:5px 8px; color:#222; font:.72rem Tahoma,Arial,sans-serif; background:linear-gradient(#f7f7f7,#d8d8d8); border-bottom:1px solid #aaa; }
+        .wmp-screen { margin:6px 0; padding:5px; background:linear-gradient(135deg,#252525,#080808); border:2px inset #a4a4a4; }
+        .video-frame-wrapper { position:relative; padding-bottom:56.25%; height:0; background:#050505; }
+        .video-frame-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; border-radius:2px; }
+        .wmp-statusbar { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 7px; color:#222; background:linear-gradient(#efefef,#d5d5d5); border-top:1px solid #fff; font:.68rem Tahoma,Arial,sans-serif; }
+        .wmp-status-light { display:inline-block; width:7px; height:7px; margin-right:5px; border-radius:50%; background:#56b86b; box-shadow:0 0 4px #56b86b; }
         
         .announcements-container { display: flex; flex-direction: column; gap: 15px; }
         .announcement-card { border: 2px solid var(--border-color); padding: 15px; background: var(--panel-bg); position: relative; box-shadow: 2px 2px 0 var(--accent-color); border-radius: 10px; }
@@ -1133,8 +1194,13 @@
                                 <h2 class="about-section-title" style="margin-bottom: 1rem;">⭐ Meet the Mascot</h2>
                                 <p class="about-text">oh? youre wondering whos that as the mascot, emu otori? thats her:</p>
                                 <div class="video-container-box">
-                                    <div class="video-frame-wrapper">
-                                        <iframe id="emu-yt-player" src="https://www.youtube.com/embed/fa7UgRsvICI?enablejsapi=1&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="wmp-window">
+                                        <div class="wmp-titlebar"><div class="wmp-title-left"><span class="wmp-logo">▶</span><span>Windows Media Player — Emu Otori</span></div><div class="wmp-title-controls"><span>_</span><span>□</span><span>×</span></div></div>
+                                        <div class="wmp-menubar"><span>File</span><span>View</span><span>Play</span><span>Tools</span><span>Help</span></div>
+                                        <div class="wmp-screen"><div class="video-frame-wrapper">
+                                            <iframe id="emu-yt-player" src="https://www.youtube.com/embed/fa7UgRsvICI?enablejsapi=1&autoplay=0&controls=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div></div>
+                                        <div class="wmp-statusbar"><span><i class="wmp-status-light"></i>Ready · Now playing: Emu Otori</span><span>Windows Media Player 9</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -1229,46 +1295,56 @@
                     </div>
             
                     <!-- SHOP VIEW -->
-                    <div id="view-shop" class="view-section">
-                        <h2 style="font-family:var(--font-pixel);font-size:.8rem;color:var(--accent-color);margin-top:0;">The Little Shop ✿</h2>
-                        <p class="shop-intro">Tiny hats, cosmetics and trinkets for the Falafelverse. Browse the little collection!</p>
-                        <div class="shop-admin-panel" id="shop-admin-panel" hidden>
-                            <h3>✦ WEBMASTER SHOP MANAGER</h3>
-                            <input type="hidden" id="shop-item-id" value="">
-                            <div class="shop-admin-grid">
-                                <div>
-                                    <label for="shop-item-name">Item name</label>
-                                    <input id="shop-item-name" maxlength="80" placeholder="e.g. Strawberry beret">
-                                </div>
-                                <div>
-                                    <label for="shop-item-image">Picture URL</label>
-                                    <input id="shop-item-image" type="url" placeholder="https://…">
-                                </div>
-                                <div>
-                                    <label for="shop-item-price">Price / currency</label>
-                                    <input id="shop-item-price" maxlength="50" placeholder="e.g. MVR 25 or 40 coins">
-                                </div>
-                                <div>
-                                    <label for="shop-item-category">Category</label>
-                                    <select id="shop-item-category">
-                                        <option value="Hats">Hats</option>
-                                        <option value="Cosmetics">Cosmetics</option>
-                                        <option value="Accessories">Accessories</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <label for="shop-item-description">Description</label>
-                            <textarea id="shop-item-description" rows="3" maxlength="600" placeholder="Describe the item…"></textarea>
-                            <div class="shop-admin-actions">
-                                <button type="button" class="modal-btn save" id="shop-save-button" onclick="saveShopItem()">Save item ✧</button>
-                                <button type="button" class="modal-btn cancel" onclick="clearShopForm()">Clear form</button>
-                            </div>
-                            <p class="shop-status" id="shop-admin-status" aria-live="polite">Only the webmaster can add or edit listings.</p>
+                    <div id="view-shop" class="view-section shop-screen">
+                        <div class="shop-screen-head">
+                            <button type="button" class="shop-back-button" onclick="closeAkitoShop()">← BACK HOME</button>
+                            <h2>AKITO'S LITTLE WARDROBE ✿</h2>
+                            <div class="shop-gem-pill" id="shop-gem-balance">0 Miku Gems</div>
                         </div>
-                        <div id="shop-status" class="shop-status" aria-live="polite">Loading the shop…</div>
-                        <div id="shop-grid" class="shop-grid"></div>
-                        <p style="font-size:.95rem;color:var(--text-light);margin-top:14px;">Catalogue only: prices are displayed for reference. Checkout and payments are not processed on this page.</p>
+                        <p class="shop-intro">Pick something. I'll tell you what I think. (You probably won't like my answer.)</p>
+                        <div class="shop-layout">
+                            <section class="shop-browse-pane">
+                                <div class="shop-admin-panel" id="shop-admin-panel" hidden>
+                                    <h3>✦ WEBMASTER SHOP MANAGER</h3>
+                                    <input type="hidden" id="shop-item-id" value="">
+                                    <div class="shop-admin-grid">
+                                        <div><label for="shop-item-name">Item name</label><input id="shop-item-name" maxlength="80" placeholder="e.g. Strawberry beret"></div>
+                                        <div><label for="shop-item-image">Picture URL</label><input id="shop-item-image" type="url" placeholder="https://…"></div>
+                                        <div><label for="shop-item-price">Price in Miku Gems</label><input id="shop-item-price" type="number" min="0" max="1000000" step="1" placeholder="e.g. 25"></div>
+                                        <div><label for="shop-item-category">Category</label><select id="shop-item-category">
+                                            <option value="Hats">Hats</option><option value="Cosmetics">Cosmetics</option><option value="Accessories">Accessories</option><option value="Backgrounds">Backgrounds</option><option value="Other">Other</option>
+                                        </select></div>
+                                        <div><label for="shop-item-placement">Preview placement on Akito</label><select id="shop-item-placement">
+                                            <option value="hat">Head / hat</option><option value="face">Face / glasses</option><option value="neck">Neck / collar</option><option value="body">Body / outfit</option><option value="hand">Hand / held item</option><option value="background">Room background</option>
+                                        </select></div>
+                                    </div>
+                                    <label for="shop-item-description">Description</label>
+                                    <textarea id="shop-item-description" rows="3" maxlength="600" placeholder="Describe the item…"></textarea>
+                                    <div class="shop-admin-actions"><button type="button" class="modal-btn save" id="shop-save-button" onclick="saveShopItem()">Save item ✧</button><button type="button" class="modal-btn cancel" onclick="clearShopForm()">Clear form</button></div>
+                                    <p class="shop-status" id="shop-admin-status" aria-live="polite">Only the webmaster can add or edit listings.</p>
+                                </div>
+                                <div class="shop-category-tabs" role="group" aria-label="Shop categories">
+                                    <button type="button" class="active" data-category="All" onclick="filterShopCategory('All')">All</button>
+                                    <button type="button" data-category="Hats" onclick="filterShopCategory('Hats')">Hats</button>
+                                    <button type="button" data-category="Cosmetics" onclick="filterShopCategory('Cosmetics')">Cosmetics</button>
+                                    <button type="button" data-category="Accessories" onclick="filterShopCategory('Accessories')">Accessories</button>
+                                    <button type="button" data-category="Backgrounds" onclick="filterShopCategory('Backgrounds')">Backgrounds</button>
+                                </div>
+                                <div id="shop-status" class="shop-status" aria-live="polite">Loading the shelves…</div>
+                                <div id="shop-grid" class="shop-grid"></div>
+                            </section>
+                            <aside class="shop-preview-pane">
+                                <h3>LIVE FIT CHECK ✧</h3>
+                                <div class="shop-akito-stage" id="shop-preview-stage">
+                                    <img class="shop-akito-preview-sprite" id="shop-akito-preview-sprite" src="https://raw.githubusercontent.com/falafelwithfeelings/falafelandfeelingdeep/main/AKIT%201" alt="Akito preview">
+                                    <img class="shop-item-preview-image" id="shop-item-preview-image" alt="Selected shop item preview">
+                                </div>
+                                <h4 class="shop-preview-name" id="shop-preview-name">Akito is waiting for your fashion decisions.</h4>
+                                <p class="shop-preview-description" id="shop-preview-description">Choose a hat, cosmetic, accessory or room background to preview it here.</p>
+                                <p class="shop-preview-hint" id="shop-preview-hint">Every selection appears on Akito before you buy.</p>
+                                <button type="button" class="shop-purchase-button" id="shop-purchase-button" onclick="buyShopItem()" disabled>Choose an item first</button>
+                            </aside>
+                        </div>
                     </div>
                 </div>
 </main>
@@ -1407,6 +1483,8 @@
         <div class="modal-box" style="max-width:560px;">
             <h3>✿ EDIT THE WEBMASTER CORNER ✿</h3>
             <div class="site-settings-fields">
+                <label for="site-post-gem-reward">MIKU GEMS PER FINISHED BLOG POST</label>
+                <input id="site-post-gem-reward" type="number" min="0" max="1000" step="1" value="5">
                 <label for="site-profile-name">PROFILE NAME</label>
                 <input id="site-profile-name" maxlength="50" placeholder="Your display name">
                 <label for="site-profile-mood">MOOD TEXT</label>
