@@ -601,3 +601,58 @@ body[data-mood="cyber"] .food-item::before {
   color: var(--accent-color) !important;
   border-color: var(--border-color) !important;
 }
+
+
+/* Standalone whimsical masthead + content-only panel surface. */
+.center-column > .top-banner {
+  position:relative !important; isolation:isolate; display:block;
+  width:max-content; max-width:100%; margin:4px auto 7px !important;
+  padding:9px 20px !important; background:transparent !important;
+  border:0 !important; box-shadow:none !important;
+  color:var(--accent-color) !important;
+  text-shadow:0 0 8px color-mix(in srgb,var(--accent-color) 45%,transparent) !important;
+  animation:falafelMastheadFloat 3.8s ease-in-out infinite !important;
+  overflow:visible !important;
+}
+.center-column > .top-banner::before,
+.center-column > .top-banner::after {
+  position:absolute; z-index:-1; color:var(--accent-color); font-family:serif;
+  pointer-events:none; text-shadow:0 0 9px var(--accent-color);
+}
+.center-column > .top-banner::before {
+  content:"✧"; left:-3px; top:0; font-size:1.05em;
+  animation:falafelMastheadSparkle 2.4s ease-in-out infinite;
+}
+.center-column > .top-banner::after {
+  content:"⋆"; right:-4px; bottom:-2px; font-size:1.3em;
+  animation:falafelMastheadSparkle 2.8s ease-in-out infinite reverse;
+}
+@keyframes falafelMastheadFloat {
+  0%,100% { transform:translateY(0) rotate(-.35deg); }
+  50% { transform:translateY(-5px) rotate(.45deg); }
+}
+@keyframes falafelMastheadSparkle {
+  0%,100% { opacity:.35; transform:scale(.72) rotate(-15deg); }
+  50% { opacity:1; transform:scale(1.22) rotate(18deg); }
+}
+.main-content-box {
+  background:var(--panel-bg, #fff5fb) !important;
+  background-image:none !important;
+}
+body[data-mood="midnight"] .main-content-box,
+body[data-mood="cyber"] .main-content-box {
+  background:#080910 !important; background-color:#080910 !important;
+  color:var(--text-main) !important; border-color:var(--border-color) !important;
+}
+body[data-mood="midnight"] .center-column,
+body[data-mood="cyber"] .center-column { background:transparent !important; }
+body[data-mood="midnight"] .top-banner,
+body[data-mood="cyber"] .top-banner {
+  background:transparent !important;
+  text-shadow:0 0 10px color-mix(in srgb,var(--accent-color) 65%,transparent) !important;
+}
+@media (prefers-reduced-motion:reduce) {
+  .center-column > .top-banner,
+  .center-column > .top-banner::before,
+  .center-column > .top-banner::after { animation:none !important; }
+}
