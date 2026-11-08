@@ -4,6 +4,7 @@
 /* === FALAFELVERSE LAYOUT ENFORCER === */
 (() => {
   function enforceLayout() {
+    const frame = document.getElementById('main-window') || document.querySelector('.window-frame');
     const app = document.getElementById('app-container');
     const left = document.querySelector('#app-container > .left-sidebar');
     const center = document.querySelector('#app-container > .center-column');
@@ -14,14 +15,19 @@
     app.appendChild(center);
     app.appendChild(right);
 
-    [app, left, center, right].forEach((el) => {
-      el.style.position = '';
-      el.style.left = '';
-      el.style.right = '';
-      el.style.top = '';
-      el.style.bottom = '';
-      el.style.inset = '';
+    [left, center, right].forEach((el) => {
+      el.style.position = 'relative';
+      el.style.left = 'auto';
+      el.style.right = 'auto';
+      el.style.top = 'auto';
+      el.style.bottom = 'auto';
+      el.style.inset = 'auto';
     });
+
+    if (frame) {
+      frame.style.display = 'flex';
+      frame.style.flexDirection = 'column';
+    }
 
     Object.assign(app.style, {
       display: 'flex',
@@ -40,19 +46,17 @@
     Object.assign(left.style, {
       flex: '0 0 180px',
       width: '180px',
-      maxWidth: '180px',
-      display: 'flex',
-      flexDirection: 'column',
-      overflowY: 'auto',
+      alignSelf: 'stretch',
       order: '1'
     });
 
     Object.assign(center.style, {
       flex: '1 1 0%',
       minWidth: '0',
-      width: 'auto',
+      minHeight: '0',
       display: 'flex',
       flexDirection: 'column',
+      alignSelf: 'stretch',
       overflow: 'hidden',
       order: '2'
     });
@@ -60,9 +64,7 @@
     Object.assign(right.style, {
       flex: '0 0 108px',
       width: '108px',
-      maxWidth: '108px',
-      display: 'flex',
-      flexDirection: 'column',
+      alignSelf: 'stretch',
       order: '3'
     });
 
@@ -70,20 +72,21 @@
     if (box) {
       Object.assign(box.style, {
         flex: '1 1 auto',
-        minHeight: '200px',
+        minHeight: '0',
+        height: '100%',
         width: '100%',
         overflowY: 'auto',
-        position: '',
-        left: '',
-        right: ''
+        backgroundImage: 'none'
       });
+      const bg = getComputedStyle(document.documentElement).getPropertyValue('--panel-bg').trim();
+      box.style.backgroundColor = bg || '#fff5fb';
     }
   }
 
   function run() {
     enforceLayout();
     setTimeout(enforceLayout, 150);
-    setTimeout(enforceLayout, 600);
+    setTimeout(enforceLayout, 500);
   }
 
   if (document.readyState === 'loading') {
