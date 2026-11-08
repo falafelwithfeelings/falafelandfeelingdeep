@@ -250,3 +250,251 @@
   .webmaster-field-editor-row [data-webmaster-field="value"] { grid-column:2 / 3; }
   .webmaster-field-editor-row .webmaster-field-remove { grid-column:3; grid-row:1 / span 2; }
 }
+
+
+/* Keep the hidden music player off-screen and unloaded until a visitor asks for music. */
+.lazy-music-player-host {
+  position:fixed !important;
+  width:200px !important;
+  height:200px !important;
+  left:-230px !important;
+  top:0 !important;
+  overflow:hidden !important;
+  opacity:.001 !important;
+  pointer-events:none !important;
+  z-index:-1 !important;
+}
+#bg-playlist-iframe { width:200px !important; height:200px !important; }
+.winamp-track-status {
+  margin-top:4px;
+  padding:3px 5px;
+  border:1px solid var(--border-color);
+  background:color-mix(in srgb,var(--panel-bg) 75%,#111);
+  color:var(--accent-color);
+  font-family:var(--font-pixel);
+  font-size:.34rem;
+  letter-spacing:.025em;
+  line-height:1.5;
+  text-align:center;
+}
+.winamp-track-status.is-error { color:#b51f55; border-color:#df6688; }
+
+/* A full Vivid Bad Squad stage replaces the tiny shake-only arcade effect. */
+.akito-arcade-takeover {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:12000;
+  place-items:center;
+  padding:clamp(8px,2vw,24px);
+  overflow:auto;
+  background:
+    radial-gradient(ellipse at 15% 20%,rgba(255,90,180,.32),transparent 36%),
+    radial-gradient(ellipse at 82% 16%,rgba(75,205,255,.28),transparent 34%),
+    radial-gradient(ellipse at 70% 90%,rgba(161,95,255,.32),transparent 42%),
+    linear-gradient(135deg,#11152c,#17102c 48%,#0d2037);
+}
+.akito-arcade-takeover[aria-hidden="false"] { display:grid; }
+.akito-arcade-cabinet {
+  position:relative;
+  width:min(1100px,96vw);
+  min-height:min(720px,94vh);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:3px solid #f9d5ff;
+  border-radius:18px;
+  background:linear-gradient(150deg,rgba(31,23,61,.98),rgba(14,31,60,.98));
+  box-shadow:0 0 0 3px rgba(255,255,255,.15),0 0 36px rgba(211,93,255,.55),0 0 80px rgba(67,190,255,.22);
+  color:#fff;
+}
+.akito-arcade-cabinet::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.2) 4px,transparent 5px);
+  z-index:5;
+}
+.akito-arcade-header,.akito-arcade-footer {
+  position:relative;
+  z-index:6;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 16px;
+  background:linear-gradient(90deg,#ff4fae,#9b55f5 53%,#2faeda);
+  color:#fff;
+  font-family:var(--font-pixel);
+  font-size:.48rem;
+  text-shadow:1px 2px 0 rgba(20,8,45,.5);
+}
+.akito-arcade-header > div:first-child { display:flex; flex-direction:column; gap:7px; }
+.akito-arcade-header strong { font-size:.78rem; letter-spacing:.04em; }
+.akito-arcade-kicker { font-size:.38rem; opacity:.88; }
+.akito-arcade-header-right { display:flex; align-items:center; gap:12px; }
+.akito-arcade-header-right button {
+  width:32px;height:30px;border:2px solid #fff;border-radius:6px;
+  color:#fff;background:rgba(30,15,60,.3);font-size:1.2rem;line-height:1;
+}
+.akito-arcade-main {
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:minmax(180px,.78fr) minmax(440px,1.6fr);
+  gap:14px;
+  flex:1;
+  padding:16px;
+  min-height:0;
+}
+.akito-arcade-hero-panel {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  min-height:420px;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,.55);
+  border-radius:13px;
+  background:
+    radial-gradient(ellipse at 50% 28%,rgba(255,255,255,.22),transparent 48%),
+    linear-gradient(155deg,rgba(255,70,167,.48),rgba(84,73,191,.42) 50%,rgba(28,178,226,.4));
+  box-shadow:inset 0 0 35px rgba(255,255,255,.15),0 0 20px rgba(255,95,204,.22);
+}
+.akito-arcade-spotlight {
+  position:absolute;inset:-40% -20%;
+  background:conic-gradient(from 0deg at 50% 50%,transparent 0 18%,rgba(255,255,255,.23) 19% 21%,transparent 22% 48%,rgba(110,225,255,.2) 49% 51%,transparent 52% 78%,rgba(255,104,196,.18) 79% 81%,transparent 82%);
+  animation:akitoSpotlightSpin 8s linear infinite;
+}
+@keyframes akitoSpotlightSpin { to { transform:rotate(360deg); } }
+.akito-arcade-ribbon,.akito-arcade-hero-caption,.akito-arcade-hero-subtitle { position:relative;z-index:2;text-align:center; }
+.akito-arcade-ribbon {
+  margin:12px auto 0;padding:7px 9px;border-radius:30px;
+  background:linear-gradient(90deg,#ff50a8,#a65dff,#38c5ed);
+  color:#fff;font-family:var(--font-pixel);font-size:.39rem;
+  box-shadow:0 0 14px rgba(255,91,192,.6);
+}
+#akito-arcade-hero {
+  position:relative;z-index:2;
+  width:min(100%,270px);height:310px;
+  object-fit:contain;object-position:center bottom;
+  filter:drop-shadow(0 0 13px rgba(255,255,255,.65));
+  animation:akitoArcadeHero 1.1s ease-in-out infinite alternate;
+}
+@keyframes akitoArcadeHero { from{transform:translateY(5px) rotate(-2deg)} to{transform:translateY(-7px) rotate(2deg)} }
+.akito-arcade-hero-caption { padding:6px 8px 2px;font-family:var(--font-pixel);font-size:.58rem;color:#fff; }
+.akito-arcade-hero-subtitle { padding:2px 8px 13px;font-family:var(--font-pixel);font-size:.34rem;color:#e6d9ff; }
+.akito-arcade-game {
+  position:relative;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  padding:10px;
+  border:2px solid rgba(177,223,255,.75);
+  border-radius:13px;
+  background:linear-gradient(180deg,rgba(8,13,35,.86),rgba(16,14,48,.95));
+  box-shadow:inset 0 0 20px rgba(80,170,255,.16),0 0 20px rgba(96,156,255,.16);
+}
+.akito-arcade-scoreboard {
+  display:grid;grid-template-columns:1.5fr 1fr 1fr .7fr;gap:7px;
+  margin-bottom:9px;
+}
+.akito-arcade-scoreboard > div {
+  min-width:0;padding:8px 6px;border:1px solid rgba(189,157,255,.5);
+  border-radius:7px;background:linear-gradient(135deg,rgba(255,255,255,.11),rgba(102,80,191,.16));
+  text-align:center;
+}
+.akito-arcade-scoreboard small { display:block;color:#b7b3e8;font-family:var(--font-pixel);font-size:.32rem;margin-bottom:5px; }
+.akito-arcade-scoreboard strong { display:block;color:#fff;font-family:var(--font-pixel);font-size:clamp(.55rem,1.2vw,.82rem);text-shadow:0 0 9px #a968ff; }
+.akito-arcade-lanes {
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;
+  flex:1;min-height:300px;max-height:52vh;
+}
+.akito-arcade-lane {
+  position:relative;overflow:hidden;min-width:0;min-height:280px;
+  padding:0;border:1px solid rgba(255,255,255,.42);border-radius:8px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  isolation:isolate;cursor:pointer;
+}
+.akito-arcade-lane::before {
+  content:"";position:absolute;inset:0;z-index:-1;opacity:.22;
+  background:repeating-linear-gradient(180deg,transparent 0 23px,rgba(255,255,255,.22) 24px,transparent 25px);
+}
+.akito-arcade-lane.lane-pink { --lane-color:#ff65ba; }
+.akito-arcade-lane.lane-blue { --lane-color:#55d8ff; }
+.akito-arcade-lane.lane-purple { --lane-color:#b18cff; }
+.akito-arcade-lane.lane-orange { --lane-color:#ffb46e; }
+.akito-arcade-lane:active { background:color-mix(in srgb,var(--lane-color) 22%,transparent); }
+.akito-arcade-lane-name {
+  position:absolute;bottom:9px;left:50%;transform:translateX(-50%);
+  display:grid;place-items:center;width:32px;height:32px;
+  border:2px solid var(--lane-color);border-radius:50%;
+  background:rgba(12,13,36,.9);color:#fff;
+  font-family:var(--font-pixel);font-size:.62rem;
+  box-shadow:0 0 13px var(--lane-color);
+}
+.akito-lane-target {
+  position:absolute;left:4px;right:4px;bottom:55px;height:10px;
+  border-radius:10px;border:1px solid var(--lane-color);
+  background:color-mix(in srgb,var(--lane-color) 40%,transparent);
+  box-shadow:0 0 12px var(--lane-color),0 0 24px color-mix(in srgb,var(--lane-color) 35%,transparent);
+}
+.akito-rhythm-note {
+  position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+  z-index:3;width:27px;height:27px;display:grid;place-items:center;
+  border:2px solid #fff;border-radius:9px;
+  background:var(--lane-color);color:#fff;
+  font-size:1.05rem;font-weight:bold;
+  text-shadow:0 1px 3px rgba(0,0,0,.55);
+  box-shadow:0 0 14px var(--lane-color),0 0 25px rgba(255,255,255,.45);
+  animation:akitoNoteFall 1.4s linear forwards;
+  pointer-events:none;
+}
+@keyframes akitoNoteFall { to { top:calc(100% - 76px);transform:translateX(-50%) rotate(220deg); } }
+.akito-arcade-instructions {
+  display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;
+  padding:8px 3px 3px;color:#e5dfff;
+  font-family:var(--font-pixel);font-size:.34rem;text-align:center;
+}
+.akito-arcade-judgement {
+  position:absolute;top:48%;left:50%;transform:translate(-50%,-50%) scale(.7);
+  z-index:6;opacity:0;pointer-events:none;
+  color:#fff;font-family:var(--font-pixel);font-size:clamp(.85rem,2vw,1.4rem);
+  text-shadow:0 0 6px #fff,0 0 16px #ff5fbf,2px 3px 0 #632cb7;
+}
+.akito-arcade-judgement.judgement-pop { animation:akitoJudgementPop .72s ease-out; }
+@keyframes akitoJudgementPop {
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.45) rotate(-8deg)}
+  18%{opacity:1;transform:translate(-50%,-50%) scale(1.18) rotate(4deg)}
+  75%{opacity:1;transform:translate(-50%,-65%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-80%) scale(.9)}
+}
+.akito-arcade-footer {
+  background:linear-gradient(90deg,rgba(255,79,174,.25),rgba(129,89,240,.35),rgba(48,174,218,.25));
+  font-size:.37rem;border-top:1px solid rgba(255,255,255,.18);
+}
+.akito-arcade-exit {
+  padding:7px 10px;border:1px solid #fff;border-radius:6px;
+  background:linear-gradient(90deg,#ff59a9,#8e5cf6);color:#fff;
+  font-family:var(--font-pixel);font-size:.39rem;
+}
+body.akito-arcade-takeover-open { overflow:hidden !important; }
+body.akito-arcade-takeover-open #main-window { animation:neonBorder 1.8s infinite alternate !important; }
+@media (max-width:760px) {
+  .akito-arcade-takeover { align-items:start; }
+  .akito-arcade-cabinet { min-height:96vh; }
+  .akito-arcade-main { grid-template-columns:1fr; gap:8px; padding:9px; }
+  .akito-arcade-hero-panel { min-height:175px;max-height:190px; }
+  #akito-arcade-hero { height:120px;width:auto; }
+  .akito-arcade-lanes { min-height:250px;max-height:40vh; }
+  .akito-arcade-lane { min-height:230px; }
+  .akito-arcade-header,.akito-arcade-footer { padding:8px; }
+  .akito-arcade-header-right span { display:none; }
+  .akito-arcade-header strong { font-size:.57rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .akito-arcade-spotlight,#akito-arcade-hero,.akito-rhythm-note,.akito-arcade-judgement { animation-duration:.01ms !important; }
+}
