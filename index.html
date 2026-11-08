@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="layout-fix.css">
+    <link rel="stylesheet" href="layout-fix.css?v=20261108-masthead-theme">
 
     <style>
         /* ================= THEME VARIABLES ================= */
@@ -956,6 +956,52 @@
         body[data-mood="midnight"] textarea::placeholder,
         body[data-mood="cyber"] input::placeholder,
         body[data-mood="cyber"] textarea::placeholder { color: var(--text-light); opacity: .8; }
+
+        /* FINAL HOME MASTHEAD + THEMED CONTENT SURFACE
+           Keep the site name floating above the content panel.
+           These rules live in the page stylesheet so cached external CSS
+           cannot override the theme-specific home panel. */
+        #app-container > .center-column {
+            background: transparent !important;
+        }
+        #app-container > .center-column > .top-banner {
+            display: block !important;
+            width: max-content !important;
+            max-width: 100% !important;
+            margin: 4px auto 7px !important;
+            padding: 9px 20px !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            color: var(--accent-color) !important;
+            text-shadow: 0 0 8px color-mix(in srgb, var(--accent-color) 45%, transparent) !important;
+            animation: falafelMastheadFloat 3.8s ease-in-out infinite !important;
+        }
+        #app-container > .center-column > .main-content-box {
+            background: var(--panel-bg) !important;
+            background-color: var(--panel-bg) !important;
+            background-image: none !important;
+            color: var(--text-main) !important;
+        }
+        body[data-mood="midnight"] #app-container > .center-column > .main-content-box,
+        body[data-mood="cyber"] #app-container > .center-column > .main-content-box {
+            background: #050509 !important;
+            background-color: #050509 !important;
+            background-image: none !important;
+            color: var(--text-main) !important;
+            border-color: var(--border-color) !important;
+        }
+        body[data-mood="midnight"] #app-container > .center-column,
+        body[data-mood="cyber"] #app-container > .center-column {
+            background: transparent !important;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #app-container > .center-column > .top-banner {
+                animation: none !important;
+            }
+        }
+
     </style>
     <link rel="stylesheet" href="calendar.css">
 </head>
