@@ -498,3 +498,106 @@ body.akito-arcade-takeover-open #main-window { animation:neonBorder 1.8s infinit
 @media (prefers-reduced-motion:reduce) {
   .akito-arcade-spotlight,#akito-arcade-hero,.akito-rhythm-note,.akito-arcade-judgement { animation-duration:.01ms !important; }
 }
+
+/* ================= DARK MOOD SURFACE OVERRIDES =================
+   Midnight and Cyber use true near-black surfaces throughout the UI.
+   Keep artwork and intentionally bright accent buttons untouched. */
+body[data-mood="midnight"],
+body[data-mood="cyber"] {
+  --panel-bg: #080910;
+}
+body[data-mood="midnight"] #app-container,
+body[data-mood="cyber"] #app-container {
+  color: var(--text-main);
+}
+body[data-mood="midnight"] .profile-box,
+body[data-mood="cyber"] .profile-box,
+body[data-mood="midnight"] .winamp-title,
+body[data-mood="cyber"] .winamp-title,
+body[data-mood="midnight"] .dance-toggle-box select,
+body[data-mood="cyber"] .dance-toggle-box select,
+body[data-mood="midnight"] .blinkie-admin-entry,
+body[data-mood="cyber"] .blinkie-admin-entry,
+body[data-mood="midnight"] .webmaster-field-editor-row,
+body[data-mood="cyber"] .webmaster-field-editor-row,
+body[data-mood="midnight"] .webmaster-field-editor-row input,
+body[data-mood="cyber"] .webmaster-field-editor-row input,
+body[data-mood="midnight"] .food-recipe-reader,
+body[data-mood="cyber"] .food-recipe-reader,
+body[data-mood="midnight"] .food-reader-copy,
+body[data-mood="cyber"] .food-reader-copy,
+body[data-mood="midnight"] .site-config-status,
+body[data-mood="cyber"] .site-config-status,
+body[data-mood="midnight"] .akito-chaos-hud,
+body[data-mood="cyber"] .akito-chaos-hud,
+body[data-mood="midnight"] .shop-browse-pane,
+body[data-mood="cyber"] .shop-browse-pane,
+body[data-mood="midnight"] .shop-preview-pane,
+body[data-mood="cyber"] .shop-preview-pane,
+body[data-mood="midnight"] .shop-card,
+body[data-mood="cyber"] .shop-card,
+body[data-mood="midnight"] .shop-card-image-wrap,
+body[data-mood="cyber"] .shop-card-image-wrap,
+body[data-mood="midnight"] .shop-category-tabs button,
+body[data-mood="cyber"] .shop-category-tabs button,
+body[data-mood="midnight"] .shop-gem-pill,
+body[data-mood="cyber"] .shop-gem-pill,
+body[data-mood="midnight"] .calendar-box,
+body[data-mood="cyber"] .calendar-box,
+body[data-mood="midnight"] .calendar-day,
+body[data-mood="cyber"] .calendar-day,
+body[data-mood="midnight"] .calendar-event-card,
+body[data-mood="cyber"] .calendar-event-card,
+body[data-mood="midnight"] .calendar-modal-card,
+body[data-mood="cyber"] .calendar-modal-card,
+body[data-mood="midnight"] .blog-card,
+body[data-mood="cyber"] .blog-card,
+body[data-mood="midnight"] .read-more,
+body[data-mood="cyber"] .read-more,
+body[data-mood="midnight"] .announcement-card.pinned,
+body[data-mood="cyber"] .announcement-card.pinned {
+  background: #080910 !important;
+  background-image: none !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color);
+}
+body[data-mood="midnight"] input:not([type="color"]),
+body[data-mood="midnight"] textarea,
+body[data-mood="midnight"] select,
+body[data-mood="cyber"] input:not([type="color"]),
+body[data-mood="cyber"] textarea,
+body[data-mood="cyber"] select {
+  background-color: #05060b !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+  color-scheme: dark;
+}
+body[data-mood="midnight"] input::placeholder,
+body[data-mood="midnight"] textarea::placeholder,
+body[data-mood="cyber"] input::placeholder,
+body[data-mood="cyber"] textarea::placeholder {
+  color: var(--text-light) !important;
+  opacity: .85;
+}
+body[data-mood="midnight"] .winamp-title,
+body[data-mood="cyber"] .winamp-title {
+  color: var(--text-main) !important;
+  border-bottom-color: var(--border-color);
+}
+body[data-mood="midnight"] .calendar-day.is-today,
+body[data-mood="cyber"] .calendar-day.is-today {
+  background: color-mix(in srgb, var(--accent-color) 22%, #080910) !important;
+  color: var(--text-main) !important;
+}
+body[data-mood="midnight"] .food-item,
+body[data-mood="cyber"] .food-item {
+  background: #080910 !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+body[data-mood="midnight"] .food-item::before,
+body[data-mood="cyber"] .food-item::before {
+  background: #080910 !important;
+  color: var(--accent-color) !important;
+  border-color: var(--border-color) !important;
+}
