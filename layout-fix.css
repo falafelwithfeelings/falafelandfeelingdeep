@@ -1,47 +1,65 @@
-/* Falafelverse layout + nav fix
-   - Nav pills on the RIGHT (like inspo)
-   - Center content fills the window (no empty wallpaper hole)
-*/
+/* FALAFELVERSE LAYOUT — nuclear fix */
 
-#app-container {
+.window-frame {
   display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: stretch !important;
-  min-height: 0 !important;
+  flex-direction: column !important;
+  position: fixed !important;
+}
+
+.window-frame > #app-container {
   flex: 1 1 0 !important;
-  height: 100% !important;
-}
-
-#app-container > .left-sidebar {
-  order: 1 !important;
-  flex: 0 0 190px !important;
-  width: 190px !important;
-  max-width: 190px !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-#app-container > .center-column {
-  order: 2 !important;
-  flex: 1 1 0% !important;
-  min-width: 0 !important;
-  width: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
   min-height: 0 !important;
-  align-self: stretch !important;
+  height: 100% !important;
+  position: relative !important;
+  display: block !important;
+  overflow: hidden !important;
+  padding: 11px !important;
+  box-sizing: border-box !important;
 }
 
-#app-container > .right-sidebar {
-  order: 3 !important;
-  flex: 0 0 118px !important;
-  width: 118px !important;
-  max-width: 118px !important;
+/* LEFT sidebar — pinned left */
+#app-container > .left-sidebar {
+  position: absolute !important;
+  left: 11px !important;
+  top: 11px !important;
+  bottom: 11px !important;
+  width: 180px !important;
+  max-width: 180px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   display: flex !important;
   flex-direction: column !important;
-  align-self: stretch !important;
-  position: relative !important;
+  gap: 10px !important;
+  z-index: 5 !important;
+}
+
+/* RIGHT sidebar / NAV — pinned right */
+#app-container > .right-sidebar {
+  position: absolute !important;
+  right: 11px !important;
+  top: 11px !important;
+  bottom: 11px !important;
+  width: 112px !important;
+  max-width: 112px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  z-index: 6 !important;
+}
+
+/* CENTER — fills space between left and right */
+#app-container > .center-column {
+  position: absolute !important;
+  left: 200px !important;
+  right: 132px !important;
+  top: 11px !important;
+  bottom: 11px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  z-index: 4 !important;
 }
 
 .center-column > .top-banner,
@@ -52,122 +70,71 @@
 .main-content-box {
   flex: 1 1 auto !important;
   min-height: 0 !important;
-  height: auto !important;
   width: 100% !important;
-  max-width: 100% !important;
-  display: block !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   box-sizing: border-box !important;
+  background: var(--panel-bg, #fff) !important;
 }
 
 .view-section.active {
   display: block !important;
   width: 100% !important;
-  min-height: 100% !important;
   box-sizing: border-box !important;
 }
 
 .vertical-tabs {
   display: flex !important;
   flex-direction: column !important;
-  flex-wrap: nowrap !important;
   gap: 10px !important;
-  margin-top: 14px !important;
+  margin-top: 12px !important;
   width: 100% !important;
-  align-items: stretch !important;
 }
 
 .v-tab {
   display: block !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  background: linear-gradient(180deg, #ffb7de 0%, #ff8ec8 45%, #f56eb0 100%) !important;
+  background: linear-gradient(180deg, #ffc0e0 0%, #ff8ec8 50%, #f56eb0 100%) !important;
   border: 2px solid #fff !important;
-  border-left: 3px solid #ffd6ec !important;
-  padding: 11px 10px !important;
+  border-left: 3px solid #ffe0f0 !important;
+  padding: 11px 8px !important;
   font-family: "Press Start 2P", monospace !important;
   font-size: 0.48rem !important;
   color: #fff !important;
   text-align: center !important;
-  cursor: pointer !important;
   text-transform: lowercase !important;
-  border-radius: 0 18px 18px 0 !important;
-  box-shadow: 3px 3px 0 rgba(180, 60, 120, 0.35), inset 0 1px 0 rgba(255,255,255,0.55) !important;
+  border-radius: 0 16px 16px 0 !important;
+  box-shadow: 3px 3px 0 rgba(180, 60, 120, 0.35) !important;
   text-decoration: none !important;
-  letter-spacing: 0.02em !important;
+  cursor: pointer !important;
 }
 
 .v-tab.active {
-  background: linear-gradient(180deg, #ff6eb4 0%, #e83d8a 50%, #c9186c 100%) !important;
-  color: #fff !important;
-  transform: translateX(4px) !important;
-  box-shadow: 4px 4px 0 rgba(100, 20, 70, 0.45), inset 0 1px 0 rgba(255,255,255,0.35) !important;
+  background: linear-gradient(180deg, #ff6eb4 0%, #e83d8a 55%, #c9186c 100%) !important;
+  transform: translateX(3px) !important;
 }
 
 .v-tab:hover {
-  transform: translateX(5px) !important;
-  filter: brightness(1.06) !important;
+  filter: brightness(1.08) !important;
   color: #fff !important;
 }
 
-.window-frame {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-.window-frame > #app-container {
-  flex: 1 1 0 !important;
-  min-height: 0 !important;
-}
-
-.about-layout,
-.mspaint-window,
-.bottom-grid,
-.latest-update-bar {
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-@media (max-width: 1024px) {
-  #app-container {
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-  }
+@media (max-width: 900px) {
   #app-container > .left-sidebar {
-    flex: 0 0 clamp(120px, 18vw, 170px) !important;
-    width: clamp(120px, 18vw, 170px) !important;
-    max-width: none !important;
-    flex-direction: column !important;
+    width: 130px !important;
+    max-width: 130px !important;
   }
   #app-container > .right-sidebar {
-    flex: 0 0 96px !important;
-    width: 96px !important;
-    max-width: none !important;
-    flex-direction: column !important;
+    width: 90px !important;
+    max-width: 90px !important;
   }
-  .vertical-tabs {
-    flex-direction: column !important;
-    flex-wrap: nowrap !important;
+  #app-container > .center-column {
+    left: 148px !important;
+    right: 108px !important;
   }
   .v-tab {
-    border-radius: 0 14px 14px 0 !important;
-    padding: 9px 6px !important;
-    font-size: 0.42rem !important;
-  }
-}
-
-@media (max-width: 640px) {
-  #app-container > .left-sidebar {
-    flex: 0 0 88px !important;
-    width: 88px !important;
-  }
-  #app-container > .right-sidebar {
-    flex: 0 0 72px !important;
-    width: 72px !important;
-  }
-  .v-tab {
-    font-size: 0.36rem !important;
-    padding: 8px 3px !important;
+    font-size: 0.4rem !important;
+    padding: 9px 4px !important;
   }
 }
