@@ -1,14 +1,23 @@
-/* Falafelverse layout — fill center panel, no wallpaper bleed */
+/* Falafelverse — stop wallpaper bleed under content */
 
 .window-frame {
   display: flex !important;
   flex-direction: column !important;
   height: 95vh !important;
   max-height: 95vh !important;
+  overflow: hidden !important;
 }
 
 .window-bar {
   flex: 0 0 26px !important;
+}
+
+.pixel-vector-flourish {
+  position: absolute !important;
+  pointer-events: none !important;
+  flex: 0 0 0 !important;
+  height: 0 !important;
+  width: 0 !important;
 }
 
 #app-container {
@@ -16,9 +25,10 @@
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: stretch !important;
-  flex: 1 1 0 !important;
+  flex: 1 1 auto !important;
   min-height: 0 !important;
-  height: 100% !important;
+  height: calc(95vh - 26px) !important;
+  max-height: calc(95vh - 26px) !important;
   padding: 10px !important;
   gap: 10px !important;
   box-sizing: border-box !important;
@@ -29,47 +39,46 @@
   flex: 0 0 180px !important;
   width: 180px !important;
   max-width: 180px !important;
-  min-width: 140px !important;
+  order: 1 !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  order: 1 !important;
-  position: relative !important;
   align-self: stretch !important;
-  height: auto !important;
-  inset: auto !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  position: relative !important;
 }
 
 #app-container > .center-column {
   flex: 1 1 0% !important;
   min-width: 0 !important;
-  width: auto !important;
+  min-height: 0 !important;
+  order: 2 !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
   overflow: hidden !important;
-  order: 2 !important;
-  position: relative !important;
   align-self: stretch !important;
-  height: auto !important;
-  min-height: 0 !important;
-  inset: auto !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  position: relative !important;
+  background: var(--panel-bg, #fff5fb) !important;
+  border-radius: 12px !important;
 }
 
 #app-container > .right-sidebar {
-  flex: 0 0 108px !important;
-  width: 108px !important;
-  max-width: 108px !important;
-  min-width: 90px !important;
+  flex: 0 0 110px !important;
+  width: 110px !important;
+  max-width: 110px !important;
+  order: 3 !important;
   display: flex !important;
   flex-direction: column !important;
-  order: 3 !important;
-  position: relative !important;
   align-self: stretch !important;
-  height: auto !important;
-  inset: auto !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  position: relative !important;
 }
 
 .center-column > .top-banner,
@@ -80,41 +89,22 @@
 
 .main-content-box {
   flex: 1 1 auto !important;
+  flex-grow: 1 !important;
   min-height: 0 !important;
-  height: 100% !important;
+  height: auto !important;
   width: 100% !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   box-sizing: border-box !important;
   background: var(--panel-bg, #fff5fb) !important;
-  position: relative !important;
-  inset: auto !important;
   background-image: none !important;
-}
-
-.view-section {
-  min-height: 100% !important;
-  box-sizing: border-box !important;
+  position: relative !important;
 }
 
 .view-section.active {
   display: block !important;
   width: 100% !important;
-  min-height: 100% !important;
-}
-
-#view-blog,
-#view-home,
-#view-about,
-#view-contact,
-#view-settings,
-#view-announcements,
-#view-shop {
   box-sizing: border-box !important;
-}
-
-#dynamic-blog-container {
-  min-height: 120px !important;
 }
 
 .vertical-tabs {
