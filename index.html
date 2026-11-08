@@ -3406,6 +3406,24 @@
         }
 
         async function getBinData() {
+            // Read the legacy public blog through the Worker first. This keeps any
+            // optional JSONBin access key on the server, never in the public page.
+            if (sharedApiIsConfigured()) {
+                try {
+                    const response = await fetch(sharedApiUrl('/blog'), { method:'GET', cache:'no-store' });
+                    if (!response.ok) throw new Error(`Shared blog read failed (${response.status})`);
+                    const record = await response.json();
+                    cachedBlogData = {
+                        posts: Array.isArray(record.posts) ? record.posts : [],
+                        syncCodes: record.syncCodes && typeof record.syncCodes === 'object' ? record.syncCodes : {}
+                    };
+                    cachedSyncCodes = cachedBlogData.syncCodes;
+                    try { localStorage.setItem('falafel_blog_cache', JSON.stringify(cachedBlogData)); } catch (error) {}
+                    return { ...cachedBlogData };
+                } catch (error) {
+                    console.warn('Shared blog bridge unavailable; trying the legacy JSONBin read.', error);
+                }
+            }
             try {
                 const headers = hasJsonBinAccessKey() ? { 'X-Access-Key': JSONBIN_ACCESS_KEY.trim() } : {};
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers });
