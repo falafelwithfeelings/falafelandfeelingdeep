@@ -79,21 +79,37 @@ async function withUserMutationLock(key,task){
  finally{release();if(USER_MUTATION_LOCKS.get(key)===queued)USER_MUTATION_LOCKS.delete(key);}
 }
 export default{async fetch(r,e){let u=new URL(r.url),p=u.pathname.replace(/\/+$/,'')||'/';if(r.method==='OPTIONS')return new Response(null,{status:204,headers:cors(e)});if(!e.SITE_CONFIG)return out({error:'Missing SITE_CONFIG KV binding.'},500,e);if(r.method==='GET'&&p==='/blog'){
- try{
-  const headers=e.JSONBIN_ACCESS_KEY?{'X-Access-Key':e.JSONBIN_ACCESS_KEY}:{};
-  const response=await fetch('https://api.jsonbin.io/v3/b/6aca4a7dac6210605a2587db/latest',{headers});
-  if(!response.ok)throw Error('JSONBin returned '+response.status);
-  const payload=await response.json();
-  const record=payload&&payload.record&&typeof payload.record==='object'&&!Array.isArray(payload.record)?payload.record:{};
-  const blog={posts:Array.isArray(record.posts)?record.posts:[],syncCodes:record.syncCodes&&typeof record.syncCodes==='object'?record.syncCodes:{}};
-  await e.SITE_CONFIG.put('falafelverse-legacy-blog-v1',JSON.stringify(blog),{metadata:{syncedAt:new Date().toISOString(),source:'jsonbin'}});
-  return out(blog,200,e);
- }catch(error){
-  const cached=await e.SITE_CONFIG.get('falafelverse-legacy-blog-v1','json');
-  if(cached&&Array.isArray(cached.posts))return out({...cached,stale:true},200,e);
-  return out({error:'The legacy JSONBin record is not publicly readable yet. Add a restricted JSONBin access key as the Worker secret JSONBIN_ACCESS_KEY, then retry.'},503,e);
+  const shared=await e.SITE_CONFIG.get('falafelverse-blog-v2','json');
+  if(shared&&Array.isArray(shared.posts))return out(shared,200,e);
+  try{
+   const headers=e.JSONBIN_ACCESS_KEY?{'X-Access-Key':e.JSONBIN_ACCESS_KEY}:{};
+   const response=await fetch('https://api.jsonbin.io/v3/b/6aca4a7dac6210605a2587db/latest',{headers});
+   if(!response.ok)throw Error('JSONBin returned HTTP '+response.status);
+   const payload=await response.json();
+   const record=payload&&payload.record&&typeof payload.record==='object'&&!Array.isArray(payload.record)?payload.record:null;
+   if(!record||!Array.isArray(record.posts))throw Error('JSONBin responded, but its record does not contain a posts array. No data was changed.');
+   const blog={posts:record.posts,syncCodes:record.syncCodes&&typeof record.syncCodes==='object'?record.syncCodes:{}};
+   if(blog.posts.length)await e.SITE_CONFIG.put('falafelverse-legacy-blog-v1',JSON.stringify(blog),{metadata:{syncedAt:new Date().toISOString(),source:'jsonbin'}});
+   return out(blog,200,e);
+  }catch(error){
+   const cached=await e.SITE_CONFIG.get('falafelverse-legacy-blog-v1','json');
+   if(cached&&Array.isArray(cached.posts)&&cached.posts.length)return out({...cached,stale:true},200,e);
+   return out({error:'The shared blog is not loaded yet. '+(error.message||'JSONBin could not be read.')},502,e);
+  }
  }
-}if(r.method==='GET'&&p==='/config'){try{let v=await e.SITE_CONFIG.get(CONFIG_KEY,'json');return out({...norm(v||DEFAULT_CONFIG),_initialized:!!v},200,e)}catch{return out({error:'Could not read site config.'},500,e)}}if(r.method==='POST'&&p==='/admin/login'){if(!e.ADMIN_PASSWORD)return out({error:'ADMIN_PASSWORD secret missing.'},503,e);if(!isAdmin(r,e))return out({error:'Incorrect password.'},401,e);return out({ok:true},200,e)}if(r.method==='POST'&&p==='/admin/config'){if(!isAdmin(r,e))return out({error:'Admin authentication required.'},401,e);try{let v=norm(await read(r));await e.SITE_CONFIG.put(CONFIG_KEY,JSON.stringify(v),{metadata:{updatedAt:new Date().toISOString()}});return out({ok:true},200,e)}catch(x){return out({error:x.message},400,e)}}if(r.method==='GET'&&p==='/shop'){try{let items=await e.SITE_CONFIG.get(SHOP_KEY,'json');return out({items:Array.isArray(items)?items:[]},200,e)}catch{return out({error:'Could not read shop items.'},500,e)}}if(r.method==='POST'&&p==='/shop'){if(!isAdmin(r,e))return out({error:'Only the webmaster can manage shop items.'},401,e);try{let x=await read(r,12000),name=txt(x.name,80).trim(),imageUrl=txt(x.imageUrl,1200).trim(),description=txt(x.description,600).trim(),priceGems=Number(x.priceGems),category=txt(x.category,30,'Other').trim(),placement=txt(x.placement,20,'hat').trim();if(!name)throw Error('Item name is required.');if(!url(imageUrl))throw Error('A valid http:// or https:// image URL is required.');if(!Number.isInteger(priceGems)||priceGems<0||priceGems>1000000)throw Error('Price must be a whole number of Miku Gems (0–1,000,000).');if(!['Hats','Cosmetics','Accessories','Backgrounds','Other'].includes(category))category='Other';if(!['hat','face','neck','body','hand','background'].includes(placement))placement=category==='Backgrounds'?'background':'hat';if(category==='Backgrounds')placement='background';let items=await e.SITE_CONFIG.get(SHOP_KEY,'json');items=Array.isArray(items)?items:[];let idx=x.id?items.findIndex(item=>item.id===x.id):-1;if(idx<0&&items.length>=100)throw Error('The shop has reached its 100-item limit.');let item={id:idx>=0?items[idx].id:crypto.randomUUID(),name,imageUrl,description,priceGems,price:priceGems+' Miku Gems',category,placement,createdAt:idx>=0?items[idx].createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};if(idx>=0)items[idx]=item;else items.unshift(item);await e.SITE_CONFIG.put(SHOP_KEY,JSON.stringify(items),{metadata:{updatedAt:new Date().toISOString()}});return out({ok:true,item,items},200,e)}catch(x){return out({error:x.message||'Could not save shop item.'},400,e)}}if(r.method==='POST'&&p==='/shop/purchase'){
+ if(r.method==='POST'&&p==='/blog'){
+  if(!isAdmin(r,e))return out({error:'Only the webmaster can publish blog posts and announcements.'},401,e);
+  try{
+   const x=await read(r,500000);
+   if(!Array.isArray(x.posts))throw Error('The blog payload must contain a posts array.');
+   if(x.posts.length>1000)throw Error('The blog is limited to 1,000 entries.');
+   const posts=x.posts.filter(v=>v&&typeof v==='object'&&!Array.isArray(v));
+   const syncCodes=x.syncCodes&&typeof x.syncCodes==='object'&&!Array.isArray(x.syncCodes)?x.syncCodes:{};
+   const blog={posts,syncCodes};
+   await e.SITE_CONFIG.put('falafelverse-blog-v2',JSON.stringify(blog),{metadata:{updatedAt:new Date().toISOString(),source:'falafelverse-admin'}});
+   return out({ok:true,postCount:posts.length},200,e);
+  }catch(error){return out({error:error.message||'Could not save the shared blog.'},400,e)}
+ }if(r.method==='GET'&&p==='/config'){try{let v=await e.SITE_CONFIG.get(CONFIG_KEY,'json');return out({...norm(v||DEFAULT_CONFIG),_initialized:!!v},200,e)}catch{return out({error:'Could not read site config.'},500,e)}}if(r.method==='POST'&&p==='/admin/login'){if(!e.ADMIN_PASSWORD)return out({error:'ADMIN_PASSWORD secret missing.'},503,e);if(!isAdmin(r,e))return out({error:'Incorrect password.'},401,e);return out({ok:true},200,e)}if(r.method==='POST'&&p==='/admin/config'){if(!isAdmin(r,e))return out({error:'Admin authentication required.'},401,e);try{let v=norm(await read(r));await e.SITE_CONFIG.put(CONFIG_KEY,JSON.stringify(v),{metadata:{updatedAt:new Date().toISOString()}});return out({ok:true},200,e)}catch(x){return out({error:x.message},400,e)}}if(r.method==='GET'&&p==='/shop'){try{let items=await e.SITE_CONFIG.get(SHOP_KEY,'json');return out({items:Array.isArray(items)?items:[]},200,e)}catch{return out({error:'Could not read shop items.'},500,e)}}if(r.method==='POST'&&p==='/shop'){if(!isAdmin(r,e))return out({error:'Only the webmaster can manage shop items.'},401,e);try{let x=await read(r,12000),name=txt(x.name,80).trim(),imageUrl=txt(x.imageUrl,1200).trim(),description=txt(x.description,600).trim(),priceGems=Number(x.priceGems),category=txt(x.category,30,'Other').trim(),placement=txt(x.placement,20,'hat').trim();if(!name)throw Error('Item name is required.');if(!url(imageUrl))throw Error('A valid http:// or https:// image URL is required.');if(!Number.isInteger(priceGems)||priceGems<0||priceGems>1000000)throw Error('Price must be a whole number of Miku Gems (0–1,000,000).');if(!['Hats','Cosmetics','Accessories','Backgrounds','Other'].includes(category))category='Other';if(!['hat','face','neck','body','hand','background'].includes(placement))placement=category==='Backgrounds'?'background':'hat';if(category==='Backgrounds')placement='background';let items=await e.SITE_CONFIG.get(SHOP_KEY,'json');items=Array.isArray(items)?items:[];let idx=x.id?items.findIndex(item=>item.id===x.id):-1;if(idx<0&&items.length>=100)throw Error('The shop has reached its 100-item limit.');let item={id:idx>=0?items[idx].id:crypto.randomUUID(),name,imageUrl,description,priceGems,price:priceGems+' Miku Gems',category,placement,createdAt:idx>=0?items[idx].createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};if(idx>=0)items[idx]=item;else items.unshift(item);await e.SITE_CONFIG.put(SHOP_KEY,JSON.stringify(items),{metadata:{updatedAt:new Date().toISOString()}});return out({ok:true,item,items},200,e)}catch(x){return out({error:x.message||'Could not save shop item.'},400,e)}}if(r.method==='POST'&&p==='/shop/purchase'){
  try{
   const identity=await sparkleIdentity(r.headers.get('X-Sparkle-Code'));
   return await withUserMutationLock(identity.key,async()=>{
