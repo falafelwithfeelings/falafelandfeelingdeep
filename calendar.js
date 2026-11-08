@@ -14,99 +14,76 @@
     app.appendChild(center);
     app.appendChild(right);
 
+    [app, left, center, right].forEach((el) => {
+      el.style.position = '';
+      el.style.left = '';
+      el.style.right = '';
+      el.style.top = '';
+      el.style.bottom = '';
+      el.style.inset = '';
+    });
+
     Object.assign(app.style, {
-      display: 'block',
-      position: 'relative',
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      alignItems: 'stretch',
       flex: '1 1 0',
       minHeight: '0',
       height: '100%',
       overflow: 'hidden',
-      padding: '11px',
+      padding: '10px',
+      gap: '10px',
       boxSizing: 'border-box'
     });
 
     Object.assign(left.style, {
-      position: 'absolute',
-      left: '11px',
-      top: '11px',
-      bottom: '11px',
+      flex: '0 0 180px',
       width: '180px',
       maxWidth: '180px',
-      overflowY: 'auto',
-      overflowX: 'hidden',
       display: 'flex',
       flexDirection: 'column',
-      gap: '10px',
-      zIndex: '5'
-    });
-
-    Object.assign(right.style, {
-      position: 'absolute',
-      right: '11px',
-      top: '11px',
-      bottom: '11px',
-      width: '112px',
-      maxWidth: '112px',
       overflowY: 'auto',
-      overflowX: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
-      zIndex: '6'
+      order: '1'
     });
 
     Object.assign(center.style, {
-      position: 'absolute',
-      left: '200px',
-      right: '132px',
-      top: '11px',
-      bottom: '11px',
+      flex: '1 1 0%',
+      minWidth: '0',
+      width: 'auto',
       display: 'flex',
       flexDirection: 'column',
-      minWidth: '0',
       overflow: 'hidden',
-      zIndex: '4'
+      order: '2'
+    });
+
+    Object.assign(right.style, {
+      flex: '0 0 108px',
+      width: '108px',
+      maxWidth: '108px',
+      display: 'flex',
+      flexDirection: 'column',
+      order: '3'
     });
 
     const box = center.querySelector('.main-content-box');
     if (box) {
       Object.assign(box.style, {
         flex: '1 1 auto',
-        minHeight: '0',
+        minHeight: '200px',
         width: '100%',
         overflowY: 'auto',
-        overflowX: 'hidden',
-        boxSizing: 'border-box'
+        position: '',
+        left: '',
+        right: ''
       });
     }
-
-    right.querySelectorAll('.v-tab').forEach((tab) => {
-      Object.assign(tab.style, {
-        display: 'block',
-        width: '100%',
-        boxSizing: 'border-box',
-        background: tab.classList.contains('active')
-          ? 'linear-gradient(180deg, #ff6eb4 0%, #e83d8a 55%, #c9186c 100%)'
-          : 'linear-gradient(180deg, #ffc0e0 0%, #ff8ec8 50%, #f56eb0 100%)',
-        border: '2px solid #fff',
-        borderLeft: '3px solid #ffe0f0',
-        padding: '11px 8px',
-        color: '#fff',
-        textAlign: 'center',
-        textTransform: 'lowercase',
-        borderRadius: '0 16px 16px 0',
-        boxShadow: '3px 3px 0 rgba(180, 60, 120, 0.35)',
-        textDecoration: 'none',
-        fontFamily: '"Press Start 2P", monospace',
-        fontSize: '0.48rem',
-        cursor: 'pointer'
-      });
-    });
   }
 
   function run() {
     enforceLayout();
-    setTimeout(enforceLayout, 100);
-    setTimeout(enforceLayout, 500);
+    setTimeout(enforceLayout, 150);
+    setTimeout(enforceLayout, 600);
   }
 
   if (document.readyState === 'loading') {
