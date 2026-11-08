@@ -1,65 +1,71 @@
-/* FALAFELVERSE LAYOUT — nuclear fix */
+/* Falafelverse layout — clean flex, matches inspo */
 
 .window-frame {
   display: flex !important;
   flex-direction: column !important;
-  position: fixed !important;
 }
 
-.window-frame > #app-container {
+#app-container {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
   flex: 1 1 0 !important;
   min-height: 0 !important;
   height: 100% !important;
-  position: relative !important;
-  display: block !important;
-  overflow: hidden !important;
-  padding: 11px !important;
+  padding: 10px !important;
+  gap: 10px !important;
   box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
-/* LEFT sidebar — pinned left */
 #app-container > .left-sidebar {
-  position: absolute !important;
-  left: 11px !important;
-  top: 11px !important;
-  bottom: 11px !important;
+  flex: 0 0 180px !important;
   width: 180px !important;
   max-width: 180px !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+  min-width: 140px !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 10px !important;
-  z-index: 5 !important;
-}
-
-/* RIGHT sidebar / NAV — pinned right */
-#app-container > .right-sidebar {
-  position: absolute !important;
-  right: 11px !important;
-  top: 11px !important;
-  bottom: 11px !important;
-  width: 112px !important;
-  max-width: 112px !important;
+  gap: 8px !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-  z-index: 6 !important;
+  order: 1 !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
 }
 
-/* CENTER — fills space between left and right */
 #app-container > .center-column {
-  position: absolute !important;
-  left: 200px !important;
-  right: 132px !important;
-  top: 11px !important;
-  bottom: 11px !important;
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  width: auto !important;
   display: flex !important;
   flex-direction: column !important;
-  min-width: 0 !important;
+  gap: 8px !important;
   overflow: hidden !important;
-  z-index: 4 !important;
+  order: 2 !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+}
+
+#app-container > .right-sidebar {
+  flex: 0 0 108px !important;
+  width: 108px !important;
+  max-width: 108px !important;
+  min-width: 90px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  order: 3 !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
 }
 
 .center-column > .top-banner,
@@ -69,25 +75,27 @@
 
 .main-content-box {
   flex: 1 1 auto !important;
-  min-height: 0 !important;
+  min-height: 200px !important;
   width: 100% !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   box-sizing: border-box !important;
-  background: var(--panel-bg, #fff) !important;
+  background: var(--panel-bg, #ffeef8) !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
 }
 
 .view-section.active {
   display: block !important;
   width: 100% !important;
-  box-sizing: border-box !important;
 }
 
 .vertical-tabs {
   display: flex !important;
   flex-direction: column !important;
-  gap: 10px !important;
-  margin-top: 12px !important;
+  gap: 9px !important;
+  margin-top: 10px !important;
   width: 100% !important;
 }
 
@@ -95,12 +103,12 @@
   display: block !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  background: linear-gradient(180deg, #ffc0e0 0%, #ff8ec8 50%, #f56eb0 100%) !important;
+  background: linear-gradient(180deg, #ffc0e0, #ff8ec8 50%, #f56eb0) !important;
   border: 2px solid #fff !important;
   border-left: 3px solid #ffe0f0 !important;
-  padding: 11px 8px !important;
+  padding: 10px 8px !important;
   font-family: "Press Start 2P", monospace !important;
-  font-size: 0.48rem !important;
+  font-size: 0.46rem !important;
   color: #fff !important;
   text-align: center !important;
   text-transform: lowercase !important;
@@ -111,7 +119,7 @@
 }
 
 .v-tab.active {
-  background: linear-gradient(180deg, #ff6eb4 0%, #e83d8a 55%, #c9186c 100%) !important;
+  background: linear-gradient(180deg, #ff6eb4, #e83d8a 55%, #c9186c) !important;
   transform: translateX(3px) !important;
 }
 
@@ -120,21 +128,8 @@
   color: #fff !important;
 }
 
-@media (max-width: 900px) {
-  #app-container > .left-sidebar {
-    width: 130px !important;
-    max-width: 130px !important;
-  }
-  #app-container > .right-sidebar {
-    width: 90px !important;
-    max-width: 90px !important;
-  }
-  #app-container > .center-column {
-    left: 148px !important;
-    right: 108px !important;
-  }
-  .v-tab {
-    font-size: 0.4rem !important;
-    padding: 9px 4px !important;
-  }
+#app-container > .left-sidebar,
+#app-container > .center-column,
+#app-container > .right-sidebar {
+  inset: auto !important;
 }
