@@ -3522,16 +3522,18 @@
             if (sharedApiIsConfigured()) {
                 try {
                     const response = await fetch(sharedApiUrl('/blog'), { method:'GET', cache:'no-store' });
-                    if (!response.ok) throw new Error(`Shared blog read failed (${response.status})`);
-                    const record = await response.json();
+                    const record = await response.json().catch(() => ({}));
+                    if (!response.ok) throw new Error(record.error || `Shared blog read failed (${response.status})`);
                     cachedBlogData = {
                         posts: Array.isArray(record.posts) ? record.posts : [],
                         syncCodes: record.syncCodes && typeof record.syncCodes === 'object' ? record.syncCodes : {}
                     };
+                    blogLoadError = '';
                     cachedSyncCodes = cachedBlogData.syncCodes;
                     try { localStorage.setItem('falafel_blog_cache', JSON.stringify(cachedBlogData)); } catch (error) {}
                     return { ...cachedBlogData };
                 } catch (error) {
+                    blogLoadError = error.message || 'The shared blog could not be loaded.';
                     console.warn('Shared blog bridge unavailable; trying the legacy JSONBin read.', error);
                 }
             }
@@ -3549,6 +3551,7 @@
                 try { localStorage.setItem('falafel_blog_cache', JSON.stringify(cachedBlogData)); } catch (error) {}
                 return { ...cachedBlogData };
             } catch (err) {
+                if (!blogLoadError) blogLoadError = err.message || 'The blog could not be loaded from JSONBin.';
                 return { ...cachedBlogData, syncCodes: cachedSyncCodes };
             }
         }
@@ -3594,9 +3597,9 @@
             if (!container) return;
 
             if (posts.length === 0) {
-                container.innerHTML = hasJsonBinAccessKey()
-                    ? '<p style="font-size:1.2rem;">No posts yet. Log in as admin to create one!</p>'
-                    : '<p style="font-size:1.1rem;">The blog is ready, but shared sync is not connected. Existing posts may still appear from this browser\'s saved cache. Add a restricted JSONBin key or a server-side proxy to sync posts and comments for everyone.</p>';
+                container.innerHTML = blogLoadError
+                    ? `<p style="font-size:1.1rem;">The shared blog couldn't load: ${escapeHTML(blogLoadError)}. Your old posts have not been deleted.</p>`
+                    : '<p style="font-size:1.2rem;">No posts yet. Log in as admin to create one!</p>';
                 return;
             }
 
@@ -3625,12 +3628,15 @@
             container.innerHTML = html;
 
             const homeUpdates = document.getElementById('home-updates-container');
-            if (homeUpdates && posts.length > 0) {
-                homeUpdates.innerHTML = posts.slice(0, 3).map(p => `
+            const allEntries = Array.isArray(data.posts) ? data.posts : [];
+            const homeEntries = allEntries.filter(p => p && p.type === 'announcement').slice(0,3);
+            const updatesToShow = homeEntries.length ? homeEntries : posts.slice(0,3);
+            if (homeUpdates) {
+                homeUpdates.innerHTML = updatesToShow.length ? updatesToShow.map(p => `
                     <div style="margin-bottom:5px;">
                         <span style="font-weight:bold; color:var(--accent-color);">${escapeHTML(p.date || 'New')}:</span> ${escapeHTML(p.title || 'Untitled')}
                     </div>
-                `).join('');
+                `).join('') : (blogLoadError ? '<span>Shared updates are waiting for the blog connection.</span>' : '<span>No updates yet. Check back soon! ✧</span>');
             }
         }
 
@@ -3641,7 +3647,9 @@
             if (!container) return;
 
             if (announcements.length === 0) {
-                container.innerHTML = '<p style="font-size:1.2rem;">No announcements yet.</p>';
+                container.innerHTML = blogLoadError
+                    ? `<p style="font-size:1.1rem;">The announcement wall couldn't load: ${escapeHTML(blogLoadError)}. Your old entries have not been deleted.</p>`
+                    : '<p style="font-size:1.2rem;">No announcements yet.</p>';
                 return;
             }
 
@@ -3740,7 +3748,7 @@
             document.getElementById('admin-modal').style.display = 'none';
             renderAllPosts();
             renderAnnouncements();
-            alert(synced ? 'Post saved successfully! 🚀' : 'Post saved in this browser only. Add a restricted JSONBin Access Key or server-side proxy to sync it for everyone.');
+            alert(synced ? 'Post saved for everyone! 🚀' : 'Saved only in this browser. Please make sure you are logged in as webmaster and the updated Worker is deployed.');
         }
 
         // Comments (With Heart, Edit, Admin, Replies)
