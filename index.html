@@ -3493,6 +3493,7 @@
         let currentPostIndexForComments = null;
         let cachedBlogData = { posts: [], syncCodes: {} };
         let cachedSyncCodes = {};
+        let blogLoadError = '';
 
         try {
             const savedBlogCache = JSON.parse(localStorage.getItem('falafel_blog_cache') || '{}');
@@ -3568,17 +3569,20 @@
                 console.warn('Could not update the local blog cache.', error);
             }
 
-            if (!hasJsonBinAccessKey()) return false;
+            // Shared blog writes go through the Worker. The JSONBin key stays server-side
+            // and is read-only; the Worker KV record is the shared source of truth.
+            if (!sharedApiIsConfigured() || !isSiteAdmin()) return false;
             try {
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'X-Access-Key': JSONBIN_ACCESS_KEY.trim() },
+                const response = await fetch(sharedApiUrl('/blog'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Password': sharedAdminPassword },
                     body: JSON.stringify(nextData)
                 });
-                if (!response.ok) throw new Error(`JSONBin update failed (${response.status})`);
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(result.error || `Shared blog save failed (${response.status})`);
                 return true;
             } catch (err) {
-                console.error('Could not sync with JSONBin. Your changes remain cached in this browser.', err);
+                console.error('Could not sync the shared blog. This browser keeps a local copy.', err);
                 return false;
             }
         }
