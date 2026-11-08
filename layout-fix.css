@@ -3,7 +3,6 @@
    - Center content fills the window (no empty wallpaper hole)
 */
 
-/* Force three-column row: left | center | right */
 #app-container {
   display: flex !important;
   flex-direction: row !important;
@@ -97,7 +96,6 @@
   box-shadow: 3px 3px 0 rgba(180, 60, 120, 0.35), inset 0 1px 0 rgba(255,255,255,0.55) !important;
   text-decoration: none !important;
   letter-spacing: 0.02em !important;
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease !important;
 }
 
 .v-tab.active {
