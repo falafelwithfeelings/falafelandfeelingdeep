@@ -1,36 +1,84 @@
-/* Falafelverse layout + nav fix — loaded after inline styles if linked */
+/* Falafelverse layout + nav fix
+   - Nav pills on the RIGHT (like inspo)
+   - Center content fills the window (no empty wallpaper hole)
+*/
+
+/* Force three-column row: left | center | right */
 #app-container {
   display: flex !important;
   flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+  flex: 1 1 0 !important;
+  height: 100% !important;
 }
-#app-container > .left-sidebar { order: 1 !important; }
+
+#app-container > .left-sidebar {
+  order: 1 !important;
+  flex: 0 0 190px !important;
+  width: 190px !important;
+  max-width: 190px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 #app-container > .center-column {
   order: 2 !important;
   flex: 1 1 0% !important;
   min-width: 0 !important;
   width: 0 !important;
-}
-#app-container > .right-sidebar {
-  order: 3 !important;
-  width: 110px !important;
-  flex: 0 0 110px !important;
-  align-self: stretch !important;
   display: flex !important;
   flex-direction: column !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
 }
+
+#app-container > .right-sidebar {
+  order: 3 !important;
+  flex: 0 0 118px !important;
+  width: 118px !important;
+  max-width: 118px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: stretch !important;
+  position: relative !important;
+}
+
+.center-column > .top-banner,
+.center-column > .blinkies-container {
+  flex: 0 0 auto !important;
+}
+
 .main-content-box {
   flex: 1 1 auto !important;
-  min-height: 220px !important;
-  height: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
   width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
 }
+
+.view-section.active {
+  display: block !important;
+  width: 100% !important;
+  min-height: 100% !important;
+  box-sizing: border-box !important;
+}
+
 .vertical-tabs {
   display: flex !important;
   flex-direction: column !important;
+  flex-wrap: nowrap !important;
   gap: 10px !important;
-  margin-top: 12px !important;
+  margin-top: 14px !important;
   width: 100% !important;
+  align-items: stretch !important;
 }
+
 .v-tab {
   display: block !important;
   width: 100% !important;
@@ -38,7 +86,7 @@
   background: linear-gradient(180deg, #ffb7de 0%, #ff8ec8 45%, #f56eb0 100%) !important;
   border: 2px solid #fff !important;
   border-left: 3px solid #ffd6ec !important;
-  padding: 10px 12px !important;
+  padding: 11px 10px !important;
   font-family: "Press Start 2P", monospace !important;
   font-size: 0.48rem !important;
   color: #fff !important;
@@ -48,36 +96,80 @@
   border-radius: 0 18px 18px 0 !important;
   box-shadow: 3px 3px 0 rgba(180, 60, 120, 0.35), inset 0 1px 0 rgba(255,255,255,0.55) !important;
   text-decoration: none !important;
+  letter-spacing: 0.02em !important;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease !important;
 }
+
 .v-tab.active {
   background: linear-gradient(180deg, #ff6eb4 0%, #e83d8a 50%, #c9186c 100%) !important;
   color: #fff !important;
   transform: translateX(4px) !important;
   box-shadow: 4px 4px 0 rgba(100, 20, 70, 0.45), inset 0 1px 0 rgba(255,255,255,0.35) !important;
 }
+
 .v-tab:hover {
   transform: translateX(5px) !important;
   filter: brightness(1.06) !important;
   color: #fff !important;
 }
+
+.window-frame {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.window-frame > #app-container {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+}
+
+.about-layout,
+.mspaint-window,
+.bottom-grid,
+.latest-update-bar {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 @media (max-width: 1024px) {
   #app-container {
     flex-direction: row !important;
+    flex-wrap: nowrap !important;
   }
-  .left-sidebar, .right-sidebar {
+  #app-container > .left-sidebar {
+    flex: 0 0 clamp(120px, 18vw, 170px) !important;
+    width: clamp(120px, 18vw, 170px) !important;
+    max-width: none !important;
     flex-direction: column !important;
-    width: auto !important;
   }
-  .right-sidebar {
-    width: 92px !important;
-    flex: 0 0 92px !important;
+  #app-container > .right-sidebar {
+    flex: 0 0 96px !important;
+    width: 96px !important;
+    max-width: none !important;
+    flex-direction: column !important;
   }
   .vertical-tabs {
     flex-direction: column !important;
     flex-wrap: nowrap !important;
   }
   .v-tab {
-    border-radius: 0 12px 12px 0 !important;
-    border-left: 3px solid #ffd6ec !important;
+    border-radius: 0 14px 14px 0 !important;
+    padding: 9px 6px !important;
+    font-size: 0.42rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #app-container > .left-sidebar {
+    flex: 0 0 88px !important;
+    width: 88px !important;
+  }
+  #app-container > .right-sidebar {
+    flex: 0 0 72px !important;
+    width: 72px !important;
+  }
+  .v-tab {
+    font-size: 0.36rem !important;
+    padding: 8px 3px !important;
   }
 }
