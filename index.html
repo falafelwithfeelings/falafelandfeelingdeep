@@ -506,7 +506,7 @@
         /* Akito Tamagotchi */
         .akito-box { background: var(--panel-bg); border: 2px solid #ccc; padding: 5px; box-shadow: 2px 2px 0 #aaa; border-radius: 8px; }
         .akito-header { display: flex; justify-content: space-between; align-items:center; flex-wrap:wrap; gap:4px; font-family: var(--font-pixel); font-size: 0.4rem; color: #87cefa; margin-bottom: 4px; }
-        .akito-shop-button { margin-left:auto; border:1px solid #fff; border-radius:7px; padding:4px 7px; background:linear-gradient(135deg,#ff9bce,#b88aff); color:#fff; font-family:var(--font-pixel); font-size:.36rem; cursor:pointer; box-shadow:2px 2px 0 rgba(139,75,149,.35); }
+        .akito-shop-button { width:100%; min-height:25px; border:2px solid #fff; border-radius:8px; padding:5px 4px; background:linear-gradient(135deg,#ff9bce,#a980ee); color:#fff; font-family:var(--font-pixel); font-size:.36rem; cursor:pointer; box-shadow:0 3px 0 #b96fb1; }
         .akito-shop-button:hover { filter:brightness(1.06); transform:translateY(-2px); }
         .akito-box.shop-opening { animation:akitoShopNudge .42s ease; }
         @keyframes akitoShopNudge { 0%,100%{transform:translateX(0) scale(1)} 25%{transform:translateX(-3px) rotate(-1deg) scale(1.015)} 60%{transform:translateX(3px) rotate(1deg) scale(1.015)} }
@@ -1135,7 +1135,6 @@
                                         <span>Name: Akito</span>
                                         <span>Born: 9-2026</span>
                                         <span>⚡ Energy</span>
-                                        <button type="button" class="akito-shop-button" onclick="openAkitoShop()" aria-label="Open Akito's shop">shop ✿</button>
                                     </div>
                                     <div class="akito-stats">
                                         <span>Mood: 💖 <span id="tama-mood">100</span></span>
@@ -1152,6 +1151,7 @@
                                             <div class="akito-btn" onclick="tamaAction('Feed')">Feed 5c</div>
                                             <div class="akito-btn" onclick="tamaAction('Work')">Work 💼</div>
                                             <div class="akito-btn" onclick="tamaAction('Arcade')">Arcade 20c</div>
+                                            <button type="button" class="akito-btn akito-shop-button" onclick="openAkitoShop()" aria-label="Open Akito's shop">Shop ✿</button>
                                         </div>
                                     </div>
                                     <div class="akito-chaos-hud" id="akito-chaos-hud">
@@ -2958,33 +2958,6 @@
             }
         }
 
-        function switchView(viewName) {
-            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.v-tab').forEach(a => a.classList.remove('active'));
-            const targetView = document.getElementById('view-' + viewName);
-            if(targetView) targetView.classList.add('active');
-            const navEl = document.getElementById('nav-' + viewName);
-            if(navEl) navEl.classList.add('active');
-            if (viewName === 'blog') renderAllPosts();
-            if (viewName === 'announcements') renderAnnouncements();
-            if (viewName === 'shop') loadShopItems();
-        }
-
-        function openAkitoShop() {
-            const dialogue = document.getElementById('tama-dialogue');
-            const box = document.querySelector('.akito-box');
-            if (dialogue) dialogue.textContent = 'Akito: A shop? Finally, somewhere to spend your Miku Gems. Try not to bankrupt yourself.';
-            if (box) {
-                box.classList.remove('shop-opening');
-                void box.offsetWidth;
-                box.classList.add('shop-opening');
-            }
-            window.setTimeout(() => {
-                if (box) box.classList.remove('shop-opening');
-                switchView('shop');
-            }, 420);
-        }
-
         async function renderAllPosts() {
             const data = await getBinData();
             const posts = (Array.isArray(data.posts) ? data.posts : []).filter(p => p && p.type !== 'announcement');
@@ -3085,12 +3058,24 @@
             const rewardCopy=document.createElement('p');rewardCopy.textContent='Collect '+rewardAmount+' Miku Gems for this post. Each post rewards your account once.';
             const rewardButton=document.createElement('button');rewardButton.type='button';rewardButton.className='modal-btn save';rewardButton.id='reader-reward-button';
             const alreadyRewarded=!!(sparkleAccount&&Array.isArray(sparkleAccount.claimedPosts)&&sparkleAccount.claimedPosts.includes(currentReaderPostKey));
-            rewardButton.textContent=alreadyRewarded?'✓ Already collected':'Finish reading · +'+rewardAmount+' Miku Gems';rewardButton.disabled=alreadyRewarded;rewardButton.addEventListener('click',claimPostReward);
+            rewardButton.textContent=alreadyRewarded?'✓ Already collected':'Keep reading to unlock your reward';rewardButton.disabled=true;rewardButton.dataset.rewardClaimed=alreadyRewarded?'true':'false';rewardButton.addEventListener('click',claimPostReward);
             const rewardStatus=document.createElement('span');rewardStatus.id='reader-reward-status';rewardStatus.style.cssText='display:block;margin-top:6px;color:var(--text-light)';
-            rewardStatus.textContent=alreadyRewarded?'You already collected this reward.':(sparkleAccount?'Your reward is ready when you finish.':'Log in with your Sparkle Code to collect it.');
+            rewardStatus.textContent=alreadyRewarded?'You already collected this reward.':'Scroll to the end of the post to unlock your Miku Gems.';
             rewardPanel.append(rewardTitle,rewardCopy,rewardButton,rewardStatus);document.getElementById('reader-social-bar-container').prepend(rewardPanel);
 
             switchView('post-reader');
+            const readerScroller=document.querySelector('.center-column');
+            if(readerScroller){
+                readerScroller.scrollTop=0;
+                readerScroller.onscroll=()=>{
+                    if(rewardButton.dataset.rewardClaimed==='true')return;
+                    const atEnd=readerScroller.scrollTop+readerScroller.clientHeight>=readerScroller.scrollHeight-28;
+                    rewardButton.disabled=!atEnd;
+                    rewardButton.textContent=atEnd?'Finish reading · +'+rewardAmount+' Miku Gems':'Keep reading to unlock your reward';
+                    rewardStatus.textContent=atEnd?'You reached the end! Collect your one-time reward.':'Scroll to the end of the post to unlock your Miku Gems.';
+                };
+                window.requestAnimationFrame(()=>readerScroller.onscroll&&readerScroller.onscroll());
+            }
         }
 
         function openNewPostModal(type = 'blog') {
@@ -3327,7 +3312,7 @@
         async function loadSparkleAccount(){const code=currentSparkleCode();if(!code){updateSparkleUI();return;}try{const data=await sparkleRequest('/account/me','GET',null,code);sparkleAccount=data.user;visitorAlias=sparkleAccount.alias||visitorAlias||'Anonymous';localStorage.setItem('visitor_alias',visitorAlias);localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));}catch(error){try{sparkleAccount=JSON.parse(localStorage.getItem('falafel_sparkle_user_cache')||'null');}catch(_){sparkleAccount=null;}console.warn('Sparkle account refresh failed:',error);}updateSparkleUI();}
         async function copySparkleCode(){const code=currentSparkleCode();if(!code)return;try{await navigator.clipboard.writeText(code);setSparkleStatus('Copied! Keep it private.');}catch(_){window.prompt('Copy your private Sparkle Code:',code);}}
         function logoutSparkleAccount(){try{localStorage.removeItem(SPARKLE_STORAGE_KEY);localStorage.removeItem('falafel_sparkle_user_cache');}catch(_){}sparkleAccount=null;updateSparkleUI();setSparkleStatus('Logged out here. Your saved account remains on the server.');}
-        async function claimPostReward(){const status=document.getElementById('reader-reward-status');if(!sparkleAccount){if(status)status.textContent='Sign in with your Sparkle Code to collect your reward.';openSparkleAccount('login');return;}if(!currentReaderPostKey)return;const button=document.getElementById('reader-reward-button');if(button)button.disabled=true;if(status)status.textContent='Checking your reading reward…';try{const data=await sparkleRequest('/account/reward','POST',{postId:currentReaderPostKey});sparkleAccount=data.user;localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();if(status)status.textContent=data.awarded?'You earned '+data.amount+' Miku Gems! ✨':'You already collected this post’s reward.';if(button)button.textContent=data.awarded?'✓ '+data.amount+' Miku Gems collected':'✓ Already collected';}catch(error){if(status)status.textContent=error.message||'The reward could not be collected.';if(button)button.disabled=false;}}
+        async function claimPostReward(){const status=document.getElementById('reader-reward-status');if(!sparkleAccount){if(status)status.textContent='Sign in with your Sparkle Code to collect your reward.';openSparkleAccount('login');return;}if(!currentReaderPostKey)return;const button=document.getElementById('reader-reward-button');if(button)button.disabled=true;if(status)status.textContent='Checking your reading reward…';try{const data=await sparkleRequest('/account/reward','POST',{postId:currentReaderPostKey});sparkleAccount=data.user;localStorage.setItem('falafel_sparkle_user_cache',JSON.stringify(sparkleAccount));updateSparkleUI();if(status)status.textContent=data.awarded?'You earned '+data.amount+' Miku Gems! ✨':'You already collected this post’s reward.';if(button){button.dataset.rewardClaimed='true';button.disabled=true;button.textContent=data.awarded?'✓ '+data.amount+' Miku Gems collected':'✓ Already collected';}}catch(error){if(status)status.textContent=error.message||'The reward could not be collected.';if(button)button.disabled=false;}}
         async function toggleLike(index, btn) {
             const data = await getBinData();
             const posts = Array.isArray(data.posts) ? data.posts : [];
@@ -3581,13 +3566,14 @@
             const id = document.getElementById('shop-item-id').value.trim();
             const name = document.getElementById('shop-item-name').value.trim();
             const imageUrl = document.getElementById('shop-item-image').value.trim();
-            const priceGems = Number(document.getElementById('shop-item-price').value);
+            const priceValue = document.getElementById('shop-item-price').value.trim();
+            const priceGems = Number(priceValue);
             const description = document.getElementById('shop-item-description').value.trim();
             const category = document.getElementById('shop-item-category').value;
             const placement = document.getElementById('shop-item-placement').value;
             if (!name) return alert('Give the item a name first!');
             if (!validHttpUrl(imageUrl)) return alert('Please paste a full http:// or https:// picture URL.');
-            if (!Number.isInteger(priceGems)||priceGems<0||priceGems>1000000) return alert('Set a whole-number Miku Gem price (0–1,000,000).');
+            if (!priceValue || !Number.isInteger(priceGems)||priceGems<0||priceGems>1000000) return alert('Set a whole-number Miku Gem price (0–1,000,000).');
             const button = document.getElementById('shop-save-button');
             button.disabled = true;
             try {
