@@ -846,6 +846,116 @@
 .sparkle-account-status{min-height:1.2em;margin:7px 0;color:#a13f83}.sparkle-account-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .sparkle-inventory-list{display:flex;flex-wrap:wrap;gap:6px}.sparkle-inventory-chip{padding:5px 8px;background:#fff;border:1px dashed #d89bc8;border-radius:8px;font-size:.9rem;color:#894a80}
 @media(max-width:760px){.sparkle-dock{right:10px;bottom:10px}.sparkle-dock button{font-size:.4rem}}
+
+        /* Midnight + Cyber: remove the leftover light/paper surfaces while keeping
+           the retro window controls legible. */
+        body[data-mood="midnight"], body[data-mood="cyber"] {
+            --panel-bg: #050509;
+            --win-gray: #11111b;
+        }
+        body[data-mood="midnight"] .winamp-title,
+        body[data-mood="cyber"] .winamp-title,
+        body[data-mood="midnight"] .web-button,
+        body[data-mood="cyber"] .web-button,
+        body[data-mood="midnight"] .blinkies-admin-panel,
+        body[data-mood="cyber"] .blinkies-admin-panel,
+        body[data-mood="midnight"] .blinkie-admin-entry,
+        body[data-mood="cyber"] .blinkie-admin-entry,
+        body[data-mood="midnight"] .shop-admin-panel,
+        body[data-mood="cyber"] .shop-admin-panel,
+        body[data-mood="midnight"] .shop-browse-pane,
+        body[data-mood="cyber"] .shop-browse-pane,
+        body[data-mood="midnight"] .shop-preview-pane,
+        body[data-mood="cyber"] .shop-preview-pane,
+        body[data-mood="midnight"] .shop-card,
+        body[data-mood="cyber"] .shop-card,
+        body[data-mood="midnight"] .shop-card-image-wrap,
+        body[data-mood="cyber"] .shop-card-image-wrap,
+        body[data-mood="midnight"] .shop-category-tabs button,
+        body[data-mood="cyber"] .shop-category-tabs button,
+        body[data-mood="midnight"] .shop-back-button,
+        body[data-mood="cyber"] .shop-back-button,
+        body[data-mood="midnight"] .shop-gem-pill,
+        body[data-mood="cyber"] .shop-gem-pill,
+        body[data-mood="midnight"] .blog-card,
+        body[data-mood="cyber"] .blog-card,
+        body[data-mood="midnight"] .read-more,
+        body[data-mood="cyber"] .read-more,
+        body[data-mood="midnight"] .food-recipe-reader,
+        body[data-mood="cyber"] .food-recipe-reader,
+        body[data-mood="midnight"] .food-reader-copy,
+        body[data-mood="cyber"] .food-reader-copy,
+        body[data-mood="midnight"] .site-config-status,
+        body[data-mood="cyber"] .site-config-status,
+        body[data-mood="midnight"] .updates-header,
+        body[data-mood="cyber"] .updates-header,
+        body[data-mood="midnight"] .akito-chaos-hud,
+        body[data-mood="cyber"] .akito-chaos-hud,
+        body[data-mood="midnight"] .akito-btn,
+        body[data-mood="cyber"] .akito-btn,
+        body[data-mood="midnight"] .akito-dialogue,
+        body[data-mood="cyber"] .akito-dialogue,
+        body[data-mood="midnight"] .calendar-box,
+        body[data-mood="cyber"] .calendar-box {
+            background: #050509 !important;
+            background-color: #050509 !important;
+            color: var(--text-main) !important;
+            border-color: var(--border-color);
+        }
+        body[data-mood="midnight"] .blog-card,
+        body[data-mood="cyber"] .blog-card,
+        body[data-mood="midnight"] .shop-card,
+        body[data-mood="cyber"] .shop-card,
+        body[data-mood="midnight"] .shop-browse-pane,
+        body[data-mood="cyber"] .shop-browse-pane,
+        body[data-mood="midnight"] .shop-preview-pane,
+        body[data-mood="cyber"] .shop-preview-pane {
+            box-shadow: 2px 3px 0 var(--accent-color);
+        }
+        body[data-mood="midnight"] .shop-card-description,
+        body[data-mood="cyber"] .shop-card-description,
+        body[data-mood="midnight"] .shop-preview-description,
+        body[data-mood="cyber"] .shop-preview-description,
+        body[data-mood="midnight"] .shop-status,
+        body[data-mood="cyber"] .shop-status,
+        body[data-mood="midnight"] .shop-admin-panel label,
+        body[data-mood="cyber"] .shop-admin-panel label,
+        body[data-mood="midnight"] .shop-preview-hint,
+        body[data-mood="cyber"] .shop-preview-hint {
+            color: var(--text-light) !important;
+        }
+        body[data-mood="midnight"] .winamp-title,
+        body[data-mood="cyber"] .winamp-title,
+        body[data-mood="midnight"] .web-button,
+        body[data-mood="cyber"] .web-button,
+        body[data-mood="midnight"] .akito-btn,
+        body[data-mood="cyber"] .akito-btn {
+            background: #0b0b14 !important;
+            color: var(--accent-color) !important;
+        }
+        body[data-mood="midnight"] .pin-badge,
+        body[data-mood="cyber"] .pin-badge { color: #fff !important; }
+        body[data-mood="midnight"] .updates-header,
+        body[data-mood="cyber"] .updates-header { color: var(--text-main) !important; }
+        body[data-mood="midnight"] .announcement-card.pinned,
+        body[data-mood="cyber"] .announcement-card.pinned {
+            background: #11101b !important;
+            color: var(--text-main) !important;
+        }
+        body[data-mood="midnight"] input,
+        body[data-mood="midnight"] textarea,
+        body[data-mood="midnight"] select,
+        body[data-mood="cyber"] input,
+        body[data-mood="cyber"] textarea,
+        body[data-mood="cyber"] select {
+            background-color: #0b0b14;
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+        body[data-mood="midnight"] input::placeholder,
+        body[data-mood="midnight"] textarea::placeholder,
+        body[data-mood="cyber"] input::placeholder,
+        body[data-mood="cyber"] textarea::placeholder { color: var(--text-light); opacity: .8; }
     </style>
     <link rel="stylesheet" href="calendar.css">
 </head>
