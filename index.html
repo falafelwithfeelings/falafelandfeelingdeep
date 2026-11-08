@@ -1102,7 +1102,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                    </div>
+                        </div>
 
                     <!-- BLOG VIEW -->
                     <div id="view-blog" class="view-section">
@@ -1227,7 +1227,6 @@
                         
                         <button class="modal-btn cancel" onclick="resetBgs()">Reset to Default</button>
                     </div>
-                </div>
             
                     <!-- SHOP VIEW -->
                     <div id="view-shop" class="view-section">
@@ -1271,6 +1270,7 @@
                         <div id="shop-grid" class="shop-grid"></div>
                         <p style="font-size:.95rem;color:var(--text-light);margin-top:14px;">Catalogue only: prices are displayed for reference. Checkout and payments are not processed on this page.</p>
                     </div>
+                </div>
 </main>
 
             <!-- RIGHT SIDEBAR -->
@@ -1494,10 +1494,13 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         // ================= USER IDENTIFIER =================
-        let visitorAlias = localStorage.getItem('visitor_alias');
-        if (!visitorAlias) {
+        let visitorAlias = localStorage.getItem('visitor_alias') || 'Anonymous';
+        function ensureVisitorAlias() {
+            const saved = localStorage.getItem('visitor_alias');
+            if (saved) { visitorAlias = saved; return visitorAlias; }
             visitorAlias = prompt("What should we call you? (Leave blank for Anonymous)") || "Anonymous";
             localStorage.setItem('visitor_alias', visitorAlias);
+            return visitorAlias;
         }
 
         // ================= WINDOW DRAG / MAXIMIZE / MINIMIZE =================
@@ -3072,6 +3075,7 @@
             const input = document.getElementById('comment-text-input');
             const text = input.value.trim();
             if (!text || currentPostIndexForComments === null) return;
+            ensureVisitorAlias();
 
             const data = await getBinData();
             const posts = Array.isArray(data.posts) ? data.posts : [];
@@ -3159,6 +3163,7 @@
         async function openReplyInput(index, parentId) {
             const replyText = prompt('Write your reply:');
             if (replyText === null || !replyText.trim()) return;
+            ensureVisitorAlias();
 
             const data = await getBinData();
             const posts = Array.isArray(data.posts) ? data.posts : [];
