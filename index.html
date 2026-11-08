@@ -955,7 +955,7 @@
 
             <!-- CENTER COLUMN -->
             <main class="center-column">
-                <div class="top-banner" id="admin-trigger" title="Triple click to unlock admin">
+                <div class="top-banner" id="admin-trigger" aria-label="Falafel with Feelings">
                     falafelwithfeelings
                 </div>
 
@@ -2787,36 +2787,75 @@
         }
 
         // ================= YOUTUBE PLAYER =================
-        let audioPlayer;
+        let audioPlayer = null;
         let isPlaying = false;
         let isLooping = false;
-        let progressInterval;
+        let progressInterval = null;
         const playlist = ["LIKE A DINO", "IT'S OK NOT TO BE OKAY", "GOOD LUCK TODAY", "A PIECE OF CAKE", "I'M SO EXCITED", "It Is What It Is", "A Silver Lining", "SO SÜß", "YOU MADE MY DAY", "MARRIAGE PROPOSAL", "OVER THE MOON", "WADDLE WADDLE"];
         let currentTrack = 0;
-        
+        let lastKnownTrackIndex = 0;
+
+        function getActualPlaylistIndex(player = audioPlayer) {
+            if (!player || typeof player.getPlaylistIndex !== 'function') return currentTrack;
+            try {
+                const index = Number(player.getPlaylistIndex());
+                const ids = typeof player.getPlaylist === 'function' ? player.getPlaylist() : null;
+                const length = Array.isArray(ids) && ids.length ? Math.min(ids.length, playlist.length) : playlist.length;
+                return Number.isInteger(index) && index >= 0 && index < length ? index : lastKnownTrackIndex;
+            } catch (_) {
+                return lastKnownTrackIndex;
+            }
+        }
+
+        function syncTrackSelector(player = audioPlayer) {
+            const index = getActualPlaylistIndex(player);
+            currentTrack = index;
+            lastKnownTrackIndex = index;
+            const selector = document.getElementById('track-selector');
+            if (selector) {
+                selector.value = String(index);
+                const option = selector.options[selector.selectedIndex];
+                if (option) selector.setAttribute('aria-label', 'Now playing: ' + option.textContent);
+            }
+        }
+
         function onYouTubeIframeAPIReady() {
-            audioPlayer = new YT.Player('bg-playlist-iframe', { events: { 'onStateChange': onAudioPlayerStateChange } });
+            audioPlayer = new YT.Player('bg-playlist-iframe', {
+                events: {
+                    'onReady': onAudioPlayerReady,
+                    'onStateChange': onAudioPlayerStateChange
+                }
+            });
+        }
+
+        function onAudioPlayerReady(event) {
+            const player = event.target;
+            // Loop is a playlist setting in the YouTube API; it repeats the list
+            // after the final item, instead of trying to replay a stale index.
+            if (typeof player.setLoop === 'function') player.setLoop(isLooping);
+            if (typeof player.setShuffle === 'function') player.setShuffle(false);
+            syncTrackSelector(player);
         }
 
         function onAudioPlayerStateChange(event) {
+            const player = event.target || audioPlayer;
             const btn = document.getElementById('audio-play-pause-btn');
             if (event.data === YT.PlayerState.PLAYING) {
                 isPlaying = true;
-                if(btn) btn.innerText = "⏸";
+                if (btn) btn.innerText = "⏸";
+                syncTrackSelector(player);
                 startProgressTracker();
             } else if (event.data === YT.PlayerState.PAUSED) {
                 isPlaying = false;
-                if(btn) btn.innerText = "▶";
+                if (btn) btn.innerText = "▶";
                 clearInterval(progressInterval);
             } else if (event.data === YT.PlayerState.ENDED) {
-                if (isLooping) {
-                    if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
-                        audioPlayer.playVideoAt(currentTrack);
-                        window.setTimeout(() => { if (audioPlayer && isLooping) audioPlayer.playVideo(); }, 180);
-                    }
-                } else {
-                    skipAudioTrack(1);
-                }
+                isPlaying = false;
+                if (btn) btn.innerText = "▶";
+                clearInterval(progressInterval);
+                // Do not manually skip here. YouTube advances the embedded
+                // playlist itself; setLoop controls whether it wraps to track 1.
+                syncTrackSelector(player);
             }
         }
 
@@ -2828,53 +2867,67 @@
         }
 
         function skipAudioTrack(dir) {
-            if (!audioPlayer || typeof audioPlayer.nextVideo !== 'function') return;
-            if (dir > 0) audioPlayer.nextVideo();
-            else audioPlayer.previousVideo();
-            currentTrack = (currentTrack + dir + playlist.length) % playlist.length;
-            document.getElementById('track-selector').value = currentTrack;
+            if (!audioPlayer || typeof audioPlayer.playVideoAt !== 'function') return;
+            const ids = typeof audioPlayer.getPlaylist === 'function' ? audioPlayer.getPlaylist() : null;
+            const length = Array.isArray(ids) && ids.length ? Math.min(ids.length, playlist.length) : playlist.length;
+            const base = getActualPlaylistIndex(audioPlayer);
+            const next = (base + (dir > 0 ? 1 : -1) + length) % length;
+            currentTrack = next;
+            lastKnownTrackIndex = next;
+            const selector = document.getElementById('track-selector');
+            if (selector) selector.value = String(next);
+            audioPlayer.playVideoAt(next);
         }
 
         function toggleLoop() {
             isLooping = !isLooping;
             const btn = document.getElementById('loop-btn');
-            if(btn) btn.setAttribute('aria-pressed', String(isLooping));
-            if(isLooping) {
-                if(btn) btn.classList.add('active-loop');
-                if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(true);
-            } else {
-                if(btn) btn.classList.remove('active-loop');
-                if(audioPlayer && audioPlayer.setLoop) audioPlayer.setLoop(false);
+            if (btn) {
+                btn.classList.toggle('active-loop', isLooping);
+                btn.setAttribute('aria-pressed', String(isLooping));
+                btn.title = isLooping ? 'Loop playlist: on' : 'Loop playlist: off';
+            }
+            if (audioPlayer && typeof audioPlayer.setLoop === 'function') {
+                audioPlayer.setLoop(isLooping);
             }
         }
 
         function changeTrack(index) {
-            currentTrack = parseInt(index);
+            const next = Number.parseInt(index, 10);
+            if (!Number.isInteger(next) || next < 0 || next >= playlist.length) return;
+            currentTrack = next;
+            lastKnownTrackIndex = next;
             if (audioPlayer && typeof audioPlayer.playVideoAt === 'function') {
-                audioPlayer.playVideoAt(currentTrack);
+                audioPlayer.playVideoAt(next);
             }
         }
 
         function startProgressTracker() {
             clearInterval(progressInterval);
             progressInterval = setInterval(() => {
-                if (audioPlayer && audioPlayer.getCurrentTime) {
+                if (audioPlayer && typeof audioPlayer.getCurrentTime === 'function') {
                     const current = audioPlayer.getCurrentTime();
                     const duration = audioPlayer.getDuration();
-                    if(duration > 0) {
-                        const percent = (current / duration) * 100;
-                        document.getElementById('music-progress-bar').style.width = percent + '%';
+                    if (duration > 0) {
+                        const bar = document.getElementById('music-progress-bar');
+                        if (bar) bar.style.width = (current / duration * 100) + '%';
                     }
+                    // The native playlist may move to the next item without a
+                    // user button click. Keep the displayed track name in sync.
+                    syncTrackSelector(audioPlayer);
                 }
             }, 1000);
         }
 
-        function seekMusic(e) {
-            if (!audioPlayer || !audioPlayer.getDuration) return;
-            const rect = e.currentTarget.getBoundingClientRect();
-            const percent = (e.clientX - rect.left) / rect.width;
+        function seekMusic(event) {
+            if (!audioPlayer || typeof audioPlayer.getDuration !== 'function') return;
+            const rect = event.currentTarget.getBoundingClientRect();
+            if (!rect.width) return;
+            const percent = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
             const duration = audioPlayer.getDuration();
-            audioPlayer.seekTo(percent * duration, true);
+            if (duration > 0 && typeof audioPlayer.seekTo === 'function') {
+                audioPlayer.seekTo(percent * duration, true);
+            }
         }
 
         // ================= JSONBIN BLOG ENGINE & SPARKLE CODES =================
